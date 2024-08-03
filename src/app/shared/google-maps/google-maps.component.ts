@@ -1,8 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, } from '@angular/core';
 import { DatePipe } from '@angular/common';
-
-;
-import zipcode from '../../assets/zipcodes.json'
+import zipcode from '../../../assets/zipcodes.json';
 
 import { GoogleMap } from '@angular/google-maps';
 // import { MapAdvancedMarker } from "@angular/google-maps"
@@ -34,7 +32,7 @@ declare var $: any;
 @Component({
   selector: 'app-google-maps',
   templateUrl: './google-maps.component.html',
-  styleUrls: ['./google-maps.component.css'],
+  styleUrls: ['./google-maps.component.scss'],
   providers: [DatePipe],
 })
 export class GoogleMapsComponent {
