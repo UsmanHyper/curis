@@ -1,0 +1,31 @@
+
+.copyright {
+    font-size: 15px;
+    font-weight: 400;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    line-height: normal;
+}
+
+.copyright span {
+    font-size: 25px;
+    font-family: 'circular';
+    font-weight: bold;
+}
+
+
+
+footer {
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+
+.btm_bar {
+    width: 100%;
+    padding: 12px 30px;
+}

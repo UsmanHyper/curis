@@ -8,7 +8,7 @@ import { authenticationService } from 'src/app/services/authentication.service';
 @Component({
   selector: 'app-payment-status',
   templateUrl: './payment-status.component.html',
-  styleUrls: ['./payment-status.component.css']
+  styleUrls: ['./payment-status.component.scss']
 })
 export class PaymentStatusComponent implements OnInit {
   isSuccess: boolean = false

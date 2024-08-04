@@ -1,0 +1,52 @@
+<section class="">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="ft_card d-flex flex-column justify-content-center align-items-center">
+                    <h3 class="title">Solutions for Healthcare Providers</h3>
+                    <p class="para">Thousands of physicians have partnered with Curis to increase access, satisfy
+                        patients,
+                        and improve outcomes.</p>
+                    <button class="view-btn">See How</button>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-12 text-center">
+                <label class="label-f-t">Also Check Out...</label>
+            </div>
+            <div class="check_out">
+                <ul class="footer-links">
+                    <span class="span-title">Specialists by city</span>
+                    <ng-container *ngFor="let item of specialists">
+                        <li class=""><a href="#">{{item}}</a></li>
+                    </ng-container>
+
+                </ul>
+                <!-- <hr> -->
+                <ul class="footer-links">
+                    <span class="span-title">Doctors by city</span>
+                    <ng-container *ngFor="let item of doctors">
+                        <li class=""><a href="#">{{item}}</a></li>
+                    </ng-container>
+
+                </ul>
+                <!-- <hr> -->
+                <ul class="footer-links">
+                    <span class="span-title">Social</span>
+                    <ng-container *ngFor="let item of social">
+                        <li class=""><a href="#">{{item}}</a></li>
+                    </ng-container>
+
+                </ul>
+                <!-- <hr> -->
+                <ul class="footer-links">
+                    <span class="span-title">Legal</span>
+                    <ng-container *ngFor="let item of legal">
+                        <li class="text-center"><a href="#">{{item}}</a></li>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

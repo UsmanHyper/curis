@@ -30,7 +30,7 @@ const routes: Routes = [
   {
     path: "",
     loadComponent: () =>
-      import("./platform/home/home.component").then(
+      import("./platform/main-dashboard/home/home.component").then(
         (mod) => mod.HomeComponent
       ),
   },
