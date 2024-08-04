@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs';
 import { authenticationService } from 'src/app/services/authentication.service';
 
 
@@ -15,7 +14,7 @@ export class PaymentStatusComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private authenticationservice: authenticationService,) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe((params:any) => {
       const successParam = params['ispaid']; // Get the 'success' query parameter
       this.isSuccess = successParam === 'true'; // Convert it to a boolean
     });
