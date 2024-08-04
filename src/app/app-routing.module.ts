@@ -44,8 +44,8 @@ const routes: Routes = [
   {
     path: "service-booking-flow",
     loadComponent: () =>
-      import("./platform/main-dashboard/service-providers/service-providers.component").then(
-        (mod) => mod.ServiceProvidersComponent
+      import("./platform/service-booking-flow/service-booking-flow.component").then(
+        (mod) => mod.ServiceBookingFlowComponent
       ),
   },
   {
