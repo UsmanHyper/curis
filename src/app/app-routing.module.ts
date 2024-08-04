@@ -35,6 +35,20 @@ const routes: Routes = [
       ),
   },
   {
+    path: "service-providers",
+    loadComponent: () =>
+      import("./platform/main-dashboard/service-providers/service-providers.component").then(
+        (mod) => mod.ServiceProvidersComponent
+      ),
+  },
+  {
+    path: "service-booking-flow",
+    loadComponent: () =>
+      import("./platform/main-dashboard/service-providers/service-providers.component").then(
+        (mod) => mod.ServiceProvidersComponent
+      ),
+  },
+  {
     path: "about-us",
     loadComponent: () =>
       import("./platform/about-us/about-us.component").then(
