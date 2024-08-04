@@ -1,1 +1,130 @@
-<p>header works!</p>
+<header>
+    <!-- <div class="container"> -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light bg-white">
+        <div class="container-fluid">
+            <!-- Logo and Toggle button -->
+            <a class="navbar-brand d-flex align-items-center gap-4" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact : true}" routerLink="/">
+                <img class="logo" src='../../../assets/images/home/logo.svg' height="30px" width="64px" alt="Curis Now"
+                    title="Curis Now" loading="lazy" />
+            </a>
+            <div class="d-flex">
+                <div class="dropdown d-lg-none"><!-- Show only on small screens -->
+                    <button class="btn " type="button" id="navbarDropdown" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="../../../assets/images/home/avatar.svg" alt="Avatar" class="avatar">
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ng-container *ngIf="!loggedIn">
+                            <li><a class="dropdown-item">Login</a></li>
+                            <li><a class="dropdown-item">Sign-Up</a>
+                            </li>
+                            <!-- <li><a class="dropdown-item" routerLink="/login" (click)="loginPath()">Login</a></li>
+                                <li><a class="dropdown-item" routerLink="/sign-up" (click)="signUpCust()">Sign-Up</a>
+                                </li> -->
+                        </ng-container>
+                        <ng-container *ngIf="loggedIn">
+                            <li><a class="dropdown-item" routerLink="/user-profile">User Profile</a></li>
+                            <li><a class="dropdown-item" (click)="logout()">Log Out</a></li>
+                        </ng-container>
+
+                    </ul>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" id="navbar-toggler-icon"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <!-- Navbar items -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            For Providers <span></span>
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" routerLink="/wedding-venues"
+                                    [queryParams]="{ type: 'hall booking' }" (click)="closeDropdown()">Book Hall</a>
+                            </li>
+                            <li><a class="dropdown-item" routerLink="/search-vendor"
+                                    [queryParams]="{ type: 'catering' }" (click)="closeDropdown()">Catering</a></li>
+                            <li><a class="dropdown-item" routerLink="/search-vendor"
+                                    [queryParams]="{ type: 'makeup artist' }" (click)="closeDropdown()">Makeup
+                                    Artist</a></li>
+                            <li><a class="dropdown-item" routerLink="/search-vendor"
+                                    [queryParams]="{ type: 'photographer' }" (click)="closeDropdown()">Photographer</a>
+                            </li>
+                            <li><a class="dropdown-item" routerLink="/search-vendor" [queryParams]="{ type: 'decor' }"
+                                    (click)="closeDropdown()">Decor</a></li>
+                            <li><a class="dropdown-item" routerLink="/search-vendor"
+                                    [queryParams]="{ type: 'musician' }" (click)="closeDropdown()">Musician</a></li>
+                            <li><a class="dropdown-item" routerLink="/search-vendor"
+                                    [queryParams]="{ type: 'mehndi artist' }" (click)="closeDropdown()">Mehandi</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link scrollto" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact : true}" routerLink="/" (click)="closeDropdown()">Home</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link scrollto" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact : true}" routerLink="/about-us"
+                            (click)="closeDropdown()">Contact us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link scrollto" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact : true}" routerLink="/about-us"
+                            (click)="closeDropdown()">About</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link scrollto" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact : true}" routerLink="/blogs"
+                            (click)="closeDropdown()">Blog</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link scrollto" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact : true}" routerLink="/pricing"
+                            (click)="closeDropdown()">Sign In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn-business" routerLink="/select-profile" (click)="closeDropdown()">Join as a provider</a>
+                    </li>
+
+                    <!-- Avatar dropdown menu (for larger screens) -->
+                    <li class="nav-item dropdown d-none d-lg-block"><!-- Hide on small screens -->
+                        <a class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <img src="../../../assets/images/home/avatar.svg" alt="Avatar" class="avatar">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                            <ng-container *ngIf="!loggedIn">
+                                <li><a class="dropdown-item">Login</a>
+                                </li>
+                                <li><a class="dropdown-item">Sign-Up</a>
+                                </li>
+                                <!-- <li><a class="dropdown-item" routerLink="/login" (click)="loginPath()">Login</a>
+                                    </li>
+                                    <li><a class="dropdown-item" routerLink="/sign-up"
+                                            (click)="signUpCust()">Sign-Up</a>
+                                    </li> -->
+                            </ng-container>
+                            <ng-container *ngIf="loggedIn">
+                                <li><a class="dropdown-item" routerLink="/user-profile">User Profile</a></li>
+                                <li><a class="dropdown-item" routerLink="/log-out" (click)="logout()">Log Out</a>
+                                </li>
+                            </ng-container>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- </div> -->
+</header>

@@ -1,0 +1,155 @@
+// #header {
+//     transition: all 0.5s;
+//     z-index: 5;
+//     top: 70px;
+//     position: absolute;
+//   }
+
+// header {
+//     position: absolute;
+//     z-index: 9999;
+//     width: 100%;
+//     top: 70px;
+// }
+
+.navbar {
+    padding: 16px 12px;
+    // box-shadow: 0 0 20px #00000020;
+}
+
+.navbar ul {
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+    min-width: 190px !important;
+}
+
+.btn-business {
+    background-color: #0086C9;
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 30px;
+  }
+
+.logo-title {
+    
+    font-size: 16.6px !important;
+    font-weight: 600;
+    line-height: 16.6px;
+    margin-left: 12px;
+}
+
+.nav-link {
+    color: #9A9A9A;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0 2px !important;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: .6s;
+    position: relative;
+}
+
+.nav-link::after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 0%;
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    border: 0;
+    opacity: 0;
+    margin: 0;
+    transition: .6s;
+    background-color: #0086C9;
+}
+
+.nav-link.active::after,
+.nav-link:hover::after {
+    width: 100%;
+    opacity: 1;
+    transition: .6s;
+}
+
+.btn-business::after,
+.nav-item:last-child .nav-link::after {
+    display: none !important;
+}
+
+.nav-link span::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    border: solid;
+    border-width: 3px 3px 0 0;
+    transform: rotate(135deg) translateY(3px);
+    border-radius: 1px;
+    border-color: #9A9A9A;
+}
+
+.nav-link:hover span::after {
+    border-color: #0086C9;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: #0086C9;
+    transition: .6s;
+}
+
+.avatar-dropdown {
+    border-bottom: 0 !important;
+    transition: 0s;
+    color: #9a9a9a !important;
+    margin: 0px 14px !important;
+}
+
+.dropdown-menu {
+    animation: 0.6s slideup;
+    left: auto;
+    right: 0;
+    min-width: 190px;
+    border: 0;
+    box-shadow: 0 0 16px 0 rgb(0 0 0 / 8%);
+}
+
+@keyframes slideup {
+    from {
+        transform: translateY(8%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+header .logo {
+    width: 150px;
+    height: auto;
+}
+
+
+.btn-check:checked+.btn,
+:not(.btn-check)+.btn:active,
+.btn:first-child:active,
+.btn.active,
+.btn.show {
+    border-color: transparent;
+}
+
+.btn:hover {
+
+    border-color: transparent;
+}
+
+
+@media screen and (max-width: 480px) and (min-width: 200px) {
+    header .logo {
+        width: 100px;
+    }
+}

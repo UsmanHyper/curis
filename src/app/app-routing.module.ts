@@ -35,6 +35,27 @@ const routes: Routes = [
       ),
   },
   {
+    path: "about-us",
+    loadComponent: () =>
+      import("./platform/about-us/about-us.component").then(
+        (mod) => mod.AboutUsComponent
+      ),
+  },
+  {
+    path: "contact-us",
+    loadComponent: () =>
+      import("./platform/contact-us/contact-us.component").then(
+        (mod) => mod.ContactUsComponent
+      ),
+  },
+  {
+    path: "blogs",
+    loadComponent: () =>
+      import("./platform/blog/blog.component").then(
+        (mod) => mod.BlogComponent
+      ),
+  },
+  {
     path: 'register',
     loadChildren: () => import('./auth/auth.module').then(m => (m.AuthModule))
   }
