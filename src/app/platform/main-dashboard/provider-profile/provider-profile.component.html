@@ -1,49 +1,5 @@
 <app-header></app-header>
-<section class="pb-24 pt-24">
-    <div class="container">
-        <div class="row justify-content-between">
-            <div class="mt-40 col-12 col-lg-12">
-                <div class="form_fields">
-                    <div class="form_group">
 
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Select Speciality</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="form_group">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Select Service</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="form_group">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Select Location</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="form_group">
-                        <input type="date" class="form-control" aria-label="Default select example"
-                            [(ngModel)]="selectedDate">
-                    </div>
-                    <div class="">
-                        <button class="web_button" (click)="search()">Search</button>
-                    </div>
-                    <div class="">
-                        <button class="web_button" (click)="search()">Filter</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 <section class="">
     <!-- <div class="container"> -->
     <div class="row">
@@ -70,7 +26,7 @@
                     </div>
                 </div>
                 <div class="">
-                    <h3 class="sub_title" routerLink="/provider-profile">Olivia Rhye, APRN</h3>
+                    <h3 class="sub_title">Olivia Rhye, APRN</h3>
                     <span class="indicate">Dermatologist</span>
                     <p class="mb-0">604 Davis Cir SWHUNTSVILLE, AL 35801</p>
                 </div>
@@ -93,11 +49,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-6 col-xl-6">
+        <!-- <div class="col-12 col-md-12 col-lg-6 col-xl-6">
             <div class="card-body border-secondary">
                 <app-google-maps [height]="'580px'" [width]="'100%'" #binMap></app-google-maps>
             </div>
-        </div>
+        </div> -->
     </div>
     <!-- </div> -->
 </section>

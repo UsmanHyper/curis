@@ -42,6 +42,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "provider-profile",
+    loadComponent: () =>
+      import("./platform/main-dashboard/provider-profile/provider-profile.component").then(
+        (mod) => mod.ProviderProfileComponent
+      ),
+  },
+  {
     path: "service-booking-flow",
     loadComponent: () =>
       import("./platform/service-booking-flow/service-booking-flow.component").then(
