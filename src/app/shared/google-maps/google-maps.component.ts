@@ -1,8 +1,11 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import zipcode from '../../../assets/zipcodes.json';
 
 import { GoogleMap } from '@angular/google-maps';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 // import { MapAdvancedMarker } from "@angular/google-maps"
 
 declare global {
@@ -34,6 +37,8 @@ declare var $: any;
   templateUrl: './google-maps.component.html',
   styleUrls: ['./google-maps.component.scss'],
   providers: [DatePipe],
+  standalone: true,
+  imports: [CommonModule, RouterModule,FormsModule,],
 })
 export class GoogleMapsComponent {
   @Input() height: any;

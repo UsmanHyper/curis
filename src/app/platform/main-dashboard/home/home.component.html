@@ -59,7 +59,7 @@
             <input type="date" class="form-control" aria-label="Default select example" [(ngModel)]="selectedDate">
           </div>
           <div class="form_group">
-            <button class="web_button" (click)="search()">Search</button>
+            <button class="web_button" routerLink="service-providers"  (click)="search()">Search</button>
           </div>
         </div>
       </div>
@@ -76,30 +76,27 @@
               type="button" role="tab" aria-controls="doctors" aria-selected="true">Doctors</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link web_button" id="specialist-tab" data-bs-toggle="tab" data-bs-target="#specialist" type="button"
-              role="tab" aria-controls="specialist" aria-selected="false">Specialist</button>
+            <button class="nav-link web_button" id="specialist-tab" data-bs-toggle="tab" data-bs-target="#specialist"
+              type="button" role="tab" aria-controls="specialist" aria-selected="false">Specialist</button>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane all_doctors fade show active" id="doctors" role="tabpanel" aria-labelledby="doctors-tab">
             <div class="doctors_profile_card">
               <div class="doctors_profile">
-                <!-- <span class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
-                  [ngClass]="{
-                      'bi-star-fill': rating >= star,
-                      'bi-star': rating < star
-                    }" (click)="setRating(star)">
-                </span> -->
+
                 <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
                   height="100%">
                 <div class="d-flex flex-column g-10">
                   <div class="d-flex align-items-center g-10">
                     <span class="d-flex align-items-center g-4">
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
+
+                      <i class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
+                        [ngClass]="{
+                      'bi-star-fill': rating >= star,
+                      'bi-star': rating < star
+                    }" (click)="setRating(star)">
+                      </i>
                     </span>
                     <span><b>4.6</b> (200)</span>
                   </div>
@@ -113,34 +110,37 @@
               </div>
               <div class="">
                 <h4 class="mini_title">Sun, May 5</h4>
+                <!-- <div class="slots">
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                </div> -->
                 <div class="slots">
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
+                  <ng-container *ngFor="let slot of slots; let i = index">
+                    <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                  </ng-container>
+                  <a class="more" href="#"> More </a>
                 </div>
               </div>
             </div>
             <div class="doctors_profile_card">
               <div class="doctors_profile">
-                <!-- <span class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
-                  [ngClass]="{
-                      'bi-star-fill': rating >= star,
-                      'bi-star': rating < star
-                    }" (click)="setRating(star)">
-                </span> -->
+
                 <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
                   height="100%">
                 <div class="d-flex flex-column g-10">
                   <div class="d-flex align-items-center g-10">
                     <span class="d-flex align-items-center g-4">
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
+
+                      <i class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
+                        [ngClass]="{
+                      'bi-star-fill': rating >= star,
+                      'bi-star': rating < star
+                    }" (click)="setRating(star)">
+                      </i>
                     </span>
                     <span><b>4.6</b> (200)</span>
                   </div>
@@ -154,34 +154,37 @@
               </div>
               <div class="">
                 <h4 class="mini_title">Sun, May 5</h4>
+                <!-- <div class="slots">
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                </div> -->
                 <div class="slots">
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
+                  <ng-container *ngFor="let slot of slots; let i = index">
+                    <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                  </ng-container>
+                  <a class="more" href="#"> More </a>
                 </div>
               </div>
             </div>
             <div class="doctors_profile_card">
               <div class="doctors_profile">
-                <!-- <span class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
-                  [ngClass]="{
-                      'bi-star-fill': rating >= star,
-                      'bi-star': rating < star
-                    }" (click)="setRating(star)">
-                </span> -->
+
                 <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
                   height="100%">
                 <div class="d-flex flex-column g-10">
                   <div class="d-flex align-items-center g-10">
                     <span class="d-flex align-items-center g-4">
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
+
+                      <i class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
+                        [ngClass]="{
+                      'bi-star-fill': rating >= star,
+                      'bi-star': rating < star
+                    }" (click)="setRating(star)">
+                      </i>
                     </span>
                     <span><b>4.6</b> (200)</span>
                   </div>
@@ -195,34 +198,37 @@
               </div>
               <div class="">
                 <h4 class="mini_title">Sun, May 5</h4>
+                <!-- <div class="slots">
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                </div> -->
                 <div class="slots">
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
-                  <a href="#">08:30 AM</a>
+                  <ng-container *ngFor="let slot of slots; let i = index">
+                    <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                  </ng-container>
+                  <a class="more" href="#"> More </a>
                 </div>
               </div>
             </div>
             <div class="doctors_profile_card">
               <div class="doctors_profile">
-                <!-- <span class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
-                  [ngClass]="{
-                      'bi-star-fill': rating >= star,
-                      'bi-star': rating < star
-                    }" (click)="setRating(star)">
-                </span> -->
+
                 <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
                   height="100%">
                 <div class="d-flex flex-column g-10">
                   <div class="d-flex align-items-center g-10">
                     <span class="d-flex align-items-center g-4">
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
+
+                      <i class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
+                        [ngClass]="{
+                      'bi-star-fill': rating >= star,
+                      'bi-star': rating < star
+                    }" (click)="setRating(star)">
+                      </i>
                     </span>
                     <span><b>4.6</b> (200)</span>
                   </div>
@@ -236,29 +242,210 @@
               </div>
               <div class="">
                 <h4 class="mini_title">Sun, May 5</h4>
+                <!-- <div class="slots">
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                </div> -->
                 <div class="slots">
+                  <ng-container *ngFor="let slot of slots; let i = index">
+                    <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                  </ng-container>
+                  <a class="more" href="#"> More </a>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="tab-pane all_doctors fade" id="specialist" role="tabpanel" aria-labelledby="specialist-tab">
+            <div class="doctors_profile_card">
+              <div class="doctors_profile">
+
+                <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
+                  height="100%">
+                <div class="d-flex flex-column g-10">
+                  <div class="d-flex align-items-center g-10">
+                    <span class="d-flex align-items-center g-4">
+
+                      <i class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
+                        [ngClass]="{
+                      'bi-star-fill': rating >= star,
+                      'bi-star': rating < star
+                    }" (click)="setRating(star)">
+                      </i>
+                    </span>
+                    <span><b>4.6</b> (200)</span>
+                  </div>
+                  <span class="tags">Available</span>
+                </div>
+              </div>
+              <div class="">
+                <h3 class="sub_title">Olivia Rhye, APRN</h3>
+                <span class="indicate">Dermatologist</span>
+                <p class="mb-0">604 Davis Cir SWHUNTSVILLE, AL 35801</p>
+              </div>
+              <div class="">
+                <h4 class="mini_title">Sun, May 5</h4>
+                <!-- <div class="slots">
                   <a href="#">08:30 AM</a>
                   <a href="#">08:30 AM</a>
                   <a href="#">08:30 AM</a>
                   <a href="#">08:30 AM</a>
                   <a href="#">08:30 AM</a>
                   <a href="#">08:30 AM</a>
+                </div> -->
+                <div class="slots">
+                  <ng-container *ngFor="let slot of slots; let i = index">
+                    <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                  </ng-container>
+                  <a class="more" href="#"> More </a>
+                </div>
+              </div>
+            </div>
+            <div class="doctors_profile_card">
+              <div class="doctors_profile">
+
+                <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
+                  height="100%">
+                <div class="d-flex flex-column g-10">
+                  <div class="d-flex align-items-center g-10">
+                    <span class="d-flex align-items-center g-4">
+
+                      <i class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
+                        [ngClass]="{
+                      'bi-star-fill': rating >= star,
+                      'bi-star': rating < star
+                    }" (click)="setRating(star)">
+                      </i>
+                    </span>
+                    <span><b>4.6</b> (200)</span>
+                  </div>
+                  <span class="tags">Available</span>
+                </div>
+              </div>
+              <div class="">
+                <h3 class="sub_title">Olivia Rhye, APRN</h3>
+                <span class="indicate">Dermatologist</span>
+                <p class="mb-0">604 Davis Cir SWHUNTSVILLE, AL 35801</p>
+              </div>
+              <div class="">
+                <h4 class="mini_title">Sun, May 5</h4>
+                <!-- <div class="slots">
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                </div> -->
+                <div class="slots">
+                  <ng-container *ngFor="let slot of slots; let i = index">
+                    <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                  </ng-container>
+                  <a class="more" href="#"> More </a>
+                </div>
+              </div>
+            </div>
+            <div class="doctors_profile_card">
+              <div class="doctors_profile">
+
+                <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
+                  height="100%">
+                <div class="d-flex flex-column g-10">
+                  <div class="d-flex align-items-center g-10">
+                    <span class="d-flex align-items-center g-4">
+
+                      <i class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
+                        [ngClass]="{
+                      'bi-star-fill': rating >= star,
+                      'bi-star': rating < star
+                    }" (click)="setRating(star)">
+                      </i>
+                    </span>
+                    <span><b>4.6</b> (200)</span>
+                  </div>
+                  <span class="tags">Available</span>
+                </div>
+              </div>
+              <div class="">
+                <h3 class="sub_title">Olivia Rhye, APRN</h3>
+                <span class="indicate">Dermatologist</span>
+                <p class="mb-0">604 Davis Cir SWHUNTSVILLE, AL 35801</p>
+              </div>
+              <div class="">
+                <h4 class="mini_title">Sun, May 5</h4>
+                <!-- <div class="slots">
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                </div> -->
+                <div class="slots">
+                  <ng-container *ngFor="let slot of slots; let i = index">
+                    <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                  </ng-container>
+                  <a class="more" href="#"> More </a>
+                </div>
+              </div>
+            </div>
+            <div class="doctors_profile_card">
+              <div class="doctors_profile">
+
+                <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
+                  height="100%">
+                <div class="d-flex flex-column g-10">
+                  <div class="d-flex align-items-center g-10">
+                    <span class="d-flex align-items-center g-4">
+
+                      <i class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
+                        [ngClass]="{
+                      'bi-star-fill': rating >= star,
+                      'bi-star': rating < star
+                    }" (click)="setRating(star)">
+                      </i>
+                    </span>
+                    <span><b>4.6</b> (200)</span>
+                  </div>
+                  <span class="tags">Available</span>
+                </div>
+              </div>
+              <div class="">
+                <h3 class="sub_title">Olivia Rhye, APRN</h3>
+                <span class="indicate">Dermatologist</span>
+                <p class="mb-0">604 Davis Cir SWHUNTSVILLE, AL 35801</p>
+              </div>
+              <div class="">
+                <h4 class="mini_title">Sun, May 5</h4>
+                <!-- <div class="slots">
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                  <a href="#">08:30 AM</a>
+                </div> -->
+                <div class="slots">
+                  <ng-container *ngFor="let slot of slots; let i = index">
+                    <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                  </ng-container>
+                  <a class="more" href="#">More</a>
                 </div>
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="specialist" role="tabpanel" aria-labelledby="specialist-tab">...</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- to open service provider page
- router link
-service-providers
 
--->
 
 
 <app-key-features></app-key-features>
