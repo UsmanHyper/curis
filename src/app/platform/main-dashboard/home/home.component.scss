@@ -125,6 +125,7 @@ input.form-control {
   gap: 24px;
   padding: 30px 0;
 }
+
 .doctors_profile_card {
   padding: 20px;
   background-color: #F9FAFB;
@@ -189,10 +190,28 @@ input.form-control {
   border-radius: 5px;
   background-color: #E0F2FE;
 }
+
 .nav-tabs {
   gap: 16px;
   padding: 12px;
   border: 1px solid #d0d5dd;
   border-radius: 12px;
   width: fit-content;
+}
+
+
+
+.more {
+  background-color: white !important;
+  // background-color: #B9E6FE !important;
+  color: #0086C9 !important;
+  border: 2px solid #0086C9 !important;
+}
+
+.tab-pane {
+  display: none; /* Hide tab panes by default */
+}
+
+.tab-pane.active {
+  display: flex; /* Show active tab pane */
 }
