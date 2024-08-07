@@ -1,61 +1,365 @@
 <app-header></app-header>
-
 <section class="">
-    <!-- <div class="container"> -->
-    <div class="row">
-        <div class="col-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="doctors_profile_card">
-                <div class="doctors_profile">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-8 col-xl-8">
+                <div class="doctors_profile_card">
+                    <div class="doctors_profile">
 
-                    <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile"
-                        width="100%" height="100%">
-                    <div class="d-flex flex-column g-10">
-                        <div class="d-flex align-items-center g-10">
-                            <span class="d-flex align-items-center g-4">
-
-                                <i class="bi bi-star-fill star-st" style="color:#FF9900"
-                                    *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{
-                            'bi-star-fill': rating >= star,
-                            'bi-star': rating < star
-                          }" (click)="setRating(star)">
-                                </i>
-                            </span>
-                            <span><b>4.6</b> (200)</span>
+                        <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile"
+                            width="100%" height="100%">
+                        <div class="d-flex flex-column g-10">
+                            <div class="">
+                                <div class="d-flex align-items-center g-4">
+                                    <h3 class="sub_title">Olivia Rhye, APRN</h3> <span class="">Available</span>
+                                </div>
+                                <span class="indicate">Dermatologist</span>
+                                <p class="mb-0">604 Davis Cir SWHUNTSVILLE, AL 35801</p>
+                            </div>
+                            <span class="tags">Available</span>
                         </div>
-                        <span class="tags">Available</span>
                     </div>
+                    
+
                 </div>
-                <div class="">
-                    <h3 class="sub_title">Olivia Rhye, APRN</h3>
-                    <span class="indicate">Dermatologist</span>
-                    <p class="mb-0">604 Davis Cir SWHUNTSVILLE, AL 35801</p>
-                </div>
-                <div class="">
-                    <h4 class="mini_title">Sun, May 5</h4>
-                    <!-- <div class="slots">
-                        <a href="#">08:30 AM</a>
-                        <a href="#">08:30 AM</a>
-                        <a href="#">08:30 AM</a>
-                        <a href="#">08:30 AM</a>
-                        <a href="#">08:30 AM</a>
-                        <a href="#">08:30 AM</a>
-                      </div> -->
-                    <div class="slots">
-                        <ng-container *ngFor="let slot of slots; let i = index">
-                            <a *ngIf="i < 5" href="#">{{ slot }}</a>
-                        </ng-container>
-                        <a class="more" href="#"> More </a>
+                <hr>
+                <div class="mt-36 mb-100">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="intro-tab" data-bs-toggle="tab" data-bs-target="#intro"
+                                type="button" role="tab" aria-controls="intro" aria-selected="true">Intro</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="education-tab" data-bs-toggle="tab" data-bs-target="#education"
+                                type="button" role="tab" aria-controls="education"
+                                aria-selected="false">Education</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="specialties-tab" data-bs-toggle="tab"
+                                data-bs-target="#specialties" type="button" role="tab" aria-controls="specialties"
+                                aria-selected="false">Specialties</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="location-tab" data-bs-toggle="tab" data-bs-target="#location"
+                                type="button" role="tab" aria-controls="location"
+                                aria-selected="false">Location</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
+                                type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="intro" role="tabpanel" aria-labelledby="intro-tab">
+
+                            <div class="mt-32">
+                                <h2 class="tab-title">
+                                    Intorduction
+                                </h2>
+                                <div class="mt-24">
+                                    <h3 class="tab-sub-title">
+                                        Great to meet you!
+                                    </h3>
+                                    <p class="tab-content-para mt-16">
+                                        I've served in the mental health field since 2006 as a mental health
+                                        professional in
+                                        the
+                                        United States Navy. As a civilian, I received both my undergrad and graduate
+                                        degrees
+                                        from Our Lady of the Lake University, in San Antonio, TX. I currently practice
+                                        in
+                                        Alabama helping clients with relationship issues, career stressors, coping with
+                                        military
+                                        life (during and after service), children and family dynamics, crisis
+                                        management,
+                                        coping
+                                        with life changes, trauma, & EMDR protocol.
+                                    </p>
+                                </div>
+                                <div class="mt-24">
+                                    <h3 class="tab-sub-title">
+                                        A bit about my approach to therapy
+                                    </h3>
+                                    <p class="tab-content-para mt-16">
+                                        I am trained in a variety of treatment modalities to fit the needs a wide
+                                        spectrum
+                                        of clients from all walks of life who may have an equally wide range of needs,
+                                        so my
+                                        approach is very client-centered; what may work for one individual may not work
+                                        for
+                                        the next even if there are similar diagnosis or challenges. I believe you are
+                                        the
+                                        expert of your story, and you have many strengths that will assist you in
+                                        overcoming
+                                        the things that challenge you, cause you distress, or make you feel “stuck”.
+                                    </p>
+                                </div>
+                                <div class="mt-24">
+                                    <h3 class="tab-sub-title">
+                                        What you can expect from our first session
+                                    </h3>
+                                    <p class="tab-content-para mt-16">
+                                        I've helped couples, families, individuals, military service members and
+                                        veterans
+                                        work through stress, anxiety, addiction, family conflicts, trauma, abuse,
+                                        sleeping
+                                        disorders, anger management, depression, anxiety, and a list of other
+                                        challenges. I
+                                        also speak "Teenager (Bruh)". So, if you feel like life is "Lifeing", give me a
+                                        call, let's work on that.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
+                            <div class="mt-32">
+                                <h2 class="tab-title">
+                                    Education
+                                </h2>
+                                <div class="mt-24">
+                                    <p class="tab-content-para">
+                                        M.B.B.S, F.C.P.S (Dermatology)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="specialties" role="tabpanel" aria-labelledby="specialties-tab">
+                            <div class="mt-32">
+                                <h2 class="tab-title">
+
+
+                                    Specialties
+                                </h2>
+                                <div class="mt-24">
+                                    <p class="tab-content-para">
+                                        Dermatologist, Cosmetologist
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="language" role="tabpanel" aria-labelledby="language-tab">
+                            <div class="mt-32">
+                                <h2 class="tab-title">
+                                    Languages </h2>
+                                <div class="mt-24">
+
+                                    <span class="tags">English</span>
+                                    <span class="tags">Spanish</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="location" role="tabpanel" aria-labelledby="location-tab">
+
+                            <div class="mt-32">
+                                <h2 class="tab-title">
+
+                                    Location
+                                </h2>
+                                <div class="card mt-24">
+
+                                    <p class="tab-content-para">
+                                        604 Davis Cir SWHUNTSVILLE, AL 35801
+                                    </p>
+                                    <div class="">
+                                        <app-google-maps [height]="'200px'" [width]="'100%'" #binMap></app-google-maps>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                            <div class="d-flex justify-content-between mt-32">
+
+                                <h2 class="tab-title">
+                                    Reviews </h2>
+                                <div class="">
+                                    <button type="button" class="review-btn mr-16">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </button>
+                                    <button type="button" class="review-btn">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+                            <div class="card mt-24">
+                                <div
+                                    class="ft_card d-flex flex-column justify-content-center align-items-center pt-16 pl-64 pr-64 pb-16">
+
+                                    <p class="cust-comment text-center "><i>“In a world older and more complete than
+                                            ours they move finished and complete, gifted with extensions of the senses
+                                            we have lost or never attained, living by voices we shall never hear.”</i>
+                                    </p>
+
+                                    <p class="cust-name">Sarah T. | <span class="cust-type">Freelance
+                                            Designer</span>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-4 col-xl-4">
+                <div class="card">
+                    <div class="mt-16 card-padding">
+                        <h3 class="card-title">
+                            Book a clinic visit
+                        </h3>
+                    </div>
+                    <hr class="m-0">
+                    <ul class="nav nav-tabs" id="myTab1" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="today-tab" data-bs-toggle="tab" data-bs-target="#today"
+                                type="button" role="tab" aria-controls="today" aria-selected="true">TODAY</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tomorrow-tab" data-bs-toggle="tab" data-bs-target="#tomorrow"
+                                type="button" role="tab" aria-controls="tomorrow"
+                                aria-selected="false">TOMORROW</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="select-date-tab" data-bs-toggle="tab"
+                                data-bs-target="#select-date" type="button" role="tab" aria-controls="select-date"
+                                aria-selected="false">SELECT DATE</button>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content card-padding " id="myTabContent1">
+                        <div class="tab-pane fade show active" id="today" role="tabpanel" aria-labelledby="today-tab">
+
+                            <div class="mt-32">
+                                <h4 class="tab-title">
+                                    Today, July 27th
+                                </h4>
+                                <div class="mt-24">
+                                    <h5 class="tab-sub-title">
+                                        Morning </h5>
+                                    <div class="slots">
+                                        <ng-container *ngFor="let slot of slots; let i = index">
+                                            <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                                        </ng-container>
+                                        <a class="more" href="#"> More </a>
+                                    </div>
+                                </div>
+                                <div class="mt-24">
+                                    <h5 class="tab-sub-title">
+                                        Afternoon </h5>
+                                    <div class="slots">
+                                        <ng-container *ngFor="let slot of slots; let i = index">
+                                            <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                                        </ng-container>
+                                        <a class="more" href="#"> More </a>
+                                    </div>
+                                </div>
+                                <div class="mt-24">
+                                    <h5 class="tab-sub-title">
+                                        Evening and after-hours
+                                    </h5>
+                                    <div class="slots">
+                                        <ng-container *ngFor="let slot of slots; let i = index">
+                                            <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                                        </ng-container>
+                                        <a class="more" href="#"> More </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tomorrow" role="tabpanel" aria-labelledby="tomorrow-tab">
+
+                            <div class="mt-32">
+                                <h4 class="tab-title">
+                                    Today, July 27th
+                                </h4>
+                                <div class="mt-24">
+                                    <h5 class="tab-sub-title">
+                                        Morning </h5>
+                                    <div class="slots">
+                                        <ng-container *ngFor="let slot of slots; let i = index">
+                                            <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                                        </ng-container>
+                                        <a class="more" href="#"> More </a>
+                                    </div>
+                                </div>
+                                <div class="mt-24">
+                                    <h5 class="tab-sub-title">
+                                        Afternoon </h5>
+                                    <div class="slots">
+                                        <ng-container *ngFor="let slot of slots; let i = index">
+                                            <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                                        </ng-container>
+                                        <a class="more" href="#"> More </a>
+                                    </div>
+                                </div>
+                                <div class="mt-24">
+                                    <h5 class="tab-sub-title">
+                                        Evening and after-hours
+                                    </h5>
+                                    <div class="slots">
+                                        <ng-container *ngFor="let slot of slots; let i = index">
+                                            <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                                        </ng-container>
+                                        <a class="more" href="#"> More </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="select-date" role="tabpanel" aria-labelledby="select-date-tab">
+
+                            <div class="mt-32">
+                                <h4 class="tab-title">
+                                    Today, July 27th
+                                </h4>
+                                <div class="mt-24">
+                                    <h5 class="tab-sub-title">
+                                        Morning </h5>
+                                    <div class="slots">
+                                        <ng-container *ngFor="let slot of slots; let i = index">
+                                            <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                                        </ng-container>
+                                        <a class="more" href="#"> More </a>
+                                    </div>
+                                </div>
+                                <div class="mt-24">
+                                    <h5 class="tab-sub-title">
+                                        Afternoon </h5>
+                                    <div class="slots">
+                                        <ng-container *ngFor="let slot of slots; let i = index">
+                                            <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                                        </ng-container>
+                                        <a class="more" href="#"> More </a>
+                                    </div>
+                                </div>
+                                <div class="mt-24">
+                                    <h5 class="tab-sub-title">
+                                        Evening and after-hours
+                                    </h5>
+                                    <div class="slots">
+                                        <ng-container *ngFor="let slot of slots; let i = index">
+                                            <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                                        </ng-container>
+                                        <a class="more" href="#"> More </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr class="m-0">
+                    <div class=" card-padding">
+                        <button class="btn card-body-btn " routerLink="/service-booking-flow">
+                            Book Session
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <!-- <div class="col-12 col-md-12 col-lg-6 col-xl-6">
-            <div class="card-body border-secondary">
-                <app-google-maps [height]="'580px'" [width]="'100%'" #binMap></app-google-maps>
-            </div>
-        </div> -->
+
+
     </div>
-    <!-- </div> -->
 </section>
 
 
