@@ -3,10 +3,10 @@
     // padding: 60px;
     border-radius: 12px;
     margin-bottom: 30px;
-  
+
     // text-align: center;
   }
-  
+
   .ft_card .view-btn {
     padding: 16px 36px;
     border-radius: 8px;
@@ -16,7 +16,7 @@
     background-color: #0086C9;
     font-size: 16px;
   }
-  
+
   .para {
     color: #667085;
     font-size: 20px;
@@ -24,70 +24,70 @@
     line-height: 24px;
     // max-width: 80%;
   }
-  
+
   .section-title {
     font-size: 16px;
     font-weight: 600;
     text-align: left;
     color: #0086C9;
   }
-  
+
   .cust-type {
     color: #667085;
     font-size: 16px;
     font-weight: 400;
     line-height: 30px;
   }
-  
+
   .cust-name {
     color: #101828;
     font-size: 16px;
     font-weight: 700;
     line-height: 30px;
   }
-  
+
   .cust-comment {
     color: #101828;
     font-size: 24px;
     font-weight: 500;
     line-height: 32px;
-  
+
   }
-  
+
   .btn-icon {
     background: #E0F2FE;
     padding: 10px 16px;
     border-radius: 100px;
     border: 16px solid #F0F9FF;
   }
-  
+
   .icon-sty {
     font-size: 24px;
     color: #0086C9;
   }
-  
+
   .gap-20 {
     gap: 20px;
   }
-  
+
   .btn-icon {
     background: #E0F2FE;
     border-radius: 100px;
     border: 12px solid #F0F9FF;
     padding: 18px 32px;
   }
-  
+
   .icon-sty {
     color: #0086C9;
     -webkit-text-stroke: 1px;
   }
-  
+
   // Malik Amir
   select.form-control,
   input.form-control {
     border-radius: 0;
   }
-  
+
   .form_fields {
     gap: 12px;
     padding: 16px;
@@ -96,16 +96,16 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
-  
+
   .form_fields .form_group {
     border: 0;
     border-right: 1px solid #d0d5dd;
   }
-  
+
   .form_fields .form_group:last-child {
     border-right: 0px;
   }
-  
+
   .form-select,
   .form-control {
     height: 40px;
@@ -117,7 +117,7 @@
     padding: 6px 10px;
     color: #475467;
   }
-  
+
   // .doctors_profile
   .all_doctors {
     display: grid;
@@ -125,42 +125,46 @@
     gap: 24px;
     padding: 30px 0;
   }
-  
+
   .doctors_profile_card {
     padding: 20px;
-    background-color: #F9FAFB;
-    border-radius: 12px;
+    background-color: transparent;
+    border-top: 1px solid #d0d5dd8a;
+    border-bottom: 1px solid #d0d5dd8a;
+    border-radius: 0px;
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
-  
+
   .doctors_profile_card p {
     font-size: 16px;
   }
-  
+
   .doctors_profile {
     display: flex;
     align-items: center;
     gap: 20px;
+    justify-content: space-between;
   }
-  
+
   .doctors_profile img {
     width: 80px;
     height: 80px;
     object-fit: cover;
     border-radius: 100px;
   }
-  
+  .doctors_profile p .bi,
+  .doctors_profile span .bi,
   .doctors_profile span {
     color: #1D2939;
-    font-size: 12px;
+    font-size: 16px;
   }
-  
+
   .doctors_profile .bi {
     color: #FDB022;
   }
-  
+
   .tags {
     background-color: #D1FADF;
     color: #039855 !important;
@@ -170,17 +174,17 @@
     width: 100%;
     display: block;
   }
-  
+
   .indicate {
     font-weight: 400;
   }
-  
+
   .slots {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: 5px;
-    flex-wrap: wrap;
   }
-  
+
   .slots a {
     font-size: 14px;
     font-weight: 600;
@@ -189,8 +193,10 @@
     text-align: center;
     border-radius: 5px;
     background-color: #E0F2FE;
+    white-space: nowrap;
+    line-height: normal;
   }
-  
+
   .nav-tabs {
     gap: 16px;
     padding: 12px;
@@ -198,20 +204,27 @@
     border-radius: 12px;
     width: fit-content;
   }
-  
-  
-  
+
   .more {
     background-color: white !important;
     // background-color: #B9E6FE !important;
     color: #0086C9 !important;
     border: 2px solid #0086C9 !important;
   }
-  
+
   .tab-pane {
     display: none; /* Hide tab panes by default */
   }
-  
+
   .tab-pane.active {
     display: flex; /* Show active tab pane */
   }
+  // malik-style
+  .service_provider_row{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 0px;
+  }
+.col-1, .col-2 {
+  width: 100%;
+}
