@@ -80,6 +80,102 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row align-items-start justify-content-center form-width" *ngIf="personalInformationStepper">
+                            <!-- <form [formGroup]="personalInformationForm">
+                                <div>
+                                    <div class="row mt-4">
+                                        <div class="col-md-6">
+                                            <span class="text-size-normal text-dark"><strong></strong>First Name</span>
+                                            <input formControlName="firstName" type="text" class="form-control placeholder-text"
+                                                id="exampleFormControlInput1" placeholder="First Name">
+                
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('firstName')?.invalid && (personalInformationForm.get('firstName')?.dirty || personalInformationForm.get('firstName')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('firstName')?.errors">
+                                                    <span class="text-danger error-state">First Name is required</span>
+                                                </ng-container>
+                
+                                            </ng-container>
+                                        </div>
+                
+                                        <div class="col-md-6">
+                                            <span class="text-size-normal text-dark">Last Name</span>
+                                            <input formControlName="lastName" type="text" class="form-control placeholder-text"
+                                                id="exampleFormControlInput1" placeholder="Last Name">
+                
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('lastName')?.invalid && (personalInformationForm.get('lastName')?.dirty || personalInformationForm.get('lastName')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('lastName')?.errors">
+                                                    <span class="text-danger error-state">Last Name is required</span>
+                                                </ng-container>
+                
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                
+                                    <div class="row mt-4">
+                                        <div class="col-md-6">
+                                            <span class="text-size-normal text-dark">Email Address</span>
+                                            <input formControlName="email" type="text" class="form-control placeholder-text"
+                                                id="exampleFormControlInput1" placeholder="Email Address">
+                
+                
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('email')?.invalid && (personalInformationForm.get('email')?.dirty || personalInformationForm.get('email')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('email')?.errors">
+                                                    <span class="text-danger error-state">Email is required</span>
+                                                </ng-container>
+                                            </ng-container>
+                                        </div>
+                
+                                        <div class="col-md-6">
+                                            <span class="text-size-normal text-dark">Cell Number</span>
+                                            <input formControlName="contactNumber" type="text" class="form-control placeholder-text"
+                                                id="exampleFormControlInput1" mask="(000) 000-0000"
+                                                placeholder="(123)-456-7890">
+                
+                
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('contactNumber')?.invalid && (personalInformationForm.get('contactNumber')?.dirty || personalInformationForm.get('contactNumber')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('contactNumber')?.errors">
+                                                    <span class="text-danger error-state">Cell Number is required</span>
+                                                </ng-container>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                
+                                    <div class="col-md-6 mt-4">
+                                        <span class="text-size-normal text-dark">Gender</span>
+                                        <select formControlName="gender" class="form-select form-control text-size-normal"
+                                            id="inputGroupSelect01" placeholder="Gender">
+                                            <option value="">Gender</option>
+                                            <option class="text-size-normal" *ngFor="let opt of genderLov" [value]="opt.value">
+                                                {{opt.value}}
+                                            </option>
+                                        </select>
+                
+                                        <ng-container
+                                            *ngIf="personalInformationForm.get('gender')?.invalid && (personalInformationForm.get('gender')?.dirty || personalInformationForm.get('gender')?.touched)">
+                                            <ng-container *ngIf="personalInformationForm.get('gender')?.errors">
+                                                <span class="text-danger error-state">Gender is required</span>
+                                            </ng-container>
+                                             Add more specific error checks as needed -->
+                                        <!-- </ng-container>
+                                    </div>
+                
+                
+                
+                
+                
+                                    <div class="text-end">
+                                        <button type="button" [disabled]="personalInformationForm.invalid"
+                                            class="btn bg-primary-dark btn-small button-small stepper-btn text-white hover-none mt-4 px-4"
+                                            [ngClass]="{'disabled-button':personalInformationForm.invalid}"
+                                            (click)="goToPracticeInformation()">Next</button>
+                                    </div>
+                                </div>
+                            </form> --> 
+                        </div>
                     </div>
                 </div>
             </div>
