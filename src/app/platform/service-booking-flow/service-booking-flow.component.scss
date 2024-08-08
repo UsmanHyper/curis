@@ -1,5 +1,116 @@
-
-
-.bg-blue{
+.bg-blue {
     background-color: #065986;
+}
+
+
+
+
+
+///Stepper
+
+/* ---------------------------------------------------stepper */
+.stepper-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+}
+
+@media (max-width: 768px) {
+    .stepper-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+
+    .line {
+        transform: rotate(90deg);
+
+    }
+}
+
+// @media (max-width: 768px) {
+//     .stepper-container {
+//         flex-direction: column;
+//         align-items: stretch;
+//     }
+
+// }
+
+.activeText {
+    font-weight: 700;
+    color: #0086C9;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    color: #0086C9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 10px;
+}
+
+.stepper-card {
+    margin-inline: auto;
+    padding-inline: 70px;
+    padding-block: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.stepper-card-container {
+    // flex-direction: column;
+    // margin-block: 40px;
+    // display: flex;
+    // justify-content: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+
+}
+
+
+.circle-grey {
+    color: #667085;
+}
+
+
+.line-parent {
+    justify-content: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.line {
+    flex: 1;
+    width: 72px;
+    height: 1.5px;
+    background-color: transparent;
+    margin: 0 5px;
+    border-top: 2px solid #bec0c1;
+    position: absolute;
+    // margin-top: -65px;
+
+}
+
+
+
+.text-medium {
+    color: #667085;
 }

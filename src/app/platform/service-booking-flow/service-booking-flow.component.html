@@ -1,6 +1,7 @@
 <app-header></app-header>
 <div class="container-fluid">
     <div class="row">
+        
         <div class="col-12 col-md-12 col-lg-4 col-xl-4 ">
             <div class="bg-blue " style="height: 100vh;">
                 <p>service-booking-flow works!</p>
@@ -11,22 +12,77 @@
         <div class="col-12 col-md-12 col-lg-8 col-xl-8 ">
 
             <div class="">
+                <div class="stepper-card-container">
+                    <div class="stepper-card">
+                        <div class="row justify-content-center ms-4">
+                            <div class="stepper-container">
+                                <div class="step">
+                                    <ng-container *ngIf="!personalInformationStepper">
+                                        <div class="circle" [ngClass]="{'circle-grey':!personalInformationStepper}">1
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="personalInformationStepper === true">
+                                        <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                                        </div>
+                                    </ng-container>
+                                    <span class="activeText"
+                                        [ngClass]="{'activeText': personalInformationStepper, 'text-medium': !personalInformationStepper}">Add
+                                        Email</span>
+                                </div>
+                                <div class="line-parent mt-3">
+                                    <div class="line"></div>
+                                </div>
+                                <div class="step">
+                                    <ng-container *ngIf="!practiceInformationStepper">
+                                        <div class="circle" [ngClass]="{'circle-grey':!practiceInformationStepper}">2
+                                        </div>
 
-
-                <!-- <h2 class="">
-                    Add Email
-                </h2>
-
-                <label class="">
-                    Email
-                </label>
-
-                <input type="text" class="">
-
-
-                <button class="btn btn-primary"></button> -->
+                                    </ng-container>
+                                    <ng-container *ngIf="practiceInformationStepper === true">
+                                        <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                                        </div>
+                                    </ng-container>
+                                    <span
+                                        [ngClass]="{'activeText': practiceInformationStepper, 'text-medium': !practiceInformationStepper}">Create
+                                        Account</span>
+                                </div>
+                                <div class="line-parent mt-3">
+                                    <div class="line"></div>
+                                </div>
+                                <div class="step">
+                                    <ng-container *ngIf="!skillsInformationStepper">
+                                        <div class="circle" [ngClass]="{'circle-grey':!skillsInformationStepper}">3
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="skillsInformationStepper === true">
+                                        <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                                        </div>
+                                    </ng-container>
+                                    <span
+                                        [ngClass]="{'activeText': skillsInformationStepper, 'text-medium': !skillsInformationStepper}"
+                                        class="text-medium">Pay Fee</span>
+                                </div>
+                                <div class="line-parent mt-3">
+                                    <div class="line"></div>
+                                </div>
+                                <div class="step">
+                                    <ng-container *ngIf="!accountInformationStepper">
+                                        <div class="circle" [ngClass]="{'circle-grey':!accountInformationStepper}">4
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="accountInformationStepper === true">
+                                        <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                                        </div>
+                                    </ng-container>
+                                    <span
+                                        [ngClass]="{'activeText': accountInformationStepper, 'text-medium': !accountInformationStepper}"
+                                        class="text-medium">Congratulations</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<app-footer></app-footer>
+    <app-footer></app-footer>
