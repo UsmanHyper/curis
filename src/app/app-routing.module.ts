@@ -77,6 +77,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "register-as-a-provider",
+    loadComponent: () =>
+      import("./register-provider/register-provider.component").then(
+        (mod) => mod.RegisterProviderComponent
+      ),
+  },
+  {
     path: 'register',
     loadChildren: () => import('./auth/auth.module').then(m => (m.AuthModule))
   }

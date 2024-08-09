@@ -1,0 +1,390 @@
+<app-header></app-header>
+<section class="booking_flow">
+  <div class="container-fluid">
+    <div class="booking_row">
+      <div class="col-1">
+        <h1 class="main_heading">Your Appointment with Dr. Shah</h1>
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-calendar-week"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Appointment Date & Time</h2>
+            <p>Jul 27, 9:30 AM - 10:00 AM</p>
+          </div>
+        </div>
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-geo-alt"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Location</h2>
+            <p>Come say hello at our clinic.</p>
+            <span class="sub_title">604 Davis Cir SWHUNTSVILLE, AL 35801</span>
+          </div>
+        </div>
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-telephone"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Contact Number</h2>
+            <p>Mobile No.</p>
+            <span class="sub_title">+923450513438</span>
+          </div>
+        </div>
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-currency-dollar"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Service Fee</h2>
+            <p>Self-pay</p>
+            <span class="sub_title">$ 100</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="stepper-card-container">
+          <div class="stepper-card">
+            <div class="stepper-container">
+              <div class="step">
+                <ng-container *ngIf="!emailInformationStepper">
+                  <div class="circle" [ngClass]="{'circle-grey':!emailInformationStepper}">1
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="emailInformationStepper === true">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                  </div>
+                </ng-container>
+                <span class="activeText"
+                  [ngClass]="{'activeText': emailInformationStepper, 'text-medium': !emailInformationStepper}">Add
+                  Email</span>
+              </div>
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
+              <div class="step">
+                <ng-container *ngIf="!createAccountStepper">
+                  <div class="circle" [ngClass]="{'circle-grey':!createAccountStepper}">2
+                  </div>
+
+                </ng-container>
+                <ng-container *ngIf="createAccountStepper === true">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                  </div>
+                </ng-container>
+                <span [ngClass]="{'activeText': createAccountStepper, 'text-medium': !createAccountStepper}">Create
+                  Account</span>
+              </div>
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
+              <div class="step">
+                <ng-container *ngIf="!payFeeStepper">
+                  <div class="circle" [ngClass]="{'circle-grey':!payFeeStepper}">3
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="payFeeStepper === true">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                  </div>
+                </ng-container>
+                <span [ngClass]="{'activeText': payFeeStepper, 'text-medium': !payFeeStepper}" class="text-medium">Pay
+                  Fee</span>
+              </div>
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
+              <div class="step">
+                <ng-container *ngIf="!successfulStepper">
+                  <div class="circle" [ngClass]="{'circle-grey':!successfulStepper}">4
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="successfulStepper === true">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                  </div>
+                </ng-container>
+                <span [ngClass]="{'activeText': successfulStepper, 'text-medium': !successfulStepper}"
+                  class="text-medium">Congratulations</span>
+              </div>
+            </div>
+
+            <!--Step Content -->
+            <ng-container *ngIf="emailInformationStepper || createAccountStepper ">
+              <div class="mt-24 w-100-p">
+
+                <form [formGroup]="userform" autocomplete="disable">
+                  <div class="d-flex justify-content-center form-width flex-column" *ngIf="emailInformationStepper">
+                    <div class="text-content">
+                      <h3 class="title">Add Email</h3>
+                      <p class="lead paragraph-desc">
+                      </p>
+                    </div>
+                    <div class="form-wrapper">
+
+                      <div class="d-flex gap-4 group-wrapper ">
+                        <div class="input-group">
+                          <label for="fname">Email</label>
+                          <input type="text" placeholder="Enter First Name" formControlName="email" class="border"
+                            name="new-email" autocomplete="off" aria-autocomplete required />
+                          <ng-container
+                            *ngIf="userform.get('email')?.invalid && (userform.get('email')?.dirty || userform.get('email')?.touched)">
+                            <ng-container *ngIf="userform.get('email')?.errors">
+                              <span class="text-danger error-state">Email is required</span>
+                            </ng-container>
+                          </ng-container>
+                        </div>
+
+                      </div>
+                      <div class="d-flex gap-4 group-wrapper ">
+                        <button type="button" class="btn btn-submit btn-width">Continue</button>
+                      </div>
+
+
+                    </div>
+
+                  </div>
+
+
+                  <div class="d-flex justify-content-center form-width flex-column" *ngIf="createAccountStepper">
+                    <div class="text-content">
+                      <h3 class="title">Create your Curis account to book with Dr. Shah</h3>
+                      <p class="lead paragraph-desc">
+                        Get Affordable Care in Minutes
+                      </p>
+                    </div>
+                    <div class="form-wrapper">
+
+                      <div class="d-flex gap-4 group-wrapper ">
+                        <div class="input-group">
+                          <label for="fname">First Name</label>
+                          <input type="text" placeholder="Enter First Name" formControlName="first_name" class="border"
+                            name="new-first_name" autocomplete="off" aria-autocomplete required />
+                          <ng-container
+                            *ngIf="userform.get('first_name')?.invalid && (userform.get('first_name')?.dirty || userform.get('first_name')?.touched)">
+                            <ng-container *ngIf="userform.get('first_name')?.errors">
+                              <span class="text-danger error-state">First Name is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+                        <div class="input-group">
+                          <label for="lname">Last Name</label>
+                          <input type="text" placeholder="Enter Last Name" class="border" formControlName="last_name"
+                            autocomplete="off" aria-autocomplete required name="new-last_name" />
+                          <ng-container
+                            *ngIf="userform.get('last_name')?.invalid && (userform.get('last_name')?.dirty || userform.get('last_name')?.touched)">
+                            <ng-container *ngIf="userform.get('last_name')?.errors">
+                              <span class="text-danger error-state">Last Name is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+
+                      </div>
+                      <div class="d-flex gap-4 group-wrapper mt-12">
+                        <div class="input-group">
+                          <label for="fname">Gender</label>
+                          <select class="form-select input-style" aria-label="Default select example"
+                            formControlName="gender">
+                            <option disabled selected>Select your gender</option>
+                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                          </select>
+
+                          <ng-container
+                            *ngIf="userform.get('gender')?.invalid && (userform.get('gender')?.dirty || userform.get('gender')?.touched)">
+                            <ng-container *ngIf="userform.get('gender')?.errors">
+                              <span class="text-danger error-state">Gender is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+                        <div class="input-group">
+                          <label for="lname">Date Of Birth</label>
+                          <input type="date" placeholder="Select date of birth" class="border" formControlName="dob"
+                            autocomplete="off" aria-autocomplete required name="new-dob" />
+                          <ng-container
+                            *ngIf="userform.get('dob')?.invalid && (userform.get('dob')?.dirty || userform.get('dob')?.touched)">
+                            <ng-container *ngIf="userform.get('dob')?.errors">
+                              <span class="text-danger error-state">Date Of Birth is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+
+                      </div>
+                      <div class="d-flex gap-4 group-wrapper mt-12 ">
+                        <div class="input-group">
+                          <label for="fname">Phone Number</label>
+                          <input type="text" placeholder="Select" formControlName="contact_number" class="border"
+                            name="new-contact_number" autocomplete="off" aria-autocomplete required />
+
+                          <ng-container
+                            *ngIf="userform.get('contact_number')?.invalid && (userform.get('contact_number')?.dirty || userform.get('contact_number')?.touched)">
+                            <ng-container *ngIf="userform.get('contact_number')?.errors">
+                              <span class="text-danger error-state">Phone Number is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+
+                        <div class="input-group">
+                          <label for="lname">Any note for the provider? </label>
+                          <textarea formControlName="notes" placeholder="Enter Notes" class="border" autocomplete="off"
+                            aria-autocomplete required name="new-notes" rows="4"></textarea>
+                          <ng-container
+                            *ngIf="userform.get('notes')?.invalid && (userform.get('notes')?.dirty || userform.get('notes')?.touched)">
+                            <ng-container *ngIf="userform.get('notes')?.errors">
+                              <span class="text-danger error-state">Notes is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+
+                      </div>
+                      <div class="d-flex gap-4 group-wrapper mt-12 ">
+                        <button type="button" class="btn btn-submit btn-width">Continue</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+
+              </div>
+            </ng-container>
+            <ng-container *ngIf="payFeeStepper">
+              <div class="mt-24 w-100-p">
+                <form [formGroup]="ccForm" autocomplete="disable" role="form" id="payment-form">
+                  <div class="d-flex justify-content-center form-width flex-column">
+                    <div class="text-content">
+                      <h3 class="title">Pay with card</h3>
+                      <p class="lead paragraph-desc">
+                      </p>
+                    </div>
+                    <div class="form-wrapper">
+                      <div class="d-flex gap-4 group-wrapper ">
+                        <div class="input-group">
+                          <label for="fname">Email</label>
+                          <input type="text" placeholder="Enter Email" formControlName="email" class="border"
+                            name="new-email" autocomplete="off" aria-autocomplete required />
+                          <ng-container
+                            *ngIf="ccForm.get('email')?.invalid && (ccForm.get('email')?.dirty || ccForm.get('email')?.touched)">
+                            <ng-container *ngIf="ccForm.get('first_name')?.errors">
+                              <span class="text-danger error-state">Email is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+                      </div>
+
+                      <div class="d-flex gap-4 group-wrapper ">
+                        <div class="input-group">
+
+                          <label for="cardNumber">Card Number <small class="text-muted"
+                              *ngIf="type$ | async as type">[<span class="cc-brand">{{type}}</span>]</small></label>
+                          <div class="input-group">
+
+
+                            <input id="cc-number" (input)="goToNextField('creditCard', expireInput)"
+                              formControlName="creditCard" type="tel" class="input-lg form-control cc-number"
+                              autocomplete="cc-number" placeholder="•••• •••• •••• ••••" ccNumber>
+                            <ng-container
+                              *ngIf="ccForm.get('creditCard')?.invalid && (ccForm.get('creditCard')?.dirty || ccForm.get('creditCard')?.touched)">
+                              <ng-container *ngIf="ccForm.get('creditCard')?.errors">
+                                <span class="text-danger error-state ">Credit Card is
+                                  invalid</span>
+                              </ng-container>
+                            </ng-container>
+
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="d-flex gap-4 group-wrapper mt-12">
+
+                        <div class="input-group">
+                          <label for="cardExpiry"><span class="hidden-xs">Expiration
+                              Date</span></label>
+
+                          <input id="cc-exp" (input)="goToNextField('expDate', cvcInput)" #expireInput
+                            formControlName="expDate" type="tel" class="input-lg form-control cc-exp"
+                            autocomplete="cc-exp" placeholder="•• / ••" ccExp>
+                          <ng-container
+                            *ngIf="ccForm.get('expDate')?.invalid && (ccForm.get('expDate')?.dirty || ccForm.get('expDate')?.touched)">
+                            <ng-container *ngIf="ccForm.get('expDate')?.errors">
+                              <span class="text-danger error-state">Expiration Date is
+                                required</span>
+                            </ng-container>
+                          </ng-container>
+
+                        </div>
+
+                        <div class="input-group">
+                          <label for="cardCVC">CVV</label>
+
+                          <input id="cc-cvc" #cvcInput formControlName="cvc" type="tel"
+                            class="input-lg form-control cc-cvc" autocomplete="off" placeholder="•••" required ccCVC>
+                          <ng-container
+                            *ngIf="ccForm.get('cvc')?.invalid && (ccForm.get('cvc')?.dirty || ccForm.get('cvc')?.touched)">
+                            <ng-container *ngIf="ccForm.get('cvc')?.errors">
+                              <span class="text-danger error-state">CVC is required</span>
+                            </ng-container>
+                          </ng-container>
+
+                        </div>
+                      </div>
+
+                      <div class="d-flex gap-4 group-wrapper mt-12 ">
+                        <div class="input-group">
+                          <label for="fname">Cardholder name</label>
+                          <input type="text" placeholder="Enter Cardholder name" formControlName="name" class="border"
+                            name="new-name" autocomplete="off" aria-autocomplete required />
+
+                          <ng-container
+                            *ngIf="ccForm.get('name')?.invalid && (ccForm.get('name')?.dirty || ccForm.get('name')?.touched)">
+                            <ng-container *ngIf="ccForm.get('name')?.errors">
+                              <span class="text-danger error-state">Cardholder name is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+                      </div>
+
+
+                      <div class="d-flex gap-4 group-wrapper mt-12 ">
+                        <div class="input-group">
+                          <label for="fname">Country or region</label>
+                          <select class="form-select input-style" aria-label="Default select example"
+                            formControlName="region">
+                            <option disabled selected>Select your Country or Region</option>
+                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                          </select>
+
+                          <ng-container
+                            *ngIf="ccForm.get('region')?.invalid && (ccForm.get('region')?.dirty || ccForm.get('region')?.touched)">
+                            <ng-container *ngIf="ccForm.get('region')?.errors">
+                              <span class="text-danger error-state">Country or Region is required</span>
+                            </ng-container>
+
+                          </ng-container>
+
+                        </div>
+
+                      </div>
+
+
+                      <div class="d-flex gap-4 group-wrapper mt-12">
+                        <button type="button" class="btn btn-submit btn-width">Continue</button>
+                      </div>
+
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </ng-container>
+
+
+            <ng-container *ngIf="successfulStepper">
+              <app-payment-status [successStatus]="successfulStepper"> </app-payment-status>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>
