@@ -1,184 +1,112 @@
 <app-header></app-header>
-<div class="container-fluid">
-    <div class="row">
-        
-        <div class="col-12 col-md-12 col-lg-4 col-xl-4 ">
-            <div class="bg-blue " style="height: 100vh;">
-                <p>service-booking-flow works!</p>
-
-            </div>
-
+<section class="booking_flow">
+  <div class="container-fluid">
+    <div class="booking_row">
+      <div class="col-1">
+        <h1 class="main_heading">Your Appointment with Dr. Shah</h1>
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-calendar-week"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Appointment Date & Time</h2>
+            <p>Jul 27, 9:30 AM - 10:00 AM</p>
+          </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-8 col-xl-8 ">
-
-            <div class="">
-                <div class="stepper-card-container">
-                    <div class="stepper-card">
-                        <div class="row justify-content-center ms-4">
-                            <div class="stepper-container">
-                                <div class="step">
-                                    <ng-container *ngIf="!personalInformationStepper">
-                                        <div class="circle" [ngClass]="{'circle-grey':!personalInformationStepper}">1
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="personalInformationStepper === true">
-                                        <div class=""><i class="bi bi-patch-check-fill circle"></i>
-                                        </div>
-                                    </ng-container>
-                                    <span class="activeText"
-                                        [ngClass]="{'activeText': personalInformationStepper, 'text-medium': !personalInformationStepper}">Add
-                                        Email</span>
-                                </div>
-                                <div class="line-parent mt-3">
-                                    <div class="line"></div>
-                                </div>
-                                <div class="step">
-                                    <ng-container *ngIf="!practiceInformationStepper">
-                                        <div class="circle" [ngClass]="{'circle-grey':!practiceInformationStepper}">2
-                                        </div>
-
-                                    </ng-container>
-                                    <ng-container *ngIf="practiceInformationStepper === true">
-                                        <div class=""><i class="bi bi-patch-check-fill circle"></i>
-                                        </div>
-                                    </ng-container>
-                                    <span
-                                        [ngClass]="{'activeText': practiceInformationStepper, 'text-medium': !practiceInformationStepper}">Create
-                                        Account</span>
-                                </div>
-                                <div class="line-parent mt-3">
-                                    <div class="line"></div>
-                                </div>
-                                <div class="step">
-                                    <ng-container *ngIf="!skillsInformationStepper">
-                                        <div class="circle" [ngClass]="{'circle-grey':!skillsInformationStepper}">3
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="skillsInformationStepper === true">
-                                        <div class=""><i class="bi bi-patch-check-fill circle"></i>
-                                        </div>
-                                    </ng-container>
-                                    <span
-                                        [ngClass]="{'activeText': skillsInformationStepper, 'text-medium': !skillsInformationStepper}"
-                                        class="text-medium">Pay Fee</span>
-                                </div>
-                                <div class="line-parent mt-3">
-                                    <div class="line"></div>
-                                </div>
-                                <div class="step">
-                                    <ng-container *ngIf="!accountInformationStepper">
-                                        <div class="circle" [ngClass]="{'circle-grey':!accountInformationStepper}">4
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="accountInformationStepper === true">
-                                        <div class=""><i class="bi bi-patch-check-fill circle"></i>
-                                        </div>
-                                    </ng-container>
-                                    <span
-                                        [ngClass]="{'activeText': accountInformationStepper, 'text-medium': !accountInformationStepper}"
-                                        class="text-medium">Congratulations</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-start justify-content-center form-width" *ngIf="personalInformationStepper">
-                            <!-- <form [formGroup]="personalInformationForm">
-                                <div>
-                                    <div class="row mt-4">
-                                        <div class="col-md-6">
-                                            <span class="text-size-normal text-dark"><strong></strong>First Name</span>
-                                            <input formControlName="firstName" type="text" class="form-control placeholder-text"
-                                                id="exampleFormControlInput1" placeholder="First Name">
-                
-                                            <ng-container
-                                                *ngIf="personalInformationForm.get('firstName')?.invalid && (personalInformationForm.get('firstName')?.dirty || personalInformationForm.get('firstName')?.touched)">
-                                                <ng-container *ngIf="personalInformationForm.get('firstName')?.errors">
-                                                    <span class="text-danger error-state">First Name is required</span>
-                                                </ng-container>
-                
-                                            </ng-container>
-                                        </div>
-                
-                                        <div class="col-md-6">
-                                            <span class="text-size-normal text-dark">Last Name</span>
-                                            <input formControlName="lastName" type="text" class="form-control placeholder-text"
-                                                id="exampleFormControlInput1" placeholder="Last Name">
-                
-                                            <ng-container
-                                                *ngIf="personalInformationForm.get('lastName')?.invalid && (personalInformationForm.get('lastName')?.dirty || personalInformationForm.get('lastName')?.touched)">
-                                                <ng-container *ngIf="personalInformationForm.get('lastName')?.errors">
-                                                    <span class="text-danger error-state">Last Name is required</span>
-                                                </ng-container>
-                
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                
-                                    <div class="row mt-4">
-                                        <div class="col-md-6">
-                                            <span class="text-size-normal text-dark">Email Address</span>
-                                            <input formControlName="email" type="text" class="form-control placeholder-text"
-                                                id="exampleFormControlInput1" placeholder="Email Address">
-                
-                
-                                            <ng-container
-                                                *ngIf="personalInformationForm.get('email')?.invalid && (personalInformationForm.get('email')?.dirty || personalInformationForm.get('email')?.touched)">
-                                                <ng-container *ngIf="personalInformationForm.get('email')?.errors">
-                                                    <span class="text-danger error-state">Email is required</span>
-                                                </ng-container>
-                                            </ng-container>
-                                        </div>
-                
-                                        <div class="col-md-6">
-                                            <span class="text-size-normal text-dark">Cell Number</span>
-                                            <input formControlName="contactNumber" type="text" class="form-control placeholder-text"
-                                                id="exampleFormControlInput1" mask="(000) 000-0000"
-                                                placeholder="(123)-456-7890">
-                
-                
-                                            <ng-container
-                                                *ngIf="personalInformationForm.get('contactNumber')?.invalid && (personalInformationForm.get('contactNumber')?.dirty || personalInformationForm.get('contactNumber')?.touched)">
-                                                <ng-container *ngIf="personalInformationForm.get('contactNumber')?.errors">
-                                                    <span class="text-danger error-state">Cell Number is required</span>
-                                                </ng-container>
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                
-                                    <div class="col-md-6 mt-4">
-                                        <span class="text-size-normal text-dark">Gender</span>
-                                        <select formControlName="gender" class="form-select form-control text-size-normal"
-                                            id="inputGroupSelect01" placeholder="Gender">
-                                            <option value="">Gender</option>
-                                            <option class="text-size-normal" *ngFor="let opt of genderLov" [value]="opt.value">
-                                                {{opt.value}}
-                                            </option>
-                                        </select>
-                
-                                        <ng-container
-                                            *ngIf="personalInformationForm.get('gender')?.invalid && (personalInformationForm.get('gender')?.dirty || personalInformationForm.get('gender')?.touched)">
-                                            <ng-container *ngIf="personalInformationForm.get('gender')?.errors">
-                                                <span class="text-danger error-state">Gender is required</span>
-                                            </ng-container>
-                                             Add more specific error checks as needed -->
-                                        <!-- </ng-container>
-                                    </div>
-                
-                
-                
-                
-                
-                                    <div class="text-end">
-                                        <button type="button" [disabled]="personalInformationForm.invalid"
-                                            class="btn bg-primary-dark btn-small button-small stepper-btn text-white hover-none mt-4 px-4"
-                                            [ngClass]="{'disabled-button':personalInformationForm.invalid}"
-                                            (click)="goToPracticeInformation()">Next</button>
-                                    </div>
-                                </div>
-                            </form> --> 
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-geo-alt"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Location</h2>
+            <p>Come say hello at our clinic.</p>
+            <span class="sub_title">604 Davis Cir SWHUNTSVILLE, AL 35801</span>
+          </div>
         </div>
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-telephone"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Contact Number</h2>
+            <p>Mobile No.</p>
+            <span class="sub_title">+923450513438</span>
+          </div>
+        </div>
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-currency-dollar"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Service Fee</h2>
+            <p>Self-pay</p>
+            <span class="sub_title">$ 100</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="stepper-card-container">
+          <div class="stepper-card">
+            <div class="stepper-container">
+              <div class="step">
+                <ng-container *ngIf="!personalInformationStepper">
+                  <div class="circle" [ngClass]="{'circle-grey':!personalInformationStepper}">1
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="personalInformationStepper === true">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                  </div>
+                </ng-container>
+                <span class="activeText"
+                  [ngClass]="{'activeText': personalInformationStepper, 'text-medium': !personalInformationStepper}">Add
+                  Email</span>
+              </div>
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
+              <div class="step">
+                <ng-container *ngIf="!practiceInformationStepper">
+                  <div class="circle" [ngClass]="{'circle-grey':!practiceInformationStepper}">2
+                  </div>
+
+                </ng-container>
+                <ng-container *ngIf="practiceInformationStepper === true">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                  </div>
+                </ng-container>
+                <span
+                  [ngClass]="{'activeText': practiceInformationStepper, 'text-medium': !practiceInformationStepper}">Create
+                  Account</span>
+              </div>
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
+              <div class="step">
+                <ng-container *ngIf="!skillsInformationStepper">
+                  <div class="circle" [ngClass]="{'circle-grey':!skillsInformationStepper}">3
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="skillsInformationStepper === true">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                  </div>
+                </ng-container>
+                <span [ngClass]="{'activeText': skillsInformationStepper, 'text-medium': !skillsInformationStepper}"
+                  class="text-medium">Pay Fee</span>
+              </div>
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
+              <div class="step">
+                <ng-container *ngIf="!accountInformationStepper">
+                  <div class="circle" [ngClass]="{'circle-grey':!accountInformationStepper}">4
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="accountInformationStepper === true">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
+                  </div>
+                </ng-container>
+                <span [ngClass]="{'activeText': accountInformationStepper, 'text-medium': !accountInformationStepper}"
+                  class="text-medium">Congratulations</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-start justify-content-center form-width" *ngIf="personalInformationStepper">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <app-footer></app-footer>
+  </div>
+</section>
+<app-footer></app-footer>

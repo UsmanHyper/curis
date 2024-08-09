@@ -29,7 +29,12 @@ h1 {
   text-align: left;
   color: #101828;
 }
-
+.main_heading {
+  font-size: 24px;
+  line-height: normal;
+  color: white;
+  font-weight: 600;
+}
 .sub_title {
   font-size: 18px;
   font-weight: 700;
@@ -80,4 +85,28 @@ h1 {
 .container-fluid {
   --bs-gutter-x: 0;
   --bs-gutter-y: 0;
+}
+
+.col-1,
+.col-2 {
+  width: 100%;
+}
+
+@media screen and (max-width: 1199px) and (min-width: 992px) {
+  .service_provider_row {
+    grid-template-columns: 60% 40% !important;
+  }
+}
+
+@media screen and (max-width: 991px) and (min-width: 200px) {
+  .navbar ul {
+    align-items: start !important;
+    width: 100% !important;
+    gap: 15px !important;
+    padding: 15px 5px !important;
+  }
+
+  .service_provider_row {
+    grid-template-columns: 100% !important;
+  }
 }

@@ -84,6 +84,84 @@
   -webkit-text-stroke: 1px;
 }
 
+.more {
+  background-color: white !important;
+  // background-color: #B9E6FE !important;
+  color: #0086C9 !important;
+  border: 2px solid #0086C9 !important;
+}
+
+.nav-link {
+  color: #667085;
+  font-size: 18px;
+}
+
+.nav-link :active {
+  color: #000000;
+  font-weight: 700;
+
+}
+
+.nav-tabs .active,
+.nav-link .active {
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-left: 0 !important;
+  border-bottom: 3px solid #0BA5EC !important;
+}
+
+.nav-link,
+.nav-link {
+  margin-bottom: 0;
+  border: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.sub_title {
+  white-space: nowrap;
+}
+
+.tab-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #101828;
+
+}
+
+.tab-sub-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1D2939;
+
+}
+
+.tab-content-para {
+  font-size: 16px;
+  font-weight: 400;
+  color: #475467;
+
+}
+
+.review-btn {
+  border: 1px solid #475467;
+  border-radius: 100%;
+  background-color: transparent;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #101828;
+  margin-bottom: 0 !important;
+}
+
+.card-body-btn {
+  background-color: #0BA5EC;
+  color: white;
+  width: 100%;
+}
+
 // Malik Amir
 select.form-control,
 input.form-control {
@@ -130,8 +208,10 @@ input.form-control {
 
 .doctors_profile_card {
   padding: 20px;
-  background-color: #F9FAFB;
-  border-radius: 12px;
+  background-color: transparent;
+  border-top: 1px solid #d0d5dd8a;
+  border-bottom: 1px solid #d0d5dd8a;
+  border-radius: 0px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -145,18 +225,21 @@ input.form-control {
   display: flex;
   align-items: center;
   gap: 20px;
+  justify-content: space-between;
 }
 
 .doctors_profile img {
-  width: 140px;
-  height: 140px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
   border-radius: 100px;
 }
 
+.doctors_profile p .bi,
+.doctors_profile span .bi,
 .doctors_profile span {
   color: #1D2939;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .doctors_profile .bi {
@@ -170,7 +253,7 @@ input.form-control {
   text-align: center;
   border-radius: 4px;
   width: 100%;
-  // display: block;
+  display: block;
 }
 
 .indicate {
@@ -178,9 +261,9 @@ input.form-control {
 }
 
 .slots {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 5px;
-  flex-wrap: wrap;
 }
 
 .slots a {
@@ -191,17 +274,18 @@ input.form-control {
   text-align: center;
   border-radius: 5px;
   background-color: #E0F2FE;
+  white-space: nowrap;
+  line-height: normal;
 }
 
-// .nav-tabs {
-//   gap: 16px;
-//   padding: 12px;
-//   border: 1px solid #d0d5dd;
-//   border-radius: 12px;
-//   width: fit-content;
-// }
-
-
+.nav-tabs {
+  gap: 5px;
+  flex-wrap: nowrap;
+  padding: 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 12px;
+  width: fit-content;
+}
 
 .more {
   background-color: white !important;
@@ -210,76 +294,25 @@ input.form-control {
   border: 2px solid #0086C9 !important;
 }
 
-.nav-link {
-  color: #667085;
-  font-size: 18px;
+.tab-pane {
+  display: none;
+  /* Hide tab panes by default */
 }
 
-.nav-link :active {
-  color: #000000;
-  font-weight: 700;
-
+.tab-pane.active {
+  display: flex;
+  /* Show active tab pane */
 }
 
-.nav-tabs .active,
-.nav-link .active {
-  border-top: 0 !important;
-  border-right: 0 !important;
-  border-left: 0 !important;
-  border-bottom: 3px solid #0BA5EC !important;
+.service_provider_row {
+  display: grid;
+  grid-template-columns: 60% 38%;
+  gap: 20px;
+  padding: 10px 50px;
 }
 
-.nav-link,
-.nav-link {
-  margin-bottom: 0;
-  border: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.tab-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #101828;
-
-}
-
-.tab-sub-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1D2939;
-
-}
-
-.tab-content-para {
-  font-size: 16px;
-  font-weight: 400;
-  color: #475467;
-
-}
-
-
-.review-btn {
-  border: 1px solid #475467;
-  border-radius: 100%;
-  background-color: transparent;
-}
-
-.card-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #101828;
-  margin-bottom: 0 !important;
-}
-
-
-.card-body-btn {
-  background-color: #0BA5EC;
-  color: white;
-  width: 100%;
-}
-
-
-.card-padding {
-  padding: 10px 20px;
+.col-2 {
+  .card {
+    padding: 20px;
+  }
 }
