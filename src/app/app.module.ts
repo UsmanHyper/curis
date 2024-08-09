@@ -13,7 +13,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     // HomeComponent,
 
     // GoogleMapsComponent,
-    PaymentStatusComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -32,6 +32,7 @@
     "@ng-select/ng-select": "^11.2.0",
     "@popperjs/core": "^2.11.6",
     "@types/googlemaps": "^3.43.3",
+    "angular-cc-library": "^3.2.0",
     "angularx-flatpickr": "^7.3.0",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.11.3",

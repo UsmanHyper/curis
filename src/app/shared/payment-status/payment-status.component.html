@@ -1,21 +1,21 @@
-<ng-container *ngIf="isSuccess">
+<ng-container *ngIf="isSuccess || successStatus">
     <div class="container text-center">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h1 class="display-3"><img src="../../../assets/images/payment/success.png" width="100px" alt="">
+                <h1 class="display-3 d-flex justify-content-center"><img src="../../../assets/images/payment/success.png" width="100px" alt="">
                 </h1>
-                <h2 class="mb-4">Payment Successful</h2>
+                <h2 class="mb-4 mt-12 payement-title">Payment Successful</h2>
                 <p class="lead">
                     Payment confirmed! Your health journey begins now. Log in to your patient portal to view your
                     upcoming appointment and take the first step towards a healthier you.
                 </p>
-                <a (click)="gotoDashboard()" class="btn btn-primary mt-3">Login patient portal</a>
+                <a (click)="gotoDashboard()" class="btn btn-submit mt-3">Login patient portal</a>
             </div>
         </div>
     </div>
 </ng-container>
 
-<ng-container *ngIf="!isSuccess">
+<ng-container *ngIf="!isSuccess && !successStatus">
     <div class="container text-center">
         <div class="row justify-content-center">
             <div class="col-md-6">
