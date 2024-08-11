@@ -143,5 +143,59 @@ export class RegisterProviderComponent implements OnInit {
   showPasswordConfirm() {
     this.imgSrc = this.passwordVisibility.confirmPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
   }
+
+
+
+
+
+
+  signUpFormSubmission() {
+    let data = {
+      "f_name": this.personalInformationForm.controls['firstName'].value,
+      "l_name": this.personalInformationForm.controls['lastName'].value,
+      "email": this.personalInformationForm.controls['email'].value,
+      "gender": this.personalInformationForm.controls['gender'].value,
+      "user_Type": this.personalInformationForm.controls['userType'].value,
+      "contact_no": this.personalInformationForm.controls['contactNumber'].value,
+
+      "practiceName": this.practiceInformationForm.controls['practiceName'].value,
+      "practiceSpecialization": this.practiceInformationForm.controls['providersSpeciality'].value,
+      "practiceSize": this.practiceInformationForm.controls['practiceSize'].value,
+      "roleAtPractice": this.practiceInformationForm.controls['roleAtPractice'].value,
+      "zipcode": this.practiceInformationForm.controls['zipCode'].value,
+      "city": this.practiceInformationForm.controls['city'].value,
+      "addressLineOne": this.practiceInformationForm.controls['addressLineOne'].value,
+      "addressLineTwo": this.practiceInformationForm.controls['addressLineTwo']?.value || "",
+
+      // "qualification": this.qualificationAndSkillsForm.controls['qualification'].value,
+      "mainSpeciality":  this.practiceInformationForm.controls['providersSpeciality'].value,
+      "subSpeciality": this.qualificationAndSkillsForm.controls['subSpeciality'].value,
+      "liciencedState": this.qualificationAndSkillsForm.controls['licienceState'].value,
+      "experience": this.qualificationAndSkillsForm.controls['overallExperience'].value,
+      "NPI_Number": this.qualificationAndSkillsForm.controls['npiNumber'].value,
+      "password": this.accountInformationForm.controls['password'].value
+    }
+    this.signUpSubmitRequest(data);
+  }
+
+
+  signUpSubmitRequest(data: any) {
+    // this.spinner.show();
+    // this.homeservice.registerUser(data)
+    //   .pipe(first())
+    //   .subscribe(
+    //     (res: any) => {
+    //       if (res.success == true) {
+    //         this.authenticationservice.setuserTokendata(res.token);
+    //         this.getUserDetailsBytokenRequest(res.token);
+    //         this.authenticationservice.setIsAuthenticated(true);
+    //       }
+    //     },
+    //     (err: any) => {
+    //       this.spinner.hide();
+    //       this.showError(err?.error?.message?.description);
+    //     }
+    //   );
+  }
 }
 
