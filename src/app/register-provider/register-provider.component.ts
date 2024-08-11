@@ -6,72 +6,106 @@ import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { defer, first, map, Observable } from 'rxjs';
 import { CustomValidators } from 'src/app/utilities/custom.validator';
-import { CreditCardDirectivesModule, CreditCardValidators } from "angular-cc-library";
-import { CreditCard } from 'angular-cc-library';
 import { PaymentStatusComponent } from 'src/app/shared/payment-status/payment-status.component';
 
 @Component({
   selector: 'app-register-provider',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, CreditCardDirectivesModule, PaymentStatusComponent],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, PaymentStatusComponent],
   templateUrl: './register-provider.component.html',
   styleUrls: ['./register-provider.component.scss']
 })
 export class RegisterProviderComponent implements OnInit {
 
 
-  emailInformationStepper: boolean = false;
-  createAccountStepper: boolean = false;
-  payFeeStepper: boolean = false;
+  personalInformationStepper: boolean = true;
+  payFeeStepper: boolean = true;
   successfulStepper: boolean = true;
-  public type$: Observable<string> | any;
+
+
+
+  practiceInformationStepper: boolean = true;
+  skillsInformationStepper: boolean = true;
+  accountInformationStepper: boolean = true;
+  // successfulStepper : boolean= false;
+
+  showPassword: boolean = false;
+  showPasswordOnPress: boolean = false;
+
   allGenders: any = [
     { name: 'Male', value: "male" },
     { name: 'Female', value: "female" },
     { name: 'Other', value: "other" }
   ]
-  userform: FormGroup;
 
-  ccForm: FormGroup;
+  personalInformationForm: FormGroup;
+  practiceInformationForm: FormGroup;
+  qualificationAndSkillsForm: FormGroup;
+  accountInformationForm: FormGroup;
+
+  genderLov: any = [];
+  specialityLov: any = [];
+  practiceSize: any = [];
+  roleAtPractice: any = [];
+  statesLov: any = [];
+  qualificationLov: any = [];
+  cityLov: any = [];
+
+  passwordVisibility: any = {
+    currentPassword: false,
+    newPassword: false,
+    confirmPassword: false
+  };
+
+  imgSrc: string = './assets/images/admin/eye.png'
+
 
   constructor(public formBuilder: FormBuilder) {
 
-
-    this.userform = this.formBuilder.group({
-      first_name: [null, [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
-      last_name: [null, [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
-      contact_number: [null, [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), Validators.minLength(8), this.noWhitespaceValidator]],
-      gender: ["Select your gender", [Validators.required]],
-      dob: [null, [Validators.required]],
-      notes: [null, [Validators.required]],
-
+    this.personalInformationForm = this.formBuilder.group({
+      firstName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
+      lastName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
+      email: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/), CustomValidators.isEmail]],
+      gender: ["Select your Gender", Validators.required],
+      contactNumber: ["", Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), Validators.minLength(8), this.noWhitespaceValidator],
+      userType: ["Provider"]
     })
 
 
-    this.ccForm = this.formBuilder.group({
-      email: [null, [Validators.required]],
-      name: [null, [Validators.required]],
-      region: [null, [Validators.required]],
-      creditCard: [null, [CreditCardValidators.validateCCNumber]],
-      expDate: ['', [CreditCardValidators.validateExpDate]],
-      cvc: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(4)]]
+    this.practiceInformationForm = this.formBuilder.group({
+      practiceName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
+      providersSpeciality: ["Provider speciality", Validators.required],
+      practiceSize: ["Practice Size", Validators.required],
+      roleAtPractice: ["Role At Practice", Validators.required],
+      zipCode: ["ZIP Code", Validators.required],
+      city: ["Practice City", Validators.required],
+      addressLineOne: ["", Validators.required],
+      addressLineTwo: [""],
     });
 
 
-    const creditCardControl = this.ccForm.get('creditCard');
-    if (creditCardControl) {
-      this.type$ = defer(() => creditCardControl.valueChanges)
-        .pipe(map((num: string) => CreditCard.cardType(num)));
-    }
+
+    this.qualificationAndSkillsForm = this.formBuilder.group({
+      qualification: ["Select qualification", Validators.required],
+      overallExperience: ["", Validators.required],
+      npiNumber: ["NPI number", [Validators.required,]],
+      licienceState: ["Licensed State", Validators.required],
+      subSpeciality: ["Sub specialization", Validators.required],
+      // specialization: ["", Validators.required],
+    });
+
+    this.accountInformationForm = this.formBuilder.group({
+      password: ["", [Validators.required,]],
+      confirmPassword: ["", [Validators.required,]]
+    })
+
 
 
   }
 
 
   ngOnInit() {
-    this.type$.subscribe((type: any) => {
-      console.log('Credit Card Type:', type);
-    })
+
   }
 
 
@@ -87,12 +121,27 @@ export class RegisterProviderComponent implements OnInit {
     return isValid ? null : { 'whitespace': true };
   }
 
-
-  goToNextField(controlName: string, nextField: HTMLInputElement) {
-    const control = this.ccForm.get(controlName);
-    if (control && control.valid) {
-      nextField.focus();
+  // showPassword() {
+  //   this.imgSrc = this.passwordVisibility.currentPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
+  // }
+  toggleVisibility(field: string): void {
+    this.passwordVisibility[field] = !this.passwordVisibility[field];
+    if (field === "newPassword") {
+      this.showNewPasswordConfirm()
+    } else if (field === "confirmPassword") {
+      this.showPasswordConfirm()
+    } else if (field === "currentPassword") {
+      // this.showPassword()
     }
+  }
+
+
+
+  showNewPasswordConfirm() {
+    this.imgSrc = this.passwordVisibility.newPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
+  }
+  showPasswordConfirm() {
+    this.imgSrc = this.passwordVisibility.confirmPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
   }
 }
 
