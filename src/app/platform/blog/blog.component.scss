@@ -1,0 +1,56 @@
+.card {
+  border: 0;
+  margin-bottom: 30px;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.recent-blog-posts .card-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.recent-blog-posts .card-text {
+  font-size: 16px;
+}
+
+.all-blog-posts .card-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.all-blog-posts .card-text {
+  font-size: 14px;
+}
+
+.tags a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 500;
+  margin-right: 5px;
+}
+
+.tags a:hover {
+  text-decoration: underline;
+}
+
+.pagination {
+  justify-content: center;
+}
+
+.blog-date {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.blog-section-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 40px;
+}
+
+.main_heading {
+  color: #000;
+}

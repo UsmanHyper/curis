@@ -20,9 +20,9 @@ import { PaymentStatusComponent } from 'src/app/shared/payment-status/payment-st
 export class RegisterProviderComponent implements OnInit {
 
 
-  emailInformationStepper: boolean = false;
-  createAccountStepper: boolean = false;
-  payFeeStepper: boolean = false;
+  emailInformationStepper: boolean = true;
+  createAccountStepper: boolean = true;
+  payFeeStepper: boolean = true;
   successfulStepper: boolean = true;
   public type$: Observable<string> | any;
   allGenders: any = [

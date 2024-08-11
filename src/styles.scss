@@ -88,6 +88,18 @@ h1 {
 .col-2 {
   width: 100%;
 }
+// blog
+.tags a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #065986;
+  padding: 8px 10px;
+  text-align: center;
+  border-radius: 50px;
+  background-color: #E0F2FE;
+  white-space: nowrap;
+  line-height: normal;
+}
 
 @media screen and (max-width: 1199px) and (min-width: 992px) {
   .service_provider_row {
