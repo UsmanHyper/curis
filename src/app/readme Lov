@@ -1,0 +1,21 @@
+//-------------------lovs----------------------------
+Country   1
+State     2
+City      3
+Speciality 4
+Sub speciality 5
+gender 6
+weekdays 7
+userTypes 8
+languages 9
+timezones 10
+roleAtPractice 11
+practiceSize 12
+Dentist  13
+General Practitioner 14
+Dermatologist  15
+Optometrist  16
+OBGYN  17
+eventTypes 18
+zipcode 19
+providerQualification 20

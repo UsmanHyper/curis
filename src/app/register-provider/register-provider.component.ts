@@ -7,11 +7,13 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { defer, first, map, Observable } from 'rxjs';
 import { CustomValidators } from 'src/app/utilities/custom.validator';
 import { PaymentStatusComponent } from 'src/app/shared/payment-status/payment-status.component';
+import { homeService } from '../services/home.service';
+import { MainHomeService } from '../services/main-home.service';
 
 @Component({
   selector: 'app-register-provider',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, PaymentStatusComponent],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, PaymentStatusComponent,],
   templateUrl: './register-provider.component.html',
   styleUrls: ['./register-provider.component.scss']
 })
@@ -19,14 +21,13 @@ export class RegisterProviderComponent implements OnInit {
 
 
   personalInformationStepper: boolean = true;
-  payFeeStepper: boolean = true;
-  successfulStepper: boolean = true;
+  successfulStepper: boolean = false;
 
 
 
-  practiceInformationStepper: boolean = true;
-  skillsInformationStepper: boolean = true;
-  accountInformationStepper: boolean = true;
+  practiceInformationStepper: boolean = false;
+  skillsInformationStepper: boolean = false;
+  accountInformationStepper: boolean = false;
   // successfulStepper : boolean= false;
 
   showPassword: boolean = false;
@@ -60,7 +61,7 @@ export class RegisterProviderComponent implements OnInit {
   imgSrc: string = './assets/images/admin/eye.png'
 
 
-  constructor(public formBuilder: FormBuilder) {
+  constructor(public formBuilder: FormBuilder,private apiService:MainHomeService ) {
 
     this.personalInformationForm = this.formBuilder.group({
       firstName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
@@ -105,6 +106,7 @@ export class RegisterProviderComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getGenderLov()
 
   }
 
@@ -168,7 +170,7 @@ export class RegisterProviderComponent implements OnInit {
       "addressLineTwo": this.practiceInformationForm.controls['addressLineTwo']?.value || "",
 
       // "qualification": this.qualificationAndSkillsForm.controls['qualification'].value,
-      "mainSpeciality":  this.practiceInformationForm.controls['providersSpeciality'].value,
+      "mainSpeciality": this.practiceInformationForm.controls['providersSpeciality'].value,
       "subSpeciality": this.qualificationAndSkillsForm.controls['subSpeciality'].value,
       "liciencedState": this.qualificationAndSkillsForm.controls['licienceState'].value,
       "experience": this.qualificationAndSkillsForm.controls['overallExperience'].value,
@@ -197,5 +199,129 @@ export class RegisterProviderComponent implements OnInit {
     //     }
     //   );
   }
+
+
+  moveToPractiveInfo() {
+    // this.personalInformationStepper = false;
+    // this.successfulStepper = true;
+    // this.practiceInformationStepper = false;
+    // this.skillsInformationStepper = false;
+    // this.accountInformationStepper = false;
+  }
+
+
+
+  getGenderLov() {
+    // this.spinner.show();
+    this.apiService.getLovs(6)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.genderLov = res[0].lovs;
+          // this.spinner.hide();
+        },
+        (err: any) => {
+          // this.spinner.hide();
+          // this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+
+  getSpecialitiesLov() {
+    // this.spinner.show();
+    this.apiService.getLovs(4)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.specialityLov = res[0].lovs;
+          // this.spinner.hide();
+        },
+        (err: any) => {
+          // this.spinner.hide();
+          // this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+
+  // getSubSpecialitiesLov() {
+    // this.spinner.show();
+  //   this.apiService.getLovs(4)
+  //     .pipe(first())
+  //     .subscribe(
+  //       (res: any) => {
+  //         this.specialityLov = res[0].lovs;
+          // this.spinner.hide();
+  //       },
+  //       (err:any) => {
+          // this.spinner.hide();
+          // this.showError(err?.error?.message?.description);
+  //       }
+  //     );
+  // }
+
+  getpracticeSizeLov() {
+    // this.spinner.show();
+    // this.apiService.getLovs(12)
+    //   .pipe(first())
+    //   .subscribe(
+    //     (res: any) => {
+    //       this.practiceSize = res[0].lovs;
+    //       // this.spinner.hide();
+    //     },
+    //     (err: any) => {
+    //       // this.spinner.hide();
+    //       // this.showError(err?.error?.message?.description);
+    //     }
+    //   );
+  }
+
+  getCityLov() {
+    // this.spinner.show();
+    // this.apiService.getLovs(3)
+    //   .pipe(first())
+    //   .subscribe(
+    //     (res: any) => {
+    //       this.cityLov = res[0].lovs;
+    //       // this.spinner.hide();
+    //     },
+    //     (err: any) => {
+    //       // this.spinner.hide();
+    //       // this.showError(err?.error?.message?.description);
+    //     }
+    //   );
+  }
+
+  getpracticeRolesLov() {
+    // this.spinner.show();
+    // this.apiService.getLovs(11)
+      // .pipe(first())
+      // .subscribe(
+      //   (res: any) => {
+      //     this.roleAtPractice = res[0].lovs;
+      //     // this.spinner.hide();
+      //   },
+      //   (err: any) => {
+      //     // this.spinner.hide();
+      //     // this.showError(err?.error?.message?.description);
+      //   }
+      // );
+  }
+
+  getStatesLov() {
+    // this.spinner.show();
+    // this.apiService.getLovs(2)
+    //   .pipe(first())
+    //   .subscribe(
+    //     (res: any) => {
+    //       this.statesLov = res[0].lovs;
+    //       // this.spinner.hide();
+    //     },
+    //     (err: any) => {
+    //       // this.spinner.hide();
+    //       // this.showError(err?.error?.message?.description);
+    //     }
+    //   );
+  }
+
 }
 

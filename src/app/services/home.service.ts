@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
+// import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 const lovsURL = environment.publicUrl + '/lov/';
 const authenticationUrl = environment.baseUrl + 'authenticate/';
@@ -17,7 +17,6 @@ export interface ApiResponse {
   data?: any
 }
 
-
 @Injectable()
 export class homeService {
 
@@ -28,7 +27,7 @@ export class homeService {
   isIndex = this.isIndexSubject.asObservable();
 
 
-  constructor(public http: HttpClient, private toastr: ToastrService) { }
+  constructor(public http: HttpClient,) { }
 
   registerUser(payload: any) {
     // const payload = {
@@ -92,29 +91,29 @@ export class homeService {
     return this.http.post(scheduleAppointmentURL + payload.slothDetails, payload);
   }
 
-  successToster(message: string, title: string) {
-    this.toastr.success(message, title, {
-      timeOut: 2000,
-    });
-  }
+  // successToster(message: string, title: string) {
+  //   this.toastr.success(message, title, {
+  //     timeOut: 2000,
+  //   });
+  // }
 
-  errorToster(message: string, title: string) {
-    this.toastr.error(message, title, {
-      timeOut: 2000,
-    });
-  }
+  // errorToster(message: string, title: string) {
+  //   this.toastr.error(message, title, {
+  //     timeOut: 2000,
+  //   });
+  // }
 
-  infoToster(message: string, title: string) {
-    this.toastr.info(message, title, {
-      timeOut: 2000,
-    });
-  }
+  // infoToster(message: string, title: string) {
+  //   this.toastr.info(message, title, {
+  //     timeOut: 2000,
+  //   });
+  // }
 
-  warningToster(message: string, title: string) {
-    this.toastr.warning(message, title, {
-      timeOut: 5000,
-    });
-  }
+  // warningToster(message: string, title: string) {
+  //   this.toastr.warning(message, title, {
+  //     timeOut: 5000,
+  //   });
+  // }
 
   //   getCodeTypeData(accessToken, payloadData, page) {
   //     const payload = {

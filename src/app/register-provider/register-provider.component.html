@@ -88,7 +88,9 @@
                 <span [ngClass]="{'activeText': skillsInformationStepper, 'text-medium': !skillsInformationStepper}"
                   class="text-medium">Qualification and skills</span>
               </div>
-
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
 
               <div class="step">
                 <ng-container *ngIf="!accountInformationStepper">
@@ -137,11 +139,11 @@
                       <div class="d-flex gap-4 group-wrapper ">
                         <div class="input-group">
                           <label for="fname">First Name</label>
-                          <input type="text" placeholder="Enter First Name" formControlName="first_name" class="border"
-                            name="new-first_name" autocomplete="off" aria-autocomplete required />
+                          <input type="text" placeholder="Enter First Name" formControlName="firstName" class="border"
+                            name="new-firstName" autocomplete="off" aria-autocomplete required />
                           <ng-container
-                            *ngIf="personalInformationForm.get('first_name')?.invalid && (personalInformationForm.get('first_name')?.dirty || personalInformationForm.get('first_name')?.touched)">
-                            <ng-container *ngIf="personalInformationForm.get('first_name')?.errors">
+                            *ngIf="personalInformationForm.get('firstName')?.invalid && (personalInformationForm.get('firstName')?.dirty || personalInformationForm.get('firstName')?.touched)">
+                            <ng-container *ngIf="personalInformationForm.get('firstName')?.errors">
                               <span class="text-danger error-state">First Name is required</span>
                             </ng-container>
 
@@ -201,7 +203,7 @@
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="gender">
                             <option disabled selected>Select your Gender</option>
-                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                            <option *ngFor="let item of genderLov" [value]="item.value">{{ item.value }}</option>
                           </select>
 
                           <ng-container
@@ -218,7 +220,8 @@
 
 
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
-                        <button type="button" class="btn btn-submit btn-width">Continue</button>
+                        <button type="button" class="btn btn-submit btn-width" (click)="moveToPractiveInfo()"
+                          [disabled]="!personalInformationForm.valid">Continue</button>
                       </div>
                     </div>
                   </div>
@@ -537,11 +540,13 @@
                           <div class="input-group">
                             <input name="password" [type]="showPassword ? 'text' : 'password'" class="form-control"
                               id="password-field" placeholder="Password">
-                            <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword">
+                            <button type="button" class="btn btn-outline-secondary"
+                              (click)="showPassword = !showPassword">
                               <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
                             </button>
                           </div>
-                          <ng-container *ngIf="accountInformationForm.get('password')?.invalid && 
+                          <ng-container
+                            *ngIf="accountInformationForm.get('password')?.invalid &&
                                                (accountInformationForm.get('password')?.dirty || accountInformationForm.get('password')?.touched)">
                             <ng-container *ngIf="accountInformationForm.get('password')?.errors">
                               <span class="text-danger error-state">Password is required</span>
@@ -553,21 +558,21 @@
                         <!-- <div class="input-group">
                           <label for="password">Password</label>
                           <div class="input-group-append">
-                            <input 
-                              [type]="showPassword ? 'text' : 'password'" 
-                              class="form-control" 
-                              id="password-field" 
-                              placeholder="Password" 
+                            <input
+                              [type]="showPassword ? 'text' : 'password'"
+                              class="form-control"
+                              id="password-field"
+                              placeholder="Password"
                               formControlName="password"
                             >
                             <span class="input-group-text">
-                              <i 
-                                class="bi {{ showPassword ? 'bi-eye-slash' : 'bi-eye' }}" 
+                              <i
+                                class="bi {{ showPassword ? 'bi-eye-slash' : 'bi-eye' }}"
                                 (click)="showPassword = !showPassword"
                               ></i>
                             </span>
                           </div>
-                          <ng-container 
+                          <ng-container
                             *ngIf="accountInformationForm.get('password')?.invalid && (accountInformationForm.get('password')?.dirty || accountInformationForm.get('password')?.touched)"
                           >
                             <ng-container *ngIf="accountInformationForm.get('password')?.errors">
@@ -575,7 +580,7 @@
                             </ng-container>
                           </ng-container>
                         </div> -->
-                        
+
                         <div class="input-group">
                           <label for="fname">Confirm Password</label>
                           <input type="text" placeholder="Enter Confirm Password" formControlName="confirmPassword"
@@ -594,15 +599,15 @@
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <div class="password-field">
                           <input [type]=" this.passwordVisibility.currentPassword ? 'text':'password'"
-                              formControlName="currentPassword" class="form-control placeholder-text "
-                              placeholder="********">
+                            formControlName="currentPassword" class="form-control placeholder-text "
+                            placeholder="********">
                           <img *ngIf=" this.passwordVisibility.currentPassword"
-                              (click)="toggleVisibility('currentPassword')" [src]="imgSrc"
-                              alt="Toggle Password Visibility" style="cursor: pointer;" />
+                            (click)="toggleVisibility('currentPassword')" [src]="imgSrc"
+                            alt="Toggle Password Visibility" style="cursor: pointer;" />
                           <img *ngIf="!this.passwordVisibility.currentPassword"
-                              (click)="toggleVisibility('currentPassword')" [src]="imgSrc"
-                              alt="Toggle Password Visibility" style="cursor: pointer;" />
-                      </div>  
+                            (click)="toggleVisibility('currentPassword')" [src]="imgSrc"
+                            alt="Toggle Password Visibility" style="cursor: pointer;" />
+                        </div>
                       </div>
 
                       <div class="d-flex gap-4 group-wrapper mt-12 ">

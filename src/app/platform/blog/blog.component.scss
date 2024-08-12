@@ -1,6 +1,7 @@
 .card {
   border: 0;
   margin-bottom: 30px;
+  gap: 20px;
 }
 
 .card-body {
@@ -48,9 +49,21 @@
 .blog-section-title {
   font-size: 28px;
   font-weight: bold;
-  margin-top: 40px;
+  margin: 60px 0 30px;
 }
 
 .main_heading {
   color: #000;
+}
+
+p {
+  font-size: 16px;
+  line-height: normal;
+  color: #475467;
+  line-height: 24px;
+}
+
+.card_b {
+  display: flex;
+  flex-direction: row;
 }

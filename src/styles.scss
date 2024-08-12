@@ -25,6 +25,7 @@ h1 {
   text-align: left;
   color: #101828;
 }
+
 .main_heading {
   font-size: 24px;
   line-height: normal;
@@ -32,11 +33,12 @@ h1 {
   font-weight: 600;
   letter-spacing: 2px;
 }
+
 .sub_title {
   font-size: 18px;
   font-weight: 700;
   color: #101828;
-  margin: 0;
+  margin: 0 0 12px 0;
   padding: 0;
 }
 
@@ -88,6 +90,7 @@ h1 {
 .col-2 {
   width: 100%;
 }
+
 // blog
 .tags a {
   font-size: 14px;
@@ -99,6 +102,22 @@ h1 {
   background-color: #E0F2FE;
   white-space: nowrap;
   line-height: normal;
+}
+
+// error-state
+.error-state {
+  position: absolute;
+  transform: translateY(0%);
+  top: 84px;
+  font-size: 12px;
+}
+
+.navbar-toggler {
+  margin: 0;
+  padding: 0;
+  border: 0 !important;
+  outline: none;
+  box-shadow: 0 0 0 !important;
 }
 
 @media screen and (max-width: 1199px) and (min-width: 992px) {
@@ -115,17 +134,19 @@ h1 {
     padding: 15px 5px !important;
   }
 
+  .navbar {
+    padding: 5px 15px !important;
+  }
+
   .service_provider_row {
     grid-template-columns: 100% !important;
   }
+
 }
 
+@media screen and (max-width: 767px) and (min-width: 200px) {
+  .card_b {
+    flex-direction: column !important;
+  }
 
-
-
-.error-state {
-  position: absolute;
-  transform: translateY(0%);
-  top: 84px;
-  font-size: 12px;
 }
