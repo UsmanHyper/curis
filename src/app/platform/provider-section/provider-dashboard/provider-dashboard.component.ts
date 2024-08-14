@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { providerService} from '../provider.service';
+import { providerService } from '../provider.service';
+import { HeaderComponent } from 'src/app/shared/header/header.component';
+import { FooterComponent } from 'src/app/shared/footer/footer.component';
 
 
 @Component({
   selector: 'app-provider-dashboard',
   templateUrl: './provider-dashboard.component.html',
-  styleUrls: ['./provider-dashboard.component.scss']
+  styleUrls: ['./provider-dashboard.component.scss'],
+  // imports: []
 })
 export class ProviderDashboardComponent implements OnInit {
 
@@ -22,18 +25,18 @@ export class ProviderDashboardComponent implements OnInit {
   private isSelectedTabSubscription: Subscription | any;
 
 
-  constructor(private providerService: providerService) {
+  constructor() {
 
   }
 
   ngOnInit() {
     this.goToProfile();
-    this.isSelectedTabSubscription = this.providerService.isSelectedTab.subscribe((value) => {
-      this.openComponetViaTabSelection(value);
-    });
+    // this.isSelectedTabSubscription = this.providerService.isSelectedTab.subscribe((value) => {
+    //   this.openComponentViaTabSelection(value);
+    // });
   }
 
-  openComponetViaTabSelection(tabValue: any) {
+  openComponentViaTabSelection(tabValue: any) {
     switch (tabValue) {
       case "Profile":
         this.goToProfile()
@@ -60,7 +63,7 @@ export class ProviderDashboardComponent implements OnInit {
         break;
 
       case "Account":
-        this.goToaccounts()
+        this.goToAccounts()
         break;
     }
   }
@@ -111,7 +114,7 @@ export class ProviderDashboardComponent implements OnInit {
     this.enableWorkingHoursTab = true;
     this.enableAccountTab = false;
   }
-  goToaccounts() {
+  goToAccounts() {
     this.enableProfileTab = false;
     this.enableChangePasswordTab = false;
     this.enableLocationTab = false;

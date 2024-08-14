@@ -23,7 +23,9 @@ export class NavBarComponent {
   }
   ngOnInit() {
     // this.userData = this.authenticationservice.getLoggedInUser();
-    this.getNavigationsByUserType(this.userData.user_Type);
+
+    // this.getNavigationsByUserType(this.userData.user_Type || 'Provider' );
+    this.getNavigationsByUserType('Provider');
   }
 
   getNavigationsByUserType(userType: String) {

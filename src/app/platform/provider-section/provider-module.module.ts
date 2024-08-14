@@ -38,6 +38,8 @@ import { AddHoursComponent } from './working-hours/add-hours/add-hours.component
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NavBarComponent } from 'src/app/shared/nav-bar/nav-bar.component';
 import { providerService } from './provider.service';
+import { HeaderComponent } from 'src/app/shared/header/header.component';
+import { FooterComponent } from 'src/app/shared/footer/footer.component';
 
 
 
@@ -54,6 +56,7 @@ import { providerService } from './provider.service';
     WorkingHoursComponent,
     AddHoursComponent,
     NavBarComponent,
+
   ],
   providers: [providerService,],
   // providers: [providerService, BsModalService],
@@ -62,6 +65,7 @@ import { providerService } from './provider.service';
     FormsModule,
     ReactiveFormsModule,
     FullCalendarModule,
+    HeaderComponent, FooterComponent
   ]
 })
 export class ProviderModuleModule { }
