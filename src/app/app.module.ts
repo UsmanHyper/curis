@@ -8,6 +8,9 @@ import { PaymentStatusComponent } from './shared/payment-status/payment-status.c
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { FlatpickrModule } from 'angularx-flatpickr';
 
 
 @NgModule({
@@ -24,6 +27,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    NgxMaskModule.forRoot(),
+    FlatpickrModule.forRoot(),
+    ToastrModule.forRoot({
+      preventDuplicates: false,
+      autoDismiss: true,
+    })
   ],
   providers: [],
   // providers: [

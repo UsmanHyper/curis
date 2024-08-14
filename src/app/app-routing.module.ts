@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProviderDashboardComponent } from './platform/provider-section/provider-dashboard/provider-dashboard.component';
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
@@ -9,23 +10,23 @@ const routes: Routes = [
   // { path: 'login', component: LoginComponent },
   // { path: 'forgotPassword', component: ForgotPasswordComponent },
   // { path: 'payment-status', component: PaymentStatusComponent },
-  // {
-  //   path: "providerDashboard",
-  //   component: ProviderDashboardComponent,
-  //   canActivate: [providerAuthGuard],
-  //   data: {
-  //     title: "provider Dashboard",
-  //   },
-  //   children: [
-  //     {
-  //       path: "",
-  //       loadChildren: () =>
-  //         import("./provider-module/provider-module.module").then(
-  //           (m) => m.ProviderModuleModule
-  //         ),
-  //     },
-  //   ],
-  // },
+  {
+    path: "providerDashboard",
+    component: ProviderDashboardComponent,
+    // canActivate: [providerAuthGuard],
+    data: {
+      title: "provider Dashboard",
+    },
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("./platform/provider-section/provider-module.module").then(
+            (m) => m.ProviderModuleModule
+          ),
+      },
+    ],
+  },
 
   {
     path: "",

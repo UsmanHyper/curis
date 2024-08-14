@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders , HttpErrorResponse,  HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-const lovsURL = new URL( `${environment.publicUrl} + '/lov/'`);
+import { ToastrService } from 'ngx-toastr';
+const lovsURL = new URL(`${environment.publicUrl}lov/`);
 const authenticationUrl = environment.baseUrl + 'authenticate/';
 const userUpdateURL = environment.baseUrl + 'users/profile/';
 const lovsByNameURL = environment.publicUrl + '/lovByName/';
@@ -23,24 +24,31 @@ export interface ApiResponse {
 export class MainHomeService {
 
 
-  // public isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  // isAuthenticated = this.isAuthenticatedSubject.asObservable();
+  public isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
-  // public isIndexSubject = new BehaviorSubject<boolean>(false);
-  // isIndex = this.isIndexSubject.asObservable();
+  public isIndexSubject = new BehaviorSubject<boolean>(false);
+  isIndex = this.isIndexSubject.asObservable();
 
-  constructor(public http: HttpClient,) { }
+  constructor(public http: HttpClient, private toastr: ToastrService) { }
 
   registerUser(payload: any) {
-    // const payload = {
-    //  data
-    // };
+
     return this.http.post(authenticationUrl + 'signup', payload);
   }
+  
+  updateUserBasicInformation(accessToken: any, payloadData: any, userId: any) {
+    const header = {
+      headers: new HttpHeaders({
+        Authorization: accessToken
+      })
+    };
 
+    return this.http.put(userUpdateURL + userId, payloadData, header);
+  }
 
   getLovs(data: any) {
-    return this.http.get(lovsURL.href + data);
+    return this.http.get(`${lovsURL.href}${data}`);
   }
 
 
@@ -63,4 +71,28 @@ export class MainHomeService {
     return this.http.put<ApiResponse>(slug, postData);
   }
 
+
+  successToster(message: string, title: string) {
+    this.toastr.success(message, title, {
+      timeOut: 2000,
+    });
+  }
+
+  errorToster(message: string, title: string) {
+    this.toastr.error(message, title, {
+      timeOut: 2000,
+    });
+  }
+
+  infoToster(message: string, title: string) {
+    this.toastr.info(message, title, {
+      timeOut: 2000,
+    });
+  }
+
+  warningToster(message: string, title: string) {
+    this.toastr.warning(message, title, {
+      timeOut: 5000,
+    });
+  }
 }

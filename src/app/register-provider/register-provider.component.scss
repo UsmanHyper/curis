@@ -25,7 +25,8 @@
   .activeText {
     font-weight: 700;
     color: #0086C9;
-    font-size: 14px;
+    font-size: 16px;
+    margin-bottom: 30px;
   }
 
   .step {
@@ -43,7 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
   }
 
   .stepper-card {
@@ -83,11 +84,12 @@
     margin: 0 5px;
     border-top: 2px solid #bec0c1;
     position: absolute;
+    top: 28px;
   }
 
   .text-medium {
     color: #667085;
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
   }
 

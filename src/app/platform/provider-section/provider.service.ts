@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 
 const lovsURL = environment.publicUrl + '/lov/';
-const lovsByNameURL = environment.publicUrl + '/lovByName/';
+const lovsByNameURL = environment.publicUrl + 'lovByName/';
 //const getUserDataURL = environment.baseUrl+
 const getProviderDataUrl = environment.baseUrl + 'provider/profile/userId';
 const saveProviderDataUrl = environment.baseUrl + 'provider/profile';
@@ -55,6 +55,7 @@ export class providerService {
   }
 
   getProviderData() {
+
     let data = localStorage?.getItem("providerData");
     if (data !== null) {
       return JSON.parse(data);

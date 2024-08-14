@@ -44,66 +44,18 @@
           <div class="stepper-card">
             <div class="stepper-container">
               <div class="step">
-                <ng-container *ngIf="!personalInformationStepper">
-                  <div class="circle" [ngClass]="{'circle-grey':!personalInformationStepper}">1
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="personalInformationStepper === true">
-                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
-                  </div>
-                </ng-container>
-                <span class="activeText  text-center"
-                  [ngClass]="{'activeText': personalInformationStepper, 'text-medium': !personalInformationStepper}">Personal
-                  Information</span>
-              </div>
-              <div class="line-parent mt-3">
-                <div class="line"></div>
-              </div>
-              <div class="step">
-                <ng-container *ngIf="!practiceInformationStepper">
-                  <div class="circle" [ngClass]="{'circle-grey':!practiceInformationStepper}">2
-                  </div>
 
+
+                <ng-container *ngIf="personalInformationStepper">
+                  <div class="activeText mb-30">1 </div>
                 </ng-container>
-                <ng-container *ngIf="practiceInformationStepper === true">
-                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
-                  </div>
-                </ng-container>
-                <span class=" text-center"
-                  [ngClass]="{'activeText': practiceInformationStepper, 'text-medium': !practiceInformationStepper}">Practice
-                  Information</span>
-              </div>
-              <div class="line-parent mt-3">
-                <div class="line"></div>
-              </div>
-              <div class="step">
-                <ng-container *ngIf="!skillsInformationStepper">
-                  <div class="circle" [ngClass]="{'circle-grey':!skillsInformationStepper}">3
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="skillsInformationStepper === true">
-                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
-                  </div>
-                </ng-container>
-                <span [ngClass]="{'activeText': skillsInformationStepper, 'text-medium': !skillsInformationStepper}"
-                  class="text-medium">Qualification and skills</span>
-              </div>
-              <div class="line-parent mt-3">
-                <div class="line"></div>
+                <ng-container *ngIf="step1">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i> </div>
+                </ng-container> <span class=" text-center"
+                  [ngClass]="{'activeText': personalInformationStepper || step1   , 'text-medium': !step1 && !personalInformationStepper}">
+                  Personal Information</span>
               </div>
 
-              <div class="step">
-                <ng-container *ngIf="!accountInformationStepper">
-                  <div class="circle" [ngClass]="{'circle-grey':!accountInformationStepper}">4
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="accountInformationStepper === true">
-                  <div class=""><i class="bi bi-patch-check-fill circle"></i>
-                  </div>
-                </ng-container>
-                <span [ngClass]="{'activeText': accountInformationStepper, 'text-medium': !accountInformationStepper}"
-                  class="text-medium">Account Information</span>
-              </div>
 
               <div class="line-parent mt-3">
                 <div class="line"></div>
@@ -111,8 +63,73 @@
 
 
               <div class="step">
+
+                <ng-container *ngIf="!step2">
+                  <div class=" mb-30"
+                    [ngClass]="{'activeText': practiceInformationStepper || step2   , 'text-medium': !step2 && !practiceInformationStepper}">
+                    2 </div>
+                </ng-container>
+                <ng-container *ngIf="step2">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i> </div>
+                </ng-container> <span class="  text-center"
+                  [ngClass]="{'activeText': practiceInformationStepper || step2   , 'text-medium': !step2 && !practiceInformationStepper}">
+                  Practice Information</span>
+
+
+              </div>
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
+
+
+
+              <div class="step">
+
+                <ng-container *ngIf="!step3">
+                  <div class=" mb-30"
+                    [ngClass]="{'activeText': skillsInformationStepper || step3   , 'text-medium': !step3 && !skillsInformationStepper}">
+                    3 </div>
+                </ng-container>
+                <ng-container *ngIf="step3">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i> </div>
+                </ng-container> <span class="  text-center"
+                  [ngClass]="{'activeText': skillsInformationStepper || step3   , 'text-medium': !step3 && !skillsInformationStepper}">
+                  Qualification and skills</span>
+
+
+
+              </div>
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
+
+              <div class="step">
+
+
+                <ng-container *ngIf="!step4">
+                  <div class=" mb-30"
+                    [ngClass]="{'activeText': accountInformationStepper || step3   , 'text-medium': !step4 && !accountInformationStepper}">
+                    4 </div>
+                </ng-container>
+                <ng-container *ngIf="step4">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i> </div>
+                </ng-container> <span class="  text-center"
+                  [ngClass]="{'activeText': accountInformationStepper || step4  , 'text-medium': !step4 && !accountInformationStepper}">
+                  Account Information </span>
+
+
+              </div>
+
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
+
+
+              <div class="step">
+
+
                 <ng-container *ngIf="!successfulStepper">
-                  <div class="circle" [ngClass]="{'circle-grey':!successfulStepper}">5
+                  <div class="circle fs-16" [ngClass]="{'circle-grey':!successfulStepper}">5
                   </div>
                 </ng-container>
                 <ng-container *ngIf="successfulStepper === true">
@@ -123,6 +140,8 @@
                   class="text-medium">Registration Completion</span>
               </div>
             </div>
+
+
 
             <!--Step Content -->
             <ng-container *ngIf="personalInformationStepper">
@@ -151,11 +170,11 @@
                         </div>
                         <div class="input-group">
                           <label for="lname">Last Name</label>
-                          <input type="text" placeholder="Enter Last Name" class="border" formControlName="last_name"
-                            autocomplete="off" aria-autocomplete required name="new-last_name" />
+                          <input type="text" placeholder="Enter Last Name" class="border" formControlName="lastName"
+                            autocomplete="off" aria-autocomplete required name="new-lastName" />
                           <ng-container
-                            *ngIf="personalInformationForm.get('last_name')?.invalid && (personalInformationForm.get('last_name')?.dirty || personalInformationForm.get('last_name')?.touched)">
-                            <ng-container *ngIf="personalInformationForm.get('last_name')?.errors">
+                            *ngIf="personalInformationForm.get('lastName')?.invalid && (personalInformationForm.get('lastName')?.dirty || personalInformationForm.get('lastName')?.touched)">
+                            <ng-container *ngIf="personalInformationForm.get('lastName')?.errors">
                               <span class="text-danger error-state">Last Name is required</span>
                             </ng-container>
 
@@ -180,13 +199,14 @@
                         </div>
                         <div class="input-group">
                           <label for="fname">Phone Number</label>
+                          
                           <input type="text" mask="(000) 000-0000" placeholder="(123)-456-7890"
-                            formControlName="contactNumber" class="border" name="new-contact_number" autocomplete="off"
+                            formControlName="contactNumber" class="border" name="new-contactNumber" autocomplete="off"
                             aria-autocomplete required />
 
                           <ng-container
-                            *ngIf="personalInformationForm.get('contact_number')?.invalid && (personalInformationForm.get('contact_number')?.dirty || personalInformationForm.get('contact_number')?.touched)">
-                            <ng-container *ngIf="personalInformationForm.get('contact_number')?.errors">
+                            *ngIf="personalInformationForm.get('contactNumber')?.invalid && (personalInformationForm.get('contactNumber')?.dirty || personalInformationForm.get('contactNumber')?.touched)">
+                            <ng-container *ngIf="personalInformationForm.get('contactNumber')?.errors">
                               <span class="text-danger error-state">Phone Number is required</span>
                             </ng-container>
 
@@ -220,8 +240,8 @@
 
 
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
-                        <button type="button" class="btn btn-submit btn-width" (click)="moveToPractiveInfo()"
-                          [disabled]="!personalInformationForm.valid">Continue</button>
+                        <button type="button" class="btn btn-submit btn-width" (click)="moveToPracticeInfo()"
+                          [disabled]="personalInformationForm.invalid && this.personalInformationForm.controls['gender'].value ==='Select your Gender' ">Continue</button>
                       </div>
                     </div>
                   </div>
@@ -263,7 +283,7 @@
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="providersSpeciality">
                             <option disabled selected>Provider speciality</option>
-                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                            <option *ngFor="let item of specialityLov" [value]="item.value">{{ item.value }}</option>
                           </select>
                           <ng-container
                             *ngIf="practiceInformationForm.get('providersSpeciality')?.invalid && (practiceInformationForm.get('providersSpeciality')?.dirty || practiceInformationForm.get('providersSpeciality')?.touched)">
@@ -282,7 +302,7 @@
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="practiceSize">
                             <option disabled selected>Practice Size</option>
-                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                            <option *ngFor="let item of practiceSize" [value]="item.value">{{ item.value }}</option>
                           </select>
                           <ng-container
                             *ngIf="practiceInformationForm.get('practiceSize')?.invalid && (practiceInformationForm.get('practiceSize')?.dirty || practiceInformationForm.get('practiceSize')?.touched)">
@@ -297,7 +317,7 @@
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="roleAtPractice">
                             <option disabled selected>Role At Practice</option>
-                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                            <option *ngFor="let item of roleAtPractice" [value]="item.value">{{ item.value }}</option>
                           </select>
 
                           <ng-container
@@ -346,7 +366,7 @@
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="city">
                             <option disabled selected>Practice City</option>
-                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                            <option *ngFor="let item of cityLov" [value]="item.value">{{ item.value }}</option>
                           </select>
                           <ng-container
                             *ngIf="practiceInformationForm.get('city')?.invalid && (practiceInformationForm.get('city')?.dirty || practiceInformationForm.get('city')?.touched)">
@@ -361,7 +381,7 @@
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="zipCode">
                             <option disabled selected>ZIP Code</option>
-                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                            <option *ngFor="let item of zipCodesLov" [value]="item.value">{{ item.value }}</option>
                           </select>
 
                           <ng-container
@@ -375,8 +395,10 @@
                       </div>
 
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
-                        <button type="button" class="btn btn-submit btn-width">Back</button>
-                        <button type="button" class="btn btn-submit btn-width">Next</button>
+                        <button type="button" class="btn btn-submit btn-width"
+                          (click)="backToPersonalInfo()">Back</button>
+                        <button type="button" class="btn btn-submit btn-width"
+                          (click)="nextToQualificationAndSkills()" [disabled]="practiceInformationForm.invalid" >Next</button>
                       </div>
                     </div>
                   </div>
@@ -406,7 +428,7 @@
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="qualification">
                             <option disabled selected>Select qualification</option>
-                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                            <option *ngFor="let item of qualificationLov" [value]="item.value">{{ item.value }}</option>
                           </select>
                           <ng-container
                             *ngIf="qualificationAndSkillsForm.get('qualification')?.invalid && (qualificationAndSkillsForm.get('qualification')?.dirty || qualificationAndSkillsForm.get('qualification')?.touched)">
@@ -439,7 +461,7 @@
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="licienceState">
                             <option disabled selected>Licensed State</option>
-                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                            <option *ngFor="let item of statesLov" [value]="item.value">{{ item.value }}</option>
                           </select>
                           <ng-container
                             *ngIf="qualificationAndSkillsForm.get('licienceState')?.invalid && (qualificationAndSkillsForm.get('licienceState')?.dirty || qualificationAndSkillsForm.get('licienceState')?.touched)">
@@ -490,8 +512,10 @@
                       </div>
 
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
-                        <button type="button" class="btn btn-submit btn-width">Back</button>
-                        <button type="button" class="btn btn-submit btn-width">Next</button>
+                        <button type="button" class="btn btn-submit btn-width"
+                          (click)="backToPracticeInfo()">Back</button>
+                        <button type="button" class="btn btn-submit btn-width"
+                          (click)="moveToAccountInfo()" [disabled]="qualificationAndSkillsForm.invalid">Next</button>
                       </div>
                     </div>
                   </div>
@@ -515,7 +539,7 @@
                     <div class="form-wrapper">
                       <div class="d-flex gap-4 group-wrapper ">
 
-                        <!-- <div class="input-group">
+                        <div class="input-group">
                           <label for="speciality">Password</label>
 
                           <input name="password" [type]="showPassword ? 'text' : 'password'" class="border"
@@ -533,9 +557,9 @@
                             </ng-container>
 
                           </ng-container>
-                        </div> -->
+                        </div>
 
-                        <div class="input-group">
+                        <!-- <div class="input-group">
                           <label for="password-field" class="form-label">Password</label>
                           <div class="input-group">
                             <input name="password" [type]="showPassword ? 'text' : 'password'" class="form-control"
@@ -552,7 +576,7 @@
                               <span class="text-danger error-state">Password is required</span>
                             </ng-container>
                           </ng-container>
-                        </div>
+                        </div> -->
 
 
                         <!-- <div class="input-group">
@@ -596,7 +620,7 @@
 
                       </div>
 
-                      <div class="d-flex gap-4 group-wrapper mt-12 ">
+                      <!-- <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <div class="password-field">
                           <input [type]=" this.passwordVisibility.currentPassword ? 'text':'password'"
                             formControlName="currentPassword" class="form-control placeholder-text "
@@ -608,11 +632,12 @@
                             (click)="toggleVisibility('currentPassword')" [src]="imgSrc"
                             alt="Toggle Password Visibility" style="cursor: pointer;" />
                         </div>
-                      </div>
+                      </div> -->
 
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
-                        <button type="button" class="btn btn-submit btn-width">Back</button>
-                        <button type="button" class="btn btn-submit btn-width">Next</button>
+                        <button type="button" class="btn btn-submit btn-width"
+                          (click)="backToAccountInfo()">Back</button>
+                        <button type="button" class="btn btn-submit btn-width" (click)="success()" [disabled]="accountInformationForm.invalid" >Next</button>
                       </div>
                     </div>
                   </div>
