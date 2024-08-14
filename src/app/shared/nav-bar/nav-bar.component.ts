@@ -100,8 +100,6 @@ export class NavBarComponent {
     });
 
     this.navBarItems = dt
-
-
   }
 
 
