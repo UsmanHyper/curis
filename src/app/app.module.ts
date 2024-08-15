@@ -12,13 +12,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { FlatpickrModule } from 'angularx-flatpickr';
 
-
 @NgModule({
   declarations: [
     AppComponent,
-    // HomeComponent,
 
-    // GoogleMapsComponent,
   ],
   imports: [
     AppRoutingModule,

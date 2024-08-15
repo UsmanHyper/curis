@@ -25,15 +25,15 @@ export class ProviderDashboardComponent implements OnInit {
   private isSelectedTabSubscription: Subscription | any;
 
 
-  constructor() {
+  constructor(private providerService: providerService) {
 
   }
 
   ngOnInit() {
     this.goToProfile();
-    // this.isSelectedTabSubscription = this.providerService.isSelectedTab.subscribe((value) => {
-    //   this.openComponentViaTabSelection(value);
-    // });
+    this.isSelectedTabSubscription = this.providerService.isSelectedTab.subscribe((value:any) => {
+      this.openComponentViaTabSelection(value);
+    });
   }
 
   openComponentViaTabSelection(tabValue: any) {

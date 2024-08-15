@@ -1,249 +1,419 @@
-<!-- <---------------------------------Personal Information---------------------------->
-<div class="mx-3 shadow-sm my-4">
-    <form [formGroup]="personalInformationForm">
-        <div class="tab-content card-shadow" id="v-tabsContent">
-            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-                <div class="blue-bar py-2">
-                    <h6 class="text-center profile-header-text">Personal Information</h6>
-                </div>
-                <div class="px-3 py-3">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="fw-bold text-black text-size-normal mb-0">First Name</p>
-                            <input formControlName="firstName" type="text" class="form-control placeholder-text "
-                                placeholder="First Name" id="exampleFormControlInput1">
-                        </div>
-                        <div class="col-md-6">
-                            <p class=" fw-bold text-black text-size-normal mb-0">Last Name</p>
-                            <input formControlName="lastName" type="text" class="form-control placeholder-text "
-                                placeholder="Last Name" id="exampleFormControlInput1">
+<section class="booking_flow">
+    <div class="container-fluid">
+        <!-- <div class="booking_row">
+            <div class="col-2"> -->
+        <div class="stepper-card-container">
+            <div class="stepper-card">
+                <ng-container>
+                    <div class="w-100-p">
+                        <div class="d-flex justify-content-center form-width flex-column">
+                            <div class="text-content">
+                                <h1 class="title">Profile</h1>
+                                <p class="lead paragraph-desc">
+                                </p>
+                            </div>
+                            <!-- <---------------------------------Personal Information---------------------------->
+
+                            <div class="text-content mt-32">
+                                <h2 class="profile-header-text">Personal Information</h2>
+
+                            </div>
+                            <hr>
+
+                            <form [formGroup]="personalInformationForm" autocomplete="disable">
+                                <div class="form-wrapper">
+                                    <div class="d-flex gap-4 group-wrapper ">
+                                        <div class="input-group">
+                                            <label for="fname">First Name</label>
+                                            <input type="text" placeholder="Enter First Name"
+                                                formControlName="firstName" class="border" name="new-firstName"
+                                                autocomplete="off" aria-autocomplete required />
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('firstName')?.invalid && (personalInformationForm.get('firstName')?.dirty || personalInformationForm.get('firstName')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('firstName')?.errors">
+                                                    <span class="text-danger error-state">First Name is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="lname">Last Name</label>
+                                            <input type="text" placeholder="Enter Last Name" class="border"
+                                                formControlName="lastName" autocomplete="off" aria-autocomplete required
+                                                name="new-lastName" />
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('lastName')?.invalid && (personalInformationForm.get('lastName')?.dirty || personalInformationForm.get('lastName')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('lastName')?.errors">
+                                                    <span class="text-danger error-state">Last Name is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname">Gender</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="gender">
+                                                <option disabled selected>Select your Gender</option>
+                                                <option *ngFor="let item of genderLov" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('gender')?.invalid && (personalInformationForm.get('gender')?.dirty || personalInformationForm.get('gender')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('gender')?.errors">
+                                                    <span class="text-danger error-state">Gender is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                        <div class="input-group">
+                                            <label for="fname">Phone Number</label>
+
+                                            <input type="text" mask="(000) 000-0000" placeholder="(123)-456-7890"
+                                                formControlName="contactNumber" class="border" name="new-contactNumber"
+                                                autocomplete="off" aria-autocomplete required />
+
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('contactNumber')?.invalid && (personalInformationForm.get('contactNumber')?.dirty || personalInformationForm.get('contactNumber')?.touched)">
+                                                <ng-container
+                                                    *ngIf="personalInformationForm.get('contactNumber')?.errors">
+                                                    <span class="text-danger error-state">Phone Number is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="fname">Email</label>
+                                            <input type="email" placeholder="Enter Email" formControlName="email"
+                                                class="border" name="new-email" autocomplete="off" aria-autocomplete
+                                                required />
+
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('email')?.invalid && (personalInformationForm.get('email')?.dirty || personalInformationForm.get('email')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('email')?.errors">
+                                                    <span class="text-danger error-state">Email is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+
+
+                                    </div>
+
+
+                                </div>
+                            </form>
+
+                            <!-- <---------------------------------Practice Information---------------------------->
+
+                            <div class="text-content mt-32">
+                                <h2 class="profile-header-text">Practice Information</h2>
+
+                            </div>
+                            <hr>
+
+                            <form [formGroup]="practiceInformationForm" autocomplete="disable">
+
+                                <div class="form-wrapper">
+                                    <div class="d-flex gap-4 group-wrapper ">
+                                        <div class="input-group">
+                                            <label for="fname">Practice Name</label>
+                                            <input type="text" placeholder="Enter Practice Name"
+                                                formControlName="practiceName" class="border" name="new-practiceName"
+                                                autocomplete="off" aria-autocomplete required />
+                                            <ng-container
+                                                *ngIf="practiceInformationForm.get('practiceName')?.invalid && (practiceInformationForm.get('practiceName')?.dirty || practiceInformationForm.get('practiceName')?.touched)">
+                                                <ng-container
+                                                    *ngIf="practiceInformationForm.get('practiceName')?.errors">
+                                                    <span class="text-danger error-state">Practice Name is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="speciality">Practice or provider’s speciality</label>
+
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="providersSpeciality">
+                                                <option disabled selected>Provider speciality</option>
+                                                <option *ngFor="let item of mainSpecialityLov" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="practiceInformationForm.get('providersSpeciality')?.invalid && (practiceInformationForm.get('providersSpeciality')?.dirty || practiceInformationForm.get('providersSpeciality')?.touched)">
+                                                <ng-container
+                                                    *ngIf="practiceInformationForm.get('providersSpeciality')?.errors">
+                                                    <span class="text-danger error-state">Practice or provider’s
+                                                        speciality is required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="fname">Practice Size</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="practiceSize">
+                                                <option disabled selected>Practice Size</option>
+                                                <option *ngFor="let item of practiceSize" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="practiceInformationForm.get('practiceSize')?.invalid && (practiceInformationForm.get('practiceSize')?.dirty || practiceInformationForm.get('practiceSize')?.touched)">
+                                                <ng-container
+                                                    *ngIf="practiceInformationForm.get('practiceSize')?.errors">
+                                                    <span class="text-danger error-state">Practice Size is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                        <div class="input-group">
+                                            <label for="fname">Role At Practice</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="roleAtPractice">
+                                                <option disabled selected>Role At Practice</option>
+                                                <option *ngFor="let item of roleAtPractice" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+
+                                            <ng-container
+                                                *ngIf="practiceInformationForm.get('roleAtPractice')?.invalid && (practiceInformationForm.get('roleAtPractice')?.dirty || practiceInformationForm.get('roleAtPractice')?.touched)">
+                                                <ng-container
+                                                    *ngIf="practiceInformationForm.get('roleAtPractice')?.errors">
+                                                    <span class="text-danger error-state">Role At Practice is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="fname">ZIP Code</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="zipCode">
+                                                <option disabled selected>ZIP Code</option>
+                                                <option *ngFor="let item of zipCodesLov" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+
+                                            <ng-container
+                                                *ngIf="practiceInformationForm.get('zipCode')?.invalid && (practiceInformationForm.get('zipCode')?.dirty || practiceInformationForm.get('zipCode')?.touched)">
+                                                <ng-container *ngIf="practiceInformationForm.get('zipCode')?.errors">
+                                                    <span class="text-danger error-state">ZIP Code is required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="fname"> City</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="city">
+                                                <option disabled selected>Practice City</option>
+                                                <option *ngFor="let item of cityLov" [value]="item.value">{{ item.value
+                                                    }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="practiceInformationForm.get('city')?.invalid && (practiceInformationForm.get('city')?.dirty || practiceInformationForm.get('city')?.touched)">
+                                                <ng-container *ngIf="practiceInformationForm.get('city')?.errors">
+                                                    <span class="text-danger error-state">Practice City is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-4 group-wrapper mt-12">
+                                        <div class="input-group">
+                                            <label for="fname">Address Line 1</label>
+                                            <input type="text" placeholder="Enter Address Line 1"
+                                                formControlName="addressLineOne" class="border"
+                                                name="new-addressLineOne" autocomplete="off" aria-autocomplete
+                                                required />
+                                            <ng-container
+                                                *ngIf="practiceInformationForm.get('addressLineOne')?.invalid && (practiceInformationForm.get('addressLineOne')?.dirty || practiceInformationForm.get('addressLineOne')?.touched)">
+                                                <ng-container
+                                                    *ngIf="practiceInformationForm.get('addressLineOne')?.errors">
+                                                    <span class="text-danger error-state">Address Line 1 is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="fname">Address Line 2</label>
+                                            <input type="text" placeholder="Enter Address Line 2"
+                                                formControlName="addressLineTwo" class="border"
+                                                name="new-addressLineTwo" autocomplete="off" aria-autocomplete
+                                                required />
+                                            <ng-container
+                                                *ngIf="practiceInformationForm.get('addressLineTwo')?.invalid && (practiceInformationForm.get('addressLineTwo')?.dirty || practiceInformationForm.get('addressLineTwo')?.touched)">
+                                                <ng-container
+                                                    *ngIf="practiceInformationForm.get('addressLineTwo')?.errors">
+                                                    <span class="text-danger error-state">Address Line 2 is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <!-- <---------------------------------Qualification & Skills---------------------------->
+
+
+                            <div class="text-content mt-32">
+                                <h2 class="profile-header-text">Qualification & Skills</h2>
+
+                            </div>
+                            <hr>
+
+                            <form [formGroup]="qualificationAndSkillsForm" autocomplete="disable">
+
+                                <div class="form-wrapper">
+                                    <div class="d-flex gap-4 group-wrapper ">
+
+                                        <div class="input-group">
+                                            <label for="speciality">Qualification</label>
+
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="qualification">
+                                                <option disabled selected>Select qualification</option>
+                                                <option *ngFor="let item of qualificationLov" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="qualificationAndSkillsForm.get('qualification')?.invalid && (qualificationAndSkillsForm.get('qualification')?.dirty || qualificationAndSkillsForm.get('qualification')?.touched)">
+                                                <ng-container
+                                                    *ngIf="qualificationAndSkillsForm.get('qualification')?.errors">
+                                                    <span class="text-danger error-state">Qualification is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname">Main specialization</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="mainSpecialization">
+                                                <option disabled selected>Main specialization</option>
+                                                <option *ngFor="let item of mainSpecialityLov" [value]="item.value">
+                                                    {{ item.value }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="qualificationAndSkillsForm.get('mainSpecialization')?.invalid && (qualificationAndSkillsForm.get('mainSpecialization')?.dirty || qualificationAndSkillsForm.get('mainSpecialization')?.touched)">
+                                                <ng-container
+                                                    *ngIf="qualificationAndSkillsForm.get('mainSpecialization')?.errors">
+                                                    <span class="text-danger error-state">
+                                                        Main specialization is required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname">Sub specialization</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="subSpeciality">
+                                                <option disabled selected>Sub specialization</option>
+                                                <option *ngFor="let item of subSpecialityLov" [value]="item.value">
+                                                    {{ item.value }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="qualificationAndSkillsForm.get('subSpeciality')?.invalid && (qualificationAndSkillsForm.get('subSpeciality')?.dirty || qualificationAndSkillsForm.get('subSpeciality')?.touched)">
+                                                <ng-container
+                                                    *ngIf="qualificationAndSkillsForm.get('subSpeciality')?.errors">
+                                                    <span class="text-danger error-state">Sub specialization is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                        <div class="input-group">
+                                            <label for="fname">Licensed State</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="licienceState">
+                                                <option disabled selected>Licensed State</option>
+                                                <option *ngFor="let item of stateLov" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="qualificationAndSkillsForm.get('licienceState')?.invalid && (qualificationAndSkillsForm.get('licienceState')?.dirty || qualificationAndSkillsForm.get('licienceState')?.touched)">
+                                                <ng-container
+                                                    *ngIf="qualificationAndSkillsForm.get('licienceState')?.errors">
+                                                    <span class="text-danger error-state">Licensed State is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname">Experience (In years)</label>
+                                            <input type="text" placeholder="Enter Experience (In years)"
+                                                formControlName="overallExperience" class="border"
+                                                name="new-overallExperience" autocomplete="off" aria-autocomplete
+                                                required />
+                                            <ng-container
+                                                *ngIf="qualificationAndSkillsForm.get('overallExperience')?.invalid && (qualificationAndSkillsForm.get('overallExperience')?.dirty || qualificationAndSkillsForm.get('overallExperience')?.touched)">
+                                                <ng-container
+                                                    *ngIf="qualificationAndSkillsForm.get('overallExperience')?.errors">
+                                                    <span class="text-danger error-state">Experience (In years) is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname">NPI Number</label>
+
+
+                                            <input type="text" placeholder="Enter NPI number"
+                                                formControlName="npiNumber" class="border" name="new-overallExperience"
+                                                autocomplete="off" aria-autocomplete required />
+
+                                            <ng-container
+                                                *ngIf="qualificationAndSkillsForm.get('npiNumber')?.invalid && (qualificationAndSkillsForm.get('npiNumber')?.dirty || qualificationAndSkillsForm.get('npiNumber')?.touched)">
+                                                <ng-container
+                                                    *ngIf="qualificationAndSkillsForm.get('npiNumber')?.errors">
+                                                    <span class="text-danger error-state">NPI Number is required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        Gender
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <select formControlName="gender" class="form-select text-size-normal"
-                                id="inputGroupSelect01">
-                                <option selected class="text-size-normal">Select Gender</option>
-                                <option class="text-size-normal" *ngFor="let opt of genderLov" [value]="opt.value">
-                                    {{opt.value}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        Email
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input formControlName="email" type="text" class="form-control placeholder-text "
-                                placeholder="Email" id="exampleFormControlInput1">
-                        </div>
-                    </div>
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        Phone Number
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input formControlName="contactNumber" type="text" class="form-control placeholder-text "
-                                placeholder="34567890-0987" id="exampleFormControlInput1">
-                        </div>
-                    </div>
-                </div>
+                </ng-container>
+
             </div>
         </div>
-    </form>
-</div>
-<!-- <---------------------------------Practice Information---------------------------->
-<div class="mx-3 shadow-sm my-4">
-    <form [formGroup]="practiceInformationForm">
-        <div class="tab-content card-shadow" id="v-tabsContent">
-            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-                <div class="blue-bar py-2">
-                    <h6 class="text-center profile-header-text">Practice Information</h6>
-                </div>
-                <div class="px-3 py-3">
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        Practice Name
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input formControlName="practiceName" type="text" class="form-control placeholder-text "
-                                placeholder="Practice Name" id="exampleFormControlInput1">
-                        </div>
-                    </div>
-                    <label class="fw-bold text-black text-size-normal mt-2 ">Practice or provider’s speciality</label>
-                    <select formControlName="providersSpeciality" class="form-select text-size-normal"
-                        id="inputGroupSelect01">
-                        <option selected class="text-size-normal">Select Main Speciality</option>
-                        <option class="text-size-normal" *ngFor="let opt of mainSpecialityLov" [value]="opt.value">
-                            {{opt.value}}
-                        </option>
-                    </select>
-
-                    <label class="fw-bold text-black text-size-normal mt-2">Practice Size</label>
-                    <select formControlName="practiceSize" class="form-select text-size-normal" id="inputGroupSelect01">
-                        <option selected class="text-size-normal">Select Practice Size</option>
-                        <option class="text-size-normal" *ngFor="let opt of practiceSize" [value]="opt.value">
-                            {{opt.value}}
-                        </option>
-                    </select>
-
-                    <label class="fw-bold text-black text-size-normal mt-2">Role At Practice</label>
-                    <select formControlName="roleAtPractice" class="form-select text-size-normal"
-                        id="inputGroupSelect01">
-                        <option selected class="text-size-normal">Select Role At Practice</option>
-                        <option class="text-size-normal" *ngFor="let opt of roleAtPractice" [value]="opt.value">
-                            {{opt.value}}
-                        </option>
-                    </select>
-
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        Billing Address line 1
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input formControlName="billingAddress" type="text" class="form-control placeholder-text "
-                                placeholder="Billing Address" id="exampleFormControlInput1">
-                        </div>
-                    </div>
-
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        Billing Address line 2
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input formControlName="billingAddresstwo" type="text"
-                                class="form-control placeholder-text " placeholder="Billing Address"
-                                id="exampleFormControlInput1">
-                        </div>
-                    </div>
-
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        ZIP Code
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input formControlName="zipCode" type="text" class="form-control placeholder-text "
-                                placeholder="Practice Name" minlength="5" maxlength="5" id="exampleFormControlInput1">
-                        </div>
-                    </div>
-
-                    <label class="fw-bold text-black text-size-normal mt-2">City</label>
-                    <select formControlName="city" class="form-select text-size-normal" id="inputGroupSelect01">
-                        <option selected class="text-size-normal">Select City</option>
-                        <option class="text-size-normal" *ngFor="let opt of cityLov" [value]="opt.value">
-                            {{opt.value}}
-                        </option>
-                    </select>
-                    <!-- <ng-select formControlName="city" class="form-select  text-size-normal"
-                        [clearable]="false" [searchable]="true" [placeholder]="'Select City'">
-                        <ng-option *ngFor="let item of cityLov" [value]="item.value">{{item.value}}</ng-option>
-                    </ng-select> -->
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-<!-- <---------------------------------Qualification & Skills---------------------------->
-<div class="mx-3 shadow-sm my-4">
-    <form [formGroup]="qualificationAndSkillsForm">
-        <div class="tab-content card-shadow" id="v-tabsContent">
-            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-                <div class="blue-bar py-2">
-                    <h6 class="text-center profile-header-text">Qualification & Skills</h6>
-                </div>
-                <div class="px-3 py-3">
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        Qualification
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input formControlName="qualification" type="text" class="form-control placeholder-text "
-                                placeholder="Dermatologist" id="exampleFormControlInput1">
-                        </div>
-                    </div>
-
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        Main Speciality
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <select formControlName="mainSpecialization" class="form-select text-size-normal"
-                                id="inputGroupSelect01">
-                                <option selected class="text-size-normal">Select Main Speciality
-                                </option>
-                                <option class="text-size-normal" *ngFor="let opt of mainSpecialityLov"
-                                    [value]="opt.value">
-                                    {{opt.value}}
-                                </option>
-                            </select>
-
-                        </div>
-
-                    </div>
-
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">Sub Speciality</p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <select formControlName="subSpecialization" class="form-select text-size-normal"
-                                id="inputGroupSelect01">
-                                <option selected class="text-size-normal">Select Sub Speciality</option>
-                                <option class="text-size-normal" *ngFor="let opt of subSpecialityLov"
-                                    [value]="opt.value">
-                                    {{opt.value}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">Licienced State</p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <select formControlName="licienceState" class="form-select text-size-normal"
-                                id="inputGroupSelect01">
-                                <option selected class="text-size-normal">Select State</option>
-                                <option class="text-size-normal" *ngFor="let opt of cityLov" [value]="opt.value">
-                                    {{opt.value}}
-                                </option>
-                            </select>
-                            <!-- <ng-select formControlName="licienceState" class="form-select form-control text-size-normal"
-                                [clearable]="false" [searchable]="true" [placeholder]="'Select licience State'">
-                                <ng-option *ngFor="let item of stateLov" [value]="item.value">{{item.value}}</ng-option>
-                            </ng-select> -->
-                        </div>
-                    </div>
-
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        Experience (In years)
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input formControlName="overallExperience" type="text"
-                                class="form-control placeholder-text " placeholder="Experience"
-                                id="exampleFormControlInput1">
-
-                        </div>
-
-                    </div>
-                    <p class="mt-2 fw-bold text-black text-size-normal mb-0">
-                        NPI Number
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input formControlName="npiNumber" type="text" class="form-control placeholder-text "
-                                placeholder="NPI Number" id="exampleFormControlInput1">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
-<div class="row mx-1">
-    <button type="button" class="btn bg-primary-light text-light hover-none text-size-normal"
-        (click)="submitProviderForm()">
-        Save Profile Information</button>
-</div>
+    </div>
+    <!-- </div>
+    </div> -->
+</section>

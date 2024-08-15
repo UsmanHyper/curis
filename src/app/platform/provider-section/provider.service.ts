@@ -18,7 +18,9 @@ const providerAppointmentsURL = environment.baseUrl + 'provider/appointments';
 const paymentUrl = environment.baseUrl + 'payment-gateway/process-payment'
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class providerService {
 
   public isSelectedTabSubject = new BehaviorSubject<any>("");

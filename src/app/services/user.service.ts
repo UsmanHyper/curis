@@ -11,7 +11,12 @@ const patientUrl = environment.baseUrl + 'patient/profile';
 const userUrl = environment.baseUrl + 'users/profile';
 const providerUrl = environment.baseUrl + 'provider/profile'
 // const patientUrl = environment.baseUrl + 'provider/profile'
-@Injectable()
+
+
+@Injectable({
+    providedIn: 'root'
+  })
+  
 export class userService {
 
     public isSelectedTabSubject = new BehaviorSubject<any>("");

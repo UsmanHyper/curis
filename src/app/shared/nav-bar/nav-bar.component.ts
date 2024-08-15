@@ -5,6 +5,10 @@ import { Component, HostListener } from '@angular/core';
 import providerNavBar from '../../utilities/navBarData/providerNavBar.json';
 import patientNavBar from '../../utilities/navBarData/userNavbar.json';
 import adminNavBar from '../../utilities/navBarData/adminNavbar.json';
+import { providerService } from 'src/app/platform/provider-section/provider.service';
+import { authenticationService } from 'src/app/services/authentication.service';
+import { adminService } from 'src/app/services/admin.service';
+import { userService } from 'src/app/services/user.service';
 // import { userService } from 'src/app/user-module/user.service';
 
 @Component({
@@ -17,12 +21,12 @@ export class NavBarComponent {
   userData: any;
   navBarItems: any;
   selectedNavItem: string | any;
-  constructor() {
+  constructor( public providerService: providerService, public authenticationService: authenticationService ,public adminService: adminService, public userService: userService) {
     // constructor(public authenticationservice: authenticationService, public providerService: providerService, public adminService: adminService, public userService: userService) {
 
   }
   ngOnInit() {
-    // this.userData = this.authenticationservice.getLoggedInUser();
+    // this.userData = this.authenticationService.getLoggedInUser();
 
     // this.getNavigationsByUserType(this.userData.user_Type || 'Provider' );
     this.getNavigationsByUserType('Provider');
@@ -104,22 +108,28 @@ export class NavBarComponent {
 
 
   getNavbarSelection(value: string) {
-    this.selectedNavItem = value;
-    if (this.userData.user_Type == "Provider") {
-      // this.providerService.setSelectedTab(value);
+    if(!!value){
+      this.selectedNavItem = value
+    }else{
+      value= 'Provider'
     }
-    else if (this.userData.user_Type == "Admin") {
-      // this.adminService.setSelectedTab(value);
-    } else if (this.userData.user_Type == "Patient") {
-      // this.userService.setSelectedTab(value);
-    } else {
-      return
-    }
+    // this.selectedNavItem = value;
+    // if (this.userData.user_Type == "Provider") {
+      this.providerService.setSelectedTab(value);
+    // }
+    // else if (this.userData.user_Type == "Admin") {
+    //   this.adminService.setSelectedTab(value);
+    // } else if (this.userData.user_Type == "Patient") {
+    //   this.userService.setSelectedTab(value);
+    // } else {
+    //   return
+    // }
   }
 
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
+    console.log("------------",event)
     this.updateExpansionState();
   }
 
@@ -129,10 +139,13 @@ export class NavBarComponent {
 
   private updateExpansionState(): void {
     // You can adjust the breakpoint as needed
-    const isSmallScreen = window.innerWidth < 768; // Example breakpoint: 768 pixels
+    const isSmallScreen = window.innerWidth < 768 || window.innerWidth === 780; // Example breakpoint: 768 pixels
 
     if (isSmallScreen) {
       this.isExpanded = false;
+    }else{
+      
+      this.isExpanded = true;
     }
   }
 

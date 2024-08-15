@@ -13,7 +13,9 @@ const logoutUrl = environment.baseUrl + 'authenticate/logout';
 const getProviderDataUrl = environment.baseUrl + 'provider/profile/userId';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class authenticationService {
   public isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated = this.isAuthenticatedSubject.asObservable();

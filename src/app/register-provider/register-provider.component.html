@@ -199,7 +199,7 @@
                         </div>
                         <div class="input-group">
                           <label for="fname">Phone Number</label>
-                          
+
                           <input type="text" mask="(000) 000-0000" placeholder="(123)-456-7890"
                             formControlName="contactNumber" class="border" name="new-contactNumber" autocomplete="off"
                             aria-autocomplete required />
@@ -397,8 +397,8 @@
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <button type="button" class="btn btn-submit btn-width"
                           (click)="backToPersonalInfo()">Back</button>
-                        <button type="button" class="btn btn-submit btn-width"
-                          (click)="nextToQualificationAndSkills()" [disabled]="practiceInformationForm.invalid" >Next</button>
+                        <button type="button" class="btn btn-submit btn-width" (click)="nextToQualificationAndSkills()"
+                          [disabled]="practiceInformationForm.invalid">Next</button>
                       </div>
                     </div>
                   </div>
@@ -474,15 +474,13 @@
 
                         <div class="input-group">
                           <label for="fname">NPI Number</label>
-                          <select class="form-select input-style" aria-label="Default select example"
-                            formControlName="roleAtPractice">
-                            <option disabled selected>NPI number</option>
-                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
-                          </select>
+
+                          <input type="text" placeholder="Enter NPI number" formControlName="npiNumber" class="border"
+                            name="new-overallExperience" autocomplete="off" aria-autocomplete required />
 
                           <ng-container
-                            *ngIf="qualificationAndSkillsForm.get('roleAtPractice')?.invalid && (qualificationAndSkillsForm.get('roleAtPractice')?.dirty || qualificationAndSkillsForm.get('roleAtPractice')?.touched)">
-                            <ng-container *ngIf="qualificationAndSkillsForm.get('roleAtPractice')?.errors">
+                            *ngIf="qualificationAndSkillsForm.get('npiNumber')?.invalid && (qualificationAndSkillsForm.get('npiNumber')?.dirty || qualificationAndSkillsForm.get('npiNumber')?.touched)">
+                            <ng-container *ngIf="qualificationAndSkillsForm.get('npiNumber')?.errors">
                               <span class="text-danger error-state">NPI Number is required</span>
                             </ng-container>
 
@@ -498,7 +496,7 @@
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="subSpeciality">
                             <option disabled selected>Sub specialization</option>
-                            <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                            <option *ngFor="let item of subSpecialityLov" [value]="item.name">{{ item.name }}</option>
                           </select>
                           <ng-container
                             *ngIf="qualificationAndSkillsForm.get('subSpeciality')?.invalid && (qualificationAndSkillsForm.get('subSpeciality')?.dirty || qualificationAndSkillsForm.get('subSpeciality')?.touched)">
@@ -514,8 +512,8 @@
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <button type="button" class="btn btn-submit btn-width"
                           (click)="backToPracticeInfo()">Back</button>
-                        <button type="button" class="btn btn-submit btn-width"
-                          (click)="moveToAccountInfo()" [disabled]="qualificationAndSkillsForm.invalid">Next</button>
+                        <button type="button" class="btn btn-submit btn-width" (click)="moveToAccountInfo()"
+                          [disabled]="qualificationAndSkillsForm.invalid">Next</button>
                       </div>
                     </div>
                   </div>
@@ -637,7 +635,8 @@
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <button type="button" class="btn btn-submit btn-width"
                           (click)="backToAccountInfo()">Back</button>
-                        <button type="button" class="btn btn-submit btn-width" (click)="success()" [disabled]="accountInformationForm.invalid" >Next</button>
+                        <button type="button" class="btn btn-submit btn-width" (click)="success()"
+                          [disabled]="accountInformationForm.invalid">Next</button>
                       </div>
                     </div>
                   </div>

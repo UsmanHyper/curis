@@ -65,6 +65,7 @@ export class RegisterProviderComponent implements OnInit {
   qualificationLov: any = [];
   cityLov: any = [];
   zipCodesLov: any = [];
+  subSpecialityLov: any = [];
 
   passwordVisibility: any = {
     currentPassword: false,
@@ -129,6 +130,7 @@ export class RegisterProviderComponent implements OnInit {
     this.getStatesLov()
     this.getzipCodeLov()
     this.providerQualification()
+    this.getSubSpecialityLov()
 
 
   }
@@ -456,7 +458,21 @@ export class RegisterProviderComponent implements OnInit {
       );
   }
 
-
+  getSubSpecialityLov() {
+    this.spinner.show();
+    this.apiService.getLovs(5)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.subSpecialityLov = res[0].lovs;
+          this.spinner.hide();
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
+  }
 
   getUserDetailsBytokenRequest(data: any) {
     this.spinner.show();

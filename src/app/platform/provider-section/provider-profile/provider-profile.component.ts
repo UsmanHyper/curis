@@ -33,14 +33,16 @@ export class ProviderProfileComponent implements OnInit {
   userToken: any;
   userData: any;
   providerData: any;
+  zipCodesLov: any;
+  qualificationLov: any;
 
 
   personalInformationForm: FormGroup;
   practiceInformationForm: FormGroup;
   qualificationAndSkillsForm: FormGroup;
 
-  constructor( private spinner: NgxSpinnerService, private apiService: MainHomeService, private formBuilder: FormBuilder,private providerService: providerService ) {
-  // constructor(private providerservice: providerService, private spinner: NgxSpinnerService, private apiService: MainHomeService, private authenticationservice: authenticationService, private formBuilder: FormBuilder, private global: Global, private homeService: homeService) {
+  constructor(private spinner: NgxSpinnerService, private apiService: MainHomeService, private formBuilder: FormBuilder, private providerService: providerService) {
+    // constructor(private providerservice: providerService, private spinner: NgxSpinnerService, private apiService: MainHomeService, private authenticationservice: authenticationService, private formBuilder: FormBuilder, private global: Global, private homeService: homeService) {
 
     this.personalInformationForm = this.formBuilder.group({
       firstName: ["", [Validators.required,]],
@@ -93,6 +95,9 @@ export class ProviderProfileComponent implements OnInit {
       this.getTimezoneLov(),
       this.getmainSpecialityLov(),
       this.getGenderLov(),
+      this.getzipCodeLov(),
+      this.providerQualification()
+
     ])
   }
 
@@ -210,8 +215,36 @@ export class ProviderProfileComponent implements OnInit {
     });
   }
 
-
-
+  getzipCodeLov() {
+    this.spinner.show();
+    this.apiService.getLovs(19)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.zipCodesLov = res[0].lovs;
+          this.spinner.hide();
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+  providerQualification() {
+    this.spinner.show();
+    this.apiService.getLovs(20)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.qualificationLov = res[0].lovs;
+          this.spinner.hide();
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
+  }
   submitProviderForm() {
     if (this.providerData) {
       let data = {
