@@ -15,8 +15,8 @@ const providerUrl = environment.baseUrl + 'provider/profile'
 
 @Injectable({
     providedIn: 'root'
-  })
-  
+})
+
 export class userService {
 
     public isSelectedTabSubject = new BehaviorSubject<any>("");
@@ -68,7 +68,7 @@ export class userService {
         return this.http.put(patientUrl + "/" + providerId, payload, header);
     }
 
-    
+
     putPatientData(accessToken: any, providerId: any, payload: any) {
         const header = {
             headers: new HttpHeaders({
@@ -96,7 +96,7 @@ export class userService {
         }
     }
 
-    getLovs(data: any) {   
+    getLovs(data: any) {
         return this.http.get(lovsURL + data);
     }
 

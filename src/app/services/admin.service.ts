@@ -84,7 +84,7 @@ export class adminService {
 
     return this.http.get(userappointmentsUrl + "/" + userId, header);
   }
-  
+
   getAppointmentDetailsByID(accessToken: any, userId: any) {
     const header = {
       headers: new HttpHeaders({

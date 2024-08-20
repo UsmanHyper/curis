@@ -8,7 +8,8 @@ const authenticationUrl = environment.baseUrl + 'authenticate/';
 const userUpdateURL = environment.baseUrl + 'users/profile/';
 const lovsByNameURL = environment.publicUrl + '/lovByName/';
 const scheduleAppointmentURL = environment.publicUrl + 'scheduleAppointment/';
-
+const slugOTP = new URL(`${environment.baseUrl}rest/v1/registration/generate-otp`)
+const slugVerifyOTP = new URL(`${environment.baseUrl}rest/v1/registration/verify-otp`)
 export interface ApiResponse {
   status: number;
   error?: string,
@@ -36,7 +37,7 @@ export class MainHomeService {
 
     return this.http.post(authenticationUrl + 'signup', payload);
   }
-  
+
   updateUserBasicInformation(accessToken: any, payloadData: any, userId: any) {
     const header = {
       headers: new HttpHeaders({
@@ -71,6 +72,14 @@ export class MainHomeService {
     return this.http.put<ApiResponse>(slug, postData);
   }
 
+
+
+  getOTP(postData: any) {
+    return this.http.post<ApiResponse>(slugOTP.href, postData);
+  }
+  verifyOTP(postData: any) {
+    return this.http.post<ApiResponse>(slugVerifyOTP.href, postData);
+  }
 
   successToster(message: string, title: string) {
     this.toastr.success(message, title, {

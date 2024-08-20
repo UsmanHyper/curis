@@ -496,7 +496,7 @@
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="subSpeciality">
                             <option disabled selected>Sub specialization</option>
-                            <option *ngFor="let item of subSpecialityLov" [value]="item.name">{{ item.name }}</option>
+                            <option *ngFor="let item of subSpecialityLov" [value]="item.value">{{ item.value }}</option>
                           </select>
                           <ng-container
                             *ngIf="qualificationAndSkillsForm.get('subSpeciality')?.invalid && (qualificationAndSkillsForm.get('subSpeciality')?.dirty || qualificationAndSkillsForm.get('subSpeciality')?.touched)">
@@ -537,25 +537,25 @@
                     <div class="form-wrapper">
                       <div class="d-flex gap-4 group-wrapper ">
 
-                        <div class="input-group">
+                        <!-- <div class="input-group">
                           <label for="speciality">Password</label>
 
                           <input name="password" [type]="showPassword ? 'text' : 'password'" class="border"
-                            id="password-field" placeholder="Password">
-                          <div>
+                            id="password-field" placeholder="Password" formControlName="password"> -->
+                        <!-- <div>
                             <i alt="show" class="bi bi-eye eye-show" (click)="showPassword = !showPassword"
                               [class.hide]="showPassword"></i>
                             <i alt="hide" class="bi bi-eye-slash eye-hide" (click)="showPassword = !showPassword"
                               [class.hide]="!showPassword"></i>
-                          </div>
-                          <ng-container
-                            *ngIf="accountInformationForm.get('qualification')?.invalid && (accountInformationForm.get('qualification')?.dirty || accountInformationForm.get('qualification')?.touched)">
-                            <ng-container *ngIf="accountInformationForm.get('qualification')?.errors">
+                          </div> -->
+                        <!-- <ng-container
+                            *ngIf="accountInformationForm.get('password')?.invalid && (accountInformationForm.get('password')?.dirty || accountInformationForm.get('password')?.touched)">
+                            <ng-container *ngIf="accountInformationForm.get('password')?.errors">
                               <span class="text-danger error-state">Password is required</span>
                             </ng-container>
 
                           </ng-container>
-                        </div>
+                        </div> -->
 
                         <!-- <div class="input-group">
                           <label for="password-field" class="form-label">Password</label>
@@ -604,8 +604,42 @@
                         </div> -->
 
                         <div class="input-group">
+                          <label for="password">Password</label>
+                          <input type="password" placeholder="Enter your password" class="border"
+                            formControlName="password" autocomplete="off" aria-autocomplete name="new-password"
+                            required />
+                          <ng-container
+                            *ngIf="accountInformationForm.get('password')?.invalid && (accountInformationForm.get('password')?.dirty || accountInformationForm.get('password')?.touched)">
+                            <ng-container *ngIf="accountInformationForm.get('password')?.errors">
+                              <span class="text-danger error-state">Password is required</span>
+                            </ng-container>
+                          </ng-container>
+                        </div>
+
+
+                        <div class="input-group">
+                          <label for="confirm-password">Confirm Password</label>
+                          <input type="password" formControlName="confirmPassword" placeholder="Confirm your password"
+                            autocomplete="off" aria-autocomplete class="border" name="new-confirmPassword" required />
+                          <div
+                            *ngIf="accountInformationForm.get('confirmPassword')?.hasError('required') && accountInformationForm.get('confirmPassword')?.touched  else checkPass">
+                            <span class="text-danger error-state"> Confirm Passwords is required.</span>
+
+                          </div>
+                          <ng-template #checkPass>
+                            <div
+                              *ngIf="accountInformationForm.get('confirmPassword')?.invalid && accountInformationForm.get('confirmPassword')?.touched ">
+                              <span class="text-danger error-state">
+                                Two passwords that you enter is inconsistent!</span>
+
+                            </div>
+                          </ng-template>
+                        </div>
+
+                      </div>
+                        <!-- <div class="input-group">
                           <label for="fname">Confirm Password</label>
-                          <input type="text" placeholder="Enter Confirm Password" formControlName="confirmPassword"
+                          <input type="password" placeholder="Enter Confirm Password" formControlName="confirmPassword"
                             class="border" name="new-confirmPassword" autocomplete="off" aria-autocomplete required />
                           <ng-container
                             *ngIf="accountInformationForm.get('confirmPassword')?.invalid && (accountInformationForm.get('confirmPassword')?.dirty || accountInformationForm.get('confirmPassword')?.touched)">
@@ -613,10 +647,26 @@
                               <span class="text-danger error-state">Confirm Password is required</span>
                             </ng-container>
 
-                          </ng-container>
-                        </div>
+                          </ng-container> -->
 
-                      </div>
+
+
+
+                        <!-- <div
+                            *ngIf="accountInformationForm.get('confirmPassword')?.hasError('required') && accountInformationForm.get('confirmPassword')?.touched  else checkPass">
+                            <span class="text-danger error-state"> Confirm Passwords is required.</span>
+
+                          </div>
+                          <ng-template #checkPass>
+                            <div
+                              *ngIf="accountInformationForm.get('confirmPassword')?.invalid && accountInformationForm.get('confirmPassword')?.touched ">
+                              <span class="text-danger error-state"> Two passwords that you enter is
+                                inconsistent!</span>
+
+                            </div>
+                          </ng-template> -->
+                        <!-- </div> -->
+
 
                       <!-- <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <div class="password-field">
@@ -636,7 +686,7 @@
                         <button type="button" class="btn btn-submit btn-width"
                           (click)="backToAccountInfo()">Back</button>
                         <button type="button" class="btn btn-submit btn-width" (click)="success()"
-                          [disabled]="accountInformationForm.invalid">Next</button>
+                          [disabled]="!accountInformationForm.valid">Next</button>
                       </div>
                     </div>
                   </div>

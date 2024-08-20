@@ -111,8 +111,8 @@ export class RegisterProviderComponent implements OnInit {
     });
 
     this.accountInformationForm = this.formBuilder.group({
-      password: ["", [Validators.required,]],
-      confirmPassword: ["", [Validators.required,]]
+      password: [null, [Validators.required,]],
+      confirmPassword: [null, [Validators.required,]]
     })
 
 
@@ -133,7 +133,40 @@ export class RegisterProviderComponent implements OnInit {
     this.getSubSpecialityLov()
 
 
+    
+
+
   }
+  // confirmationValidator = (control: FormControl): Promise<any> | Observable<any> => {
+  //   return new Promise((resolve) => {
+  //     console.log("------------------", control.value)
+  //     console.log("------------------",  this.accountInformationForm.controls['password'].value)
+  //     console.log("------------------",  this.accountInformationForm)
+  //     if (!control.value) {
+  //       resolve({ error: true, required: true });
+  //     } else if (control.value !== this.accountInformationForm.controls['password'].value) {
+  //       resolve({ confirm: true, error: true });
+  //     } else {
+  //       resolve(null); // Validation passed
+  //     }
+  //   });
+  // };
+
+
+  confirmationValidator = (control: FormControl): Promise<any> | Observable<any> => {
+    return new Promise((resolve) => {
+      const password = this.accountInformationForm?.get('password')?.value;
+      const confirmPassword = control.value;
+      if (!confirmPassword) {
+        resolve({ required: true });
+      } else if (confirmPassword !== password) {
+        resolve({ confirm: true });
+      } else {
+        resolve(null);       // Validation passed
+      }
+    });
+  };
+
 
 
 
@@ -192,7 +225,7 @@ export class RegisterProviderComponent implements OnInit {
       "addressLineOne": this.practiceInformationForm.controls['addressLineOne'].value,
       "addressLineTwo": this.practiceInformationForm.controls['addressLineTwo']?.value || "",
 
-      // "qualification": this.qualificationAndSkillsForm.controls['qualification'].value,
+      "qualification": this.qualificationAndSkillsForm.controls['qualification'].value,
       "mainSpeciality": this.practiceInformationForm.controls['providersSpeciality'].value,
       "subSpeciality": this.qualificationAndSkillsForm.controls['subSpeciality'].value,
       "liciencedState": this.qualificationAndSkillsForm.controls['licienceState'].value,
@@ -291,6 +324,8 @@ export class RegisterProviderComponent implements OnInit {
     this.successfulStepper = true;
 
     this.step4 = true
+
+    this.signUpFormSubmission()
   }
 
 

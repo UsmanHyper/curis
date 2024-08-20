@@ -12,7 +12,9 @@ const getPatientrDataUrl = environment.adminUrl + 'patientDetails';
 const getuserDataUrl = environment.adminUrl + 'admin/profile/userId/';
 const userDataUrl = environment.baseUrl + 'users/profile';
 const userappointmentsUrl = environment.baseUrl + 'patient/appointments';
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class adminService {
 
   public isSelectedTabSubject = new BehaviorSubject<any>("");
@@ -79,7 +81,7 @@ export class adminService {
 
     return this.http.get(userappointmentsUrl + "/" + userId, header);
   }
-  
+
   getAppointmentDetailsByID(accessToken: any, userId: any) {
     const header = {
       headers: new HttpHeaders({

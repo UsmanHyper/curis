@@ -21,7 +21,7 @@ export class NavBarComponent {
   userData: any;
   navBarItems: any;
   selectedNavItem: string | any;
-  constructor( public providerService: providerService, public authenticationService: authenticationService ,public adminService: adminService, public userService: userService) {
+  constructor( public providerService: providerService, public authenticationService: authenticationService , public userService: userService) {
     // constructor(public authenticationservice: authenticationService, public providerService: providerService, public adminService: adminService, public userService: userService) {
 
   }

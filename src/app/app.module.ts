@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FlatpickrModule } from 'angularx-flatpickr';
     ToastrModule.forRoot({
       preventDuplicates: false,
       autoDismiss: true,
-    })
+    }),
+    ModalModule.forRoot(),
   ],
   providers: [],
   // providers: [
