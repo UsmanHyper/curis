@@ -22,7 +22,8 @@ import { NgxMaskModule } from 'ngx-mask';
 export class RegisterProviderComponent implements OnInit {
 
 
-  personalInformationStepper: boolean = true;
+  emailStepper: boolean = true;
+  personalInformationStepper: boolean = false;
   successfulStepper: boolean = false;
 
 
@@ -33,6 +34,7 @@ export class RegisterProviderComponent implements OnInit {
 
 
 
+  step0: boolean = false;
   step1: boolean = false;
   step2: boolean = false;
   step3: boolean = false;
@@ -131,11 +133,6 @@ export class RegisterProviderComponent implements OnInit {
     this.getzipCodeLov()
     this.providerQualification()
     this.getSubSpecialityLov()
-
-
-    
-
-
   }
   // confirmationValidator = (control: FormControl): Promise<any> | Observable<any> => {
   //   return new Promise((resolve) => {
@@ -151,6 +148,23 @@ export class RegisterProviderComponent implements OnInit {
   //     }
   //   });
   // };
+
+
+
+  checkEmail() {
+    let payload = {
+      email: this.personalInformationForm.controls['email'].value
+    }
+
+    this.personalInformationStepper = true;
+    this.practiceInformationStepper = false;
+    this.emailStepper = false;
+    this.skillsInformationStepper = false;
+    this.accountInformationStepper = false;
+    this.successfulStepper = false;
+
+    this.step0 = true;
+  }
 
 
   confirmationValidator = (control: FormControl): Promise<any> | Observable<any> => {

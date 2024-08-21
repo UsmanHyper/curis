@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-// import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
@@ -41,7 +41,7 @@ export class authenticationService {
   }
 
 
-  setuserTokendata(data: any) {
+  setUserTokenData(data: any) {
     localStorage.setItem('token', JSON.stringify(data));
   }
 
@@ -75,6 +75,20 @@ export class authenticationService {
   //   };
   //   return this.http.get(userUrl + '/' + userId, header);
   // }
+
+  getDataByToken(accessToken: any) {
+    let jwt_decode = new JwtHelperService();
+    let decodedToken = jwt_decode.decodeToken(accessToken);
+    console.log("----------", decodedToken)
+    let userId = decodedToken._id;
+    console.log("----------", userId)
+    const header = {
+      headers: new HttpHeaders({
+        Authorization: accessToken
+      })
+    };
+    return this.http.get(userUrl + '/' + userId, header);
+  }
 
   setProviderData(data: any) {
     console.log(data)

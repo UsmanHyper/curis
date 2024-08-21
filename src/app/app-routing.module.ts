@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProviderDashboardComponent } from './platform/provider-section/provider-dashboard/provider-dashboard.component';
+import { DefaultScreenComponent } from './auth/default-screen/default-screen.component';
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
@@ -28,6 +29,27 @@ const routes: Routes = [
     ],
   },
 
+  // {
+  //   path: "login",
+  //   component: DefaultScreenComponent,
+  //   // canActivate: [providerAuthGuard],
+  //   data: {
+  //     title: "Login",
+  //   },
+  //   children: [
+  //     {
+  //       path: "",
+  //       loadChildren: () =>
+  //         import("./auth/auth.module").then(
+  //           (m) => m.AuthModule
+  //         ),
+  //     },
+  //   ],
+  // },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
   {
     path: "",
     loadComponent: () =>

@@ -8,7 +8,7 @@
             <figure class="photo">
               <div class="d-flex flex-column g-36">
                 <div class="d-flex gap-20 flex-column">
-                  <h1 >Helping find economical healthcare for uninsured and under-insured.</h1>
+                  <h1>Helping find economical healthcare for uninsured and under-insured.</h1>
                   <p class="para">Curis is a marketplace connecting patients and providers based on a pay for service
                     basis</p>
                 </div>
@@ -32,27 +32,27 @@
               <option>Speciality 2</option>
               <option>Speciality 3</option>
             </select> -->
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" aria-label="Default select example" (change)="getServicesForSpeciality()">
               <option selected>Select Speciality</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option *ngFor="let item of specialtiesList" [value]="item.value">{{item.value}}</option>
+              <!-- <option value="2">Two</option>
+              <option value="3">Three</option> -->
             </select>
           </div>
           <div class="form_group">
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" aria-label="Default select example" [disabled]="disableService">
               <option selected>Select Service</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option *ngFor="let item of servicesList" [value]="item.value">{{item.value}}</option>
+              <!-- <option value="2">Two</option>
+              <option value="3">Three</option> -->
             </select>
           </div>
           <div class="form_group">
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" aria-label="Default select example" [disabled]="disableLocation">
               <option selected>Select Location</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option *ngFor="let item of zipCodesLov" [value]="item.value">{{item.value}}</option>
+              <!-- <option value="2">Two</option>
+              <option value="3">Three</option> -->
             </select>
           </div>
           <div class="form_group">
@@ -66,7 +66,8 @@
       <div class="mt-60 col-12 col-lg-12">
         <div class="ft_card d-flex flex-column">
           <h2 class="title">Explore Top Rated Direct-Pay-Care Providers</h2>
-          <p class="para">Browse thousands of trusted providers offering affordable services every day. Book appointments online today and get the care you need.</p>
+          <p class="para">Browse thousands of trusted providers offering affordable services every day. Book
+            appointments online today and get the care you need.</p>
 
         </div>
       </div>
@@ -117,7 +118,7 @@
                 </div>
                 <div class="">
                   <h4 class="mini_title">Sun, May 5</h4>
-                  
+
                   <div class="slots">
                     <ng-container *ngFor="let slot of slots; let i = index">
                       <a *ngIf="i < 5" href="#">{{ slot }}</a>
@@ -154,7 +155,7 @@
                 </div>
                 <div class="">
                   <h4 class="mini_title">Sun, May 5</h4>
-                  
+
                   <div class="slots">
                     <ng-container *ngFor="let slot of slots; let i = index">
                       <a *ngIf="i < 5" href="#">{{ slot }}</a>
@@ -191,7 +192,7 @@
                 </div>
                 <div class="">
                   <h4 class="mini_title">Sun, May 5</h4>
-                  
+
                   <div class="slots">
                     <ng-container *ngFor="let slot of slots; let i = index">
                       <a *ngIf="i < 5" href="#">{{ slot }}</a>
@@ -228,7 +229,7 @@
                 </div>
                 <div class="">
                   <h4 class="mini_title">Sun, May 5</h4>
-                  
+
                   <div class="slots">
                     <ng-container *ngFor="let slot of slots; let i = index">
                       <a *ngIf="i < 5" href="#">{{ slot }}</a>
@@ -268,7 +269,7 @@
                 </div>
                 <div class="">
                   <h4 class="mini_title">Sun, May 5</h4>
-                  
+
                   <div class="slots">
                     <ng-container *ngFor="let slot of slots; let i = index">
                       <a *ngIf="i < 5" href="#">{{ slot }}</a>
@@ -305,7 +306,7 @@
                 </div>
                 <div class="">
                   <h4 class="mini_title">Sun, May 5</h4>
-                  
+
                   <div class="slots">
                     <ng-container *ngFor="let slot of slots; let i = index">
                       <a *ngIf="i < 5" href="#">{{ slot }}</a>
@@ -342,7 +343,7 @@
                 </div>
                 <div class="">
                   <h4 class="mini_title">Sun, May 5</h4>
-                  
+
                   <div class="slots">
                     <ng-container *ngFor="let slot of slots; let i = index">
                       <a *ngIf="i < 5" href="#">{{ slot }}</a>
@@ -379,7 +380,7 @@
                 </div>
                 <div class="">
                   <h4 class="mini_title">Sun, May 5</h4>
-                  
+
                   <div class="slots">
                     <ng-container *ngFor="let slot of slots; let i = index">
                       <a *ngIf="i < 5" href="#">{{ slot }}</a>

@@ -7,10 +7,10 @@
                 </span>
                 <h1 class="title_description mt-10 mb-10 text-center">Please check your email.</h1>
                 <h2 class="sub-title_description text-center">We've sent a code to
-                    <span class="sub-bold-title"> {{'shah@example.com'}} </span>
+                    <span class="sub-bold-title"> {{payload.email}} </span>
                 </h2>
             </div>
-            <form class="form " [formGroup]="userPassword" (ngSubmit)="verifyOtp()">
+            <form class="form " [formGroup]="userPassword">
                 <div class="form-group w-100-p align-items-center">
                     <ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
                 </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class=" d-flex g-16 mt-10">
                     <button class="form-cancel-btn " (click)="bsModalRef.hide()">Cancel </button>
-                    <button class="form-submit-btn" type="submit"
+                    <button class="form-submit-btn" (click)="verifyOtp()"
                         [ngClass]="!userPassword.valid ? '': 'btn-disabled' " [disabled]="!userPassword.valid">
                         Verify
                     </button>

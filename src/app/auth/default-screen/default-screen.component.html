@@ -1,2 +1,15 @@
-<p>default-screen works!</p>
-<router-outlet></router-outlet>
+<app-header></app-header>
+<section>
+    <div class="container-fluid">
+        <div class="booking_row">
+            <div class="col-1">
+                <router-outlet></router-outlet>
+            </div>
+            <div class="col-2">
+                <img class="default-screen-img" src="../../../assets/images/default-screen/login-img.svg" alt="logo"
+                    loading="lazy" width="100%" height="100%" />
+            </div>
+        </div>
+    </div>
+</section>
+<app-footer></app-footer>

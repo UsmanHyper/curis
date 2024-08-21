@@ -77,7 +77,6 @@ export class VerifyOtpComponent implements OnInit {
   }
 
   verifyOtp() {
-    console.log("----------------")
     let payload = {
       email: this.payload.email,
       otpType: this.payload.otpType,
@@ -89,14 +88,15 @@ export class VerifyOtpComponent implements OnInit {
     this.apiService.verifyOTP(payload).pipe(first())
       .subscribe(
         (res: any) => {
-          this.dss.sendSignal({ type: "otpVerified", data: true, })
+          this.bsModalRef.hide()
+          this.dss.sendSignal({ type: "otpVerified", data: res, })
         },
         (err: any) => {
           // this.spinner.hide();
           // this.showError(err?.error?.message?.description);
         }
       );
-    }
+  }
 
   onOtpChange(otp: any) {
     this.otp = otp;
@@ -122,6 +122,7 @@ export class VerifyOtpComponent implements OnInit {
       this.sendOtpAgian = false;
       this.otpCounter()
       this.ngOtpInputRef.setValue(null);
+      this.generateOtp();
       // const slug =new URL(`${environment.baseUrl}/users/authentication/forgot`);
       // const payload = { email: this.email };
       // this.apiService.post(slug.href, payload).subscribe((resp: any) => {
@@ -131,5 +132,16 @@ export class VerifyOtpComponent implements OnInit {
       return
     }
 
+  }
+
+  generateOtp() {
+    this.apiService.getOTP(this.payload).pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.apiService.successToster("Check Your Email", 'OTP Re-Sent',)
+        },
+        (err: any) => {
+        }
+      );
   }
 }

@@ -201,7 +201,7 @@
                             <select class="form-select input-style" aria-label="Default select example"
                               formControlName="gender">
                               <option disabled selected>Select your gender</option>
-                              <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                              <option *ngFor="let item of genderLov" [value]="item.value">{{ item.value }}</option>
                             </select>
 
                             <ng-container
@@ -229,7 +229,7 @@
                         <div class="d-flex gap-4 group-wrapper mt-12 ">
                           <div class="input-group">
                             <label for="fname">Phone Number</label>
-                            <input type="text" placeholder="Select" formControlName="contact_number" class="border"
+                            <input type="text" mask="(000) 000-0000" placeholder="(123)-456-7890" formControlName="contact_number" class="border"
                               name="new-contact_number" autocomplete="off" aria-autocomplete required />
 
                             <ng-container
@@ -256,7 +256,7 @@
 
                         </div>
                         <div class="d-flex gap-4 group-wrapper mt-12 ">
-                          <button type="button" class="btn btn-submit btn-width" (click)="moveToPay()"  [disabled]="!userform.valid ">Continue</button>
+                          <button type="button" class="btn btn-submit btn-width" (click)="confirmBooking()"  [disabled]="!userform.valid ">Continue</button>
                         </div>
                       </div>
                     </div>
@@ -547,7 +547,7 @@
                             <select class="form-select input-style" aria-label="Default select example"
                               formControlName="region">
                               <option disabled selected>Select your Country or Region</option>
-                              <option *ngFor="let item of allGenders" [value]="item.name">{{ item.name }}</option>
+                              <option *ngFor="let item of countryLov" [value]="item.value">{{ item.value }}</option>
                             </select>
 
                             <ng-container

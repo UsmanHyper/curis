@@ -3,38 +3,37 @@
   <div class="container-fluid">
     <div class="booking_row">
       <div class="col-1">
-        <h1 class="main_heading">Your Appointment with Dr. Shah</h1>
+        <img src="../../assets/images//admin/Content.svg" class="img-logo mb-32" alt="logo" loading="lazy" width="100%"
+          height="100%" />
+        <h1 class="main_heading">Join Curis: Expand Your Practice, Serve More Patients</h1>
         <div class="d-flex g-16 py-20">
-          <div class=""><i class="bi bi-calendar-week"></i></div>
-          <div class="d-flex flex-column g-6">
-            <h2 class="sub_title">Appointment Date & Time</h2>
-            <p>Jul 27, 9:30 AM - 10:00 AM</p>
-          </div>
+          <p class="paragraph">Are you a healthcare provider looking to reach uninsured and under-insured patients? Join
+            thousands of
+            providers already using Curis to offer affordable, transparent care.</p>
         </div>
         <div class="d-flex g-16 py-20">
-          <div class=""><i class="bi bi-geo-alt"></i></div>
+
           <div class="d-flex flex-column g-6">
-            <h2 class="sub_title">Location</h2>
-            <p>Come say hello at our clinic.</p>
-            <span class="sub_title">604 Davis Cir SWHUNTSVILLE, AL 35801</span>
+            <h2 class="sub_title">Register Now to:</h2>
+            <ul>
+              <li class="list-item">Gain access to a growing patient base</li>
+              <li class="list-item">Streamline your practice with our easy-to-use platform </li>
+              <li class="list-item">Offer pay-for-service options without insurance hassles </li>
+              <li class="list-item">Make a real difference in healthcare accessibility</li>
+
+            </ul>
           </div>
         </div>
-        <div class="d-flex g-16 py-20">
-          <div class=""><i class="bi bi-telephone"></i></div>
+        <div class="d-flex g-16 ">
+
           <div class="d-flex flex-column g-6">
-            <h2 class="sub_title">Contact Number</h2>
-            <p>Mobile No.</p>
-            <span class="sub_title">+923450513438</span>
+
+            <p class="paragraph">Fill out the form below to get started. Your practice could be live on Curis within 24
+              hours!</p>
+
           </div>
         </div>
-        <div class="d-flex g-16 py-20">
-          <div class=""><i class="bi bi-currency-dollar"></i></div>
-          <div class="d-flex flex-column g-6">
-            <h2 class="sub_title">Service Fee</h2>
-            <p>Self-pay</p>
-            <span class="sub_title">$ 100</span>
-          </div>
-        </div>
+
       </div>
 
 
@@ -46,8 +45,27 @@
               <div class="step">
 
 
-                <ng-container *ngIf="personalInformationStepper">
+                <ng-container *ngIf="emailStepper">
                   <div class="activeText mb-30">1 </div>
+                </ng-container>
+                <ng-container *ngIf="step0">
+                  <div class=""><i class="bi bi-patch-check-fill circle"></i> </div>
+                </ng-container> <span class=" text-center"
+                  [ngClass]="{'activeText': emailStepper || step0   , 'text-medium': !step0 && !emailStepper}">
+                  Add Email</span>
+              </div>
+
+
+              <div class="line-parent mt-3">
+                <div class="line"></div>
+              </div>
+              <div class="step">
+
+
+                <ng-container *ngIf="!step1">
+                  <div class=" mb-30"
+                    [ngClass]="{'activeText': personalInformationStepper || step1   , 'text-medium': !step1 && !personalInformationStepper}">
+                    2</div>
                 </ng-container>
                 <ng-container *ngIf="step1">
                   <div class=""><i class="bi bi-patch-check-fill circle"></i> </div>
@@ -67,7 +85,7 @@
                 <ng-container *ngIf="!step2">
                   <div class=" mb-30"
                     [ngClass]="{'activeText': practiceInformationStepper || step2   , 'text-medium': !step2 && !practiceInformationStepper}">
-                    2 </div>
+                    3</div>
                 </ng-container>
                 <ng-container *ngIf="step2">
                   <div class=""><i class="bi bi-patch-check-fill circle"></i> </div>
@@ -88,7 +106,7 @@
                 <ng-container *ngIf="!step3">
                   <div class=" mb-30"
                     [ngClass]="{'activeText': skillsInformationStepper || step3   , 'text-medium': !step3 && !skillsInformationStepper}">
-                    3 </div>
+                    4 </div>
                 </ng-container>
                 <ng-container *ngIf="step3">
                   <div class=""><i class="bi bi-patch-check-fill circle"></i> </div>
@@ -109,7 +127,7 @@
                 <ng-container *ngIf="!step4">
                   <div class=" mb-30"
                     [ngClass]="{'activeText': accountInformationStepper || step3   , 'text-medium': !step4 && !accountInformationStepper}">
-                    4 </div>
+                    5 </div>
                 </ng-container>
                 <ng-container *ngIf="step4">
                   <div class=""><i class="bi bi-patch-check-fill circle"></i> </div>
@@ -129,7 +147,7 @@
 
 
                 <ng-container *ngIf="!successfulStepper">
-                  <div class="circle fs-16" [ngClass]="{'circle-grey':!successfulStepper}">5
+                  <div class="circle fs-16" [ngClass]="{'circle-grey':!successfulStepper}">6
                   </div>
                 </ng-container>
                 <ng-container *ngIf="successfulStepper === true">
@@ -144,6 +162,47 @@
 
 
             <!--Step Content -->
+            <ng-container *ngIf="emailStepper">
+              <div class="mt-24 w-100-p">
+                <form [formGroup]="personalInformationForm" autocomplete="disable">
+                  <div class="d-flex justify-content-center form-width flex-column">
+                    <div class="text-content">
+                      <h3 class="title">Email</h3>
+                      <p class="lead paragraph-desc">
+                      </p>
+                    </div>
+                    <div class="form-wrapper">
+
+
+                      <div class="d-flex gap-4 group-wrapper mt-12 ">
+                        <div class="input-group">
+                          <label for="fname">Email</label>
+                          <input type="email" placeholder="Enter Email" formControlName="email" class="border"
+                            name="new-email" autocomplete="off" aria-autocomplete required />
+                          <ng-container
+                            *ngIf="personalInformationForm.get('email')?.invalid && (personalInformationForm.get('email')?.dirty || personalInformationForm.get('email')?.touched)">
+                            <ng-container *ngIf="personalInformationForm.get('email')?.errors">
+                              <span class="text-danger error-state">Email is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+                      </div>
+
+
+
+
+                      <div class="d-flex gap-4 group-wrapper mt-12 ">
+                        <button type="button" class="btn btn-submit btn-width" (click)="checkEmail()"
+                          [disabled]="this.personalInformationForm.get('email')?.invalid">Continue</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+
+              </div>
+            </ng-container>
             <ng-container *ngIf="personalInformationStepper">
               <div class="mt-24 w-100-p">
 
@@ -637,7 +696,7 @@
                         </div>
 
                       </div>
-                        <!-- <div class="input-group">
+                      <!-- <div class="input-group">
                           <label for="fname">Confirm Password</label>
                           <input type="password" placeholder="Enter Confirm Password" formControlName="confirmPassword"
                             class="border" name="new-confirmPassword" autocomplete="off" aria-autocomplete required />
@@ -652,7 +711,7 @@
 
 
 
-                        <!-- <div
+                      <!-- <div
                             *ngIf="accountInformationForm.get('confirmPassword')?.hasError('required') && accountInformationForm.get('confirmPassword')?.touched  else checkPass">
                             <span class="text-danger error-state"> Confirm Passwords is required.</span>
 
@@ -665,7 +724,7 @@
 
                             </div>
                           </ng-template> -->
-                        <!-- </div> -->
+                      <!-- </div> -->
 
 
                       <!-- <div class="d-flex gap-4 group-wrapper mt-12 ">

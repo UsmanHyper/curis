@@ -6,10 +6,13 @@ import { ToastrService } from 'ngx-toastr';
 const lovsURL = new URL(`${environment.publicUrl}lov/`);
 const authenticationUrl = environment.baseUrl + 'authenticate/';
 const userUpdateURL = environment.baseUrl + 'users/profile/';
-const lovsByNameURL = environment.publicUrl + '/lovByName/';
+const lovsByNameURL = environment.publicUrl + 'lovByName/';
 const scheduleAppointmentURL = environment.publicUrl + 'scheduleAppointment/';
 const slugOTP = new URL(`${environment.baseUrl}rest/v1/registration/generate-otp`)
 const slugVerifyOTP = new URL(`${environment.baseUrl}rest/v1/registration/verify-otp`)
+const patientByEmail = new URL(`${environment.baseUrl}patient/rest/v1/getPatientByEmail`)
+
+
 export interface ApiResponse {
   status: number;
   error?: string,
@@ -47,6 +50,15 @@ export class MainHomeService {
 
     return this.http.put(userUpdateURL + userId, payloadData, header);
   }
+  getPatientByEmail(accessToken: any, payloadData: any,) {
+    const header = {
+      headers: new HttpHeaders({
+        Authorization: accessToken
+      })
+    };
+
+    return this.http.post(patientByEmail.href, payloadData, header);
+  }
 
   getLovs(data: any) {
     return this.http.get(`${lovsURL.href}${data}`);
@@ -72,6 +84,9 @@ export class MainHomeService {
     return this.http.put<ApiResponse>(slug, postData);
   }
 
+  getLovByName(data: any) {
+    return this.http.get(lovsByNameURL + data);
+  }
 
 
   getOTP(postData: any) {
@@ -104,4 +119,12 @@ export class MainHomeService {
       timeOut: 5000,
     });
   }
+
+
+
+  scheduleAppointment(payload: any) {
+
+    return this.http.post(scheduleAppointmentURL + payload.slothDetails, payload);
+  }
+
 }

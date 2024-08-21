@@ -17,6 +17,8 @@ import { MainHomeService } from 'src/app/services/main-home.service';
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 import { VerifyOtpComponent } from 'src/app/shared/verify-otp/verify-otp.component';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
+import { NgxMaskModule } from 'ngx-mask';
+import { providerService } from '../provider-section/provider.service';
 
 
 @Component({
@@ -24,7 +26,7 @@ import { DataSharingService } from 'src/app/services/data-sharing-servcie';
   templateUrl: './service-booking-flow.component.html',
   styleUrls: ['./service-booking-flow.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, CreditCardDirectivesModule, PaymentStatusComponent],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, CreditCardDirectivesModule, PaymentStatusComponent, NgxMaskModule],
 })
 export class ServiceBookingFlowComponent implements OnInit {
 
@@ -47,19 +49,24 @@ export class ServiceBookingFlowComponent implements OnInit {
   payStep1: boolean = false;
   payStep2: boolean = false;
 
-
+  genderLov: any;
+  data: any;
+  selectedId: any;
 
   public type$: Observable<string> | any;
-  allGenders: any = [
-    { name: 'Male', value: "male" },
-    { name: 'Female', value: "female" },
-    { name: 'Other', value: "other" }
-  ]
+  // allGenders: any = [
+  //   { name: 'Male', value: "male" },
+  //   { name: 'Female', value: "female" },
+  //   { name: 'Other', value: "other" }
+  // ]
   userform: FormGroup;
 
   ccForm: FormGroup;
 
-  constructor(public formBuilder: FormBuilder, private apiService: MainHomeService, private spinner: NgxSpinnerService, private modalService: BsModalService, private dss: DataSharingService,) {
+  token: any = null;
+
+  constructor(public formBuilder: FormBuilder, private apiService: MainHomeService, private spinner: NgxSpinnerService,
+    private authenticationService: authenticationService, private modalService: BsModalService, private dss: DataSharingService, private providerService: providerService) {
 
 
     this.userform = this.formBuilder.group({
@@ -93,7 +100,30 @@ export class ServiceBookingFlowComponent implements OnInit {
     this.dss.onSignal().subscribe((value: any) => {
 
       if (value && value.type === "otpVerified") {
-        this.moveToCreateAccount()
+
+        this.token = value.data.token;
+        let payload = {
+          email: this.userform.controls['email'].value,
+          userType: 'Patient'
+        }
+        this.apiService.getPatientByEmail(this.token, payload).pipe(first())
+          .subscribe(
+            (res: any) => {
+              let dt = res
+              this.userform.patchValue({
+                first_name: dt.f_name,
+                last_name: dt.l_name,
+                contact_number: dt.contact_no,
+                gender: dt.gender,
+                // dob: dt.dob || '',
+                email: dt.email,
+              })
+              this.moveToCreateAccount()
+            },
+            (err: any) => {
+              this.showError(err?.error?.message || 'Something Went Wrong');
+            }
+          );
       }
     })
   }
@@ -103,6 +133,9 @@ export class ServiceBookingFlowComponent implements OnInit {
     this.type$.subscribe((type: any) => {
       console.log('Credit Card Type:', type);
     })
+
+    this.getCountryLov()
+    this.getGenderLov()
   }
 
 
@@ -146,6 +179,8 @@ export class ServiceBookingFlowComponent implements OnInit {
     this.apiService.errorToster(error, 'Error!',);
   }
 
+
+
   moveToCreateAccount() {
     this.emailInformationStepper = false;
     this.createAccountStepper = true;
@@ -161,6 +196,63 @@ export class ServiceBookingFlowComponent implements OnInit {
 
 
   }
+
+
+  confirmBooking() {
+    let payload = {
+      f_name: this.userform.controls['first_name'].value,
+      l_name: this.userform.controls['last_name'].value,
+      gender: this.userform.controls['gender'].value,
+      user_Type: "Patient",
+      email: this.userform.controls['email'].value,
+      dob: this.userform.controls['dob'].value,
+      contact_no: this.userform.controls['contact_number'].value,
+      password: "test12345"
+    }
+    console.log("=================", payload)
+
+    // let dataToSend = JSON.stringify(this.payload)
+    // localStorage.setItem("PatientDetail", dataToSend)
+
+    if (!!this.token) {
+      this.authenticationService.setUserTokenData(this.token);
+      this.getUserDetailsByTokenRequest(this.token);
+    } else {
+      this.signUpSubmitRequest(payload)
+    }
+
+    // this.formView = false;
+    // this.scheduleView = false;
+    // this.booking = true;
+    // }
+  }
+  signUpSubmitRequest(data: any) {
+
+
+    this.apiService.registerUser(data)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          if (res.success == true) {
+            this.authenticationService.setUserTokenData(res.token);
+            this.getUserDetailsByTokenRequest(res.token);
+
+            //this.authenticationService.setIsAuthenticated(true);
+          }
+        },
+        (err: any) => {
+          // this.spinner.hide();
+          // this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+
+
+
+
+
+
+
   moveToPay() {
     this.emailInformationStepper = false;
     this.createAccountStepper = false;
@@ -183,6 +275,21 @@ export class ServiceBookingFlowComponent implements OnInit {
     this.step3 = true;
   }
 
+  getGenderLov() {
+    this.spinner.show();
+    this.apiService.getLovs(6)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.genderLov = res[0].lovs;
+          this.spinner.hide();
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
+  }
 
   openModal(title?: any, payload?: any, description?: any) {
 
@@ -201,19 +308,153 @@ export class ServiceBookingFlowComponent implements OnInit {
   generateOtp() {
     let payload = {
       email: this.userform.controls['email'].value,
-      otpType: 'patient'
+      otpType: 'Patient'
     }
     this.apiService.getOTP(payload).pipe(first())
       .subscribe(
         (res: any) => {
-          this.openModal('', payload,);
+          if (res.isPatient === true) {
+            this.openModal('', payload,);
+          }
         },
         (err: any) => {
           this.spinner.hide();
-          this.showError(err?.error?.message?.description);
+          this.moveToCreateAccount();
+          if (err?.error?.isPatient === false) {
+            this.apiService.successToster("Please Add Your Details ", 'Welcome!',);
+          } else {
+            this.showError(err?.error?.message || 'Something Went Wrong');
+          }
+
         }
       );
   }
 
+
+
+
+
+  // timeSelect(item: any) {
+  //   this.selectedId = item._id;
+  //   this.scheduleAppointment.get('time_slot')?.setValue(this.selectTime)
+  //   this.submit();
+  // }
+
+
+  // submit() {
+  //   this.formView = true;
+  //   this.scheduleView = false;
+  //   this.booking = false;
+  // }
+
+  // modalClose() {
+  //   this.dialogRef.close();
+  // }
+
+  setScheduleAppintmentPayload(item: any) {
+    let payload = {
+      "isAvailable": false,
+      "providerId": this.data?._id || '6637dc27abd045c855ede1ab',
+      "providerUserId": this.data?.userId._id || '6637dc26abd045c855ede1a7',
+      "patientId": item?._id,
+      "slothDetails": this.selectedId || '6637ea9c0cb21905de4bec65',
+      "email": this.userform.controls['email'].value,
+      "appointmentTitle": this.userform.controls['first_name'].value + ` ` + this.userform.controls['last_name'].value,
+      "patientNotes": this.userform.controls['notes'].value
+
+    }
+    console.log("=============", payload)
+
+    this.schedulePatientAppointment(payload)
+  }
+
+  schedulePatientAppointment(data: any) {
+    debugger
+    this.apiService.scheduleAppointment(data)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          console.log(res)
+          let dt = res.data._id
+          localStorage.setItem("appointmentId", dt)
+          this.PayNow()
+          // this.gender = res[0].lovs;
+        },
+        (err: any) => {
+          // this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+
+  getUserDetailsByTokenRequest(data: any) {
+    console.log("===============",data)
+    this.authenticationService.getDataByToken(data)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          if (res) {
+            this.setScheduleAppintmentPayload(res)
+            let response = JSON.stringify(res)
+            localStorage.setItem("user_response", response)
+            // this.authenticationService.setLoggedInUser(res);
+            // if (res.user_Type == "Patient") {
+            //   this.router.navigate(['/userDashboard']);
+            // }
+          }
+        },
+        (err: any) => {
+          // this.spinner.hide();
+          // this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+  getProviderDataById(providerId: any, token: any) {
+    // this.spinner.show();
+    this.authenticationService.getProviderDataById(token, providerId)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.authenticationService.setProviderData(res);
+          // this.spinner.hide();
+        },
+        (err: any) => {
+          // this.spinner.hide();
+          // this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+
+  PayNow() {
+
+    let response = localStorage.getItem("user_response") || ""
+    let res = JSON.parse(response)
+    let appointment_id = localStorage.getItem("appointmentId")
+    let payload = {
+      name: this.userform.controls['first_name'].value + this.userform.controls['last_name'].value,
+      description: "Appointment for ",
+      // description: "Appointment for " + this.dataSource.mainSpeciality,
+      amount: 500,
+      // amount: this.price,
+      email: this.userform.controls['email'].value,
+      appointment_id: appointment_id,
+      userId: res._id
+
+    }
+    this.providerService.patientPaymentInformation(payload).pipe(first())
+      .subscribe(
+        (res: any) => {
+          console.log("paynow resp", res)
+          this.openURLInSameTab(res.sessionURL)
+
+        },
+        (err: any) => {
+        });
+
+
+  }
+
+  openURLInSameTab(url: any) {
+    window.open(`${url}`, '_self'); // '_self' opens in the same tab
+  }
 
 }

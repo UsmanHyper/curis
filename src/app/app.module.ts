@@ -12,6 +12,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   imports: [
     AppRoutingModule,
     NgbModule,
+    AuthModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
