@@ -1,0 +1,16 @@
+.cal{
+    padding: 20px 20px;
+}
+
+
+/* Example: Customizing the event background and border colors */
+.fc .fc-event {
+    background-color: #007bff; /* Bootstrap primary color */
+    border-color: #007bff;
+}
+
+/* Example: Customizing the header buttons */
+.fc .fc-toolbar .fc-button {
+    background-color: #28a745; /* Bootstrap success color */
+    color: #fff;
+}

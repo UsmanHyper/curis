@@ -1,0 +1,213 @@
+.booking_flow {
+    // border-bottom: 1px solid #d4d4d6;
+}
+
+.stepper-card-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    // margin-top: 40px;
+
+}
+
+.stepper-card {
+    margin-inline: auto;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.title {
+    color: #101828;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.paragraph-desc {
+    font-size: 16px;
+    color: #777777;
+}
+
+.profile-header-text {
+    color: #101828 !important;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: left;
+}
+
+
+.page-header-section {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+
+.input-field {
+    display: flex;
+    align-items: center;
+}
+
+.input-field i {
+    width: 35px;
+    height: 35px;
+    margin-left: -515px;
+    display: flex;
+    align-items: center;
+}
+
+// .img2 {
+//     width: 35px;
+//     height: 35px;
+//     margin-left: -40px;
+// }
+
+
+
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    height: 56px;
+    padding: 10px 20px 10px 48px;
+    box-sizing: border-box;
+    color: #777777;
+    border: 1px solid #9e9e9e96 !important;
+    border-radius: 10px !important;
+    background-color: transparent;
+    font-size: 16px !important;
+}
+
+.input-field {
+    width: 36%;
+}
+
+
+
+.card-title {
+    padding: 12px 24px;
+    border-bottom: 1px solid #EAECF0;
+    margin-bottom: 0px;
+
+    .h2 {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 28px;
+        text-align: left;
+        color: #101828;
+
+    }
+}
+
+
+.card-title h2 {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: left;
+    color: #101828;
+
+}
+
+.card-footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+
+}
+
+.page-index {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    color: #344054;
+
+}
+
+
+// th{
+// font-size: 12px;
+// font-weight: 500;
+// line-height: 18px;
+// text-align: left;
+
+// }
+
+
+.table thead tr {
+    background-color: #F9FAFB;
+    border-bottom: 1px solid #EAECF0;
+}
+
+// .table thead th {
+//     background-color: #F9FAFB;
+// }
+
+.table tbody tr {
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.table> :not(caption)>*>* {
+    font-size: 15px;
+    background-color: transparent;
+    border: 0;
+    padding: 20px 20px 18px;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 40px;
+}
+
+.table tr td {
+    color: #333333;
+}
+
+.table th {
+    color: #667085;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: left;
+}
+
+
+.tag {
+    border-radius: 100px;
+    padding: 8px 36px;
+    text-align: center;
+    // display: block;
+    text-align: center;
+
+}
+
+.tag_btn-cancel {
+    background-color: #FEF3F2;
+    border-radius: 10px;
+    text-align: center;
+    color: #D92D20;
+    // display: block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 15px 28px;
+
+}
+
+.tag_btn-reschdule {
+    background-color: #F0F9FF;
+    border-radius: 10px;
+    text-align: center;
+    color: #0086C9;
+    // display: block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 15px 28px;
+
+}

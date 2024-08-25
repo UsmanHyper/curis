@@ -1,9 +1,9 @@
-<div class="col-md-2 ms-auto " style="margin-bottom: 16px;">
+<!-- <div class="col-md-2 ms-auto " style="margin-bottom: 16px;">
     <button type="button" class="btn bg-warning text-white hover-none button-small px-2" style="width: 100%;
     padding: 4px; font-size: 15px;" (click)="addNewLocation()">
         Add Location
     </button>
-</div>
+</div> -->
 <!-- <div class=" customAccordion" id="accordionFlushExample">
     <div class="accordion-item ">
         <h2 class="accordion-header accordion-button" id="flush-headingOne">
@@ -46,3 +46,103 @@
         </h2>
     </div>
 </div> -->
+
+
+<section class="booking_flow">
+    <div class="container-fluid">
+
+        <div class="stepper-card-container">
+            <div class="stepper-card">
+                <ng-container>
+                    <div class="w-100-p">
+                        <div class="d-flex justify-content-center form-width flex-column">
+                            <div class="text-content">
+                                <h1 class="title">Locations</h1>
+                                <p class="lead paragraph-desc">
+                                </p>
+                            </div>
+
+                            <div class="page-header-section mt-28">
+                                <div class="input-field">
+                                    <input type="text" class=" placeholder-text " placeholder="Search for Locations">
+                                    <i class="bi bi-search" style="cursor: pointer;"></i>
+                                    <!-- <img [src]="imgSrc1" alt="Toggle Password Visibility" style="cursor: pointer;" /> -->
+                                    <!-- <img [src]="imgSrc1" alt="Toggle Password Visibility" class="img2" style="cursor: pointer;" /> -->
+                                </div>
+                                <div class="button-grid ">
+                                    <div class="btn-group">
+
+                                        <input type="date" placeholder="Select date of birth" class="border"
+                                            autocomplete="off" aria-autocomplete required name="new-dob" />
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="card mt-20">
+                                <div class="card-title">
+                                    <h2> Locations</h2>
+                                </div>
+                                <div class="card-content">
+                                    <div class="table-wrapper">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Location Name</th>
+                                                    <th scope="col">Address Line One</th>
+                                                    <th scope="col">Address Line Two</th>
+                                                    <th scope="col">City</th>
+                                                    <th scope="col">Zip Code</th>
+                                                    <th scope="col">State</th>
+                                                    <th scope="col">Activation Status</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- <tr *ngFor="let order of dataSource; let i = index"> -->
+                                                <tr>
+                                                    <td>USA</td>
+                                                    <td>M3PM+HC New York</td>
+                                                    <td>M3PM+HC New York</td>
+                                                    <td>New York</td>
+                                                    <td>1234</td>
+                                                    <td>New York</td>
+                                                    <td>
+                                                        <div class="form-switch">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexSwitchCheckChecked" checked>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="">
+                                                            <i class="bi bi-trash"></i>
+                                                            <i class="bi bi-pencil-square"></i>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer-section ">
+                                    <h3 class="page-index">Page {{itemInView}} of {{totalView}} </h3>
+                                    <div class="">
+                                        <app-pagination></app-pagination>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+
+</section>

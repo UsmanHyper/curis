@@ -16,6 +16,10 @@ import { first } from 'rxjs';
 import * as moment from 'moment'
 import { ViewportScroller } from '@angular/common';
 import { MainHomeService } from 'src/app/services/main-home.service';
+
+import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
+import { VerifyOtpComponent } from 'src/app/shared/verify-otp/verify-otp.component';
+
 // import { homeService } from 'src/app/app.service';
 
 
@@ -33,6 +37,7 @@ export class CalenderComponent implements OnInit {
   providersLocation: any;
   providerData: any;
   userToken: any;
+  modalRef!: BsModalRef;
 
   eventsPromise: Promise<EventInput[]> | any;
 
@@ -64,9 +69,9 @@ export class CalenderComponent implements OnInit {
 
     // eventRender: this.handleEventRender.bind(this),
   };
-  constructor(private httpClient: HttpClient,    private providerService: providerService,     private spinner: NgxSpinnerService,    private apiService: MainHomeService, private viewportScroller: ViewportScroller  )
+  constructor(private httpClient: HttpClient, private providerService: providerService, private modalService: BsModalService, private spinner: NgxSpinnerService, private apiService: MainHomeService, private viewportScroller: ViewportScroller)
   // constructor(private httpClient: HttpClient, public dialog: MatDialog,    private providerService: providerService,    private authenticationservice: authenticationService,    private spinner: NgxSpinnerService,    private home: homeService, private viewportScroller: ViewportScroller  )
-   {
+  {
 
   }
 
@@ -221,6 +226,22 @@ export class CalenderComponent implements OnInit {
 
 
   openModal(payload?: any, type?: any) {
+console.log("openModal", payload , type);
+
+    let initialState: ModalOptions = { initialState: { titleData: type === 'eventDataUpdate' ? 'Update Appointment' : ' Add New Appointment',
+       payload: payload } };
+    console.log("this this.initialState", initialState)
+    this.modalRef = this.modalService.show(VerifyOtpComponent, {
+      initialState,
+      class: 'modal-dialog-centered modal-md',
+      // ignoreBackdropClick: true,
+      keyboard: false,
+      animated: true,
+      backdrop: true,
+      // backdrop: 'static',
+    });
+
+
     // const dialogRefLocation = this.dialog.open(AppointmentModalComponent, {
     //   width: '600px',
     //   height: '400px',

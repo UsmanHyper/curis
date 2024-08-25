@@ -15,12 +15,13 @@ export class ProviderDashboardComponent implements OnInit {
 
   isSelectedTabValue: any;
   enableSchedular = false;
-  enableProfileTab = false;
+  enableProfileTab = true;
   enableChangePasswordTab = false;
   enableLocationTab = false;
   enableRatesTab = false;
   enableWorkingHoursTab = false;
   enableAccountTab = false;
+  enableAppointmentTab = false;
 
   private isSelectedTabSubscription: Subscription | any;
 
@@ -31,23 +32,28 @@ export class ProviderDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.goToProfile();
-    this.isSelectedTabSubscription = this.providerService.isSelectedTab.subscribe((value:any) => {
+    this.isSelectedTabSubscription = this.providerService.isSelectedTab.subscribe((value: any) => {
       this.openComponentViaTabSelection(value);
     });
   }
 
   openComponentViaTabSelection(tabValue: any) {
+    console.log("openComponentViaTabSelection", tabValue);
     switch (tabValue) {
       case "Profile":
         this.goToProfile()
         break;
 
-      case "Schedular":
+      case "Appointments":
+        this.goToAppointment()
+        break;
+
+      case "Schedule Time":
         this.goToSchedular()
         break;
 
-      case "Change Password":
-        this.goToChangePassword()
+      case "Working Hours":
+        this.goToWorkingHours()
         break;
 
       case "Locations":
@@ -58,8 +64,8 @@ export class ProviderDashboardComponent implements OnInit {
         this.goToRates()
         break;
 
-      case "Working Hours":
-        this.goToWorkingHours()
+      case "Change Password":
+        this.goToChangePassword()
         break;
 
       case "Account":
@@ -76,6 +82,7 @@ export class ProviderDashboardComponent implements OnInit {
     this.enableRatesTab = false;
     this.enableWorkingHoursTab = false;
     this.enableAccountTab = false;
+    this.enableAppointmentTab = false;
   }
 
   goToChangePassword() {
@@ -86,6 +93,7 @@ export class ProviderDashboardComponent implements OnInit {
     this.enableSchedular = false;
     this.enableWorkingHoursTab = false;
     this.enableAccountTab = false;
+    this.enableAppointmentTab = false;
   }
   goToLocation() {
     this.enableProfileTab = false;
@@ -95,6 +103,7 @@ export class ProviderDashboardComponent implements OnInit {
     this.enableRatesTab = false;
     this.enableWorkingHoursTab = false;
     this.enableAccountTab = false;
+    this.enableAppointmentTab = false;
   }
   goToRates() {
     this.enableProfileTab = false;
@@ -104,6 +113,7 @@ export class ProviderDashboardComponent implements OnInit {
     this.enableSchedular = false;
     this.enableWorkingHoursTab = false;
     this.enableAccountTab = false;
+    this.enableAppointmentTab = false;
   }
   goToWorkingHours() {
     this.enableProfileTab = false;
@@ -113,6 +123,7 @@ export class ProviderDashboardComponent implements OnInit {
     this.enableSchedular = false;
     this.enableWorkingHoursTab = true;
     this.enableAccountTab = false;
+    this.enableAppointmentTab = false;
   }
   goToAccounts() {
     this.enableProfileTab = false;
@@ -122,6 +133,7 @@ export class ProviderDashboardComponent implements OnInit {
     this.enableSchedular = false;
     this.enableWorkingHoursTab = false;
     this.enableAccountTab = true;
+    this.enableAppointmentTab = false;
   }
   goToProfile() {
     this.enableProfileTab = true;
@@ -131,6 +143,17 @@ export class ProviderDashboardComponent implements OnInit {
     this.enableSchedular = false;
     this.enableWorkingHoursTab = false;
     this.enableAccountTab = false;
+    this.enableAppointmentTab = false;
+  }
+  goToAppointment() {
+    this.enableProfileTab = false;
+    this.enableChangePasswordTab = false;
+    this.enableLocationTab = false;
+    this.enableRatesTab = false;
+    this.enableSchedular = false;
+    this.enableWorkingHoursTab = false;
+    this.enableAccountTab = false;
+    this.enableAppointmentTab = true;
   }
 
 }

@@ -1,19 +1,25 @@
+// import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+// import { NgxSpinnerService } from 'ngx-spinner';
+// import { first } from 'rxjs/operators';
+// // import { authenticationService } from '../../authentication.service';
+// import {
+//   FormBuilder,
+//   Validators,
+//   FormGroup
+// } from "@angular/forms";
+// // import { Global } from '../../Global';
+// import { providerService } from '../provider.service';
+// // import { MatDialog } from '@angular/material/dialog';
+// import { AddLocationComponent } from './add-location/add-location.component';
+// import { MainHomeService } from 'src/app/services/main-home.service';
+// // import { homeService } from 'src/app/app.service';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { first } from 'rxjs/operators';
-// import { authenticationService } from '../../authentication.service';
-import {
-  FormBuilder,
-  Validators,
-  FormGroup
-} from "@angular/forms";
-// import { Global } from '../../Global';
-import { providerService } from '../provider.service';
-// import { MatDialog } from '@angular/material/dialog';
-import { AddLocationComponent } from './add-location/add-location.component';
+import { first } from 'rxjs';
 import { MainHomeService } from 'src/app/services/main-home.service';
-// import { homeService } from 'src/app/app.service';
-
+import { providerService } from '../provider.service';
+import { authenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-location',
@@ -27,18 +33,20 @@ export class LocationComponent implements OnInit {
   providersLocation: any;
   isEditMode = false;
   cityLov: any;
+  itemInView: number = 5;
+  totalView: number = 10;
   @ViewChild("addLocationModal") addLocationModal: TemplateRef<any> | any;
 
-  constructor(private apiService: MainHomeService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private providerService: providerService,) {
+  constructor(private apiService: MainHomeService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private providerService: providerService, private authenticationService: authenticationService) {
     // constructor(public dialog: MatDialog, private home: homeService, public formBuilder: FormBuilder, public global: Global,
     //   private spinner: NgxSpinnerService, private providerService: providerService, private authenticationservice: authenticationService,) {
 
   }
   ngOnInit() {
-    this.providerData = this.providerService.getProviderData()
-    // this.userToken = this.authenticationservice.getUserToken();
-    this.getProviderLocationAPI(this.providerData._id)
-    this.getCityLov();
+    // this.providerData = this.providerService.getProviderData()
+    // this.userToken = this.authenticationService.getUserToken();
+    // this.getProviderLocationAPI(this.providerData._id)
+    // this.getCityLov();
   }
   addNewLocation() {
     this.isEditMode = false;

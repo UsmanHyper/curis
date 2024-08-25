@@ -13,6 +13,7 @@ import { first } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import { MainHomeService } from 'src/app/services/main-home.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 // import { homeService } from 'src/app/app.service';
 @Component({
   selector: 'app-appointment-modal',
@@ -34,7 +35,9 @@ export class AppointmentModalComponent implements OnInit {
   pipe = new DatePipe('en-US');
   locationLov: any = []
 
-  constructor(private formBuilder: FormBuilder, private spinner: NgxSpinnerService, private providerService: providerService, private apiService: MainHomeService, private datePipe: DatePipe) {
+  initialState: any
+
+  constructor(private formBuilder: FormBuilder, private spinner: NgxSpinnerService, public bsModalRef: BsModalRef, private modalService: BsModalService, private providerService: providerService, private apiService: MainHomeService, private datePipe: DatePipe) {
     // constructor(private formBuilder: FormBuilder,    public dialog: MatDialog,    private spinner: NgxSpinnerService,    private providerService: providerService,    private authenticationservice: authenticationService,    private home: homeService, private datePipe: DatePipe) {
 
     this.appointmentFormGroup = this.formBuilder.group({
@@ -59,6 +62,9 @@ export class AppointmentModalComponent implements OnInit {
     this.appointmentFormGroup.get('userId')?.setValue(this.providerData.userId)
     this.appointmentFormGroup.get('providerId')?.setValue(this.providerData._id)
     this.appointmentFormGroup.get('date')?.setValue(this.data)
+
+    this.title = this.initialState.title;
+
 
 
   }

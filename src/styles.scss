@@ -160,3 +160,79 @@ h1 {
   right: 20px;
   z-index: 1000;
 }
+
+
+
+button.fc-prev-button.btn.btn-primary {
+  background-color: white;
+  color: #667085;
+  border-color: #B6C1CA;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: center;
+  padding: 12px;
+
+}
+
+button.fc-next-button.btn.btn-primary {
+  background-color: white;
+  color: #667085;
+  border-color: #B6C1CA;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: center;
+  padding: 12px;
+
+}
+
+
+.fc-toolbar-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  text-align: center;
+  color: #14181F;
+}
+
+
+button.fc-today-button.btn.btn-primary,
+button.fc-dayGridMonth-button.btn.btn-primary,
+button.fc-timeGridWeek-button.btn.btn-primary,
+button.fc-timeGridDay-button.btn.btn-primary,
+button.fc-listWeek-button.btn.btn-primary {
+  background-color: white;
+  color: #14181F;
+  text-transform: capitalize;
+  border-color: #B6C1CA;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: center;
+  padding: 12px;
+  
+}
+
+.fc-col-header {
+  background-color: #DCE0E5;
+}
+
+.fc-col-header th {
+  color: #6F7C8E;
+  // font-size: 15px;
+  // font-weight: 500;
+  // line-height: 21px;
+  text-align: left;
+  margin-left: 8px;
+
+}
+
+.fc-daygrid-day-number {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 33.6px;
+  text-align: left;
+  color: #14181F;
+
+}

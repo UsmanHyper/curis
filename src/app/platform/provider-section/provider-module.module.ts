@@ -19,6 +19,12 @@ import { providerService } from './provider.service';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { FooterComponent } from 'src/app/shared/footer/footer.component';
 import { NavTabComponent } from 'src/app/shared/nav-tab/nav-tab.component';
+import { AppointmentsComponent } from './appointments/appointments.component';
+import { ScheduleTimeComponent } from './schedule-time/schedule-time.component';
+import { ChangePasswordComponent } from 'src/app/shared/change-password/change-password.component';
+import { ProviderAccountComponent } from './provider-account/provider-account.component';
+import { PaginationComponent } from 'src/app/shared/pagination/pagination.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 
@@ -35,7 +41,10 @@ import { NavTabComponent } from 'src/app/shared/nav-tab/nav-tab.component';
     WorkingHoursComponent,
     AddHoursComponent,
     NavBarComponent,
-    NavTabComponent
+    NavTabComponent,
+    AppointmentsComponent,
+    ScheduleTimeComponent,
+    ProviderAccountComponent
   ],
   providers: [],
   // providers: [providerService, BsModalService],
@@ -44,7 +53,8 @@ import { NavTabComponent } from 'src/app/shared/nav-tab/nav-tab.component';
     FormsModule,
     ReactiveFormsModule,
     FullCalendarModule,
-    HeaderComponent, FooterComponent
+    HeaderComponent, FooterComponent, ChangePasswordComponent, PaginationComponent, ModalModule.forRoot(),
+
   ]
 })
 export class ProviderModuleModule { }

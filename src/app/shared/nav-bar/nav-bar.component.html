@@ -1,10 +1,10 @@
 <div class="sidebar sidebar-borders" [ngClass]="{ 'expanded': isExpanded }">
 
-    <div class="content">
+    <div class="content p-12">
         <div class="link" *ngFor="let opt of navBarItems ">
             <div class="content" (click)="getNavbarSelection(opt.value)"
                 [ngClass]="{'active': opt.value === selectedNavItem}">
-                <!-- <i  class="icon-colors">{{opt.icon}}</i> -->
+                <i  class="icon-colors " [ngClass]="'bi ' + opt.icon" ></i>
                 <!-- <mat-icon fontSet="material-icons-outlined" class="icon-colors">{{opt.icon}}</mat-icon> -->
                 <div class="title">{{opt.value}}</div>
             </div>

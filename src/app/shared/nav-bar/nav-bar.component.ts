@@ -21,7 +21,7 @@ export class NavBarComponent {
   userData: any;
   navBarItems: any;
   selectedNavItem: string | any;
-  constructor( public providerService: providerService, public authenticationService: authenticationService , public userService: userService) {
+  constructor(public providerService: providerService, public authenticationService: authenticationService, public userService: userService) {
     // constructor(public authenticationservice: authenticationService, public providerService: providerService, public adminService: adminService, public userService: userService) {
 
   }
@@ -60,37 +60,42 @@ export class NavBarComponent {
     let dt = item
 
     dt.forEach((ele: any) => {
-      if (ele.value === "Schedular" || ele.value === "Scheduled Appointment") {
-        ele.icon = "calendar_month"
+      if (ele.value === "Appointments") {
+        ele.icon = "bi-bookmark-check"
       } else if (ele.value === "Profile" || ele.value === "My Profile") {
-        ele.icon = "person"
+        ele.icon = "bi-person-circle"
         this.selectedNavItem = ele.value
-      } else if (ele.value === "Change Password") {
-        ele.icon = "lock"
-      } else if (ele.value === "Locations") {
-        ele.icon = "map"
+      }
+      else if (ele.value === "Change Password") {
+        ele.icon = "bi-three-dots"
+      }
+      else if (ele.value === "Schedule Time") {
+        ele.icon = "bi-clock-history"
+      }
+      else if (ele.value === "Locations") {
+        ele.icon = "bi-pin-map"
       } else if (ele.value === "Rates") {
-        ele.icon = "money"
+        ele.icon = "bi-ticket-perforated"
       } else if (ele.value === "Working Hours") {
-        ele.icon = "schedule"
+        ele.icon = "bi-calendar3"
       } else if (ele.value === "Account") {
-        ele.icon = "account_circle"
+        ele.icon = "bi-person-fill-gear"
       }
       else if (ele.value === "Reporting Dashboard") {
-        ele.icon = "dashboard"
+        ele.icon = "bi-grid-1x2"
       } else if (ele.value === "Provider Information") {
-        ele.icon = "privacy_tip"
+        ele.icon = " bi-shield-exclamation"
         this.selectedNavItem = ele.value
       } else if (ele.value === "Patients Information") {
-        ele.icon = "personal_injury"
+        ele.icon = "bi-hospital"
       } else if (ele.value === "LOV management") {
-        ele.icon = "volunteer_activism"
+        ele.icon = "bi-sliders"
       }
-      else if (ele.value === "Appointmet Governence") {
-        ele.icon = "beenhere"
+      else if (ele.value === "Appointment Governance") {
+        ele.icon = "bi-clipboard2-check"
       }
       else if (ele.value === "Password management") {
-        ele.icon = "password"
+        ele.icon = "bi-three-dots"
       }
 
       else if (ele.value === "My Appointment") {
@@ -108,14 +113,14 @@ export class NavBarComponent {
 
 
   getNavbarSelection(value: string) {
-    if(!!value){
+    if (!!value) {
       this.selectedNavItem = value
-    }else{
-      value= 'Provider'
+    } else {
+      value = 'Provider'
     }
     // this.selectedNavItem = value;
     // if (this.userData.user_Type == "Provider") {
-      this.providerService.setSelectedTab(value);
+    this.providerService.setSelectedTab(value);
     // }
     // else if (this.userData.user_Type == "Admin") {
     //   this.adminService.setSelectedTab(value);
@@ -129,7 +134,7 @@ export class NavBarComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
-    console.log("------------",event)
+    console.log("------------", event)
     this.updateExpansionState();
   }
 
@@ -143,8 +148,8 @@ export class NavBarComponent {
 
     if (isSmallScreen) {
       this.isExpanded = false;
-    }else{
-      
+    } else {
+
       this.isExpanded = true;
     }
   }

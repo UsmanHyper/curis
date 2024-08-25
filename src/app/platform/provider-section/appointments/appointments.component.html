@@ -7,16 +7,18 @@
                     <div class="w-100-p">
                         <div class="d-flex justify-content-center form-width flex-column">
                             <div class="text-content">
-                                <h1 class="title">Rates / Service</h1>
+                                <h1 class="title">Appointments</h1>
                                 <p class="lead paragraph-desc">
                                 </p>
                             </div>
 
                             <div class="page-header-section mt-28">
                                 <div class="input-field">
-                                    <input type="text" class=" placeholder-text "
-                                        placeholder="Search for Rates / Service">
+                                    <input type="text" class=" placeholder-text " placeholder="Search for Appointments">
                                     <i class="bi bi-search" style="cursor: pointer;"></i>
+
+                                    <!-- <img [src]="imgSrc1" alt="Toggle Password Visibility" style="cursor: pointer;" /> -->
+                                    <!-- <img [src]="imgSrc1" alt="Toggle Password Visibility" class="img2" style="cursor: pointer;" /> -->
                                 </div>
                                 <div class="button-grid ">
                                     <div class="btn-group">
@@ -30,40 +32,41 @@
                             </div>
                             <div class="card mt-20">
                                 <div class="card-title">
-                                    <h2> Service</h2>
+                                    <h2> Appointments</h2>
                                 </div>
+                                <!-- <hr> -->
                                 <div class="card-content">
                                     <div class="table-wrapper">
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Service Name</th>
-                                                    <th scope="col">Location</th>
-                                                    <th scope="col">Amount ($)</th>
-                                                    <th scope="col">Activation Status</th>
+                                                    <th scope="col">Appointment ID</th>
+                                                    <th scope="col">Patient Name</th>
+                                                    <th scope="col">Date & Time</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Reschedule</th>
                                                     <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <!-- <tr *ngFor="let order of dataSource; let i = index"> -->
                                                 <tr>
-                                                    <td>Dental Consultation</td>
-
-                                                    <td>New York</td>
-                                                    <td>{{'100' | currency:' USD'}}</td>
+                                                    <td>cu-0001</td>
+                                                    <td>Shah Zaman</td>
+                                                    <td>{{ '27/07/2024 01:20 PM' }}</td>
+                                                    <!-- <td>{{ '27/07/2024 01:20 PM' | date: 'dd MMM yyyy'
+                                                        }}</td> -->
 
                                                     <td>
-                                                        <div class="form-switch">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="flexSwitchCheckChecked" checked>
-                                                        </div>
+                                                        <span class="tag" [style.color]="getStatusColor('New')"
+                                                            [style.background-color]="getStatusBg('New')">
+                                                            {{ 'New' | titlecase }}
+                                                            <!-- {{ order?.order_status | titlecase }} -->
+                                                        </span>
                                                     </td>
-
+                                                    <td><a class="tag_btn-reschdule">Reschedule</a></td>
                                                     <td>
-                                                        <div class="">
-                                                            <i class="bi bi-trash"></i>
-                                                            <i class="bi bi-pencil-square"></i>
-                                                        </div>
+                                                        <a class="tag_btn-cancel">Cancel</a>
                                                     </td>
 
                                                 </tr>
