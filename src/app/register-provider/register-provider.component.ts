@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FooterComponent } from 'src/app/shared/footer/footer.component';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
@@ -10,6 +10,7 @@ import { PaymentStatusComponent } from 'src/app/shared/payment-status/payment-st
 import { MainHomeService } from '../services/main-home.service';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 import { NgxMaskModule } from 'ngx-mask';
+import { authenticationService } from '../services/authentication.service';
 
 
 @Component({
@@ -78,7 +79,7 @@ export class RegisterProviderComponent implements OnInit {
   imgSrc: string = './assets/images/admin/eye.png'
 
 
-  constructor(public formBuilder: FormBuilder, private apiService: MainHomeService, private spinner: NgxSpinnerService,) {
+  constructor(public formBuilder: FormBuilder, private apiService: MainHomeService, private spinner: NgxSpinnerService, private router: Router, private authenticationService: authenticationService) {
 
     this.personalInformationForm = this.formBuilder.group({
       firstName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
@@ -155,7 +156,24 @@ export class RegisterProviderComponent implements OnInit {
     let payload = {
       email: this.personalInformationForm.controls['email'].value
     }
+    this.apiService.checkEmail(payload).pipe(first())
+      .subscribe(
+        (res: any) => {
+          if (res.success == true && res.isPatient == true) {
+            this.router.navigateByUrl('/auth')
+          } else {
+            this.nextMove()
+          }
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.nextMove()
+          this.apiService.successToster(err?.error?.message, 'Success');
+        }
+      );
+  }
 
+  nextMove(): void {
     this.personalInformationStepper = true;
     this.practiceInformationStepper = false;
     this.emailStepper = false;
@@ -258,21 +276,22 @@ export class RegisterProviderComponent implements OnInit {
       .subscribe(
         (res: any) => {
           if (res.success == true) {
-            // this.authenticationservice.setuserTokendata(res.token);
-            // this.getUserDetailsBytokenRequest(res.token);
-            // this.authenticationservice.setIsAuthenticated(true);
+            this.authenticationService.setUserTokenData(res.token);
+            this.getUserDetailsBytokenRequest(res.token);
+            this.authenticationService.setIsAuthenticated(true);
+            localStorage.setItem("isLoggedIn", "true");
           }
         },
         (err: any) => {
           this.spinner.hide();
-          this.showError(err?.error?.message?.description);
+          this.showError(err?.error?.message);
         }
       );
   }
 
 
   showError(error: any) {
-    // this.home.errorToster(error, 'Error!',);
+    this.apiService.errorToster(error, 'Error!',);
   }
 
   moveToPracticeInfo() {
@@ -525,32 +544,49 @@ export class RegisterProviderComponent implements OnInit {
 
   getUserDetailsBytokenRequest(data: any) {
     this.spinner.show();
-    // this.authenticationservice.getDataByToken(data)
-    //   .pipe(first())
-    //   .subscribe(
-    //     (res: any) => {
-    //       if (res) {
-    //         this.authenticationservice.setLoggedInUser(res);
-    //         if (res.user_Type == "Provider") {
-    //           this.getProviderDataById(res._id, data);
-    //           this.router.navigate(['/providerDashboard']);
-    //         }
-    //         else if (res.user_Type == "Patient") {
-    //           this.router.navigate(['/userDashboard']);
-    //         }
-    //         else if (res.user_Type == "Admin") {
-    //           this.router.navigate(['/AdminDashboard']);
-    //         }
-    //         else if (res.user_Type == "Lab") {
-    //           this.router.navigate(['/LabDashboard']);
-    //         }
-    //       }
-    //     },
-    //     (err: any) => {
-    //       this.spinner.hide();
-    //       this.showError(err?.error?.message?.description);
-    //     }
-    //   );
+    this.authenticationService.getDataByToken(data)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          if (res) {
+            this.authenticationService.setLoggedInUser(res);
+            if (res.user_Type == "Provider") {
+              this.getProviderDataById(res._id, data);
+              this.router.navigate(['/providerDashboard']);
+            }
+            else if (res.user_Type == "Patient") {
+              this.router.navigate(['/userDashboard']);
+            }
+            else if (res.user_Type == "Admin") {
+              this.router.navigate(['/AdminDashboard']);
+            }
+            else if (res.user_Type == "Lab") {
+              this.router.navigate(['/LabDashboard']);
+            }
+          }
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+
+
+  getProviderDataById(providerId: any, token: any) {
+    this.spinner.show();
+    this.authenticationService.getProviderDataById(token, providerId)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.authenticationService.setProviderData(res);
+          this.spinner.hide();
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
   }
 }
 

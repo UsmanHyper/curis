@@ -1,0 +1,45 @@
+/* error-page.component.css */
+.container {
+    padding: 200px 0;
+}
+
+h1 {
+    font-size: 6em;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+.btn {
+    font-size: 1.2em;
+}
+
+
+.payment-title {
+    color: #101828;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+.lead{
+    color: #667085;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+
+.btn-submit,
+.btn-submit:hover,
+.btn-submit:active,
+.btn-submit:focus {
+  background-color: #0086C9;
+  color: white;
+  width: 100%;
+  border-radius: 8px;
+  border: 0;
+  font-size: 16px;
+  padding: 10px 18px;
+
+}

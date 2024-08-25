@@ -9,6 +9,7 @@ import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
+import { NgOtpInputModule } from 'ng-otp-input';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FooterComponent } from '../shared/footer/footer.component';
         ReactiveFormsModule,
         AuthRoutingModule,
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
+        NgOtpInputModule
         // NgOtpInputModule,
         // NgProgressModule.withConfig({
         //     spinner:false,

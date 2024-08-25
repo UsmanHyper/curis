@@ -52,7 +52,10 @@
 }
 
 
-
+.div-width{
+  max-width: 85%;
+  min-width: 50%;
+}
 
 .title {
     font-size: 36px;
@@ -160,3 +163,21 @@ input[type="date"] {
       flex-wrap: wrap;
     }
   }
+
+
+
+
+  .password-field {
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-field img {
+    width: 35px;
+    height: 35px;
+    margin-left: -40px;
+  }
+
+
+
+ 

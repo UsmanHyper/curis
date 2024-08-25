@@ -161,7 +161,7 @@ export class ServiceBookingFlowComponent implements OnInit {
 
   getCountryLov() {
     this.spinner.show();
-    this.apiService.getLovs(6)
+    this.apiService.getLovs(1)
       .pipe(first())
       .subscribe(
         (res: any) => {

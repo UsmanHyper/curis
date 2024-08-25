@@ -596,71 +596,7 @@
                     <div class="form-wrapper">
                       <div class="d-flex gap-4 group-wrapper ">
 
-                        <!-- <div class="input-group">
-                          <label for="speciality">Password</label>
-
-                          <input name="password" [type]="showPassword ? 'text' : 'password'" class="border"
-                            id="password-field" placeholder="Password" formControlName="password"> -->
-                        <!-- <div>
-                            <i alt="show" class="bi bi-eye eye-show" (click)="showPassword = !showPassword"
-                              [class.hide]="showPassword"></i>
-                            <i alt="hide" class="bi bi-eye-slash eye-hide" (click)="showPassword = !showPassword"
-                              [class.hide]="!showPassword"></i>
-                          </div> -->
-                        <!-- <ng-container
-                            *ngIf="accountInformationForm.get('password')?.invalid && (accountInformationForm.get('password')?.dirty || accountInformationForm.get('password')?.touched)">
-                            <ng-container *ngIf="accountInformationForm.get('password')?.errors">
-                              <span class="text-danger error-state">Password is required</span>
-                            </ng-container>
-
-                          </ng-container>
-                        </div> -->
-
-                        <!-- <div class="input-group">
-                          <label for="password-field" class="form-label">Password</label>
-                          <div class="input-group">
-                            <input name="password" [type]="showPassword ? 'text' : 'password'" class="form-control"
-                              id="password-field" placeholder="Password">
-                            <button type="button" class="btn btn-outline-secondary"
-                              (click)="showPassword = !showPassword">
-                              <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
-                            </button>
-                          </div>
-                          <ng-container
-                            *ngIf="accountInformationForm.get('password')?.invalid &&
-                                               (accountInformationForm.get('password')?.dirty || accountInformationForm.get('password')?.touched)">
-                            <ng-container *ngIf="accountInformationForm.get('password')?.errors">
-                              <span class="text-danger error-state">Password is required</span>
-                            </ng-container>
-                          </ng-container>
-                        </div> -->
-
-
-                        <!-- <div class="input-group">
-                          <label for="password">Password</label>
-                          <div class="input-group-append">
-                            <input
-                              [type]="showPassword ? 'text' : 'password'"
-                              class="form-control"
-                              id="password-field"
-                              placeholder="Password"
-                              formControlName="password"
-                            >
-                            <span class="input-group-text">
-                              <i
-                                class="bi {{ showPassword ? 'bi-eye-slash' : 'bi-eye' }}"
-                                (click)="showPassword = !showPassword"
-                              ></i>
-                            </span>
-                          </div>
-                          <ng-container
-                            *ngIf="accountInformationForm.get('password')?.invalid && (accountInformationForm.get('password')?.dirty || accountInformationForm.get('password')?.touched)"
-                          >
-                            <ng-container *ngIf="accountInformationForm.get('password')?.errors">
-                              <span class="text-danger error-state">Password is required</span>
-                            </ng-container>
-                          </ng-container>
-                        </div> -->
+                       
 
                         <div class="input-group">
                           <label for="password">Password</label>
@@ -696,51 +632,7 @@
                         </div>
 
                       </div>
-                      <!-- <div class="input-group">
-                          <label for="fname">Confirm Password</label>
-                          <input type="password" placeholder="Enter Confirm Password" formControlName="confirmPassword"
-                            class="border" name="new-confirmPassword" autocomplete="off" aria-autocomplete required />
-                          <ng-container
-                            *ngIf="accountInformationForm.get('confirmPassword')?.invalid && (accountInformationForm.get('confirmPassword')?.dirty || accountInformationForm.get('confirmPassword')?.touched)">
-                            <ng-container *ngIf="accountInformationForm.get('confirmPassword')?.errors">
-                              <span class="text-danger error-state">Confirm Password is required</span>
-                            </ng-container>
-
-                          </ng-container> -->
-
-
-
-
-                      <!-- <div
-                            *ngIf="accountInformationForm.get('confirmPassword')?.hasError('required') && accountInformationForm.get('confirmPassword')?.touched  else checkPass">
-                            <span class="text-danger error-state"> Confirm Passwords is required.</span>
-
-                          </div>
-                          <ng-template #checkPass>
-                            <div
-                              *ngIf="accountInformationForm.get('confirmPassword')?.invalid && accountInformationForm.get('confirmPassword')?.touched ">
-                              <span class="text-danger error-state"> Two passwords that you enter is
-                                inconsistent!</span>
-
-                            </div>
-                          </ng-template> -->
-                      <!-- </div> -->
-
-
-                      <!-- <div class="d-flex gap-4 group-wrapper mt-12 ">
-                        <div class="password-field">
-                          <input [type]=" this.passwordVisibility.currentPassword ? 'text':'password'"
-                            formControlName="currentPassword" class="form-control placeholder-text "
-                            placeholder="********">
-                          <img *ngIf=" this.passwordVisibility.currentPassword"
-                            (click)="toggleVisibility('currentPassword')" [src]="imgSrc"
-                            alt="Toggle Password Visibility" style="cursor: pointer;" />
-                          <img *ngIf="!this.passwordVisibility.currentPassword"
-                            (click)="toggleVisibility('currentPassword')" [src]="imgSrc"
-                            alt="Toggle Password Visibility" style="cursor: pointer;" />
-                        </div>
-                      </div> -->
-
+                   
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <button type="button" class="btn btn-submit btn-width"
                           (click)="backToAccountInfo()">Back</button>

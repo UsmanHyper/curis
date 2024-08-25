@@ -10,6 +10,7 @@ const lovsByNameURL = environment.publicUrl + 'lovByName/';
 const scheduleAppointmentURL = environment.publicUrl + 'scheduleAppointment/';
 const slugOTP = new URL(`${environment.baseUrl}rest/v1/registration/generate-otp`)
 const slugVerifyOTP = new URL(`${environment.baseUrl}rest/v1/registration/verify-otp`)
+const checkEmail = new URL(`${environment.baseUrl}users/rest/v1/getUserStatusByEmail`)
 const patientByEmail = new URL(`${environment.baseUrl}patient/rest/v1/getPatientByEmail`)
 
 
@@ -94,6 +95,14 @@ export class MainHomeService {
   }
   verifyOTP(postData: any) {
     return this.http.post<ApiResponse>(slugVerifyOTP.href, postData);
+  }
+  checkEmail(postData: any) {
+    return this.http.post<ApiResponse>(checkEmail.href, postData);
+  }
+
+  loginUser(payload: any) {
+    
+    return this.http.post(authenticationUrl + 'login', payload);
   }
 
   successToster(message: string, title: string) {
