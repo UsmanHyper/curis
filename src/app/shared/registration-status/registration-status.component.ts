@@ -11,13 +11,13 @@ import { authenticationService } from 'src/app/services/authentication.service';
   templateUrl: './registration-status.component.html',
   styleUrls: ['./registration-status.component.scss']
 })
-export class RegistrationStatusComponent  implements OnInit {
+export class RegistrationStatusComponent implements OnInit {
   isSuccess: boolean = false
 
   @Input() successStatus: any;
 
 
-  constructor(private router: Router, private route: ActivatedRoute,) { }
+  constructor(private router: Router, private route: ActivatedRoute, private authenticationService: authenticationService) { }
 
 
 

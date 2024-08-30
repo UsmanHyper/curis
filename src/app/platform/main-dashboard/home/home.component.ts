@@ -12,13 +12,15 @@ import { MainHomeService } from 'src/app/services/main-home.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { first } from 'rxjs';
+import { FlatpickrModule } from 'angularx-flatpickr';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, HeaderComponent, FooterComponent, LinksComponent, TestimonialComponent, WorkflowComponent, KeyFeaturesComponent, FormsModule, ReactiveFormsModule,]
+  imports: [CommonModule, FormsModule, RouterModule, HeaderComponent, FooterComponent, LinksComponent, TestimonialComponent, 
+    WorkflowComponent, KeyFeaturesComponent, FormsModule, ReactiveFormsModule,FlatpickrModule]
 })
 export class HomeComponent implements OnInit {
 
@@ -38,6 +40,16 @@ export class HomeComponent implements OnInit {
   selectedValue: any;
 
   showList = false;
+  flatpickrOptions: any = {
+    disable: [
+      (date: Date) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return date < today;
+      }
+    ],
+
+  };
 
   range = new FormGroup({
     start: new FormControl<Date | null>(null),

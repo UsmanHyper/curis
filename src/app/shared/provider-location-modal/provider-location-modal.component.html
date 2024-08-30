@@ -1,0 +1,176 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header justify-content-between">
+            <h1 class="modal-title">{{title}}</h1>
+            <i class="bi bi-x-lg close-icon" type="button" (click)="bsModalRef.hide()"></i>
+        </div>
+        <div class="modal-body contact_modal">
+            <div class="">
+                <div class="w-100-p">
+                    <div class="d-flex justify-content-center form-width flex-column">
+                        <form [formGroup]="locationFormGroup" autocomplete="disable">
+                            <div class="form-wrapper">
+                                <div class="d-flex gap-4 group-wrapper ">
+                                    <div class="input-group">
+                                        <label for="fname">Location Name </label>
+
+                                        <input type="text" placeholder="Location Name" class="border"
+                                            formControlName="locationName" autocomplete="off" aria-autocomplete required
+                                            name="new-locationName" />
+                                        <ng-container
+                                            *ngIf="locationFormGroup.get('locationName')?.invalid && (locationFormGroup.get('locationName')?.dirty || locationFormGroup.get('locationName')?.touched)">
+                                            <ng-container *ngIf="locationFormGroup.get('locationName')?.errors">
+                                                <span class="text-danger error-state">Location Name is
+                                                    required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+                                    <div class="input-group">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                    <div class="input-group">
+                                        <label for="fname">Address Line 1</label>
+
+
+                                        <input type="text" placeholder="Address Line 1" class="border"
+                                            formControlName="locationAddressLineOne" autocomplete="off"
+                                            aria-autocomplete required name="new-locationAddressLineOne" />
+                                        <ng-container
+                                            *ngIf="locationFormGroup.get('locationAddressLineOne')?.invalid && (locationFormGroup.get('locationAddressLineOne')?.dirty || locationFormGroup.get('locationAddressLineOne')?.touched)">
+                                            <ng-container
+                                                *ngIf="locationFormGroup.get('locationAddressLineOne')?.errors">
+                                                <span class="text-danger error-state">
+                                                    Address Line 1 is required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Address Line 2</label>
+                                        <input type="text" placeholder="Address Line 2" class="border"
+                                            formControlName="locationAddressLineTwo" autocomplete="off"
+                                            aria-autocomplete required name="new-locationAddressLineTwo" />
+                                        <ng-container
+                                            *ngIf="locationFormGroup.get('locationAddressLineTwo')?.invalid && (locationFormGroup.get('locationAddressLineTwo')?.dirty || locationFormGroup.get('locationAddressLineTwo')?.touched)">
+                                            <ng-container
+                                                *ngIf="locationFormGroup.get('locationAddressLineTwo')?.errors">
+                                                <span class="text-danger error-state">
+                                                    Address Line 2 is required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">City</label>
+
+                                        <select class="form-select input-style" aria-label="Default select example"
+                                            formControlName="city">
+                                            <option disabled selected>Select your City</option>
+                                            <option *ngFor="let item of cityLov" [value]="item.value">
+                                                {{ item.value }}
+                                            </option>
+                                        </select>
+
+                                        <ng-container
+                                            *ngIf="locationFormGroup.get('city')?.invalid && (locationFormGroup.get('city')?.dirty || locationFormGroup.get('city')?.touched)">
+                                            <ng-container *ngIf="locationFormGroup.get('city')?.errors">
+                                                <span class="text-danger error-state">City Name is required.</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">Zip Code</label>
+
+                                        <select class="form-select input-style" aria-label="Default select example"
+                                            formControlName="zipCode">
+                                            <option disabled selected>Select your Zip Code</option>
+                                            <option *ngFor="let item of zipCodesLov" [value]="item.value">
+                                                {{ item.value }}
+                                            </option>
+                                        </select>
+
+                                        <ng-container
+                                            *ngIf="locationFormGroup.get('zipCode')?.invalid && (locationFormGroup.get('zipCode')?.dirty || locationFormGroup.get('zipCode')?.touched)">
+                                            <ng-container *ngIf="locationFormGroup.get('zipCode')?.errors">
+                                                <span class="text-danger error-state">ZipCode is required.</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                    <div class="input-group">
+                                        <label for="fname">Description</label>
+                                        <textarea formControlName="locationDescription"
+                                            placeholder="Write text here ..." class="border" autocomplete="off"
+                                            aria-autocomplete required name="new-notes" rows="4"></textarea>
+                                        <ng-container
+                                            *ngIf="locationFormGroup.get('locationDescription')?.invalid && (locationFormGroup.get('locationDescription')?.dirty || locationFormGroup.get('locationDescription')?.touched)">
+                                            <ng-container *ngIf="locationFormGroup.get('locationDescription')?.errors">
+                                                <span class="text-danger error-state" style="top: 148px;">
+                                                    Location Description is required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Active Status</label>
+                                        <div class="form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                                formControlName="activeStatus" [checked]="checked">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-container  mt-12">
+                                    <div class=" d-flex g-16 mt-10">
+                                        <button class="form-cancel-btn " (click)="bsModalRef.hide()">Cancel </button>
+                                        <button class="form-submit-btn"
+                                            [ngClass]="(!locationFormGroup.valid || locationFormGroup.controls['city'].value =='Select your City'|| locationFormGroup.controls['zipCode'].value =='Select your Zip Code') ? 'btn-disabled': '' "
+                                            [disabled]="!locationFormGroup.valid || locationFormGroup.controls['city'].value =='Select your City'|| locationFormGroup.controls['zipCode'].value =='Select your Zip Code'"
+                                            (click)=" this.initialState.type === 'old_location' ? updateLocationInformation() : saveLocationInformationData()">
+                                            {{this.initialState.type === 'old_location' ?
+                                            'Update' : ' Save'}}
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -11,6 +11,7 @@ import {
   FormGroup
 } from "@angular/forms";
 import { MainHomeService } from 'src/app/services/main-home.service';
+import { authenticationService } from 'src/app/services/authentication.service';
 
 
 
@@ -41,40 +42,40 @@ export class ProviderProfileComponent implements OnInit {
   practiceInformationForm: FormGroup;
   qualificationAndSkillsForm: FormGroup;
 
-  constructor(private spinner: NgxSpinnerService, private apiService: MainHomeService, private formBuilder: FormBuilder, private providerService: providerService) {
-    // constructor(private providerservice: providerService, private spinner: NgxSpinnerService, private apiService: MainHomeService, private authenticationservice: authenticationService, private formBuilder: FormBuilder, private global: Global, private homeService: homeService) {
+  constructor(private spinner: NgxSpinnerService, private apiService: MainHomeService, private formBuilder: FormBuilder,
+    private providerService: providerService, private authenticationService: authenticationService) {
 
     this.personalInformationForm = this.formBuilder.group({
       firstName: ["", [Validators.required,]],
       lastName: ["", [Validators.required,]],
       email: ["", [Validators.required,]],
-      gender: ["", Validators.required],
+      gender: ["Select your Gender", Validators.required],
       contactNumber: ["", Validators.required],
     });
 
 
     this.practiceInformationForm = this.formBuilder.group({
       practiceName: ["", [Validators.required,]],
-      providersSpeciality: ["", Validators.required],
-      practiceSize: ["", Validators.required],
-      roleAtPractice: ["", Validators.required],
+      providersSpeciality: ["Provider speciality", Validators.required],
+      practiceSize: ["Practice Size", Validators.required],
+      roleAtPractice: ["Role At Practice", Validators.required],
       billingAddress: ["", Validators.required],
       billingAddresstwo: ["", Validators.required],
-      zipCode: ["", Validators.required],
-      city: ["", Validators.required],
+      zipCode: ["ZIP Code", Validators.required],
+      city: ["Practice City", Validators.required],
       state: ["", Validators.required]
     });
 
     this.qualificationAndSkillsForm = this.formBuilder.group({
-      qualification: ["", Validators.required],
-      mainSpecialization: ["", Validators.required],
-      subSpecialization: [""],
-      licienceState: ["", Validators.required],
+      qualification: ["Select qualification", Validators.required],
+      mainSpecialization: ["Main specialization", Validators.required],
+      subSpecialization: ["Sub specialization", Validators.required],
+      licienceState: ["Licensed State", Validators.required],
       overallExperience: ["", Validators.required],
       npiNumber: ["", [Validators.required,]]
     });
 
-    // this.fetchData()
+    this.fetchData()
     this.initializeData()
 
   }
@@ -102,32 +103,32 @@ export class ProviderProfileComponent implements OnInit {
   }
 
 
-  // async fetchData() {
-  //   return Promise.all([
-  //     this.providerService.getProviderData(),
-  //     this.authenticationservice.getLoggedInUser(),
-  //     this.authenticationservice.getUserToken(),
-  //   ])
-  //     .then(([providerData, userData, userToken]) => {
-  //       this.providerData = providerData;
-  //       this.userData = userData;
-  //       this.userToken = userToken;
-  //       // Further logic after the promises resolve
+  async fetchData() {
+    return Promise.all([
+      this.providerService.getProviderData(),
+      this.authenticationService.getLoggedInUser(),
+      this.authenticationService.getUserToken(),
+    ])
+      .then(([providerData, userData, userToken]) => {
+        this.providerData = providerData;
+        this.userData = userData;
+        this.userToken = userToken;
+        // Further logic after the promises resolve
 
-  //       this.createPersonalInformationForm();
+        this.createPersonalInformationForm();
 
-  //       setTimeout(() => {
-  //         this.createPracticeInformationForm();
-  //         this.createQualificationAndSkillsForm();
+        setTimeout(() => {
+          this.createPracticeInformationForm();
+          this.createQualificationAndSkillsForm();
 
-  //       }, 3000)
+        }, 3000)
 
-  //     })
-  //     .catch(error => {
-  //       console.error('Error during fetchData:', error);
-  //       // Handle the error appropriately
-  //     });
-  // }
+      })
+      .catch(error => {
+        console.error('Error during fetchData:', error);
+        // Handle the error appropriately
+      });
+  }
 
 
 
@@ -154,8 +155,8 @@ export class ProviderProfileComponent implements OnInit {
       providersSpeciality: this.providerData.practiceSpecialization,
       practiceSize: this.providerData.practiceSize,
       roleAtPractice: this.providerData.roleAtPractice,
-      billingAddress: this.providerData.billingAddress ? this.providerData.billingAddress : null,
-      billingAddresstwo: this.providerData.billingAddresstwo ? this.providerData.billingAddresstwo : null,
+      billingAddress: this.providerData.addressLineOne ? this.providerData.addressLineOne : null,
+      billingAddresstwo: this.providerData.addressLineTwo ? this.providerData.addressLineTwo : null,
       zipCode: this.providerData.zipcode,
       city: this.providerData.city,
       state: this.providerData.liciencedState
@@ -172,8 +173,8 @@ export class ProviderProfileComponent implements OnInit {
 
     this.qualificationAndSkillsForm.setValue({
       qualification: this.providerData.qualification,
-      mainSpecialization: this.providerData.mainSpeciality,
-      subSpecialization: this.providerData.subSpeciality || "",
+      mainSpecialization: this.providerData.mainSpeciality || 'Main specialization',
+      subSpecialization: this.providerData.subSpeciality || "Sub specialization",
       licienceState: this.providerData.liciencedState,
       overallExperience: this.providerData.experience || null,
       npiNumber: this.providerData.NPI_Number
@@ -206,7 +207,7 @@ export class ProviderProfileComponent implements OnInit {
 
     // Set values for qualification and skills form
     this.qualificationAndSkillsForm.setValue({
-      qualification: response.qualification,
+      qualification: response.qualification || 'Select qualification',
       mainSpecialization: response.mainSpeciality,
       subSpecialization: response.subSpeciality || "",
       licienceState: response.practiceState,
@@ -260,7 +261,7 @@ export class ProviderProfileComponent implements OnInit {
         "roleAtPractice": this.practiceInformationForm.controls['roleAtPractice'].value,
         "billingAddress": this.practiceInformationForm.controls['billingAddress'].value,
         "billingAddresstwo": this.practiceInformationForm.controls['billingAddresstwo'].value,
-        "zipcode": this.practiceInformationForm.controls['roleAtPractice'].value,
+        "zipcode": this.practiceInformationForm.controls['zipCode'].value,
         "city": this.practiceInformationForm.controls['city'].value,
         "practiceState": this.practiceInformationForm.controls['state'].value,
 
@@ -274,6 +275,8 @@ export class ProviderProfileComponent implements OnInit {
       let UserData = {
         "f_name": this.personalInformationForm.controls['firstName'].value,
         "l_name": this.personalInformationForm.controls['lastName'].value,
+        "contact_no": this.personalInformationForm.controls['contactNumber'].value,
+
       }
       this.updateProviderDataById(data, this.providerData._id);
       this.updateUserDataById(UserData);
@@ -367,8 +370,8 @@ export class ProviderProfileComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.spinner.hide();
-          // this.authenticationservice.setLoggedInUser(res);
-          // this.userData = this.authenticationservice.getLoggedInUser();
+          this.authenticationService.setLoggedInUser(res);
+          this.userData = this.authenticationService.getLoggedInUser();
         },
         (err: any) => {
           this.spinner.hide();

@@ -211,3 +211,27 @@ input[type="date"] {
     padding: 15px 28px;
 
 }
+
+
+
+
+.btn-business,
+.btn-business.active,
+.btn-business:hover{
+
+    background-color: #0086C9;
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 16px;
+}
+
+.tag {
+    border-radius: 100px;
+    padding: 8px 36px;
+    text-align: center;
+    font-weight: 800;
+    // display: block;
+    text-align: center;
+
+}

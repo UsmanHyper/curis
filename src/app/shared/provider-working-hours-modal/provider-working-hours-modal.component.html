@@ -1,0 +1,126 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header justify-content-between">
+            <h1 class="modal-title">{{title}}</h1>
+            <i class="bi bi-x-lg close-icon" type="button" (click)="bsModalRef.hide()"></i>
+        </div>
+        <div class="modal-body contact_modal">
+            <div class="">
+                <div class="w-100-p">
+                    <div class="d-flex justify-content-center form-width flex-column">
+                        <form [formGroup]="workingHoursFormGroup" autocomplete="disable">
+                            <div class="form-wrapper">
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Working Day</label>
+
+                                        <select class="form-select input-style" aria-label="Default select example"
+                                            formControlName="dayName">
+                                            <option disabled selected>Select Working Day</option>
+                                            <option *ngFor="let item of weekdaysLov" [value]="item.value">
+                                                {{ item.value }}
+                                            </option>
+                                        </select>
+
+                                        <ng-container
+                                            *ngIf="workingHoursFormGroup.get('dayName')?.invalid && (workingHoursFormGroup.get('dayName')?.dirty || workingHoursFormGroup.get('dayName')?.touched)">
+                                            <ng-container *ngIf="workingHoursFormGroup.get('dayName')?.errors">
+                                                <span class="text-danger error-state">Working Day is required.</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="fname">Location</label>
+
+                                        <select class="form-select input-style" aria-label="Default select example"
+                                            formControlName="locationId">
+                                            <option disabled selected>Select your Location</option>
+                                            <option *ngFor="let item of locationLov" [value]="item._id">
+                                                {{ item.locationName }}
+                                            </option>
+                                        </select>
+
+                                        <ng-container
+                                            *ngIf="workingHoursFormGroup.get('locationId')?.invalid && (workingHoursFormGroup.get('locationId')?.dirty || workingHoursFormGroup.get('locationId')?.touched)">
+                                            <ng-container *ngIf="workingHoursFormGroup.get('locationId')?.errors">
+                                                <span class="text-danger error-state">Location Name is required.</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                    <div class="input-group">
+                                        <label for="fname">Start Time</label>
+
+
+                                        <input class="border date-input flatpickr-input" type="text" mwlFlatpickr
+                                            placeholder="HH:MM" formControlName="startTime" [noCalendar]="true"
+                                            [minuteIncrement]="30" [disableMobile]="true" [enableTime]="true"
+                                            [dateFormat]="'H:i'">
+
+                                        <ng-container
+                                            *ngIf="workingHoursFormGroup.get('startTime')?.invalid && (workingHoursFormGroup.get('startTime')?.dirty || workingHoursFormGroup.get('startTime')?.touched)">
+                                            <ng-container *ngIf="workingHoursFormGroup.get('startTime')?.errors">
+                                                <span class="text-danger error-state">Start Time is
+                                                    required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">End Time</label>
+                                        <input class="form-control date-input flatpickr-input" type="text" mwlFlatpickr
+                                            placeholder="HH:MM" formControlName="endTime" [noCalendar]="true"
+                                            [minuteIncrement]="30" [disableMobile]="true" [enableTime]="true"
+                                            [dateFormat]="'H:i'">
+
+                                        <ng-container
+                                            *ngIf="workingHoursFormGroup.get('endTime')?.invalid && (workingHoursFormGroup.get('endTime')?.dirty || workingHoursFormGroup.get('endTime')?.touched)">
+                                            <ng-container *ngIf="workingHoursFormGroup.get('endTime')?.errors">
+                                                <span class="text-danger error-state">End Time is
+                                                    required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Active Status</label>
+                                        <div class="form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                                formControlName="isAvailable" [checked]="checked">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-container  mt-12">
+                                    <div class=" d-flex g-16 mt-10">
+                                        <button class="form-cancel-btn " (click)="bsModalRef.hide()">Cancel </button>
+                                        <button class="form-submit-btn"
+                                            [ngClass]="(!workingHoursFormGroup.valid || workingHoursFormGroup.controls['dayName'].value =='Select Working Day'|| workingHoursFormGroup.controls['locationId'].value =='Select your Location') ? 'btn-disabled': '' "
+                                            [disabled]="!workingHoursFormGroup.valid || workingHoursFormGroup.controls['dayName'].value =='Select Working Day'|| workingHoursFormGroup.controls['locationId'].value =='Select your Location'"
+                                            (click)=" this.initialState?.type === 'old_location' ? updateData() : submitWorkingHours()">
+                                            {{this.initialState.type === 'old_location' ?
+                                            'Update' : ' Save'}}
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -56,7 +56,9 @@
             </select>
           </div>
           <div class="form_group">
-            <input type="date" class="form-control" aria-label="Default select example" [(ngModel)]="selectedDate">
+            <!-- <input type="date" class="form-control" aria-label="Default select example" [(ngModel)]="selectedDate"> -->
+            <input class="date-input border-0 flatpickr-input " type="text" mwlFlatpickr [options]="flatpickrOptions"
+              [disableMobile]="true" placeholder="dd,mm,yyyy" [altInput]="true" [convertModelValue]="true" mode="range">
           </div>
           <div class="form_group">
             <button class="web_button" routerLink="service-providers" (click)="search()">Search</button>

@@ -243,13 +243,13 @@
                                         <div class="input-group">
                                             <label for="fname">Address Line 1</label>
                                             <input type="text" placeholder="Enter Address Line 1"
-                                                formControlName="addressLineOne" class="border"
-                                                name="new-addressLineOne" autocomplete="off" aria-autocomplete
+                                                formControlName="billingAddress" class="border"
+                                                name="new-billingAddress" autocomplete="off" aria-autocomplete
                                                 required />
                                             <ng-container
-                                                *ngIf="practiceInformationForm.get('addressLineOne')?.invalid && (practiceInformationForm.get('addressLineOne')?.dirty || practiceInformationForm.get('addressLineOne')?.touched)">
+                                                *ngIf="practiceInformationForm.get('billingAddress')?.invalid && (practiceInformationForm.get('billingAddress')?.dirty || practiceInformationForm.get('billingAddress')?.touched)">
                                                 <ng-container
-                                                    *ngIf="practiceInformationForm.get('addressLineOne')?.errors">
+                                                    *ngIf="practiceInformationForm.get('billingAddress')?.errors">
                                                     <span class="text-danger error-state">Address Line 1 is
                                                         required</span>
                                                 </ng-container>
@@ -259,13 +259,13 @@
                                         <div class="input-group">
                                             <label for="fname">Address Line 2</label>
                                             <input type="text" placeholder="Enter Address Line 2"
-                                                formControlName="addressLineTwo" class="border"
-                                                name="new-addressLineTwo" autocomplete="off" aria-autocomplete
+                                                formControlName="billingAddresstwo" class="border"
+                                                name="new-billingAddresstwo" autocomplete="off" aria-autocomplete
                                                 required />
                                             <ng-container
-                                                *ngIf="practiceInformationForm.get('addressLineTwo')?.invalid && (practiceInformationForm.get('addressLineTwo')?.dirty || practiceInformationForm.get('addressLineTwo')?.touched)">
+                                                *ngIf="practiceInformationForm.get('billingAddresstwo')?.invalid && (practiceInformationForm.get('billingAddresstwo')?.dirty || practiceInformationForm.get('billingAddresstwo')?.touched)">
                                                 <ng-container
-                                                    *ngIf="practiceInformationForm.get('addressLineTwo')?.errors">
+                                                    *ngIf="practiceInformationForm.get('billingAddresstwo')?.errors">
                                                     <span class="text-danger error-state">Address Line 2 is
                                                         required</span>
                                                 </ng-container>
@@ -333,15 +333,15 @@
                                         <div class="input-group">
                                             <label for="fname">Sub specialization</label>
                                             <select class="form-select input-style" aria-label="Default select example"
-                                                formControlName="subSpeciality">
+                                                formControlName="subSpecialization">
                                                 <option disabled selected>Sub specialization</option>
                                                 <option *ngFor="let item of subSpecialityLov" [value]="item.value">
                                                     {{ item.value }}</option>
                                             </select>
                                             <ng-container
-                                                *ngIf="qualificationAndSkillsForm.get('subSpeciality')?.invalid && (qualificationAndSkillsForm.get('subSpeciality')?.dirty || qualificationAndSkillsForm.get('subSpeciality')?.touched)">
+                                                *ngIf="qualificationAndSkillsForm.get('subSpecialization')?.invalid && (qualificationAndSkillsForm.get('subSpecialization')?.dirty || qualificationAndSkillsForm.get('subSpecialization')?.touched)">
                                                 <ng-container
-                                                    *ngIf="qualificationAndSkillsForm.get('subSpeciality')?.errors">
+                                                    *ngIf="qualificationAndSkillsForm.get('subSpecialization')?.errors">
                                                     <span class="text-danger error-state">Sub specialization is
                                                         required</span>
                                                 </ng-container>
@@ -408,7 +408,16 @@
                                 </div>
                             </form>
                         </div>
+                        <div class="d-flex gap-4 group-wrapper mt-12 justify-content-end">
+                            <button type="button" class="btn btn-submit btn-width w-20-p"
+                                (click)="submitProviderForm()">Save Profile Information</button>
+                        </div>
                     </div>
+                    <!-- <div class=""> -->
+                    <!-- <button type="button" class="btn bg-primary-light text-light hover-none text-size-normal"
+                            (click)="submitProviderForm()">
+                            Save Profile Information</button> -->
+                    <!-- </div> -->
                 </ng-container>
 
             </div>

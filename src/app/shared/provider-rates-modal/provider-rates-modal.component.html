@@ -1,0 +1,106 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header justify-content-between">
+            <h1 class="modal-title">{{title}}</h1>
+            <i class="bi bi-x-lg close-icon" type="button" (click)="bsModalRef.hide()"></i>
+        </div>
+        <div class="modal-body contact_modal">
+            <div class="">
+                <div class="w-100-p">
+                    <div class="d-flex justify-content-center form-width flex-column">
+                        <form [formGroup]="ratesFormGroup" autocomplete="disable">
+                            <div class="form-wrapper">
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Service</label>
+
+                                        <select class="form-select input-style" aria-label="Default select example"
+                                            formControlName="serviceName">
+                                            <option disabled selected>Select Service</option>
+                                            <option *ngFor="let item of serviceLov" [value]="item.value">
+                                                {{ item.value }}
+                                            </option>
+                                        </select>
+
+                                        <ng-container
+                                            *ngIf="ratesFormGroup.get('serviceName')?.invalid && (ratesFormGroup.get('serviceName')?.dirty || ratesFormGroup.get('serviceName')?.touched)">
+                                            <ng-container *ngIf="ratesFormGroup.get('serviceName')?.errors">
+                                                <span class="text-danger error-state">Service Name is required.</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">Amount</label>
+
+                                        <input type="text" placeholder="Enter Amount" class="border"
+                                            formControlName="amount" autocomplete="off" aria-autocomplete required
+                                            name="new-amount" />
+
+                                        <ng-container
+                                            *ngIf="ratesFormGroup.get('amount')?.invalid && (ratesFormGroup.get('amount')?.dirty || ratesFormGroup.get('amount')?.touched)">
+                                            <ng-container *ngIf="ratesFormGroup.get('amount')?.errors">
+                                                <span class="text-danger error-state">Amount is required.</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                    <div class="input-group">
+                                        <label for="fname">Location</label>
+
+                                        <select class="form-select input-style" aria-label="Default select example"
+                                            formControlName="locationId">
+                                            <option disabled selected>Select your Location</option>
+                                            <option *ngFor="let item of locationLov" [value]="item._id">
+                                                {{ item.locationName }}
+                                            </option>
+                                        </select>
+
+                                        <ng-container
+                                            *ngIf="ratesFormGroup.get('locationId')?.invalid && (ratesFormGroup.get('locationId')?.dirty || ratesFormGroup.get('locationId')?.touched)">
+                                            <ng-container *ngIf="ratesFormGroup.get('locationId')?.errors">
+                                                <span class="text-danger error-state">Location Name is required.</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+                                    <div class="input-group"></div>
+
+                                </div>
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Active Status</label>
+                                        <div class="form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                                formControlName="status" [checked]="checked">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-container  mt-12">
+                                    <div class=" d-flex g-16 mt-10">
+                                        <button class="form-cancel-btn " (click)="bsModalRef.hide()">Cancel </button>
+                                        <button class="form-submit-btn"
+                                            [ngClass]="(!ratesFormGroup.valid || ratesFormGroup.controls['serviceName'].value =='Select Service'|| ratesFormGroup.controls['locationId'].value =='Select your Location') ? 'btn-disabled': '' "
+                                            [disabled]="!ratesFormGroup.valid || ratesFormGroup.controls['serviceName'].value =='Select Service'|| ratesFormGroup.controls['locationId'].value =='Select your Location'"
+                                            (click)=" this.initialState.type === 'old_location' ? updateLocationServiceRates() : addLocationServiceRates()">
+                                            {{this.initialState.type === 'old_location' ?
+                                            'Update' : ' Save'}}
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

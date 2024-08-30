@@ -23,8 +23,21 @@
                                 <div class="button-grid ">
                                     <div class="btn-group">
 
-                                        <input type="date" placeholder="Select date of birth" class="border"
-                                            autocomplete="off" aria-autocomplete required name="new-dob" />
+                                        <!-- <input type="date" placeholder="Select date of birth" class="border"
+                                            autocomplete="off" aria-autocomplete required name="new-dob" /> -->
+                                        <button class="custom_dropdown_btn" type="button"
+                                            id="dropdownMenuClickableInside" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="outside" aria-expanded="false">
+                                            {{ inlineDatePicker | date: 'dd/MM/yyyy' }}
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+                                            <div class="panel-body inline-flatpickr">
+                                                <input type="hidden" class="form-control" mwlFlatpickr [inline]="true"
+                                                    [(ngModel)]="inlineDatePicker" [disableMobile]="true"
+                                                    (ngModelChange)="onDateChange($event)" [options]="flatpickrOptions">
+                                            </div>
+
+                                        </ul>
                                     </div>
                                 </div>
 
@@ -45,15 +58,18 @@
                                                     <th scope="col">Date & Time</th>
                                                     <th scope="col">Status</th>
                                                     <th scope="col">Reschedule</th>
+                                                    <th scope="col">View</th>
                                                     <th scope="col">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- <tr *ngFor="let order of dataSource; let i = index"> -->
-                                                <tr>
-                                                    <td>cu-0001</td>
-                                                    <td>Shah Zaman</td>
-                                                    <td>{{ '27/07/2024 01:20 PM' }}</td>
+                                                <tr *ngFor="let appointments of appointmentList; let i = index">
+                                                    <!-- <tr> -->
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{appointments.patientId.f_name}}
+                                                        {{appointments.patientId.l_name}}</td>
+                                                    <td> {{appointments?.slothDetails?.startTime ||
+                                                        ' 27/07/2024 01:20 PM'}}</td>
                                                     <!-- <td>{{ '27/07/2024 01:20 PM' | date: 'dd MMM yyyy'
                                                         }}</td> -->
 
@@ -66,7 +82,11 @@
                                                     </td>
                                                     <td><a class="tag_btn-reschdule">Reschedule</a></td>
                                                     <td>
-                                                        <a class="tag_btn-cancel">Cancel</a>
+                                                        <a class="btn-business"
+                                                            (click)="viewAppointment(appointments)">View Appointment</a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="tag_btn-cancel">Cancel Appointment</a>
                                                     </td>
 
                                                 </tr>

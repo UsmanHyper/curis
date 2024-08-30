@@ -198,6 +198,16 @@ input[type="date"] {
     padding: 15px 28px;
 
 }
+.btn-business,
+.btn-business.active,
+.btn-business:hover{
+
+    background-color: #0086C9;
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+}
 
 .tag_btn-reschdule {
     background-color: #F0F9FF;
@@ -211,3 +221,79 @@ input[type="date"] {
     padding: 15px 28px;
 
 }
+
+
+
+.custom_dropdown_btn {
+    min-width: 346px;
+    padding: 16px;
+    text-align: left;
+    height: 55px;
+    background-color: transparent;
+    border: 1px solid #c5c5c5 !important;
+    border-radius: 8px;
+    color: #828482;
+    font-size: 15px;
+    font-weight: 400;
+    position: relative;
+}
+
+.dropdown-menu{
+    min-width: 346px;
+    padding: 16px;
+    text-align: left;
+    height: 55px;
+    background-color: white !important;;
+    border: 0 solid #c5c5c5 !important;
+    border-radius: 8px;
+    color: #828482;
+    font-size: 15px;
+    font-weight: 400;
+    position: relative;
+}
+
+.custom_dropdown_btn::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    float: right;
+    border: solid;
+    border-width: 2px 2px 0 0;
+    transform: rotate(135deg) translate(6px, 0px);
+    border-radius: 1px;
+    border-color: #718EBF;
+}
+
+.dropdown-menu {
+    // padding: 20px;
+    right: 0 !important;
+    left: auto !important;
+    height: auto;
+}
+
+
+.inline-flatpickr .form-control,
+.flatpickr-calendar.arrowTop:before,
+.flatpickr-calendar.arrowTop:after {
+    display: none;
+}
+
+.date-input {
+    background-color: transparent;
+    font-family: "Poppins", sans-serif;
+    outline: none !important;
+    border: none !important;
+    padding-left: 10px;
+    color: rgb(0, 0, 0);
+  }
+  
+  :host ::ng-deep.flatpickr-day.today.selected {
+    border-color: #fb6f10 !important;
+    background-color: #fb6f10 !important;
+  }
+  
+  .flatpickr-day.flatpickr-disabled,
+  .flatpickr-day.flatpickr-disabled:hover {
+    color: rgb(57 57 57 / 15%);
+  }

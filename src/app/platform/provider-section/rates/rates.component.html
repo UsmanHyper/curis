@@ -6,12 +6,15 @@
                 <ng-container>
                     <div class="w-100-p">
                         <div class="d-flex justify-content-center form-width flex-column">
-                            <div class="text-content">
+
+                            <div class="text-content d-flex align-items-center justify-content-between">
                                 <h1 class="title">Rates / Service</h1>
                                 <p class="lead paragraph-desc">
                                 </p>
+                                <button class="btn btn-business" (click)="addNewLocation()"><i
+                                        class="bi bi-plus mr-8"></i>Add New Rates / Service
+                                </button>
                             </div>
-
                             <div class="page-header-section mt-28">
                                 <div class="input-field">
                                     <input type="text" class=" placeholder-text "
@@ -45,24 +48,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- <tr *ngFor="let order of dataSource; let i = index"> -->
-                                                <tr>
-                                                    <td>Dental Consultation</td>
+                                                <tr *ngFor="let order of workingHours; let i = index">
+                                                    <!-- <tr> -->
+                                                    <td>{{order.serviceName}}</td>
+                                                    <td>{{order.locationName}}</td>
 
-                                                    <td>New York</td>
-                                                    <td>{{'100' | currency:' USD'}}</td>
+
+                                                    <td>{{order.rate | currency:'USD '}}</td>
 
                                                     <td>
                                                         <div class="form-switch">
                                                             <input class="form-check-input" type="checkbox"
-                                                                id="flexSwitchCheckChecked" checked>
+                                                                id="flexSwitchCheckChecked" [checked]="order.is_enable">
                                                         </div>
                                                     </td>
 
                                                     <td>
-                                                        <div class="">
-                                                            <i class="bi bi-trash"></i>
-                                                            <i class="bi bi-pencil-square"></i>
+                                                        <div class="d-flex justify-content-evenly align-items-center">
+                                                            <i class="bi bi-trash fs-20"></i>
+                                                            <i class="bi bi-pencil-square fs-20"></i>
                                                         </div>
                                                     </td>
 

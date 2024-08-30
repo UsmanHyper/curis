@@ -87,19 +87,21 @@
                             [routerLinkActiveOptions]="{exact : true}" routerLink="/blogs"
                             (click)="closeDropdown()">Blog</a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link scrollto" routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact : true}" routerLink="/auth"
-                            (click)="closeDropdown()">Sign In</a>
-                    </li>
+                    <ng-container *ngIf="!loggedIn">
+                        <li class="nav-item">
+                            <a class="nav-link scrollto" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact : true}" routerLink="/auth"
+                                (click)="closeDropdown()">Sign In</a>
+                        </li>
+                    </ng-container>
                     <!-- <li class="nav-item">
                         <a class="nav-link scrollto" routerLinkActive="active"
                             [routerLinkActiveOptions]="{exact : true}" routerLink="/providerDashboard"
                             (click)="closeDropdown()">Sign In</a>
                     </li> -->
                     <li class="nav-item">
-                        <a class="btn-business" routerLink="/register-as-a-provider" (click)="closeDropdown()">Join as a provider</a>
+                        <a class="btn-business" routerLink="/register-as-a-provider" (click)="closeDropdown()">Join
+                            as a provider</a>
                     </li>
 
                     <!-- Avatar dropdown menu (for larger screens) -->

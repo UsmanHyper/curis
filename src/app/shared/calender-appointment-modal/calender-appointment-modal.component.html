@@ -1,0 +1,152 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header justify-content-between">
+            <h1 class="modal-title">{{title}}</h1>
+            <i class="bi bi-x-lg close-icon" type="button" (click)="bsModalRef.hide()"></i>
+        </div>
+        <div class="modal-body contact_modal">
+            <div class="">
+                <div class="w-100-p">
+                    <div class="d-flex justify-content-center form-width flex-column">
+                        <form [formGroup]="appointmentFormGroup" autocomplete="disable">
+                            <div class="form-wrapper">
+                                <div class="d-flex gap-4 group-wrapper ">
+                                    <div class="input-group">
+                                        <label for="fname">Date</label>
+
+                                        <input type="text" placeholder="dd,mm,yyyy" class="border disable-date"
+                                            formControlName="date" autocomplete="off" aria-autocomplete readonly
+                                            name="new-lastName" />
+                                    </div>
+                                    <div class="input-group">
+                                        <!-- <label for="lname">Last Name</label>
+                                        <input type="text" placeholder="Enter Last Name" class="border"
+                                            formControlName="lastName" autocomplete="off" aria-autocomplete required
+                                            name="new-lastName" />
+                                        <ng-container
+                                            *ngIf="appointmentFormGroup.get('lastName')?.invalid && (appointmentFormGroup.get('lastName')?.dirty || appointmentFormGroup.get('lastName')?.touched)">
+                                            <ng-container *ngIf="appointmentFormGroup.get('lastName')?.errors">
+                                                <span class="text-danger error-state">Last Name is
+                                                    required</span>
+                                            </ng-container>
+
+                                        </ng-container> -->
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                    <div class="input-group">
+                                        <label for="fname">Start Time</label>
+
+
+                                        <input class="border date-input flatpickr-input" type="text" mwlFlatpickr
+                                            placeholder="HH:MM" formControlName="startTime" [noCalendar]="true"
+                                            [minuteIncrement]="30" [disableMobile]="true" [enableTime]="true"
+                                            [dateFormat]="'H:i'">
+
+                                        <ng-container
+                                            *ngIf="appointmentFormGroup.get('startTime')?.invalid && (appointmentFormGroup.get('startTime')?.dirty || appointmentFormGroup.get('startTime')?.touched)">
+                                            <ng-container *ngIf="appointmentFormGroup.get('startTime')?.errors">
+                                                <span class="text-danger error-state">Start Time is
+                                                    required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">End Time</label>
+                                        <input class="form-control date-input flatpickr-input" type="text" mwlFlatpickr
+                                            placeholder="HH:MM" formControlName="endTime" [noCalendar]="true"
+                                            [minuteIncrement]="30" [disableMobile]="true" [enableTime]="true"
+                                            [dateFormat]="'H:i'">
+
+                                        <ng-container
+                                            *ngIf="appointmentFormGroup.get('endTime')?.invalid && (appointmentFormGroup.get('endTime')?.dirty || appointmentFormGroup.get('endTime')?.touched)">
+                                            <ng-container *ngIf="appointmentFormGroup.get('endTime')?.errors">
+                                                <span class="text-danger error-state">End Time is
+                                                    required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Location</label>
+
+                                        <select class="form-select input-style" aria-label="Default select example"
+                                            formControlName="location">
+                                            <option disabled selected>Select your Location Name</option>
+                                            <option *ngFor="let item of locationLov" [value]="item._id">
+                                                {{ item.locationName }}
+                                            </option>
+                                        </select>
+
+                                        <ng-container
+                                            *ngIf="appointmentFormGroup.get('location')?.invalid && (appointmentFormGroup.get('location')?.dirty || appointmentFormGroup.get('location')?.touched)">
+                                            <ng-container *ngIf="appointmentFormGroup.get('location')?.errors">
+                                                <span class="text-danger error-state">Location Name is required.</span>
+                                            </ng-container>
+
+                                        </ng-container>ٖ
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">Slot Type</label>
+
+                                        <select class="form-select input-style" aria-label="Default select example"
+                                            formControlName="serviceName">
+                                            <option disabled selected>Select your Slot</option>
+                                            <option *ngFor="let item of serviceLov" [value]="item.value">
+                                                {{ item.value }}
+                                            </option>
+                                        </select>
+
+                                        <ng-container
+                                            *ngIf="appointmentFormGroup.get('serviceName')?.invalid && (appointmentFormGroup.get('serviceName')?.dirty || appointmentFormGroup.get('serviceName')?.touched)">
+                                            <ng-container *ngIf="appointmentFormGroup.get('serviceName')?.errors">
+                                                <span class="text-danger error-state">Slot is required.</span>
+                                            </ng-container>
+
+                                        </ng-container>ٖ
+                                    </div>
+
+
+
+                                </div>
+                                <div class="form-container">
+                                    <div class=" d-flex g-16 mt-10">
+                                        <button class="form-cancel-btn " (click)="bsModalRef.hide()">Cancel </button>
+                                        <button class="form-submit-btn"
+                                            [ngClass]="(!appointmentFormGroup.valid || appointmentFormGroup.controls['location'].value =='Select your Location Name'|| appointmentFormGroup.controls['serviceName'].value =='Select your Slot') ? 'btn-disabled': '' "
+                                            [disabled]="!appointmentFormGroup.valid || appointmentFormGroup.controls['location'].value =='Select your Location Name'|| appointmentFormGroup.controls['serviceName'].value =='Select your Slot'"
+                                            (click)=" this.initialState.type === 'eventDataUpdate' ? updateAppointmentInformation() : saveAppointmentInformationData()">
+                                            {{this.initialState.type === 'eventDataUpdate' ?
+                                            'Update' : ' Save'}}
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -20,6 +20,9 @@ import { first } from 'rxjs';
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { providerService } from '../provider.service';
 import { authenticationService } from 'src/app/services/authentication.service';
+import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
+import { DataSharingService } from 'src/app/services/data-sharing-servcie';
+import { ProviderLocationModalComponent } from 'src/app/shared/provider-location-modal/provider-location-modal.component';
 
 @Component({
   selector: 'app-location',
@@ -35,46 +38,67 @@ export class LocationComponent implements OnInit {
   cityLov: any;
   itemInView: number = 5;
   totalView: number = 10;
-  @ViewChild("addLocationModal") addLocationModal: TemplateRef<any> | any;
+  modalRef!: BsModalRef;
 
-  constructor(private apiService: MainHomeService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private providerService: providerService, private authenticationService: authenticationService) {
-    // constructor(public dialog: MatDialog, private home: homeService, public formBuilder: FormBuilder, public global: Global,
-    //   private spinner: NgxSpinnerService, private providerService: providerService, private authenticationservice: authenticationService,) {
+
+
+
+
+  constructor(private apiService: MainHomeService, public formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService, private providerService: providerService,
+    private authenticationService: authenticationService, private modalService: BsModalService, private dss: DataSharingService) {
+
 
   }
   ngOnInit() {
-    // this.providerData = this.providerService.getProviderData()
-    // this.userToken = this.authenticationService.getUserToken();
-    // this.getProviderLocationAPI(this.providerData._id)
-    // this.getCityLov();
+    this.providerData = this.providerService.getProviderData()
+    this.userToken = this.authenticationService.getUserToken();
+    this.getProviderLocationAPI(this.providerData._id)
+    this.getCityLov();
+
+    this.dss.onSignal().subscribe((value: any) => {
+
+      if (value && value.type === "location-saved") {
+        this.getProviderLocationAPI(this.providerData._id)
+      }
+    })
+
   }
   addNewLocation() {
     this.isEditMode = false;
-    this.openModal(this.addLocationModal, "Add Location");
+    this.openModal("", "Add Location", "new_location");
   }
 
   openEditModal(ev?: any): void {
-    this.openModal(ev, "Update Location")
+    this.openModal(ev, "Update Location", "old_location")
   }
+
+  // openModal(payload?: any, title?: any, type?: any) {
+
+  // }
 
   openModal(payload?: any, title?: any, type?: any) {
-    // const dialogRefLocation = this.dialog.open(AddLocationComponent, {
-    //   width: '600px',
-    //   height: '560px',
-    // });
+    console.log("openModal", payload, type, title);
 
+    let initialState: ModalOptions = {
+      initialState: {
+        title: title,
+        payload: payload,
+        type: type
+      }
+    };
+    console.log("this this.initialState", initialState)
+    this.modalRef = this.modalService.show(ProviderLocationModalComponent, {
+      initialState,
+      class: 'modal-dialog-centered modal-lg',
+      // ignoreBackdropClick: true,
+      keyboard: false,
+      animated: true,
+      backdrop: true,
+      // backdrop: 'static',
+    });
 
-    // dialogRefLocation.componentInstance.title = title ? title : "";
-    // dialogRefLocation.componentInstance.data = payload;
-
-    // dialogRefLocation.afterClosed().subscribe(result => {
-    //   this.providerData = this.providerService.getProviderData()
-    //   this.userToken = this.authenticationservice.getUserToken();
-    //   this.getProviderLocationAPI(this.providerData._id)
-    //   this.getCityLov();
-    // })
   }
-
 
   handleSwitchToggle(e: any) {
     console.log(e.target.checked)
@@ -87,6 +111,15 @@ export class LocationComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.providersLocation = res;
+          let dt = this.providersLocation;
+          dt.forEach((ele: any) => {
+            ele.status = ele.isActive === true ? 'Active' : 'Not Active'
+
+          })
+          this.providersLocation = dt
+
+          this.itemInView = dt.length;
+          this.totalView = dt.length;
           this.spinner.hide();
         },
         (err: any) => {
@@ -140,6 +173,34 @@ export class LocationComponent implements OnInit {
     //     return;
     //   }
     // });
+  }
+
+
+
+  getStatusColor(status: any): string {
+    switch (status) {
+      case true:
+        return '#027A48'; // Example color for booked status
+      // case 'true':
+      //   return '#026AA2'; // Example color for reserved status
+      case false:
+        return '#B42318';
+      // Add more cases as needed
+      default:
+        return 'yellow'; // Default color
+    }
+  }
+  getStatusBg(status: any): string {
+    switch (status) {
+      case true:
+        return '#ECFDF3'; // Example color for booked status
+      // Example color for reserved status
+      case false:
+        return '#f4d3d3';
+      // Add more cases as needed
+      default:
+        return 'yellow'; // Default color
+    }
   }
 
 }

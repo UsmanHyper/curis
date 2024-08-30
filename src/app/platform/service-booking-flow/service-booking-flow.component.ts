@@ -354,10 +354,10 @@ export class ServiceBookingFlowComponent implements OnInit {
   setScheduleAppintmentPayload(item: any) {
     let payload = {
       "isAvailable": false,
-      "providerId": this.data?._id || '6637dc27abd045c855ede1ab',
-      "providerUserId": this.data?.userId._id || '6637dc26abd045c855ede1a7',
+      "providerId": this.data?._id || '669ab03ce5d49e68501328ff',
+      "providerUserId": this.data?.userId._id || '669ab03be5d49e68501328fb',
       "patientId": item?._id,
-      "slothDetails": this.selectedId || '6637ea9c0cb21905de4bec65',
+      "slothDetails": this.selectedId || '66cf4d29b1bd26b54d748e33',
       "email": this.userform.controls['email'].value,
       "appointmentTitle": this.userform.controls['first_name'].value + ` ` + this.userform.controls['last_name'].value,
       "patientNotes": this.userform.controls['notes'].value

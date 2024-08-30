@@ -11,12 +11,13 @@ import { MainHomeService } from '../services/main-home.service';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 import { NgxMaskModule } from 'ngx-mask';
 import { authenticationService } from '../services/authentication.service';
+import { RegistrationStatusComponent } from '../shared/registration-status/registration-status.component';
 
 
 @Component({
   selector: 'app-register-provider',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, PaymentStatusComponent, NgxSpinnerModule, NgxMaskModule],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, RegistrationStatusComponent, NgxSpinnerModule, NgxMaskModule],
   templateUrl: './register-provider.component.html',
   styleUrls: ['./register-provider.component.scss']
 })

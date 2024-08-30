@@ -1,74 +1,97 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-  FormGroup
-} from "@angular/forms";
-// import { MatDialog } from '@angular/material/dialog';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { providerService } from '../../provider.service';
-// import { authenticationService } from 'src/app/authentication.service';
-import { first } from 'rxjs';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { first, Subscription, take, timer } from 'rxjs';
+import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { MainHomeService } from 'src/app/services/main-home.service';
-// import { homeService } from 'src/app/app.service';
-@Component({
-  selector: 'app-add-location',
-  templateUrl: './add-location.component.html',
-  styleUrls: ['./add-location.component.scss']
-})
-export class AddLocationComponent implements OnInit {
+import { NgxSpinnerService } from 'ngx-spinner';
+import { providerService } from 'src/app/platform/provider-section/provider.service';
+import * as moment from 'moment';
+import { authenticationService } from 'src/app/services/authentication.service';
 
-  locationFormGroup: FormGroup;
+
+@Component({
+  selector: 'app-provider-location-modal',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule,],
+  providers: [DatePipe],
+  templateUrl: './provider-location-modal.component.html',
+  styleUrls: ['./provider-location-modal.component.scss']
+})
+export class ProviderLocationModalComponent implements OnInit {
   title: any;
   data: any;
+  time: any;
   cityLov: any;
   providersLocation: any;
   providerData: any;
   userToken: any;
   isEditMode: boolean = false;
+  initialState: any;
+  locationFormGroup: FormGroup;
   zipCodesLov: any;
   location: any;
+  checked: boolean = false
 
 
-  constructor(private formBuilder: FormBuilder,
-    private apiService: MainHomeService,
-    private spinner: NgxSpinnerService,
-    private providerService: providerService,
-  ) {
-    // constructor(private formBuilder: FormBuilder,
-    //   public dialog: MatDialog, private homeService: homeService,
-    //   private spinner: NgxSpinnerService,
-    //   private providerService: providerService,
-    //   private authenticationservice: authenticationService,
-    //   private home: homeService,) {
+  constructor(
+    private fb: FormBuilder, private router: Router, public bsModalRef: BsModalRef,
+    private modalService: BsModalService, private dss: DataSharingService,
+    private apiService: MainHomeService, private datePipe: DatePipe, private spinner: NgxSpinnerService,
+    private providerService: providerService, private authenticationService: authenticationService) {
 
-    this.locationFormGroup = this.formBuilder.group({
 
+    this.locationFormGroup = this.fb.group({
       locationName: ["", Validators.required],
       locationDescription: ["", Validators.required],
       activeStatus: [false, Validators.required],
       locationAddressLineOne: ["", Validators.required],
       locationAddressLineTwo: [""],
-      city: ["", Validators.required],
-      zipCode: ["", Validators.required]
+      city: ["Select your City", Validators.required],
+      zipCode: ["Select your Zip Code", Validators.required]
+
     });
 
+
+    this.checked = this.locationFormGroup.controls['activeStatus'].value || false;
   }
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.providerData = this.providerService.getProviderData()
-    // this.userToken = this.authenticationservice.getUserToken();
+    this.userToken = this.authenticationService.getUserToken();
     this.getProviderLocationAPI(this.providerData._id)
     this.getCityLov()
     this.getzipCodeLov();
+    console.log("---------", this.initialState)
 
-    if (!!this.data) {
-      this.patchFormData(this.data)
+    if (!!this.initialState.payload) {
+      this.patchData(this.initialState.payload)
 
       this.isEditMode = true;
 
+      this.location = this.initialState.payload._id
     }
 
-    this.location = this.data._id
+    this.title = this.initialState.title
+
+
+
+  }
+
+
+
+
+  closeModal() {
+    this.locationFormGroup.reset();
+    // this.dialog.closeAll()
+    this.bsModalRef.hide()
+  }
+
+
+  showError(error: any) {
+    this.apiService.errorToster(error, 'Error!',);
   }
 
   getCityLov() {
@@ -86,18 +109,7 @@ export class AddLocationComponent implements OnInit {
         }
       );
   }
-
-  closeModal() {
-    this.locationFormGroup.reset();
-    // this.dialog.closeAll()
-  }
-
-
-  showError(error: any) {
-    this.apiService.errorToster(error, 'Error!',);
-  }
-
-  patchFormData(data: any) {
+  patchData(data: any) {
     this.isEditMode = true;
     this.locationFormGroup.patchValue({
       id: data._id,
@@ -112,7 +124,6 @@ export class AddLocationComponent implements OnInit {
 
 
   }
-
 
   updateLocationInformation() {
     let data = {
@@ -134,6 +145,8 @@ export class AddLocationComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (res: any) => {
+          this.dss.sendSignal({ type: 'location-saved', data: 'success' })
+
           this.getProviderLocationAPI(this.providerData._id);
           this.closeEditModal();
           this.spinner.hide();
@@ -203,6 +216,8 @@ export class AddLocationComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (res: any) => {
+          this.dss.sendSignal({ type: 'location-saved', data: 'success' })
+
           this.spinner.hide();
           this.closeModal();
           this.getProviderLocationAPI(this.providerData._id);

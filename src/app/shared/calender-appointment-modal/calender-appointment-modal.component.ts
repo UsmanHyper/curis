@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-  FormGroup,
-} from "@angular/forms";
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
-// import { MatDialog } from '@angular/material/dialog';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { providerService } from '../../provider.service';
-// import { authenticationService } from 'src/app/authentication.service';
-import { first } from 'rxjs';
-import { DatePipe } from '@angular/common';
-import * as moment from 'moment';
-import { MainHomeService } from 'src/app/services/main-home.service';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-// import { homeService } from 'src/app/app.service';
+import { first, Subscription, take, timer } from 'rxjs';
+import { DataSharingService } from 'src/app/services/data-sharing-servcie';
+import { MainHomeService } from 'src/app/services/main-home.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { providerService } from 'src/app/platform/provider-section/provider.service';
+import * as moment from 'moment';
+import { authenticationService } from 'src/app/services/authentication.service';
+import { FlatpickrModule } from 'angularx-flatpickr';
+
 @Component({
-  selector: 'app-appointment-modal',
-  templateUrl: './appointment-modal.component.html',
-  styleUrls: ['./appointment-modal.component.scss']
+  selector: 'app-calender-appointment-modal',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FlatpickrModule],
+  providers: [DatePipe],
+  templateUrl: './calender-appointment-modal.component.html',
+  styleUrls: ['./calender-appointment-modal.component.scss'],
 })
-export class AppointmentModalComponent implements OnInit {
+export class CalenderAppointmentModalComponent implements OnInit {
   appointmentFormGroup: FormGroup;
   title: any;
   data: any;
@@ -35,27 +35,41 @@ export class AppointmentModalComponent implements OnInit {
   pipe = new DatePipe('en-US');
   locationLov: any = []
 
-  initialState: any
+  initialState: any;
+  flatpickrOptions: any = {
+    disable: [
+      (date: Date) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return date < today;
+      }
+    ],
 
-  constructor(private formBuilder: FormBuilder, private spinner: NgxSpinnerService, public bsModalRef: BsModalRef, private modalService: BsModalService, private providerService: providerService, private apiService: MainHomeService, private datePipe: DatePipe) {
-    // constructor(private formBuilder: FormBuilder,    public dialog: MatDialog,    private spinner: NgxSpinnerService,    private providerService: providerService,    private authenticationservice: authenticationService,    private home: homeService, private datePipe: DatePipe) {
+  };
 
-    this.appointmentFormGroup = this.formBuilder.group({
+  constructor(
+    private fb: FormBuilder, private router: Router, public bsModalRef: BsModalRef,
+    private modalService: BsModalService, private dss: DataSharingService,
+    private apiService: MainHomeService, private datePipe: DatePipe, private spinner: NgxSpinnerService,
+    private providerService: providerService, private authenticationService: authenticationService) {
+
+
+    this.appointmentFormGroup = this.fb.group({
       userId: [""],
       providerId: [""],
       date: ["", Validators.required],
-
       startTime: ["", Validators.required],
       endTime: ["", Validators.required],
-      serviceName: ['', Validators.required],
-      location: ['', Validators.required],
+      serviceName: ['Select your Slot', Validators.required],
+      location: ['Select your Location Name', Validators.required],
 
     });
 
   }
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.providerData = this.providerService.getProviderData()
-    // this.userToken = this.authenticationservice.getUserToken();
+    this.userToken = this.authenticationService.getUserToken();
     // this.getProviderAppointment(this.providerData._id)
     this.getSlotLov()
     this.getLocationLov()
@@ -63,29 +77,23 @@ export class AppointmentModalComponent implements OnInit {
     this.appointmentFormGroup.get('providerId')?.setValue(this.providerData._id)
     this.appointmentFormGroup.get('date')?.setValue(this.data)
 
-    this.title = this.initialState.title;
+    this.title = this.initialState.title
 
-
-
-  }
-  onTimeChange(event: any) {
-    const timeArray = event.split(':');
-    let minutes = parseInt(timeArray[1]);
-
-    // Round minutes to the nearest 15-minute interval
-    minutes = Math.round(minutes / 15) * 15;
-
-    // Ensure minutes stay within bounds (0-59)
-    minutes = Math.min(59, Math.max(0, minutes));
-
-    // Convert minutes back to string and pad with zero if necessary
-    const formattedMinutes = minutes < 10 ? '0' + minutes.toString() : minutes.toString();
-
-    // Update selectedTime with the rounded minutes
-    let selectedTime = `${timeArray[0]}:${formattedMinutes}`;
-    this.appointmentFormGroup.get('startTime')?.setValue(selectedTime)
+    console.log(this.initialState)
+    this.patchData(this.initialState.payload)
   }
 
+
+
+  patchData(data: any) {
+
+    this.appointmentFormGroup.patchValue({
+      date: moment(data).format('DD/MM/YYYY')
+
+    })
+    console.log("=========", this.appointmentFormGroup.value)
+
+  }
 
 
   getProviderAppointment(providerId: any) {
@@ -140,6 +148,7 @@ export class AppointmentModalComponent implements OnInit {
   closeModal() {
     this.appointmentFormGroup.reset();
     // this.dialog.closeAll()
+    this.bsModalRef.hide()
   }
 
 
@@ -206,7 +215,7 @@ export class AppointmentModalComponent implements OnInit {
     let date: any = this.appointmentFormGroup.controls['date'].value;
     let startTime: any = this.appointmentFormGroup.controls['startTime'].value;
     let endTime: any = this.appointmentFormGroup.controls['endTime'].value;
-    const dateObject = new Date(date)
+    const dateObject = new Date(this.initialState.payload)
     let startDateAndTime: any = new Date(dateObject.setHours(parseInt(startTime.split(':')[0]), parseInt(startTime.split(':')[1])));
     let endDateAndTime: any = new Date(dateObject.setHours(parseInt(endTime.split(':')[0]), parseInt(endTime.split(':')[1])));
     let stday: any = this.datePipe.transform(startDateAndTime)
@@ -233,6 +242,7 @@ export class AppointmentModalComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (res: any) => {
+          this.dss.sendSignal({ type: 'appointment-saved', data: 'success' })
           this.spinner.hide();
           this.closeModal();
 
@@ -245,8 +255,4 @@ export class AppointmentModalComponent implements OnInit {
   }
 
 
-
-
-
 }
-

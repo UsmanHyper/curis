@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CalendarOptions, EventApi, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -8,7 +7,7 @@ import listPlugin from '@fullcalendar/list';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 // import { AppointmentSchedularModalComponent } from '../appointment-schedular-modal/appointment-schedular-modal.component';
 // import { MatDialog } from '@angular/material/dialog';
-import { AppointmentModalComponent } from './appointment-modal/appointment-modal.component';
+// import { AppointmentModalComponent } from './appointment-modal/appointment-modal.component';
 // import { authenticationService } from 'src/app/authentication.service';
 import { providerService } from '../provider.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,7 +17,9 @@ import { ViewportScroller } from '@angular/common';
 import { MainHomeService } from 'src/app/services/main-home.service';
 
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
-import { VerifyOtpComponent } from 'src/app/shared/verify-otp/verify-otp.component';
+import { CalenderAppointmentModalComponent } from 'src/app/shared/calender-appointment-modal/calender-appointment-modal.component';
+import { authenticationService } from 'src/app/services/authentication.service';
+import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 
 // import { homeService } from 'src/app/app.service';
 
@@ -69,9 +70,9 @@ export class CalenderComponent implements OnInit {
 
     // eventRender: this.handleEventRender.bind(this),
   };
-  constructor(private httpClient: HttpClient, private providerService: providerService, private modalService: BsModalService, private spinner: NgxSpinnerService, private apiService: MainHomeService, private viewportScroller: ViewportScroller)
-  // constructor(private httpClient: HttpClient, public dialog: MatDialog,    private providerService: providerService,    private authenticationservice: authenticationService,    private spinner: NgxSpinnerService,    private home: homeService, private viewportScroller: ViewportScroller  )
-  {
+  constructor(private providerService: providerService,
+    private modalService: BsModalService, private spinner: NgxSpinnerService, private apiService: MainHomeService,
+    private viewportScroller: ViewportScroller, private authenticationService: authenticationService, private dss: DataSharingService) {
 
   }
 
@@ -81,8 +82,18 @@ export class CalenderComponent implements OnInit {
 
     this.calendar()
     this.providerData = this.providerService.getProviderData()
-    // this.userToken = this.authenticationservice.getUserToken();
+    this.userToken = this.authenticationService.getUserToken();
     this.getProviderAppointment(this.providerData._id)
+
+    this.dss.onSignal().subscribe((value: any) => {
+
+      if (value && value.type === "appointment-saved") {
+        this.calendar()
+        this.providerData = this.providerService.getProviderData()
+        this.userToken = this.authenticationService.getUserToken();
+        this.getProviderAppointment(this.providerData._id)
+      }
+    })
   }
 
   calendar() {
@@ -226,20 +237,28 @@ export class CalenderComponent implements OnInit {
 
 
   openModal(payload?: any, type?: any) {
-console.log("openModal", payload , type);
+    console.log("openModal", payload, type);
+    if (!!payload) {
+      let initialState: ModalOptions = {
+        initialState: {
+          title: type === 'eventDataUpdate' ? 'Update Appointment Slot' : ' Add New Slot',
+          payload: payload,
+          type: type
+        }
+      };
+      console.log("this this.initialState", initialState)
+      this.modalRef = this.modalService.show(CalenderAppointmentModalComponent, {
+        initialState,
+        class: 'modal-dialog-centered modal-lg',
+        // ignoreBackdropClick: true,
+        keyboard: false,
+        animated: true,
+        backdrop: true,
+        // backdrop: 'static',
+      });
+    }
 
-    let initialState: ModalOptions = { initialState: { titleData: type === 'eventDataUpdate' ? 'Update Appointment' : ' Add New Appointment',
-       payload: payload } };
-    console.log("this this.initialState", initialState)
-    this.modalRef = this.modalService.show(VerifyOtpComponent, {
-      initialState,
-      class: 'modal-dialog-centered modal-md',
-      // ignoreBackdropClick: true,
-      keyboard: false,
-      animated: true,
-      backdrop: true,
-      // backdrop: 'static',
-    });
+
 
 
     // const dialogRefLocation = this.dialog.open(AppointmentModalComponent, {

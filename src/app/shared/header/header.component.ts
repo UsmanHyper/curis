@@ -1,6 +1,10 @@
-import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Component, Input, OnInit, SimpleChanges, HostListener } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs';
+import { authenticationService } from 'src/app/services/authentication.service';
+import { MainHomeService } from 'src/app/services/main-home.service';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +13,39 @@ import { RouterModule } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
 
+
+  constructor(private router: Router, private route: ActivatedRoute, private authenticationService: authenticationService, private apiService: MainHomeService) { }
+  ngOnInit(): void {
+
+
+    this.loggedIn = localStorage.getItem('isLoggedIn') === 'true' ? true : false
+
+  }
+
+
   logout() {
+
+    let data = this.authenticationService.getLoggedInUser();
+    this.authenticationService.logOutUser(data)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.authenticationService.removeLoggedInUser();
+          this.authenticationService.removeTokenData();
+          this.authenticationService.removeProviderData();
+          localStorage.setItem('isLoggedIn','false')
+          this.router.navigate(['/login']);
+
+          // this.spinner.hide();
+        },
+        (err: any) => {
+          // this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
 
   }
 
@@ -43,5 +76,10 @@ export class HeaderComponent {
         (navbarToggler as HTMLElement).click();
       }
     }
+  }
+
+
+  showError(error: any) {
+    this.apiService.errorToster(error, 'Error!',);
   }
 }

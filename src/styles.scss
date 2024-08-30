@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter");
 @import "./assets/styles/helpers";
+@import "flatpickr/dist/flatpickr.css";
+
 
 body {
   font-size: 20px;
@@ -211,7 +213,7 @@ button.fc-listWeek-button.btn.btn-primary {
   line-height: 21px;
   text-align: center;
   padding: 12px;
-  
+
 }
 
 .fc-col-header {
@@ -235,4 +237,73 @@ button.fc-listWeek-button.btn.btn-primary {
   text-align: left;
   color: #14181F;
 
+}
+
+.form-check-input:checked {
+  background-color: #0086C9;
+  border-color: #0086C9;
+}
+
+.form-switch {
+  .form-check-input {
+    padding: 12px 24px;
+  }
+}
+
+
+// flat picker
+.flatpickr-current-month {
+  font-size: 14px;
+  font-weight: 300;
+  padding: 0;
+  height: auto;
+}
+
+.flatpickr-months .flatpickr-month {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  margin: 0 0 15px;
+}
+
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+  height: 20px;
+  font-size: 24px;
+  padding: 3px;
+  color: #a6a6a6;
+  fill: #a6a6a6;
+}
+
+.flatpickr-innerContainer {
+  justify-content: center;
+  width: 100%;
+  margin-top: 0;
+  padding: 12px 0;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #0000001c;
+}
+
+.flatpickr-calendar.inline {
+  box-shadow: 0 0 !important;
+  width: 100%;
+}
+
+.flatpickr-days {
+  width: 100%;
+}
+
+.dayContainer {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  justify-content: start;
+}
+
+
+
+.bi-trash,
+.bi-pencil-square {
+  color: #667085;
 }
