@@ -1,0 +1,23 @@
+.mt-30 {
+    margin-top: 30px;
+}
+
+.pagination-style {
+    color: #0086c9;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.active {
+    background-color: #0086c9;
+    border-radius: 8px;
+    font-weight: 700;
+    color: white
+}
+
+
+.disabled{
+    cursor: not-allowed;
+    color: #A6A6A6;
+}

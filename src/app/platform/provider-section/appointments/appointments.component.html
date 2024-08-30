@@ -1,4 +1,4 @@
-<section class="booking_flow">
+<section class="">
     <div class="container-fluid">
 
         <div class="stepper-card-container">
@@ -97,7 +97,10 @@
                                 <div class="card-footer-section ">
                                     <h3 class="page-index">Page {{itemInView}} of {{totalView}} </h3>
                                     <div class="">
-                                        <app-pagination></app-pagination>
+                                        <ng-container *ngIf="appointmentList?.length">
+                                            <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"
+                                                (pageChange)="onPageChange($event)"></app-pagination>
+                                        </ng-container>
                                     </div>
                                 </div>
 

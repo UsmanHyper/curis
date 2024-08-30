@@ -36,7 +36,8 @@ export class AppointmentsComponent implements OnInit {
 
   dateTitle: string = "dd,mm,yyyy"
   modalRef!: BsModalRef;
-
+  totalPages: any = 10;
+  currentPage: number = 1;
 
   constructor(private providerService: providerService, private authenticationService: authenticationService, private modalService: BsModalService, private dss: DataSharingService) {
 
@@ -61,11 +62,8 @@ export class AppointmentsComponent implements OnInit {
   }
 
   viewAppointment(ev?: any) {
-
     console.log("viewAppointment", ev);
-
-
- this.openModal(ev,'Appointment Details');
+    this.openModal(ev, 'Appointment Details');
 
   }
 
@@ -76,7 +74,7 @@ export class AppointmentsComponent implements OnInit {
       initialState: {
         title: title,
         payload: payload,
-        
+
       }
     };
     console.log("this this.initialState", initialState)
@@ -90,6 +88,12 @@ export class AppointmentsComponent implements OnInit {
       // backdrop: 'static',
     });
 
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+
+    // this.getHallData("", page)
   }
 
 

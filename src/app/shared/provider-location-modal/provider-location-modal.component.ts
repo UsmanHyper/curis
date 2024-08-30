@@ -119,7 +119,7 @@ export class ProviderLocationModalComponent implements OnInit {
       locationAddressLineOne: data.locationAddressLineOne,
       locationAddressLineTwo: data?.locationAddressLineTwo || "",
       city: data.city,
-      zip: data.zip,
+      zipCode: data.zip,
     });
 
 
@@ -146,9 +146,8 @@ export class ProviderLocationModalComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.dss.sendSignal({ type: 'location-saved', data: 'success' })
-
           this.getProviderLocationAPI(this.providerData._id);
-          this.closeEditModal();
+          this.closeModal();
           this.spinner.hide();
         },
         (err: any) => {

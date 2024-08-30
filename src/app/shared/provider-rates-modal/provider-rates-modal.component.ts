@@ -71,7 +71,7 @@ export class ProviderRatesModalComponent implements OnInit {
 
       this.isEditMode = true;
 
-      this.locationNumber = this.initialState.payload.locationId
+      this.location = this.initialState.payload.locationId
     }
 
     this.title = this.initialState.title
@@ -109,11 +109,11 @@ export class ProviderRatesModalComponent implements OnInit {
   patchData(data: any) {
     this.isEditMode = true;
     this.ratesFormGroup.patchValue({
-      serviceId: data.serviceId,
+      // serviceId: data.serviceId,
       locationId: data.locationId,
       serviceName: data.serviceName,
-      amount: data.amount,
-      status: data.status
+      amount: data.rate,
+      status: data.is_enable
     });
 
 
@@ -180,7 +180,8 @@ export class ProviderRatesModalComponent implements OnInit {
       "serviceName": this.ratesFormGroup.controls['serviceName'].value,
       "is_enable": this.ratesFormGroup.controls['status'].value,
     };
-    this.updateNewRatesByLocation(this.ratesFormGroup.controls['locationId'].value, this.ratesFormGroup.controls['serviceId'].value, data);
+    let serviceId = this.initialState.payload._id
+    this.updateNewRatesByLocation(this.location, serviceId, data);
   }
 
 
@@ -190,6 +191,7 @@ export class ProviderRatesModalComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (res: any) => {
+          this.dss.sendSignal({ type: 'rates-saved', data: 'success' })
           this.isEditMode = false;
           this.closeModal();
           this.spinner.hide();

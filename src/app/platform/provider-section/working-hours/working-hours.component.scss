@@ -1,7 +1,3 @@
-.booking_flow {
-    // border-bottom: 1px solid #d4d4d6;
-}
-
 .stepper-card-container {
     width: 100%;
     display: flex;
@@ -60,12 +56,6 @@
     display: flex;
     align-items: center;
 }
-
-// .img2 {
-//     width: 35px;
-//     height: 35px;
-//     margin-left: -40px;
-// }
 
 
 
@@ -130,24 +120,11 @@ input[type="date"] {
 
 }
 
-
-// th{
-// font-size: 12px;
-// font-weight: 500;
-// line-height: 18px;
-// text-align: left;
-
-// }
-
-
 .table thead tr {
     background-color: #F9FAFB;
     border-bottom: 1px solid #EAECF0;
 }
 
-// .table thead th {
-//     background-color: #F9FAFB;
-// }
 
 .table tbody tr {
     border-bottom: 1px solid #F2F2F2;
@@ -176,6 +153,18 @@ input[type="date"] {
 }
 
 
+
+.btn-business,
+.btn-business.active,
+.btn-business:hover {
+
+    background-color: #0086C9;
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 16px;
+}
+
 .tag {
     border-radius: 100px;
     padding: 8px 36px;
@@ -183,43 +172,4 @@ input[type="date"] {
     // display: block;
     text-align: center;
 
-}
-
-.tag_btn-cancel {
-    background-color: #FEF3F2;
-    border-radius: 10px;
-    text-align: center;
-    color: #D92D20;
-    // display: block;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    padding: 15px 28px;
-
-}
-
-.tag_btn-reschdule {
-    background-color: #F0F9FF;
-    border-radius: 10px;
-    text-align: center;
-    color: #0086C9;
-    // display: block;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    padding: 15px 28px;
-
-}
-
-
-.btn-business,
-.btn-business.active,
-.btn-business:hover{
-
-    background-color: #0086C9;
-    color: #fff;
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 16px;
 }

@@ -23,6 +23,7 @@ import { authenticationService } from 'src/app/services/authentication.service';
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { ProviderLocationModalComponent } from 'src/app/shared/provider-location-modal/provider-location-modal.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-location',
@@ -40,7 +41,8 @@ export class LocationComponent implements OnInit {
   totalView: number = 10;
   modalRef!: BsModalRef;
 
-
+  totalPages: any = 10;
+  currentPage: number = 1;
 
 
 
@@ -70,12 +72,13 @@ export class LocationComponent implements OnInit {
   }
 
   openEditModal(ev?: any): void {
+
+
+
     this.openModal(ev, "Update Location", "old_location")
   }
 
-  // openModal(payload?: any, title?: any, type?: any) {
 
-  // }
 
   openModal(payload?: any, title?: any, type?: any) {
     console.log("openModal", payload, type, title);
@@ -117,7 +120,7 @@ export class LocationComponent implements OnInit {
 
           })
           this.providersLocation = dt
-
+          console.log("providersLocation", this.providersLocation)
           this.itemInView = dt.length;
           this.totalView = dt.length;
           this.spinner.hide();
@@ -152,27 +155,43 @@ export class LocationComponent implements OnInit {
   }
 
 
-  deleteLocationInformation(locationId: any, workingHourId?: any) {
-    // AlertService.confirm('Are you sure?', 'You want to delete   ?', 'Yes', 'No').subscribe((resp: VAlertAction) => {
-    //   if (resp.positive) {
-    //     this.spinner.show();
-    //     this.providerService.deleteLocationInformation(this.userToken, locationId)
-    //       .pipe(first())
-    //       .subscribe(
-    //         (res: any) => {
-    //           this.getProviderLocationAPI(this.providerData._id);
-    //           this.spinner.hide();
-    //         },
-    //         (err: any) => {
-    //           this.spinner.hide();
-    //           this.showError(err?.error?.message?.description);
-    //         }
-    //       );
+  deleteLocationInformation(data: any) {
+    let locationId: any = data;
+    Swal.fire({
+      title: 'Are you sure you want to delete it?',
 
-    //   } else {
-    //     return;
-    //   }
-    // });
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: 'grey',
+      confirmButtonText: 'Yes',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.providerService.deleteLocationInformation(this.userToken, locationId)
+          .pipe(first())
+          .subscribe(
+            (res: any) => {
+              this.spinner.hide();
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'Location has been deleted.',
+                icon: 'success',
+              });
+              this.getProviderLocationAPI(this.providerData._id)
+            },
+            (err: any) => {
+              this.spinner.hide();
+              Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred while deleting the Location.',
+                icon: 'error',
+              });
+              // this.showError(err?.error?.message?.description);
+            }
+          );
+
+      }
+    });
   }
 
 
@@ -201,6 +220,56 @@ export class LocationComponent implements OnInit {
       default:
         return 'yellow'; // Default color
     }
+  }
+
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+
+    // this.getHallData("", page)
+  }
+
+  onCheckboxChange(event: Event, ev: any): void {
+    const inputElement = event.target as HTMLInputElement;
+    //  inputElement.checked;
+    console.log('Checkbox state:', inputElement.checked);
+
+    let body = {
+      // id: ev._id,
+      locationName: ev.locationName,
+      locationDescription: ev.locationDescription,
+      isActive: inputElement.checked,
+      locationAddressLineOne: ev.locationAddressLineOne,
+      locationAddressLineTwo: ev?.locationAddressLineTwo || "",
+      city: ev.city,
+      zip: ev.zip,
+    }
+    let locationId = ev._id
+
+
+
+
+
+    this.updateProviderLocationAPI(locationId, body);
+
+    // this.updateWorkingHoursByIdAPI(body, locationId, workingHourId)
+  }
+
+
+  updateProviderLocationAPI(locationId: any, dataToSet: any) {
+    this.spinner.show();
+    this.providerService.updateLocationInformation(this.userToken, locationId, dataToSet)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.getProviderLocationAPI(this.providerData._id);
+          this.spinner.hide();
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
   }
 
 }

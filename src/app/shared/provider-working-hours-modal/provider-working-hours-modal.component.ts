@@ -51,7 +51,7 @@ export class ProviderWorkingHoursModalComponent implements OnInit {
 
       locationId: ["Select your Location", Validators.required],
       workingHourId: [],
-      isAvailable: [false, Validators.required],
+      isAvalible: [false, Validators.required],
       dayName: ["Select Working Day", Validators.required],
       startTime: ["", Validators.required],
       endTime: ["", Validators.required]
@@ -63,7 +63,7 @@ export class ProviderWorkingHoursModalComponent implements OnInit {
     });
 
 
-    this.checked = this.workingHoursFormGroup.controls['isAvailable'].value || false;
+    this.checked = this.workingHoursFormGroup.controls['isAvalible'].value || false;
   }
 
   ngOnInit(): void {
@@ -84,9 +84,13 @@ export class ProviderWorkingHoursModalComponent implements OnInit {
 
       this.locationNumber = this.initialState.payload.locationId
       this.location = this.initialState.payload.locationId
+
+      this.checked = this.initialState.payload.isAvalible
     }
 
     this.title = this.initialState.title
+
+    console.log('isAvalible', this.checked)
 
   }
 
@@ -95,7 +99,7 @@ export class ProviderWorkingHoursModalComponent implements OnInit {
     this.workingHoursFormGroup.patchValue({
 
       locationId: data.locationId,
-      isAvailable: data.isAvailable,
+      isAvalible: data.isAvalible,
       dayName: data.dayName,
       startTime: data.startTime,
       endTime: data.endTime
@@ -174,7 +178,7 @@ export class ProviderWorkingHoursModalComponent implements OnInit {
       "endTime": this.workingHoursFormGroup.controls['endTime'].value,
       "startTime": this.workingHoursFormGroup.controls['startTime'].value,
       "dayName": this.workingHoursFormGroup.controls['dayName'].value,
-      "isAvailable": this.workingHoursFormGroup.controls['isAvailable'].value,
+      "isAvalible": this.workingHoursFormGroup.controls['isAvalible'].value,
     };
     this.saveWorkingHoursByLocationAPI(data);
   }
@@ -187,7 +191,7 @@ export class ProviderWorkingHoursModalComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.workingHours = res;
-          this.dss.sendSignal({type:"workingHours-success", data: 'success'})
+          this.dss.sendSignal({ type: "workingHours-success", data: 'success' })
           this.spinner.hide();
           this.closeModal();
           this.getProviderLocationAPI(this.providerData._id);
@@ -201,10 +205,11 @@ export class ProviderWorkingHoursModalComponent implements OnInit {
 
   updateWorkingHoursByIdAPI(data: any, workingHourId: any) {
     this.spinner.show();
-    this.providerService.updateWorkingHour(this.userToken, this.workingHoursFormGroup.controls['locationId'].value, this.workingHoursFormGroup.controls['workingHourId'].value, data)
+    this.providerService.updateWorkingHour(this.userToken, this.location, workingHourId, data)
       .pipe(first())
       .subscribe(
         (res: any) => {
+          this.dss.sendSignal({ type: "workingHours-success", data: 'success' })
           this.spinner.hide();
           this.closeModal();
           this.getProviderLocationAPI(this.providerData._id);
@@ -239,13 +244,15 @@ export class ProviderWorkingHoursModalComponent implements OnInit {
   }
 
   updateWorkingHours(data: any) {
-    this.workingHoursFormGroup.patchValue({
-      isAvailable: data.isAvailable,
-      dayName: data.dayName,
-      startTime: data.startTime,
-      endTime: data.endTime
-    });
-    this.updateWorkingHoursByIdAPI(this.workingHoursFormGroup.value, this.workingHoursFormGroup.controls['workingHourId'].value);
+    // this.workingHoursFormGroup.patchValue({
+    //   isAvalible: data.isAvalible,
+    //   dayName: data.dayName,
+    //   startTime: data.startTime,
+    //   endTime: data.endTime
+    // });
+    this.location = data.locationId;
+    let workingHourId = data.workingHourId
+    this.updateWorkingHoursByIdAPI(this.workingHoursFormGroup.value, workingHourId);
   }
 
 

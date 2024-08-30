@@ -9,6 +9,7 @@ import { first } from 'rxjs';
 
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 import { ProviderRatesModalComponent } from 'src/app/shared/provider-rates-modal/provider-rates-modal.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-rates',
@@ -30,6 +31,9 @@ export class RatesComponent implements OnInit {
   workingHours: any
   accordionIsOpen: boolean = true;
   accordionStates: boolean[] = [];
+  totalPages: any = 10;
+  currentPage: number = 1;
+
 
   constructor(private apiService: MainHomeService, public formBuilder: FormBuilder,
     private spinner: NgxSpinnerService, private providerService: providerService,
@@ -41,7 +45,7 @@ export class RatesComponent implements OnInit {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
     this.getProviderLocationAPI(this.providerData._id);
-    this.getservicesLov(this.providerData.mainSpeciality);
+    this.getServicesLov(this.providerData.mainSpeciality);
 
 
     this.dss.onSignal().subscribe((value: any) => {
@@ -54,15 +58,17 @@ export class RatesComponent implements OnInit {
   }
 
 
+  onPageChange(page: number): void {
+    this.currentPage = page;
+
+    // this.getHallData("", page)
+  }
 
   addNewLocation() {
     this.isEditMode = false;
     this.openModal("", "Add Service and Rates", "new_location");
   }
 
-  openEditModal(ev?: any): void {
-    this.openModal(ev, "Update Service and Rates", "old_location")
-  }
 
   openModal(payload?: any, title?: any, type?: any) {
     console.log("openModal", payload, type, title);
@@ -104,26 +110,45 @@ export class RatesComponent implements OnInit {
     this.accordionStates[index] = isOpen;
   }
 
-  deleteService(locationId: any, ServiceId?: any, workingHourId?: any) {
-    // AlertService.confirm('Are you sure?', 'You want to delete   ?', 'Yes', 'No').subscribe((resp: VAlertAction) => {
-    //   if (resp.positive) {
-    //     this.providerService.deleteRatesByLocation(this.userToken, locationId, ServiceId)
-    //       .pipe(first())
-    //       .subscribe(
-    //         (res: any) => {
-    //           this.spinner.hide();
-    //           this.getProviderLocationAPI(this.providerData._id);
-    //         },
-    //         (err: any) => {
-    //           this.spinner.hide();
-    //           this.showError(err?.error?.message?.description);
-    //         }
-    //       );
+  deleteService(ev: any) {
 
-    //   } else {
-    //     return;
-    //   }
-    // });
+    let locationId: any = ev.locationId;
+    let ServiceId: any = ev._id;
+    Swal.fire({
+      title: 'Are you sure you want to delete it?',
+
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: 'grey',
+      confirmButtonText: 'Yes',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.providerService.deleteRatesByLocation(this.userToken, locationId, ServiceId)
+          .pipe(first())
+          .subscribe(
+            (res: any) => {
+              this.spinner.hide();
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'Rates has been deleted.',
+                icon: 'success',
+              });
+              this.getProviderLocationAPI(this.providerData._id)
+            },
+            (err: any) => {
+              this.spinner.hide();
+              Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred while deleting the Rates.',
+                icon: 'error',
+              });
+              // this.showError(err?.error?.message?.description);
+            }
+          );
+
+      }
+    });
   }
 
 
@@ -144,12 +169,15 @@ export class RatesComponent implements OnInit {
             if (ele.locationServices.length > 0) {
               ele.locationServices.forEach((loc: any) => {
                 loc.locationName = ele.locationName
+                loc.locationId = ele._id
               });
               working.push(...ele.locationServices); // Spread the array and push the items individually
             }
+            // ele.status= ele.is_enable === true ? "Active" : "Inactive"
           });
 
           console.log(working); // Check the result
+          console.log(this.providersLocation); // Check the result
           this.workingHours = working
           this.spinner.hide();
           this.totalView = working.length;
@@ -162,23 +190,12 @@ export class RatesComponent implements OnInit {
       );
   }
 
-  openRatesModaltoEdit(ev?: any, event?: any): void {
-    let body = {
-      serviceId: event._id,
-      locationId: ev._id,
-      serviceName: event.serviceName,
-      amount: event.rate,
-      status: event.is_enable
-
-    }
-    let edited = true;
-    let title = "Update Services And Rates";
-    this.openModal(body, edited, title)
-
+  openRatesModalToEdit(ev?: any): void {
+    this.openModal(ev, "Update Service and Rates", "old_location")
   }
 
 
-  getservicesLov(pSpecialityName: any) {
+  getServicesLov(pSpecialityName: any) {
     this.spinner.show();
     this.providerService.getLovsByName(pSpecialityName)
       .pipe(first())
@@ -198,7 +215,64 @@ export class RatesComponent implements OnInit {
     this.apiService.errorToster(error, 'Error!',);
   }
 
+  onCheckboxChange(event: Event, ev: any): void {
+    const inputElement = event.target as HTMLInputElement;
+    //  inputElement.checked;
+    console.log('Checkbox state:', inputElement.checked);
+    console.log('Checkbox state:', ev);
+
+    let data = {
+      "rate": ev.rate,
+      "serviceName": ev.serviceName,
+      "is_enable": inputElement.checked,
+    };
+
+    this.updateNewRatesByLocation(ev.locationId, ev._id, data);
+
+  }
 
 
+
+  updateNewRatesByLocation(locationId: any, serviceId: any, dataToSet: any) {
+    this.spinner.show();
+    this.providerService.updateRatesByLocation(this.userToken, locationId, serviceId, dataToSet)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.isEditMode = false;
+          this.spinner.hide();
+          this.getProviderLocationAPI(this.providerData._id);
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+  getStatusColor(status: any): string {
+    switch (status) {
+      case true:
+        return '#027A48'; // Example color for booked status
+      // case 'true':
+      //   return '#026AA2'; // Example color for reserved status
+      case false:
+        return '#B42318';
+      // Add more cases as needed
+      default:
+        return 'yellow'; // Default color
+    }
+  }
+  getStatusBg(status: any): string {
+    switch (status) {
+      case true:
+        return '#ECFDF3'; // Example color for booked status
+      // Example color for reserved status
+      case false:
+        return '#f4d3d3';
+      // Add more cases as needed
+      default:
+        return 'yellow'; // Default color
+    }
+  }
 
 }

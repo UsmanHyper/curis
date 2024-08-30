@@ -9,6 +9,7 @@ import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-boots
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { ProviderRatesModalComponent } from 'src/app/shared/provider-rates-modal/provider-rates-modal.component';
 import { ProviderWorkingHoursModalComponent } from 'src/app/shared/provider-working-hours-modal/provider-working-hours-modal.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-working-hours',
@@ -28,10 +29,16 @@ export class WorkingHoursComponent implements OnInit {
   weekdaysLov: any;
   modalRef!: BsModalRef;
 
-
+  sortedData: any[] = [];
+  sortDirection: string = 'asc'; // 'asc' or 'desc'
+  sortKey: string = '';
 
   accordionIsOpen: boolean = true;
   accordionStates: boolean[] = [];
+
+
+  totalPages: any = 10;
+  currentPage: number = 1;
 
   constructor(private apiService: MainHomeService, public formBuilder: FormBuilder,
     private spinner: NgxSpinnerService, private providerService: providerService,
@@ -51,9 +58,14 @@ export class WorkingHoursComponent implements OnInit {
 
       }
     })
-
-
   }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+
+    // this.getHallData("", page)
+  }
+
 
   addNewLocation() {
     this.isEditMode = false;
@@ -104,18 +116,17 @@ export class WorkingHoursComponent implements OnInit {
 
 
 
-  openWorkingHoursModalToEdit(ev?: any, event?: any) {
-    console.log("openWorkin", ev, event);
+  openWorkingHoursModalToEdit(ev?: any) {
 
     let body = {
-      workingHourId: event._id,
-      locationId: ev._id,
-      isAvalible: event.isAvalible,
-      dayName: event.dayName,
-      startTime: event.startTime,
-      endTime: event.endTime,
+      workingHourId: ev._id,
+      locationId: ev.locationId,
+      isAvalible: ev.isAvalible,
+      dayName: ev.dayName,
+      startTime: ev.startTime,
+      endTime: ev.endTime,
     }
-    this.openModal(body, true, "Update Services And Rates");
+    this.openModal(body, "Update Working Hours", "old_location")
 
   }
 
@@ -135,8 +146,16 @@ export class WorkingHoursComponent implements OnInit {
 
           dt.forEach((ele: any) => {
             if (ele.workingHours.length > 0) {
+              ele.workingHours.forEach((elem: any) => {
+                elem.locationId = ele._id
+              });
+            }
+            if (ele.workingHours.length > 0) {
               working.push(...ele.workingHours); // Spread the array and push the items individually
             }
+
+            ele.status = ele.isAvalible ? "Active" : "Inactive"
+
           });
 
           console.log(working); // Check the result
@@ -155,27 +174,45 @@ export class WorkingHoursComponent implements OnInit {
   }
 
 
-  deleteLocation(locationId: any, workingHourId: any) {
-    // AlertService.confirm('Are you sure?', 'You want to delete   ?', 'Yes', 'No').subscribe((resp: VAlertAction) => {
-    //   if (resp.positive) {
-    //     this.spinner.show();
-    //     this.providerService.deleteWorkingHoursByLocation(this.userToken, locationId, workingHourId)
-    //       .pipe(first())
-    //       .subscribe(
-    //         (res: any) => {
-    //           this.spinner.hide();
-    //           this.getProviderLocationsByProviderIdAPI(this.providerData._id);
-    //         },
-    //         (err: any) => {
-    //           this.spinner.hide();
-    //           this.showError(err?.error?.message?.description);
-    //         }
-    //       );
+  deleteLocation(data: any) {
+    let locationId: any = data.locationId;
+    let workingHourId: any = data._id;
+    Swal.fire({
+      title: 'Are you sure you want to delete it?',
 
-    //   } else {
-    //     return;
-    //   }
-    // });
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: 'grey',
+      confirmButtonText: 'Yes',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.providerService.deleteWorkingHoursByLocation(this.userToken, locationId, workingHourId)
+          .pipe(first())
+          .subscribe(
+            (res: any) => {
+              this.spinner.hide();
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'Working hour has been deleted.',
+                icon: 'success',
+              });
+              this.getProviderLocationsByProviderIdAPI(this.providerData._id);
+            },
+            (err: any) => {
+              this.spinner.hide();
+              Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred while deleting the Working hour.',
+                icon: 'error',
+              });
+              // this.showError(err?.error?.message?.description);
+            }
+          );
+
+      }
+    });
+
   }
 
   getWeekdaysLov() {
@@ -200,5 +237,79 @@ export class WorkingHoursComponent implements OnInit {
   }
 
 
+  onCheckboxChange(event: Event, ev: any): void {
+    const inputElement = event.target as HTMLInputElement;
+    //  inputElement.checked;
+    console.log('Checkbox state:', inputElement.checked);
 
+    let body = {
+      isAvalible: inputElement.checked,
+      dayName: ev.dayName,
+      startTime: ev.startTime,
+      endTime: ev.endTime,
+    }
+    let locationId = ev.locationId
+    let workingHourId = ev._id
+
+    this.updateWorkingHoursByIdAPI(body, locationId, workingHourId)
+  }
+
+  updateWorkingHoursByIdAPI(data: any, locationId: any, workingHourId: any) {
+    this.spinner.show();
+    this.providerService.updateWorkingHour(this.userToken, locationId, workingHourId, data)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.spinner.hide();
+          this.getProviderLocationsByProviderIdAPI(this.providerData._id);
+
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+
+  getStatusColor(status: any): string {
+    switch (status) {
+      case true:
+        return '#027A48'; // Example color for booked status
+      // case 'true':
+      //   return '#026AA2'; // Example color for reserved status
+      case false:
+        return '#B42318';
+      // Add more cases as needed
+      default:
+        return 'yellow'; // Default color
+    }
+  }
+  getStatusBg(status: any): string {
+    switch (status) {
+      case true:
+        return '#ECFDF3'; // Example color for booked status
+      // Example color for reserved status
+      case false:
+        return '#f4d3d3';
+      // Add more cases as needed
+      default:
+        return 'yellow'; // Default color
+    }
+  }
+
+
+  sortData(key: string): void {
+    this.sortKey = key;
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    this.sortedData = this.workingHours.sort((a: any, b: any) => {
+      const valueA = a[key];
+      const valueB = b[key];
+
+      if (this.sortDirection === 'asc') {
+        return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+      } else {
+        return valueA < valueB ? 1 : valueA > valueB ? -1 : 0;
+      }
+    });
+  }
 }
