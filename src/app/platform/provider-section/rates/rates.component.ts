@@ -10,6 +10,7 @@ import { first } from 'rxjs';
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 import { ProviderRatesModalComponent } from 'src/app/shared/provider-rates-modal/provider-rates-modal.component';
 import Swal from 'sweetalert2';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-rates',
@@ -31,18 +32,21 @@ export class RatesComponent implements OnInit {
   workingHours: any
 
   totalPages: any = 10;
+  itemsPerPage: any = 10;
   currentPage: number = 1;
+  totalItems: number = 0;
 
 
 
   filteredData: any
+  pagedItems: any
   locationLov: any
   selectedLabel: any = null
   searchText: string = '';
 
   constructor(private apiService: MainHomeService, public formBuilder: FormBuilder,
     private spinner: NgxSpinnerService, private providerService: providerService,
-    private authenticationService: authenticationService, private modalService: BsModalService, private dss: DataSharingService) {
+    private authenticationService: authenticationService, private modalService: BsModalService, private dss: DataSharingService, private viewportScroller: ViewportScroller) {
 
   }
 
@@ -243,8 +247,13 @@ export class RatesComponent implements OnInit {
           this.workingHours = working
           this.filteredData = working
           this.spinner.hide();
-          this.totalView = this.filteredData.length;
-          this.itemInView = this.filteredData.length;
+          this.totalItems = this.filteredData.length;
+          // this.itemInView = this.filteredData.length;
+
+
+            // this.calculatePages(this.totalItems);
+            // this.setPage(this.currentPage);
+     
         },
         (err: any) => {
           this.spinner.hide();
@@ -294,6 +303,28 @@ export class RatesComponent implements OnInit {
 
   }
 
+  calculatePages(item: number): void {
+    if (item > 0) {
+      this.totalPages = Math.ceil(item / this.itemsPerPage);
+    }
+  }
+
+
+  setPage(page: number): void {
+    this.currentPage = page;
+    const startIndex = (page - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.totalItems);
+    this.pagedItems = this.filteredData;
+
+    this.viewportScroller.scrollToPosition([0, 0]);
+    this.itemInView = this.totalItems
+    this.totalView = this.pagedItems
+
+    // this.pageInfo = {
+    //   page_size: this.totalItems || 0,
+    //   on_display: this.pagedItems.length || 0,
+    // };
+  }
 
 
   updateNewRatesByLocation(locationId: any, serviceId: any, dataToSet: any) {
