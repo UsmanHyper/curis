@@ -37,11 +37,11 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
 
 
     this.appointmentForm = this.fb.group({
-      f_name: ["", Validators.required],
-      l_name: ["", Validators.required],
-      gender: ["", Validators.required],
-      email: ['', Validators.required],
-      patientNotes: ['', Validators.required],
+      f_name: [""],
+      l_name: [""],
+      gender: [""],
+      email: [''],
+      patientNotes: [''],
       m_reports: ["", Validators.required],
       investigation_ordered: ["", Validators.required],
       prescription: ["", Validators.required],
@@ -54,7 +54,6 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
-    console.log("---------", this.initialState)
     this.title = this.initialState.title
     this.patchData(this.initialState.payload)
   }

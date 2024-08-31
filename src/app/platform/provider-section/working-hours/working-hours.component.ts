@@ -1,7 +1,7 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { first } from 'rxjs';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs';
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { providerService } from '../provider.service';
 import { authenticationService } from 'src/app/services/authentication.service';
@@ -25,20 +25,27 @@ export class WorkingHoursComponent implements OnInit {
   itemInView: number = 5;
   totalView: number = 10;
   workingHours: any;
+  locationLov: any;
   locationNumber: any;
   weekdaysLov: any;
   modalRef!: BsModalRef;
-
+  filteredData: any
   sortedData: any[] = [];
   sortDirection: string = 'asc'; // 'asc' or 'desc'
   sortKey: string = '';
 
-  accordionIsOpen: boolean = true;
-  accordionStates: boolean[] = [];
 
 
+  selectedLabel: any = null
+  searchText: string = '';
+  // itemSearched = new FormControl(null);
   totalPages: any = 10;
   currentPage: number = 1;
+
+
+  
+
+  
 
   constructor(private apiService: MainHomeService, public formBuilder: FormBuilder,
     private spinner: NgxSpinnerService, private providerService: providerService,
@@ -48,6 +55,7 @@ export class WorkingHoursComponent implements OnInit {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
     this.getProviderLocationsByProviderIdAPI(this.providerData._id);
+    this.getLocationLov();
     this.getWeekdaysLov();
 
     this.dss.onSignal().subscribe((value: any) => {
@@ -58,6 +66,7 @@ export class WorkingHoursComponent implements OnInit {
 
       }
     })
+
   }
 
   onPageChange(page: number): void {
@@ -65,6 +74,46 @@ export class WorkingHoursComponent implements OnInit {
 
     // this.getHallData("", page)
   }
+
+
+  filteredItems() {
+    return this.locationLov?.filter((item: any) =>
+      item?.locationName?.toLowerCase().includes(this.searchText?.toLowerCase())
+    );
+  }
+
+  // Handle item selection
+  selectItem(item: any) {
+    this.selectedLabel = item.locationName;
+    this.searchText = '';  // Reset search text
+    this.closeDropdown()
+    let data = this.workingHours?.filter((item: any) =>
+      item?.locationName?.toLowerCase().includes(this.selectedLabel?.toLowerCase())
+    );
+
+    console.log(data);
+    console.log("---------", data)
+    this.filteredData = data
+  }
+
+
+  getLocationLov() {
+    this.spinner.show();
+    this.providerService.getProviderLocationInformation(this.userToken, this.providerData._id)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.locationLov = res;
+          this.spinner.hide();
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+
+
 
 
   addNewLocation() {
@@ -108,13 +157,6 @@ export class WorkingHoursComponent implements OnInit {
     this.openModal(body, edited, title);
   }
 
-  openAccordion(index: number, isOpen: boolean): void {
-    this.accordionStates[index] = isOpen;
-  }
-
-
-
-
 
   openWorkingHoursModalToEdit(ev?: any) {
 
@@ -139,7 +181,7 @@ export class WorkingHoursComponent implements OnInit {
         (res: any) => {
           this.providersLocation = res;
           this.providersLocation.forEach(() => {
-            this.accordionStates.push(true);
+            // this.accordionStates.push(true);
           });
           let working: any[] = []; // Initialize as an array
           let dt = this.providersLocation;
@@ -148,6 +190,7 @@ export class WorkingHoursComponent implements OnInit {
             if (ele.workingHours.length > 0) {
               ele.workingHours.forEach((elem: any) => {
                 elem.locationId = ele._id
+                elem.locationName = ele.locationName
               });
             }
             if (ele.workingHours.length > 0) {
@@ -158,10 +201,12 @@ export class WorkingHoursComponent implements OnInit {
 
           });
 
+
           console.log(working); // Check the result
           this.workingHours = working
-          this.totalView = working.length;
-          this.itemInView = working.length;
+          this.filteredData = working
+          this.totalView = this.filteredData.length;
+          this.itemInView = this.filteredData.length;
 
 
           this.spinner.hide();
@@ -312,4 +357,34 @@ export class WorkingHoursComponent implements OnInit {
       }
     });
   }
+
+
+
+  closeDropdown() {
+    const navbarToggler = document.getElementById('navbarSupportedContent');
+    const navbarCollapse = document.getElementById('dropdownMenuClickable');
+
+    if (navbarToggler && navbarCollapse) {
+      const isNavbarOpen = navbarCollapse.classList.contains('show');
+      if (isNavbarOpen) {
+        (navbarToggler as HTMLElement).click();
+      }
+    }
+  }
+
+  // @HostListener('document:click', ['$event'])
+  // onDocumentClick(event: MouseEvent) {
+  //   const target = event.target as HTMLElement;
+  //   const navbarCollapse = document.getElementById('dropdownMenuClickable');
+  //   const navbarToggler = document.getElementById('navbarSupportedContent');
+
+  //   if (navbarCollapse && navbarToggler) {
+  //     const isNavbarOpen = navbarCollapse.classList.contains('show');
+  //     const clickedInsideNavbar = navbarCollapse.contains(target) || navbarToggler.contains(target);
+
+  //     if (isNavbarOpen && !clickedInsideNavbar) {
+  //       (navbarToggler as HTMLElement).click();
+  //     }
+  //   }
+  // }
 }

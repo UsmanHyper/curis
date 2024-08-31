@@ -16,7 +16,7 @@ import { ProviderAppointmentDetailsComponent } from 'src/app/shared/provider-app
 
 })
 export class AppointmentsComponent implements OnInit {
-  imgSrc1: string = './assets/images/admin/search.png';
+  imgSrc1: string = './assets/images/provider/icon.png';
   itemInView: number = 5;
   totalView: number = 10;
   appointmentList: any;

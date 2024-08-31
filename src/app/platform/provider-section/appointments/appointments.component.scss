@@ -59,6 +59,11 @@
     align-items: center;
 }
 
+.input-field img {
+   
+    margin-left: -40px;
+  }
+
 // .img2 {
 //     width: 35px;
 //     height: 35px;
@@ -295,3 +300,6 @@ input[type="date"] {
   .flatpickr-day.flatpickr-disabled:hover {
     color: rgb(57 57 57 / 15%);
   }
+
+
+

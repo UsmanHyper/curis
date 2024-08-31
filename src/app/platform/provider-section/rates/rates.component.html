@@ -17,15 +17,33 @@
                             </div>
                             <div class="page-header-section mt-28">
                                 <div class="input-field">
-                                    <input type="text" class=" placeholder-text "
-                                        placeholder="Search for Rates / Service">
-                                    <i class="bi bi-search" style="cursor: pointer;"></i>
+                                    <input type="text" class=" placeholder-text " placeholder="Search for Appointments">
+                                    <!-- <i class="bi bi-search" style="cursor: pointer;"></i> -->
+                                    <img src="../../../../assets/images/provider/Icon.png" alt="Toggle Password Visibility" style="cursor: pointer;" />
+
+                                    <!-- <img [src]="imgSrc1" alt="Toggle Password Visibility" class="img2" style="cursor: pointer;" /> -->
                                 </div>
                                 <div class="button-grid ">
                                     <div class="btn-group">
+                                        <button class="custom_dropdown_btn" type="button" id="dropdownMenuClickable"
+                                            data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                                            aria-expanded="false">
+                                            {{ selectedLabel || "Select an item" }}
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <div class="panel-body inline-flatpickr">
 
-                                        <input type="date" placeholder="Select date of birth" class="border"
-                                            autocomplete="off" aria-autocomplete required name="new-dob" />
+
+                                                <input type="text" class="form-control" placeholder="Search..."
+                                                    [(ngModel)]="searchText" />
+
+                                                <li *ngFor="let item of filteredItems()" class="dropdown-item"
+                                                    (click)="selectItem(item)">
+                                                    {{ item.locationName }}
+                                                </li>
+                                            </div>
+                                        </ul>
+
                                     </div>
                                 </div>
 
@@ -49,7 +67,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let order of workingHours; let i = index">
+                                                <tr *ngFor="let order of filteredData; let i = index">
                                                     <!-- <tr> -->
                                                     <td>{{order.serviceName}}</td>
                                                     <td>{{order.locationName}}</td>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
@@ -29,11 +29,16 @@ export class RatesComponent implements OnInit {
   isEditMode: boolean = false;
   locationId: any
   workingHours: any
-  accordionIsOpen: boolean = true;
-  accordionStates: boolean[] = [];
+
   totalPages: any = 10;
   currentPage: number = 1;
 
+
+
+  filteredData: any
+  locationLov: any
+  selectedLabel: any = null
+  searchText: string = '';
 
   constructor(private apiService: MainHomeService, public formBuilder: FormBuilder,
     private spinner: NgxSpinnerService, private providerService: providerService,
@@ -46,7 +51,7 @@ export class RatesComponent implements OnInit {
     this.userToken = this.authenticationService.getUserToken();
     this.getProviderLocationAPI(this.providerData._id);
     this.getServicesLov(this.providerData.mainSpeciality);
-
+    this.getLocationLov();
 
     this.dss.onSignal().subscribe((value: any) => {
 
@@ -56,6 +61,70 @@ export class RatesComponent implements OnInit {
     })
 
   }
+
+  getLocationLov() {
+    this.spinner.show();
+    this.providerService.getProviderLocationInformation(this.userToken, this.providerData._id)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.locationLov = res;
+          this.spinner.hide();
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+
+  filteredItems() {
+    return this.locationLov?.filter((item: any) =>
+      item?.locationName?.toLowerCase().includes(this.searchText?.toLowerCase())
+    );
+  }
+
+  // Handle item selection
+  selectItem(item: any) {
+    this.selectedLabel = item.locationName;
+    this.searchText = '';  // Reset search text
+    this.closeDropdown()
+    let data = this.workingHours?.filter((item: any) =>
+      item?.locationName?.toLowerCase().includes(this.selectedLabel?.toLowerCase())
+    );
+
+    console.log(data);
+    this.filteredData = data
+  }
+
+
+  closeDropdown() {
+    const navbarToggler = document.getElementById('navbarSupportedContent');
+    const navbarCollapse = document.getElementById('dropdownMenuClickable');
+
+    if (navbarToggler && navbarCollapse) {
+      const isNavbarOpen = navbarCollapse.classList.contains('show');
+      if (isNavbarOpen) {
+        (navbarToggler as HTMLElement).click();
+      }
+    }
+  }
+
+  // @HostListener('document:click', ['$event'])
+  // onDocumentClick(event: MouseEvent) {
+  //   const target = event.target as HTMLElement;
+  //   const navbarCollapse = document.getElementById('dropdownMenuClickable');
+  //   const navbarToggler = document.getElementById('navbarSupportedContent');
+
+  //   if (navbarCollapse && navbarToggler) {
+  //     const isNavbarOpen = navbarCollapse.classList.contains('show');
+  //     const clickedInsideNavbar = navbarCollapse.contains(target) || navbarToggler.contains(target);
+
+  //     if (isNavbarOpen && !clickedInsideNavbar) {
+  //       (navbarToggler as HTMLElement).click();
+  //     }
+  //   }
+  // }
 
 
   onPageChange(page: number): void {
@@ -102,12 +171,6 @@ export class RatesComponent implements OnInit {
     let title = "Add Services And Rates";
     let edited = false;
     this.openModal(body, edited, title);
-  }
-
-
-
-  openAccordion(index: number, isOpen: boolean): void {
-    this.accordionStates[index] = isOpen;
   }
 
   deleteService(ev: any) {
@@ -160,7 +223,6 @@ export class RatesComponent implements OnInit {
         (res: any) => {
           this.providersLocation = res;
           this.providersLocation.forEach(() => {
-            this.accordionStates.push(true);
           });
           let working: any[] = []; // Initialize as an array
           let dt = this.providersLocation;
@@ -179,9 +241,10 @@ export class RatesComponent implements OnInit {
           console.log(working); // Check the result
           console.log(this.providersLocation); // Check the result
           this.workingHours = working
+          this.filteredData = working
           this.spinner.hide();
-          this.totalView = working.length;
-          this.itemInView = working.length;
+          this.totalView = this.filteredData.length;
+          this.itemInView = this.filteredData.length;
         },
         (err: any) => {
           this.spinner.hide();

@@ -1,7 +1,6 @@
 <section class="booking_flow">
     <div class="container-fluid">
-        <!-- <div class="booking_row">
-            <div class="col-2"> -->
+
         <div class="stepper-card-container">
             <div class="stepper-card">
                 <ng-container>
@@ -95,8 +94,8 @@
                                         <div class="input-group">
                                             <label for="fname">Email</label>
                                             <input type="email" placeholder="Enter Email" formControlName="email"
-                                                class="border" name="new-email" autocomplete="off" aria-autocomplete
-                                                required />
+                                                [readOnly]="true" class="border disable-field" name="new-email"
+                                                autocomplete="off" aria-autocomplete required />
 
                                             <ng-container
                                                 *ngIf="personalInformationForm.get('email')?.invalid && (personalInformationForm.get('email')?.dirty || personalInformationForm.get('email')?.touched)">
@@ -423,6 +422,5 @@
             </div>
         </div>
     </div>
-    <!-- </div>
-    </div> -->
+    
 </section>
