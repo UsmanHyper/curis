@@ -307,3 +307,39 @@ button.fc-listWeek-button.btn.btn-primary {
 .bi-pencil-square {
   color: #667085;
 }
+
+
+
+
+
+@media screen and (max-width: 2400px) and (min-width: 2135px) {}
+
+@media screen and (max-width: 2134px) and (min-width: 1921px) {}
+
+@media screen and (max-width: 1920px) and (min-width: 1600px) {}
+
+@media screen and (max-width: 1599px) and (min-width: 1400px) {}
+
+@media screen and (max-width: 1399px) and (min-width: 1200px) {}
+
+@media screen and (max-width: 1199px) and (min-width: 200px) {}
+
+@media screen and (max-width: 991px) and (min-width: 200px) {}
+
+@media screen and (max-width: 767px) and (min-width: 200px) {
+  .content{
+    padding: 8px!important;
+  } 
+}
+
+@media screen and (max-width: 575px) and (min-width: 200px) {
+  body {
+    font-size: 15px !important;
+  }
+
+
+}
+
+@media screen and (max-width: 400px) and (min-width: 200px) {}
+
+@media screen and (max-width: 480px) and (min-width: 200px) {}

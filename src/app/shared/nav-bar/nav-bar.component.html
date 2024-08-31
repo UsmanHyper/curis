@@ -4,9 +4,11 @@
         <div class="link" *ngFor="let opt of navBarItems ">
             <div class="content" (click)="getNavbarSelection(opt.value)"
                 [ngClass]="{'active': opt.value === selectedNavItem}">
-                <i  class="icon-colors " [ngClass]="'bi ' + opt.icon" ></i>
+                <i  class="icon-colors " [ngClass]="'bi icon ' + opt.icon "  ></i>
                 <!-- <mat-icon fontSet="material-icons-outlined" class="icon-colors">{{opt.icon}}</mat-icon> -->
-                <div class="title">{{opt.value}}</div>
+                 <ng-container *ngIf="this.isExpanded">
+                     <div class="title">{{opt.value}}</div>
+                 </ng-container>
             </div>
         </div>
     </div>

@@ -9,7 +9,7 @@
   color: #6d6e7e;
   border: 1px solid #dfdfdf;
   border-radius: 4px;
-  width: 60px;
+  // width: 60px;
 
   &.expanded {
     width: 100%;
@@ -217,3 +217,78 @@
   color: #344054;
 
 }
+
+
+@media screen and (max-width: 2400px) and (min-width: 2135px) {}
+
+@media screen and (max-width: 2134px) and (min-width: 1921px) {}
+
+@media screen and (max-width: 1920px) and (min-width: 1600px) {
+    .content {
+        padding: 12px !important;
+    }
+    .icon{
+      padding-right: 12px !important;
+    }
+}
+
+@media screen and (max-width: 1599px) and (min-width: 1400px) {
+    .content {
+        padding: 12px !important;
+    }
+    .icon{
+      padding-right: 12px !important;
+    }
+}
+
+@media screen and (max-width: 1399px) and (min-width: 1200px) {
+    .content {
+        padding: 12px !important;
+    }
+    .icon{
+      padding-right: 12px !important;
+    }
+}
+
+@media screen and (max-width: 1199px) and (min-width: 200px) {
+    .content {
+        padding: 12px !important;
+    }
+    .icon{
+      padding-right: 12px !important;
+    }
+}
+
+@media screen and (max-width: 991px) and (min-width: 200px) {
+    .content {
+        padding: 12px !important;
+    } 
+    .icon{
+      padding-right: 12px !important;
+    }
+}
+
+@media screen and (max-width: 767px) and (min-width: 200px) {
+    .content {
+        padding: 8px !important;
+    }
+    .icon{
+      padding-right: 4px !important;
+    }
+    
+}
+
+@media screen and (max-width: 575px) and (min-width: 200px) {
+    body {
+        font-size: 15px !important;
+    }
+    .icon{
+      padding-right: 4px !important;
+    }
+
+
+}
+
+@media screen and (max-width: 400px) and (min-width: 200px) {}
+
+@media screen and (max-width: 480px) and (min-width: 200px) {}
