@@ -166,7 +166,7 @@ export class CalenderAppointmentModalComponent implements OnInit {
       "date": this.appointmentFormGroup.controls['date'].value,
       "startTime": this.appointmentFormGroup.controls['startTime'].value,
       "endTime": this.appointmentFormGroup.controls['endTime'].value,
-      "slothType": this.appointmentFormGroup.controls['serviceName'].value,
+      "slotType": this.appointmentFormGroup.controls['serviceName'].value,
 
 
     };
@@ -212,26 +212,56 @@ export class CalenderAppointmentModalComponent implements OnInit {
 
   saveAppointmentInformationData() {
 
+    // let date: any = this.appointmentFormGroup.controls['date'].value;
+    // let startTime: any = this.appointmentFormGroup.controls['startTime'].value;
+    // let endTime: any = this.appointmentFormGroup.controls['endTime'].value;
+    // const dateObject = new Date(this.initialState.payload)
+    // let startDateAndTime: any = new Date(dateObject.setHours(parseInt(startTime.split(':')[0]), parseInt(startTime.split(':')[1])));
+    // let endDateAndTime: any = new Date(dateObject.setHours(parseInt(endTime.split(':')[0]), parseInt(endTime.split(':')[1])));
+    // let stday: any = this.datePipe.transform(startDateAndTime)
+    // let enday: any = this.datePipe.transform(endDateAndTime)
+
     let date: any = this.appointmentFormGroup.controls['date'].value;
     let startTime: any = this.appointmentFormGroup.controls['startTime'].value;
     let endTime: any = this.appointmentFormGroup.controls['endTime'].value;
-    const dateObject = new Date(this.initialState.payload)
-    let startDateAndTime: any = new Date(dateObject.setHours(parseInt(startTime.split(':')[0]), parseInt(startTime.split(':')[1])));
-    let endDateAndTime: any = new Date(dateObject.setHours(parseInt(endTime.split(':')[0]), parseInt(endTime.split(':')[1])));
-    let stday: any = this.datePipe.transform(startDateAndTime)
-    let enday: any = this.datePipe.transform(endDateAndTime)
+    
+    // Ensure you have a Date object for the date
+    let dateObject = new Date(this.initialState.payload); 
+    
+    // Split the startTime and set hours and minutes to the date object
+    let startDateAndTime = new Date(dateObject);
+    startDateAndTime.setHours(parseInt(startTime.split(':')[0]), parseInt(startTime.split(':')[1]));
+    
+    // Split the endTime and set hours and minutes to the date object
+    let endDateAndTime = new Date(dateObject);
+    endDateAndTime.setHours(parseInt(endTime.split(':')[0]), parseInt(endTime.split(':')[1]));
+    
 
 
 
+    
+    console.log('Start Date and Time in ISO Format:', startDateAndTime);
+    console.log('End Date and Time in ISO Format:', endDateAndTime);
 
+    
+    // Convert to ISO strings
+    let startISO = startDateAndTime.toISOString();
+    let endISO = endDateAndTime.toISOString();
+    
+    console.log('Start Date and Time in ISO Format:', startISO);
+    console.log('Start Date and Time in ISO Format:',  moment(startISO).format('YYYY-MM-DDTHH:mm:ss'));
+    console.log('End Date and Time in ISO Format:', endISO);
+    console.log('End Date and Time in ISO Format:', moment(endISO).format('YYYY-MM-DDTHH:mm:ss'));
+    
+    
     let data = {
       "userId": this.appointmentFormGroup.controls['userId'].value,
       "providerId": this.appointmentFormGroup.controls['providerId'].value,
-      "startTime": moment(startDateAndTime).format('DD/MM/YYYY : hh:mm:ss A'),
+      "startTime": moment(startISO).format('YYYY-MM-DDTHH:mm:ss'),
       "appointmentTitle": "Empty Appointment Slot",
-      "endTime": moment(endDateAndTime).format('DD/MM/YYYY : hh:mm:ss A'),
-      "slothType": this.appointmentFormGroup.controls['serviceName'].value,
-      "slothLocation": this.appointmentFormGroup.controls['location'].value,
+      "endTime": moment(endISO).format('YYYY-MM-DDTHH:mm:ss'),
+      "slotType": this.appointmentFormGroup.controls['serviceName'].value,
+      "slotLocation": this.appointmentFormGroup.controls['location'].value,
     };
     this.saveProviderSlot(data);
   }

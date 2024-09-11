@@ -1,13 +1,11 @@
 [
     {
-        "value": "My Profile"
+        "value": "Profile"
     },
     {
-        "value": "My Appointment"
+        "value": "Appointments"
     },
-    {
-        "value": "Scheduled Appointment"
-    },
+
     {
         "value": "Change Password"
     }

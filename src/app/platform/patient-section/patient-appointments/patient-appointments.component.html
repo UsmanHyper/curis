@@ -1,0 +1,106 @@
+<section class="">
+    <div class="container-fluid">
+
+        <div class="stepper-card-container">
+            <div class="stepper-card">
+                <ng-container>
+                    <div class="w-100-p">
+                        <div class="d-flex justify-content-center form-width flex-column">
+                            <div class="text-content">
+                                <h1 class="title">Appointments</h1>
+                                <p class="lead paragraph-desc">
+                                </p>
+                            </div>
+
+                            <div class="page-header-section mt-28">
+                                <div class="input-field">
+                                    <input type="text" class=" placeholder-text " placeholder="Search for Appointments">
+                                    <!-- <i class="bi bi-search" style="cursor: pointer;"></i> -->
+                                    <img src="../../../../assets/images/provider/Icon.png"
+                                        alt="Toggle Password Visibility" style="cursor: pointer;" />
+
+                                    <!-- <img [src]="imgSrc1" alt="Toggle Password Visibility" class="img2" style="cursor: pointer;" /> -->
+                                </div>
+                                <div class="button-grid ">
+                                    <div class="btn-group">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="card mt-20">
+                                <div class="card-title">
+                                    <h2> Appointments</h2>
+                                </div>
+                                <!-- <hr> -->
+                                <div class="card-content">
+                                    <div class="table-wrapper">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Provider Name</th>
+                                                    <th scope="col">City</th>
+                                                    <th scope="col">Services</th>
+                                                    <th scope="col">Main Specialty</th>
+                                                    <th scope="col">Appointment Date</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">View</th>
+                                                    <th scope="col">Download Invoice</th>
+                                                    <th scope="col">Cancel</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- <tr *ngFor="let appointments of appointmentList; let i = index"> -->
+                                                <tr>
+                                                    <td>{{'Steve Smith'}}</td>
+                                                    <td>{{'New York'}} </td>
+                                                    <td> {{'Dentist'}}</td>
+                                                    <td> {{'Dentist'}}</td>
+                                                    <td>{{ '27/07/2024 01:20 PM' }}</td>
+
+                                                    <td>
+                                                        <span class="tag" [style.color]="getStatusColor('New')"
+                                                            [style.background-color]="getStatusBg('New')">
+                                                            {{ 'New' | titlecase }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a class="tag_btn-reschdule"
+                                                            (click)="viewAppointment('abcd')">View</a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="tag_btn-reschdule"
+                                                            (click)="viewAppointment('abcd')">Download Invoice</a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="tag_btn-cancel">Cancel</a>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer-section ">
+                                    <h3 class="page-index">Page {{itemInView}} of {{totalView}} </h3>
+                                    <div class="">
+                                        <ng-container *ngIf="appointmentList?.length">
+                                            <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"
+                                                (pageChange)="onPageChange($event)"></app-pagination>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+
+</section>

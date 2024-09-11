@@ -175,6 +175,17 @@
     display: block;
   }
 
+
+  .tags-blue {
+    background-color: #E0F2FE;
+    color: #0086C9 !important;
+    padding: 5px 10px;
+    text-align: center;
+    border-radius: 4px;
+    width: 100%;
+    display: block;
+  }
+
   .indicate {
     font-weight: 400;
   }
@@ -227,4 +238,41 @@
   }
 .col-1, .col-2 {
   width: 100%;
+}
+
+
+input.date-input.form-control.border-0.flatpickr-input.ng-untouched.ng-pristine.ng-valid.active {
+  box-shadow: none !important;
+}
+
+
+.dropdown-menu{
+  min-width: 200px;
+  background-color: #fffffffc !important;
+  border: 0 solid #c5c5c5 !important;
+  border-radius: 8px;
+  color: #828482;
+  font-size: 15px;
+  font-weight: 400;
+ 
+}
+
+
+.disabled{
+  cursor: not-allowed;
+}
+
+
+.btn.disabled, .btn:disabled, fieldset:disabled .btn {
+ 
+  pointer-events: not-allowed;
+  background-color: grey;
+  color: white;
+}
+
+
+.btn:hover {
+  color: white;
+  background-color: #0086C9;
+  border-color: #0086C9;
 }

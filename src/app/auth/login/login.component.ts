@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/providerDashboard']);
           }
           else if (res.user_Type == "Patient") {
-            this.router.navigate(['/userDashboard']);
+            this.router.navigate(['/patientDashboard']);
           }
           else if (res.user_Type == "Admin") {
             this.router.navigate(['/AdminDashboard']);

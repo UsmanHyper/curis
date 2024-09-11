@@ -1,0 +1,371 @@
+<section class="booking_flow">
+    <div class="container-fluid">
+
+        <div class="stepper-card-container">
+            <div class="stepper-card">
+                <ng-container>
+                    <div class="w-100-p">
+                        <div class="d-flex justify-content-center form-width flex-column">
+                            <div class="text-content">
+                                <h1 class="title">Profile</h1>
+                                <p class="lead paragraph-desc">
+                                </p>
+                            </div>
+                            <!-- <---------------------------------Personal Information---------------------------->
+
+                            <div class="text-content mt-32">
+                                <h2 class="profile-header-text">Personal Information</h2>
+
+                            </div>
+                            <hr>
+
+                            <form [formGroup]="personalInformationForm" autocomplete="disable">
+                                <div class="form-wrapper">
+                                    <div class="d-flex gap-4 group-wrapper ">
+                                        <div class="input-group">
+                                            <label for="fname">First Name</label>
+                                            <input type="text" placeholder="Enter First Name"
+                                                formControlName="firstName" class="border" name="new-firstName"
+                                                autocomplete="off" aria-autocomplete required />
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('firstName')?.invalid && (personalInformationForm.get('firstName')?.dirty || personalInformationForm.get('firstName')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('firstName')?.errors">
+                                                    <span class="text-danger error-state">First Name is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="lname">Middle Initial</label>
+                                            <input type="text" placeholder="Enter Middle Initial Name" class="border"
+                                                formControlName="middleName" autocomplete="off" aria-autocomplete
+                                                required name="new-middleName" />
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('middleName')?.invalid && (personalInformationForm.get('middleName')?.dirty || personalInformationForm.get('middleName')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('middleName')?.errors">
+                                                    <span class="text-danger error-state">Middle Initial is
+                                                        Required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="lname">Last Name</label>
+                                            <input type="text" placeholder="Enter Last Name" class="border"
+                                                formControlName="lastName" autocomplete="off" aria-autocomplete required
+                                                name="new-lastName" />
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('lastName')?.invalid && (personalInformationForm.get('lastName')?.dirty || personalInformationForm.get('lastName')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('lastName')?.errors">
+                                                    <span class="text-danger error-state">Last Name is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                        <div class="input-group">
+                                            <label for="fname">Gender</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="gender">
+                                                <option disabled selected>Select your Gender</option>
+                                                <option *ngFor="let item of genderLov" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('gender')?.invalid && (personalInformationForm.get('gender')?.dirty || personalInformationForm.get('gender')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('gender')?.errors">
+                                                    <span class="text-danger error-state">Gender is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname">Email</label>
+                                            <input type="email" placeholder="Enter Email" formControlName="email"
+                                                [readOnly]="true" class="border disable-field" name="new-email"
+                                                autocomplete="off" aria-autocomplete required />
+
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('email')?.invalid && (personalInformationForm.get('email')?.dirty || personalInformationForm.get('email')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('email')?.errors">
+                                                    <span class="text-danger error-state">Email is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <!-- <label for="fname">Email</label>
+                                            <input type="email" placeholder="Enter Email" formControlName="email"
+                                                [readOnly]="true" class="border disable-field" name="new-email"
+                                                autocomplete="off" aria-autocomplete required />
+
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('email')?.invalid && (personalInformationForm.get('email')?.dirty || personalInformationForm.get('email')?.touched)">
+                                                <ng-container *ngIf="personalInformationForm.get('email')?.errors">
+                                                    <span class="text-danger error-state">Email is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container> -->
+                                        </div>
+
+
+
+                                    </div>
+
+
+                                </div>
+
+                                <!-- <---------------------------------Emergency Contact---------------------------->
+
+
+                                <div class="text-content mt-32">
+                                    <h2 class="profile-header-text">Emergency Contact</h2>
+                                </div>
+                                <hr>
+
+                                <!-- <form [formGroup]="emergencyContact" autocomplete="disable"> -->
+
+                                <div class="form-wrapper">
+                                    <div class="d-flex gap-4 group-wrapper ">
+
+                                        <div class="input-group">
+                                            <label for="fname">First name</label>
+                                            <input type="text" placeholder="Enter First name"
+                                                formControlName="emergency_firstName" class="border"
+                                                name="new-emergency_firstName" autocomplete="off" aria-autocomplete
+                                                required />
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('emergency_firstName')?.invalid && (personalInformationForm.get('emergency_firstName')?.dirty || personalInformationForm.get('emergency_firstName')?.touched)">
+                                                <ng-container
+                                                    *ngIf="personalInformationForm.get('emergency_firstName')?.errors">
+                                                    <span class="text-danger error-state">First name is
+                                                        required</span>
+                                                </ng-container>
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname">Last name</label>
+                                            <input type="text" placeholder="Enter Last name"
+                                                formControlName="emergency_lastName" class="border"
+                                                name="new-emergency_lastName" autocomplete="off" aria-autocomplete
+                                                required />
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('emergency_lastName')?.invalid && (personalInformationForm.get('emergency_lastName')?.dirty || personalInformationForm.get('emergency_lastName')?.touched)">
+                                                <ng-container
+                                                    *ngIf="personalInformationForm.get('emergency_lastName')?.errors">
+                                                    <span class="text-danger error-state">Last name is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname">Contact Number </label>
+                                            <input type="text" placeholder="Enter Contact Number "
+                                                formControlName="emergency_contact_no" class="border"
+                                                name="new-contact_no" autocomplete="off" aria-autocomplete required />
+                                            <ng-container
+                                                *ngIf="personalInformationForm.get('emergency_contact_no')?.invalid && (personalInformationForm.get('emergency_contact_no')?.dirty || personalInformationForm.get('emergency_contact_no')?.touched)">
+                                                <ng-container
+                                                    *ngIf="personalInformationForm.get('emergency_contact_no')?.errors">
+                                                    <span class="text-danger error-state">Contact Number is
+                                                        required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                                <!-- </form> -->
+                            </form>
+
+                            <!-- <---------------------------------Patient Demographics---------------------------->
+
+                            <div class="text-content mt-32">
+                                <h2 class="profile-header-text">Patient Demographics</h2>
+
+                            </div>
+                            <hr>
+
+                            <form [formGroup]="patientDemographics" autocomplete="disable">
+
+                                <div class="form-wrapper">
+                                    <div class="d-flex gap-4 group-wrapper ">
+
+                                        <div class="input-group">
+                                            <label for="fname">Date Of Birth </label>
+                                            <input type="date" placeholder="DD/MM/YYYY" formControlName="DOB"
+                                                class="border" name="new-DOB" autocomplete="off" aria-autocomplete
+                                                required />
+                                            <ng-container
+                                                *ngIf="patientDemographics.get('DOB')?.invalid && (patientDemographics.get('DOB')?.dirty || patientDemographics.get('DOB')?.touched)">
+                                                <ng-container *ngIf="patientDemographics.get('DOB')?.errors">
+                                                    <span class="text-danger error-state">Add DOB is required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname">Contact One</label>
+                                            <input type="text" placeholder="Enter Contact One"
+                                                formControlName="contact_one" class="border" name="new-contact_one"
+                                                autocomplete="off" aria-autocomplete required />
+                                            <ng-container
+                                                *ngIf="patientDemographics.get('contact_one')?.invalid && (patientDemographics.get('contact_one')?.dirty || patientDemographics.get('contact_one')?.touched)">
+                                                <ng-container *ngIf="patientDemographics.get('contact_one')?.errors">
+                                                    <span class="text-danger error-state">Contact One is required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="fname">Contact Two </label>
+                                            <input type="text" placeholder="Enter Contact Two"
+                                                formControlName="contact_two" class="border" name="new-contact_two"
+                                                autocomplete="off" aria-autocomplete required />
+                                            <ng-container
+                                                *ngIf="patientDemographics.get('contact_two')?.invalid && (patientDemographics.get('contact_two')?.dirty || patientDemographics.get('contact_two')?.touched)">
+                                                <ng-container *ngIf="patientDemographics.get('contact_two')?.errors">
+                                                    <span class="text-danger error-state">Contact Two is Required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                        <div class="input-group">
+                                            <label for="fname"> City</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="city">
+                                                <option disabled selected> Select City</option>
+                                                <option *ngFor="let item of cityLov" [value]="item.value">{{ item.value
+                                                    }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="patientDemographics.get('city')?.invalid && (patientDemographics.get('city')?.dirty || patientDemographics.get('city')?.touched)">
+                                                <ng-container *ngIf="patientDemographics.get('city')?.errors">
+                                                    <span class="text-danger error-state"> City is Required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname"> State</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="state">
+                                                <option disabled selected> Select State</option>
+                                                <option *ngFor="let item of stateLov" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="patientDemographics.get('state')?.invalid && (patientDemographics.get('state')?.dirty || patientDemographics.get('state')?.touched)">
+                                                <ng-container *ngIf="patientDemographics.get('state')?.errors">
+                                                    <span class="text-danger error-state"> State is required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <label for="fname">Country</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="country">
+                                                <option disabled selected> Select Country</option>
+                                                <option *ngFor="let item of stateLov" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="patientDemographics.get('country')?.invalid && (patientDemographics.get('country')?.dirty || patientDemographics.get('country')?.touched)">
+                                                <ng-container *ngIf="patientDemographics.get('country')?.errors">
+                                                    <span class="text-danger error-state"> Country is required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="fname">Zip Code</label>
+                                            <select class="form-select input-style" aria-label="Default select example"
+                                                formControlName="zipcode">
+                                                <option disabled selected> Select Zip Code</option>
+                                                <option *ngFor="let item of zipcodeLov" [value]="item.value">{{
+                                                    item.value }}</option>
+                                            </select>
+                                            <ng-container
+                                                *ngIf="patientDemographics.get('zipcode')?.invalid && (patientDemographics.get('zipcode')?.dirty || patientDemographics.get('zipcode')?.touched)">
+                                                <ng-container *ngIf="patientDemographics.get('zipcode')?.errors">
+                                                    <span class="text-danger error-state"> Zip Code is required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-4 group-wrapper mt-12">
+                                        <div class="input-group">
+                                            <label for="fname">Address One </label>
+                                            <input type="text" placeholder="Enter Address One"
+                                                formControlName="address_one" class="border" name="new-address_one"
+                                                autocomplete="off" aria-autocomplete required />
+                                            <ng-container
+                                                *ngIf="patientDemographics.get('address_one')?.invalid && (patientDemographics.get('address_one')?.dirty || patientDemographics.get('address_one')?.touched)">
+                                                <ng-container *ngIf="patientDemographics.get('address_one')?.errors">
+                                                    <span class="text-danger error-state">Address One is Required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="fname">Address Two </label>
+                                            <input type="text" placeholder="Enter Address Line 2"
+                                                formControlName="address_two" class="border" name="new-address_two"
+                                                autocomplete="off" aria-autocomplete required />
+                                            <ng-container
+                                                *ngIf="patientDemographics.get('address_two')?.invalid && (patientDemographics.get('address_two')?.dirty || patientDemographics.get('address_two')?.touched)">
+                                                <ng-container *ngIf="patientDemographics.get('address_two')?.errors">
+                                                    <span class="text-danger error-state">Address Two is Required</span>
+                                                </ng-container>
+
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+
+
+                        </div>
+                        <div class="d-flex gap-4 group-wrapper mt-12 justify-content-end">
+                            <button type="button" class="btn btn-submit btn-width w-30-p">Save Profile
+                                Information</button>
+                        </div>
+                    </div>
+
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+
+</section>

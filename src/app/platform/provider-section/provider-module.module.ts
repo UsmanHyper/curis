@@ -15,7 +15,6 @@ import { NavBarComponent } from 'src/app/shared/nav-bar/nav-bar.component';
 import { providerService } from './provider.service';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { FooterComponent } from 'src/app/shared/footer/footer.component';
-import { NavTabComponent } from 'src/app/shared/nav-tab/nav-tab.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { ScheduleTimeComponent } from './schedule-time/schedule-time.component';
 import { ChangePasswordComponent } from 'src/app/shared/change-password/change-password.component';
@@ -26,6 +25,7 @@ import { CalenderAppointmentModalComponent } from 'src/app/shared/calender-appoi
 import { ProviderLocationModalComponent } from 'src/app/shared/provider-location-modal/provider-location-modal.component';
 import { ProviderRatesModalComponent } from 'src/app/shared/provider-rates-modal/provider-rates-modal.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -37,8 +37,7 @@ import { NgxMaskModule } from 'ngx-mask';
     ProviderProfileComponent,
     RatesComponent,
     WorkingHoursComponent,
-    NavBarComponent,
-    NavTabComponent,
+    
     AppointmentsComponent,
     ScheduleTimeComponent,
     ProviderAccountComponent
@@ -54,7 +53,8 @@ import { NgxMaskModule } from 'ngx-mask';
     CalenderAppointmentModalComponent,
     FlatpickrModule,
     ProviderLocationModalComponent, ProviderRatesModalComponent,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    SharedModule
 
   ]
 })

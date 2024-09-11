@@ -14,9 +14,12 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthModule } from './auth/auth.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,
+    
+    
 
   ],
   imports: [

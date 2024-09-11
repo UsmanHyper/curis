@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { providerService } from '../provider.service';
-// import { authenticationService } from '../../authentication.service';
-// import { homeService } from '../../app.service';
-// import { Global } from '../../Global';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { first } from 'rxjs/operators';
 import {

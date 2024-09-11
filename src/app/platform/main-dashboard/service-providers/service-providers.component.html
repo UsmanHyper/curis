@@ -6,37 +6,54 @@
         <div class="form_fields">
           <div class="form_group">
 
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Select Speciality</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+            <select class="form-select" aria-label="Default select example" (change)="getServicesForSpeciality()"
+              [formControl]="selectedSpeciality">
+              <option selected disabled>Select Speciality</option>
+              <option *ngFor="let item of specialtiesList" [value]="item.value">{{item.value}}</option>
+
             </select>
           </div>
           <div class="form_group">
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Select Service</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+            <select class="form-select" aria-label="Default select example" [disabled]="disableService"
+              [formControl]="selectedService">
+              <option selected disabled>Select Service</option>
+              <option *ngFor="let item of servicesList" [value]="item.value" class="text-capitalize">{{item.value}}
+              </option>
+
             </select>
           </div>
           <div class="form_group">
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" aria-label="Default select example" [disabled]="disableLocation"
+              aria-disabled="true" [formControl]="selectedLocation">
               <option selected>Select Location</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option *ngFor="let item of zipCodesLov" [value]="item.value">{{item.value}}</option>
+
             </select>
           </div>
           <div class="form_group">
-            <input type="date" class="form-control" aria-label="Default select example" [(ngModel)]="selectedDate">
+            <input class="date-input form-control border-0 flatpickr-input " type="text" mwlFlatpickr
+              [formControl]="selectedDate" [options]="flatpickrOptions" [disableMobile]="true" placeholder="dd,mm,yyyy"
+              [altInput]="true" [convertModelValue]="true">
+
           </div>
           <div class="">
-            <button class="web_button" (click)="search()">Search</button>
+            <button class="web_button btn" (click)="search()"
+              [disabled]="!checkSpeciality || !checkService || !checkLocation || !checkDate">Search</button>
           </div>
           <div class="">
-            <button class="web_button" (click)="search()">Filter</button>
+            <button class="custom_dropdown_btn web_button" type="button" id="dropdownMenuClickableInside"
+              data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+              {{ filterValue }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickableInside">
+              <li class="dropdown-item" (click)="selectItem('none')">
+                None</li>
+              <li *ngFor="let item of filterItems" class="dropdown-item">
+                <input type="checkbox" [checked]="item.selected" (change)="selectItem(item)" />
+                {{ item.name }}
+              </li>
+            </ul>
+
           </div>
         </div>
       </div>
@@ -47,7 +64,7 @@
   <div class="container-fluid">
     <div class="service_provider_row">
       <div class="col-1">
-        <div class="doctors_profile_card">
+        <!-- <div class="doctors_profile_card">
           <div class="doctors_profile">
             <div class="d-flex align-items-center g-20">
               <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
@@ -70,19 +87,13 @@
                 </span>
                 <span><b>4.6</b> (200)</span>
               </div>
-              <span class="tags">Available</span>
+              <span class="tags">Available Today</span>
+              <span class="tags-blue"><i class="bi bi-star-fill mr-4" style="color:  #0086C9;"></i>Top Rated</span>
             </div>
           </div>
           <div class="">
-            <h4 class="mini_title">Sun, May 5</h4>
-            <!-- <div class="slots">
-                        <a href="#">08:30 AM</a>
-                        <a href="#">08:30 AM</a>
-                        <a href="#">08:30 AM</a>
-                        <a href="#">08:30 AM</a>
-                        <a href="#">08:30 AM</a>
-                        <a href="#">08:30 AM</a>
-                      </div> -->
+            <h4 class="mini_title">{{dateSelected}}</h4>
+
             <div class="slots">
               <ng-container *ngFor="let slot of slots; let i = index">
                 <a *ngIf="i < 5" href="#">{{ slot }}</a>
@@ -90,7 +101,55 @@
               <a class="more" href="#"> More </a>
             </div>
           </div>
-        </div>
+        </div> -->
+
+
+        <ng-container *ngFor="let item of providerDetails">
+          <div class="doctors_profile_card">
+            <div class="doctors_profile">
+              <div class="d-flex align-items-center g-20">
+                <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
+                  height="100%">
+                <div class="">
+                  <h3 class="sub_title m-0" routerLink="/provider-profile">{{ item?.providerInformation?.userId?.f_name
+                    }} {{ item?.providerInformation?.userId?.l_name }}</h3>
+                  <span class="text-capitalize"><i class="bi bi-star"></i>
+                    {{item?.providerInformation?.mainSpeciality}}</span>
+                  <p class="mb-0"><i class="bi bi-geo-alt"></i> {{ item?.providerInformation?.addressLineOne }}, {{
+                    item?.providerInformation?.city }}, {{ item?.providerInformation?.liciencedState }} {{
+                    item?.providerInformation?.zipcode }}</p>
+                </div>
+              </div>
+              <div class="d-flex flex-column g-6">
+                <div class="d-flex align-items-center g-6">
+                  <span class="d-flex align-items-center g-4">
+                    <i class="bi bi-star-fill star-st" style="color:#FF9900" *ngFor="let star of [1, 2, 3, 4, 5]"
+                      [ngClass]="{
+                        'bi-star-fill': rating >= star,
+                        'bi-star': rating < star
+                      }" (click)="setRating(star)">
+                    </i>
+                  </span>
+                  <span><b>4.6</b> (200)</span>
+                </div>
+                <span class="tags">Available Today</span>
+                <span class="tags-blue"><i class="bi bi-star-fill mr-4" style="color:  #0086C9;"></i>Top Rated</span>
+              </div>
+            </div>
+            <div class="">
+              <h4 class="mini_title">{{dateSelected}}</h4>
+              <ng-container *ngFor="let location of item.locationInformation; let i = index">
+                <div class="slots">
+                  <ng-container *ngFor="let slot of location.availableSlots; let i = index">
+                    <a *ngIf="i < 5">{{ slot.timeSlot }}</a>
+                  </ng-container>
+                  <a class="more"> More </a>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+
       </div>
       <div class="col-2">
         <div class="card-body border-secondary">

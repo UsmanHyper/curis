@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProviderDashboardComponent } from './platform/provider-section/provider-dashboard/provider-dashboard.component';
 import { DefaultScreenComponent } from './auth/default-screen/default-screen.component';
+import { PatientDashboardComponent } from './platform/patient-section/patient-dashboard/patient-dashboard.component';
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
@@ -16,7 +17,7 @@ const routes: Routes = [
     component: ProviderDashboardComponent,
     // canActivate: [providerAuthGuard],
     data: {
-      title: "provider Dashboard",
+      title: "Provider Dashboard",
     },
     children: [
       {
@@ -24,6 +25,23 @@ const routes: Routes = [
         loadChildren: () =>
           import("./platform/provider-section/provider-module.module").then(
             (m) => m.ProviderModuleModule
+          ),
+      },
+    ],
+  },
+  {
+    path: "patientDashboard",
+    component: PatientDashboardComponent,
+    // canActivate: [providerAuthGuard],
+    data: {
+      title: "Patient Dashboard",
+    },
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("./platform/patient-section/patient-module.module").then(
+            (m) => m.PatientModuleModule
           ),
       },
     ],
@@ -71,6 +89,7 @@ const routes: Routes = [
         (mod) => mod.ProviderProfileComponent
       ),
   },
+
   {
     path: "service-booking-flow",
     loadComponent: () =>

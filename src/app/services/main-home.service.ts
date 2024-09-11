@@ -12,7 +12,7 @@ const slugOTP = new URL(`${environment.baseUrl}rest/v1/registration/generate-otp
 const slugVerifyOTP = new URL(`${environment.baseUrl}rest/v1/registration/verify-otp`)
 const checkEmail = new URL(`${environment.baseUrl}users/rest/v1/getUserStatusByEmail`)
 const patientByEmail = new URL(`${environment.baseUrl}patient/rest/v1/getPatientByEmail`)
-
+const searchProvidersByCriteria = new URL(`${environment.publicUrl}searchProvidersByCriteria`)
 
 export interface ApiResponse {
   status: number;
@@ -40,6 +40,10 @@ export class MainHomeService {
   registerUser(payload: any) {
 
     return this.http.post(authenticationUrl + 'signup', payload);
+  }
+  searchProvidersByCriteria(payload: any) {
+
+    return this.http.post(searchProvidersByCriteria.href, payload);
   }
 
   updateUserBasicInformation(accessToken: any, payloadData: any, userId: any) {
@@ -101,7 +105,7 @@ export class MainHomeService {
   }
 
   loginUser(payload: any) {
-    
+
     return this.http.post(authenticationUrl + 'login', payload);
   }
 

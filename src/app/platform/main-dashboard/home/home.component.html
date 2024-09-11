@@ -26,43 +26,44 @@
       <div class="mt-40 col-12 col-lg-12">
         <div class="form_fields">
           <div class="form_group">
-            <!-- <select class="form-control" aria-label="Default select example" [(ngModel)]="selectedSpeciality">
-              <option selected>Select Speciality</option>
-              <option>Speciality 1</option>
-              <option>Speciality 2</option>
-              <option>Speciality 3</option>
-            </select> -->
-            <select class="form-select" aria-label="Default select example" (change)="getServicesForSpeciality()">
-              <option selected>Select Speciality</option>
+
+            <select class="form-select" aria-label="Default select example" (change)="getServicesForSpeciality()"
+              [formControl]="selectedSpeciality">
+              <option selected disabled>Select Speciality</option>
               <option *ngFor="let item of specialtiesList" [value]="item.value">{{item.value}}</option>
-              <!-- <option value="2">Two</option>
-              <option value="3">Three</option> -->
+
             </select>
           </div>
           <div class="form_group">
-            <select class="form-select" aria-label="Default select example" [disabled]="disableService">
-              <option selected>Select Service</option>
-              <option *ngFor="let item of servicesList" [value]="item.value">{{item.value}}</option>
-              <!-- <option value="2">Two</option>
-              <option value="3">Three</option> -->
+            <select class="form-select" aria-label="Default select example" [disabled]="disableService"
+              [formControl]="selectedService">
+              <option selected disabled>Select Service</option>
+              <option *ngFor="let item of servicesList" [value]="item.value" class="text-capitalize">{{item.value}}
+              </option>
+
             </select>
           </div>
+
           <div class="form_group">
-            <select class="form-select" aria-label="Default select example" [disabled]="disableLocation">
+            <select class="form-select" aria-label="Default select example" [disabled]="disableLocation"
+              aria-disabled="true" [formControl]="selectedLocation">
               <option selected>Select Location</option>
               <option *ngFor="let item of zipCodesLov" [value]="item.value">{{item.value}}</option>
-              <!-- <option value="2">Two</option>
-              <option value="3">Three</option> -->
+
             </select>
           </div>
           <div class="form_group">
-            <!-- <input type="date" class="form-control" aria-label="Default select example" [(ngModel)]="selectedDate"> -->
-            <input class="date-input border-0 flatpickr-input " type="text" mwlFlatpickr [options]="flatpickrOptions"
-              [disableMobile]="true" placeholder="dd,mm,yyyy" [altInput]="true" [convertModelValue]="true" mode="range">
+            <input class="date-input form-control border-0 flatpickr-input " type="text" mwlFlatpickr
+              [formControl]="selectedDate" [options]="flatpickrOptions" [disableMobile]="true" placeholder="dd,mm,yyyy"
+              [altInput]="true" [convertModelValue]="true">
+
           </div>
           <div class="form_group">
-            <button class="web_button" routerLink="service-providers" (click)="search()">Search</button>
+            <button class="web_button btn" (click)="search()"
+              [disabled]="!checkSpeciality || !checkService || !checkLocation || !checkDate">Search</button>
+            <!-- <button class="web_button" routerLink="service-providers" (click)="search()">Search</button> -->
           </div>
+
         </div>
       </div>
       <div class="mt-60 col-12 col-lg-12">

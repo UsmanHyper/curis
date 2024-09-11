@@ -22,14 +22,12 @@ export class NavBarComponent {
   navBarItems: any;
   selectedNavItem: string | any;
   constructor(public providerService: providerService, public authenticationService: authenticationService, public userService: userService) {
-    // constructor(public authenticationservice: authenticationService, public providerService: providerService, public adminService: adminService, public userService: userService) {
 
   }
   ngOnInit() {
-    // this.userData = this.authenticationService.getLoggedInUser();
+    this.userData = this.authenticationService.getLoggedInUser();
 
-    // this.getNavigationsByUserType(this.userData.user_Type || 'Provider' );
-    this.getNavigationsByUserType('Provider');
+    this.getNavigationsByUserType(this.userData.user_Type || 'Provider');
   }
 
   getNavigationsByUserType(userType: String) {
@@ -62,17 +60,14 @@ export class NavBarComponent {
     dt.forEach((ele: any) => {
       if (ele.value === "Appointments") {
         ele.icon = "bi-bookmark-check"
-      } else if (ele.value === "Profile" || ele.value === "My Profile") {
+      } else if (ele.value === "Profile") {
         ele.icon = "bi-person-circle"
         this.selectedNavItem = ele.value
-      }
-      else if (ele.value === "Change Password") {
+      } else if (ele.value === "Change Password" || ele.value === "Password Management") {
         ele.icon = "bi-three-dots"
-      }
-      else if (ele.value === "Schedule Time") {
+      } else if (ele.value === "Schedule Time") {
         ele.icon = "bi-clock-history"
-      }
-      else if (ele.value === "Locations") {
+      } else if (ele.value === "Locations") {
         ele.icon = "bi-pin-map"
       } else if (ele.value === "Rates") {
         ele.icon = "bi-ticket-perforated"
@@ -80,26 +75,21 @@ export class NavBarComponent {
         ele.icon = "bi-calendar3"
       } else if (ele.value === "Account") {
         ele.icon = "bi-person-fill-gear"
-      }
-      else if (ele.value === "Reporting Dashboard") {
+      } else if (ele.value === "Reporting Dashboard") {
         ele.icon = "bi-grid-1x2"
       } else if (ele.value === "Provider Information") {
         ele.icon = " bi-shield-exclamation"
         this.selectedNavItem = ele.value
       } else if (ele.value === "Patients Information") {
         ele.icon = "bi-hospital"
-      } else if (ele.value === "LOV management") {
+      } else if (ele.value === "LOV Management") {
         ele.icon = "bi-sliders"
-      }
-      else if (ele.value === "Appointment Governance") {
+      } else if (ele.value === "Appointment Governance") {
         ele.icon = "bi-clipboard2-check"
-      }
-      else if (ele.value === "Password management") {
+      } else if (ele.value === "Password management") {
         ele.icon = "bi-three-dots"
-      }
-
-      else if (ele.value === "My Appointment") {
-        ele.icon = "chair"
+      } else if (ele.value === "Scheduled Appointment") {
+        ele.icon = "bi-clock-history"
       }
 
       else {

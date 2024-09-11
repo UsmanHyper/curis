@@ -139,15 +139,19 @@ export class CalenderComponent implements OnInit {
     this.providerService.getProviderAppointmentInformation(this.userToken, providerId).pipe(first())
       .subscribe(
         (res: any) => {
-          let dt = res
+          console.log("Provider information Slots", res)
+          let dt = res.slots
           dt.forEach((ele: any) => {
-            const parsedDate = moment(ele.startTime, 'DD/MM/YYYY : hh:mm:ss A');
-            const parsedDateEnd = moment(ele.endTime, 'DD/MM/YYYY : hh:mm:ss A');
+            // const parsedDate = moment(ele.startTime, 'DD/MM/YYYY : hh:mm:ss A');
+            // const parsedDateEnd = moment(ele.endTime, 'DD/MM/YYYY : hh:mm:ss A');
             ele.title = ele?.appointmentTitle || " Empty Appointment Slot";
-            ele.start = parsedDate.format('YYYY-MM-DDTHH:mm:ss');
-            ele.end = parsedDateEnd.format('YYYY-MM-DDTHH:mm:ss');
+            ele.start = ele.startTime;
+            ele.end = ele.endTime;
+            // ele.start = parsedDate.format('YYYY-MM-DDTHH:mm:ss');
+            // ele.end = parsedDateEnd.format('YYYY-MM-DDTHH:mm:ss');
           });
           this.events = dt
+          console.log("Provider information Slots", this.events)
 
 
           this.calendar()
