@@ -111,7 +111,8 @@
                 <img src="../../../../assets/images/home/Avatar.png" loading="lazy" alt="Doctors Profile" width="100%"
                   height="100%">
                 <div class="">
-                  <h3 class="sub_title m-0" routerLink="/provider-profile">{{ item?.providerInformation?.userId?.f_name
+                  <h3 class="sub_title m-0 cur-point" routerLink="/provider-profile" (click)="profileInfo(item)">{{
+                    item?.providerInformation?.userId?.f_name
                     }} {{ item?.providerInformation?.userId?.l_name }}</h3>
                   <span class="text-capitalize"><i class="bi bi-star"></i>
                     {{item?.providerInformation?.mainSpeciality}}</span>
@@ -138,14 +139,33 @@
             </div>
             <div class="">
               <h4 class="mini_title">{{dateSelected}}</h4>
-              <ng-container *ngFor="let location of item.locationInformation; let i = index">
-                <div class="slots">
+              <!-- <ng-container *ngFor="let location of item.locationInformation; let i = index"> -->
+              <!-- <div class="slots">
                   <ng-container *ngFor="let slot of location.availableSlots; let i = index">
                     <a *ngIf="i < 5">{{ slot.timeSlot }}</a>
                   </ng-container>
                   <a class="more"> More </a>
+                </div> -->
+              <!-- <div class="slots">
+                  <ng-container *ngFor="let slot of location.availableSlots; let j = index">
+                    <a *ngIf="j < slotsToShow">{{ slot.timeSlot }}</a>
+                  </ng-container>
+                  <a class="more" *ngIf="slotsToShow < location.availableSlots.length"
+                    (click)="showMoreSlots(location.availableSlots.length)">More</a>
+                </div>
+
+              </ng-container> -->
+              <ng-container *ngFor="let location of item.locationInformation; let i = index">
+                <div class="slots scrollable">
+                  <ng-container *ngFor="let slot of location.availableSlots; let j = index">
+                    <a *ngIf="j < slotsToShow[i]" routerLink="/service-booking-flow"
+                      (click)="sendDataForPayment(slot,item)">{{ slot.timeSlot }}</a>
+                  </ng-container>
+                  <a class="more" *ngIf="slotsToShow[i] < location.availableSlots.length"
+                    (click)="showMoreSlots(i, location.availableSlots.length)">More</a>
                 </div>
               </ng-container>
+
             </div>
           </div>
         </ng-container>

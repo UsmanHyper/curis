@@ -16,7 +16,8 @@
                                 <div class="input-field">
                                     <input type="text" class=" placeholder-text " placeholder="Search for Appointments">
                                     <!-- <i class="bi bi-search" style="cursor: pointer;"></i> -->
-                                    <img src="../../../../assets/images/provider/Icon.png" alt="Toggle Password Visibility" style="cursor: pointer;" />
+                                    <img src="../../../../assets/images/provider/Icon.png"
+                                        alt="Toggle Password Visibility" style="cursor: pointer;" />
 
                                     <!-- <img [src]="imgSrc1" alt="Toggle Password Visibility" class="img2" style="cursor: pointer;" /> -->
                                 </div>
@@ -86,7 +87,8 @@
                                                             (click)="viewAppointment(appointments)">View Appointment</a>
                                                     </td>
                                                     <td>
-                                                        <a class="tag_btn-cancel">Cancel Appointment</a>
+                                                        <a class="tag_btn-cancel"
+                                                            (click)="cancelAppointment(appointments._id)">Cancel Appointment</a>
                                                     </td>
 
                                                 </tr>

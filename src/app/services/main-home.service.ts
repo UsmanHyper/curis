@@ -13,6 +13,7 @@ const slugVerifyOTP = new URL(`${environment.baseUrl}rest/v1/registration/verify
 const checkEmail = new URL(`${environment.baseUrl}users/rest/v1/getUserStatusByEmail`)
 const patientByEmail = new URL(`${environment.baseUrl}patient/rest/v1/getPatientByEmail`)
 const searchProvidersByCriteria = new URL(`${environment.publicUrl}searchProvidersByCriteria`)
+const searchProvidersByCriteriaByProviderId = new URL(`${environment.publicUrl}rest/v1/searchSlotsByProviderAndDate`)
 
 export interface ApiResponse {
   status: number;
@@ -44,6 +45,10 @@ export class MainHomeService {
   searchProvidersByCriteria(payload: any) {
 
     return this.http.post(searchProvidersByCriteria.href, payload);
+  }
+  searchProvidersByCriteriaByProviderId(payload: any) {
+
+    return this.http.post(searchProvidersByCriteriaByProviderId.href, payload);
   }
 
   updateUserBasicInformation(accessToken: any, payloadData: any, userId: any) {
@@ -137,7 +142,7 @@ export class MainHomeService {
 
   scheduleAppointment(payload: any) {
 
-    return this.http.post(scheduleAppointmentURL + payload.slothDetails, payload);
+    return this.http.post(scheduleAppointmentURL + payload.slotDetails, payload);
   }
 
 }

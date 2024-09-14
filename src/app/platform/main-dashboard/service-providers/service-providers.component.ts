@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FooterComponent } from 'src/app/shared/footer/footer.component';
@@ -24,8 +24,9 @@ import * as moment from 'moment'
 })
 export class ServiceProvidersComponent implements OnInit {
 
-
-
+  @ViewChild('binMap') binMap: GoogleMapsComponent | any;
+  // @ViewChildren('widget') widgets: QueryList<ElementRef>;
+  mapData: any = [];
 
   rating: number = 5;
   selectedSpeciality: FormControl;
@@ -72,6 +73,8 @@ export class ServiceProvidersComponent implements OnInit {
 
   };
 
+  slotsToShow: number[] = []
+
   disableService: boolean = true;
   disableLocation: boolean = false;
   dateSelected: any
@@ -87,6 +90,9 @@ export class ServiceProvidersComponent implements OnInit {
     this.selectedDate = new FormControl(null);
 
     this.filterValue = 'Filter'
+
+
+    this.slotsToShow.push(5);
   }
 
 
@@ -168,9 +174,18 @@ export class ServiceProvidersComponent implements OnInit {
 
     this.dateSelected = moment(this.selectedDate.value).format('ddd, MMM D');
 
-    // setTimeout(() => {
-    //   this.selectedService.patchValue(data.service)
-    // }, 2000);
+    setTimeout(() => {
+      let payload = {
+        mainSpeciality: this.selectedSpeciality.value,
+        service: this.selectedSpeciality.value,
+        // service: this.selectedService.value,
+        zipCode: this.selectedLocation.value,
+        date: moment(this.selectedDate.value).format('YYYY-MM-DD')
+      }
+
+      this.getDataByCriteria(payload);
+    }, 1000);
+
   }
 
   // selectItem(ev: any) {
@@ -188,6 +203,19 @@ export class ServiceProvidersComponent implements OnInit {
     //   this.filterValue = 'Filter'
     // }
   }
+
+  // showMoreSlots(item: any, data: any): void {
+
+  //   this.slotsToShow = item
+
+  // }
+  showMoreSlots(locationIndex: number, totalSlots: number) {
+    // Increase the number of slots to show for the specific location
+    if (this.slotsToShow[locationIndex] < totalSlots) {
+      this.slotsToShow[locationIndex] = totalSlots;
+    }
+  }
+
   getSpecialityLov() {
     this.spinner.show();
     this.apiService.getLovs(4)
@@ -268,37 +296,8 @@ export class ServiceProvidersComponent implements OnInit {
         date: moment(this.selectedDate.value).format('YYYY-MM-DD')
       }
 
+      this.getDataByCriteria(payload);
 
-      this.apiService.searchProvidersByCriteria(payload).pipe(first()).subscribe((res: any) => {
-
-        console.log("searchProvidersByCriteria==============", res);
-        this.dss.sendSignal({ type: 'appointmentSearch', item: payload });
-        localStorage.setItem("searchData", JSON.stringify(payload));
-        localStorage.setItem("appointments", JSON.stringify(res.data));
-        // this.providerDetails = res.data;
-
-        let dt = res.data
-        dt.forEach((ele: any) => {
-          if (ele.locationInformation.length > 0) {
-            ele.locationInformation.forEach((elem: any) => {
-              if (elem.availableSlots.length > 0) {
-                elem.availableSlots.forEach((slot: any) => {
-                  slot.timeSlot = moment(slot.startTimeOnly, 'HH:mm:ss').format('h:mm A');
-                })
-              }
-            });
-          }
-        });
-        console.log("------------------------", dt)
-        this.providerDetails = dt;
-      },
-        (err: any) => {
-          this.spinner.hide();
-          this.showError(err?.error?.message);
-        }
-
-
-      )
 
       // this.signals.emit(payload);
 
@@ -308,9 +307,74 @@ export class ServiceProvidersComponent implements OnInit {
 
   }
 
+  getDataByCriteria(payload: any): any {
+    this.apiService.searchProvidersByCriteria(payload).pipe(first()).subscribe((res: any) => {
+
+      console.log("searchProvidersByCriteria==============", res);
+      this.dss.sendSignal({ type: 'appointmentSearch', item: payload });
+      localStorage.setItem("searchData", JSON.stringify(payload));
+      localStorage.setItem("appointments", JSON.stringify(res.data));
+      // this.providerDetails = res.data;
+
+      let dt = res.data
+      dt.forEach((ele: any) => {
+        if (ele.locationInformation.length > 0) {
+          ele.locationInformation.forEach((elem: any) => {
+            let body = { locName: elem.locationName, zipCode: elem.zip }
+            this.mapData.push(body);
+            elem.rates = elem?.locationServices[0]?.rate || 0
+            if (elem.availableSlots.length > 0) {
+              elem.availableSlots.forEach((slot: any) => {
+                slot.timeSlot = moment(slot.startTimeOnly, 'HH:mm:ss').format('h:mm A');
+                slot.rates = elem?.locationServices[0]?.rate || 0
+              })
+            }
+          });
+        }
+      });
+      console.log("------------------------", dt)
+      this.providerDetails = dt;
+
+
+      setTimeout(() => {
+        this.binMap.setupLocations(this.mapData)
+      }, 2000)
+    },
+      (err: any) => {
+        this.spinner.hide();
+        this.showError(err?.error?.message);
+      }
+
+
+    )
+  }
+
 
   setRating(star: any) {
 
+  }
+
+  profileInfo(data: any) {
+    console.log("send", data);
+
+    localStorage.setItem('profileInfo', JSON.stringify(data));
+
+
+  }
+
+
+  sendDataForPayment(slot: any, data: any) {
+    console.log("send", slot);
+    console.log("send", data);
+
+    // let dt = [slot, ...data?.providerInformation]
+    // let dt = [...data?.providerInformation, slot];
+    // let dt = [{...slot}, ...data?.providerInformation];
+    let mergedData = { ...slot, ...data?.providerInformation };
+
+    console.log("send", mergedData);
+
+    localStorage.setItem('slotInfo', JSON.stringify(mergedData));
   }
 
 }

@@ -16,7 +16,7 @@ const ProviderWorkingHoursUrl = environment.baseUrl + 'provider/locationWorkingH
 const SlotURL = environment.baseUrl + 'provider/slot';
 const providerAppointmentsURL = environment.baseUrl + 'provider/appointments';
 const paymentUrl = environment.baseUrl + 'payment-gateway/process-payment'
-
+let cancelAppointment = new URL(`${environment.baseUrl}/patient/rest/v1/appointment/cancel`)
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +41,12 @@ export class providerService {
 
   setSelectedTab(tabName: any) {
     this.isSelectedTabSubject.next(tabName);
+  }
+
+
+  cancelAppointment(payload: any) {
+    return this.http.post(cancelAppointment.href, payload);
+
   }
 
 
@@ -73,7 +79,7 @@ export class providerService {
 
     return this.http.post(saveProviderDataUrl, payloadData, header);
   }
-  patientPaymentInformation( payload: any) {
+  patientPaymentInformation(payload: any) {
     // const header = {
     //   headers: new HttpHeaders({
     //     Authorization: accessToken
@@ -256,7 +262,7 @@ export class providerService {
   //     };
   //     const header = {
   //       headers: new HttpHeaders({
-  //         Authorization: `Bearer ${accessToken}`
+  //         Authorization: `Bearer ${ accessToken }`
   //       })
   //     };
 

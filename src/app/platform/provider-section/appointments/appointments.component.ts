@@ -125,6 +125,26 @@ export class AppointmentsComponent implements OnInit {
   }
 
 
+  cancelAppointment(item: any) {
+    let payload = {
+      appointmentId: item
+    }
+
+
+    this.providerService.cancelAppointment(payload).pipe(first())
+      .subscribe(
+        (res: any) => {
+          console.log("---------------", res)
+        },
+        (err: any) => {
+          // this.spinner.hide();
+          // this.showError(err?.error?.message?.description);
+        }
+      );
+
+
+  }
+
   getProviderAppointments() {
     this.providerService.getScheduledAppointments(this.userToken, this.providerData._id)
       .pipe(first())

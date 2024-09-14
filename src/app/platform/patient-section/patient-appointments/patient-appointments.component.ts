@@ -97,27 +97,27 @@ export class PatientAppointmentsComponent implements OnInit {
   }
 
 
-  getStatusColor(status: string): string {
+  getStatusColor(status: any) {
     switch (status) {
-      case 'New':
+      case true:
         return '#027A48'; // Example color for booked status
       case 'Completed':
         return '#026AA2'; // Example color for reserved status
-      case 'cancelled':
+      case false:
         return '#B42318';
       // Add more cases as needed
       default:
         return '#f3f3f3'; // Default color
     }
   }
-  getStatusBg(status: string): string {
+  getStatusBg(status: any) {
     switch (status) {
-      case 'New':
+      case true:
         return '#ECFDF3'; // Example color for booked status
       case 'Completed':
         return '#F0F9FF'; // Example color for reserved status
-      case 'cancelled':
-        return '#d50000';
+      case false:
+        return '#c1414130';
       // Add more cases as needed
       default:
         return '#f3f3f3'; // Default color
@@ -134,6 +134,15 @@ export class PatientAppointmentsComponent implements OnInit {
           this.spinner.hide();
           console.log(res);
           this.appointmentList = res
+          let dt = res;
+
+          dt.forEach((ele: any) => {
+
+            ele.status = (ele.isCancelled === false && ele.isCompleted === false && ele.isPaid === true) ? true : false
+
+
+          });
+
           this.dataToSend = res
           // this.getProviderData(res)
         },

@@ -83,6 +83,9 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
     this.appointmentForm.get('email')?.setValue(patientData.email)
     this.appointmentForm.get('gender')?.setValue(patientData.gender)
     this.appointmentForm.get('patientNotes')?.setValue(patientData.patientNotes)
+    this.appointmentForm.get('investigation_ordered')?.setValue(patientData.investigationsOrdered)
+    this.appointmentForm.get('m_reports')?.setValue(patientData.medicalNotes)
+    this.appointmentForm.get('prescription')?.setValue(patientData.prescription)
   }
 
 

@@ -180,7 +180,8 @@ export class HomeComponent implements OnInit {
       },
         (err: any) => {
           this.spinner.hide();
-          this.showError(err?.error?.message);
+          this.showError('No Slots Available');
+          // this.showError(err?.error?.message);
         }
 
 

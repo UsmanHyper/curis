@@ -6,10 +6,7 @@ import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { defer, first, map, Observable } from 'rxjs';
 import { authenticationService } from 'src/app/services/authentication.service';
-import { Global } from '../../utilities/Global';
-import { homeService } from 'src/app/services/home.service';
 import { CustomValidators } from 'src/app/utilities/custom.validator';
-import { CreditCardDirectivesModule, CreditCardValidators } from "angular-cc-library";
 import { CreditCard } from 'angular-cc-library';
 import { PaymentStatusComponent } from 'src/app/shared/payment-status/payment-status.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -19,14 +16,14 @@ import { VerifyOtpComponent } from 'src/app/shared/verify-otp/verify-otp.compone
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { NgxMaskModule } from 'ngx-mask';
 import { providerService } from '../provider-section/provider.service';
-
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-service-booking-flow',
   templateUrl: './service-booking-flow.component.html',
   styleUrls: ['./service-booking-flow.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, CreditCardDirectivesModule, PaymentStatusComponent, NgxMaskModule],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, PaymentStatusComponent, NgxMaskModule],
 })
 export class ServiceBookingFlowComponent implements OnInit {
 
@@ -53,6 +50,10 @@ export class ServiceBookingFlowComponent implements OnInit {
   data: any;
   selectedId: any;
 
+  formattedDate: string = '';
+  formattedStartTime: string = '';
+  formattedEndTime: string = '';
+
   public type$: Observable<string> | any;
   // allGenders: any = [
   //   { name: 'Male', value: "male" },
@@ -61,7 +62,7 @@ export class ServiceBookingFlowComponent implements OnInit {
   // ]
   userform: FormGroup;
 
-  ccForm: FormGroup;
+  // ccForm: FormGroup;
 
   token: any = null;
 
@@ -81,22 +82,6 @@ export class ServiceBookingFlowComponent implements OnInit {
     })
 
 
-    this.ccForm = this.formBuilder.group({
-      email: [null, [Validators.required]],
-      name: [null, [Validators.required]],
-      region: [null, [Validators.required]],
-      creditCard: [null, [CreditCardValidators.validateCCNumber]],
-      expDate: ['', [CreditCardValidators.validateExpDate]],
-      cvc: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(4)]]
-    });
-
-
-    const creditCardControl = this.ccForm.get('creditCard');
-    if (creditCardControl) {
-      this.type$ = defer(() => creditCardControl.valueChanges)
-        .pipe(map((num: string) => CreditCard.cardType(num)));
-    }
-    // moveToCreateAccount
     this.dss.onSignal().subscribe((value: any) => {
 
       if (value && value.type === "otpVerified") {
@@ -136,6 +121,18 @@ export class ServiceBookingFlowComponent implements OnInit {
 
     this.getCountryLov()
     this.getGenderLov()
+
+
+    let slot: any = localStorage.getItem('slotInfo');
+
+    this.data = JSON.parse(slot);
+
+    console.log("=============", this.data)
+
+    this.formattedDate = moment(this.data.dateOnly).format('MMM DD');
+    this.formattedStartTime = moment(this.data.startTimeOnly, 'HH:mm:ss').format('h:mm A');
+    this.formattedEndTime = moment(this.data.endTimeOnly, 'HH:mm:ss').format('h:mm A');
+
   }
 
 
@@ -152,12 +149,7 @@ export class ServiceBookingFlowComponent implements OnInit {
   }
 
 
-  goToNextField(controlName: string, nextField: HTMLInputElement) {
-    const control = this.ccForm.get(controlName);
-    if (control && control.valid) {
-      nextField.focus();
-    }
-  }
+ 
 
   getCountryLov() {
     this.spinner.show();
@@ -207,7 +199,7 @@ export class ServiceBookingFlowComponent implements OnInit {
       email: this.userform.controls['email'].value,
       dob: this.userform.controls['dob'].value,
       contact_no: this.userform.controls['contact_number'].value,
-      password: "test12345"
+      password: "test12345",
     }
     console.log("=================", payload)
 
@@ -227,8 +219,6 @@ export class ServiceBookingFlowComponent implements OnInit {
     // }
   }
   signUpSubmitRequest(data: any) {
-
-
     this.apiService.registerUser(data)
       .pipe(first())
       .subscribe(
@@ -354,10 +344,10 @@ export class ServiceBookingFlowComponent implements OnInit {
   setScheduleAppintmentPayload(item: any) {
     let payload = {
       "isAvailable": false,
-      "providerId": this.data?._id || '669ab03ce5d49e68501328ff',
-      "providerUserId": this.data?.userId._id || '669ab03be5d49e68501328fb',
+      "providerId": this.data?.providerId,
+      "providerUserId": this.data?.userId,
       "patientId": item?._id,
-      "slothDetails": this.selectedId || '66cf4d29b1bd26b54d748e33',
+      "slotDetails": this.data?._id,
       "email": this.userform.controls['email'].value,
       "appointmentTitle": this.userform.controls['first_name'].value + ` ` + this.userform.controls['last_name'].value,
       "patientNotes": this.userform.controls['notes'].value
@@ -369,7 +359,7 @@ export class ServiceBookingFlowComponent implements OnInit {
   }
 
   schedulePatientAppointment(data: any) {
-    debugger
+
     this.apiService.scheduleAppointment(data)
       .pipe(first())
       .subscribe(
@@ -387,7 +377,7 @@ export class ServiceBookingFlowComponent implements OnInit {
   }
 
   getUserDetailsByTokenRequest(data: any) {
-    console.log("===============",data)
+    console.log("===============", data)
     this.authenticationService.getDataByToken(data)
       .pipe(first())
       .subscribe(

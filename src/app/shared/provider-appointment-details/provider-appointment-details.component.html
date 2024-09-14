@@ -88,7 +88,7 @@
                                     <div class="input-group">
                                         <label for="fname">Patient notes </label>
                                         <textarea formControlName="patientNotes" placeholder="Write text here ..."
-                                            class="border disable-field" autocomplete="off" aria-autocomplete required
+                                            class="border disable-field" autocomplete="off" aria-autocomplete 
                                             [readonly]="true" name="new-notes" rows="4"></textarea>
                                         <ng-container
                                             *ngIf="appointmentForm.get('patientNotes')?.invalid && (appointmentForm.get('patientNotes')?.dirty || appointmentForm.get('patientNotes')?.touched)">

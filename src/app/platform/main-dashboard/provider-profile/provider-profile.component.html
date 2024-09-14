@@ -10,24 +10,28 @@
                 height="100%">
               <div class="">
                 <div class="d-flex align-items-center g-7">
-                  <h3 class="sub_title" routerLink="/provider-profile">Olivia Rhye, APRN</h3>
-                  <span class="tags">Available</span>
+                  <h3 class="sub_title m-0" routerLink="/provider-profile">
+                    {{ providerDetails?.providerInformation?.userId?.f_name }}
+                    {{ providerDetails?.providerInformation?.userId?.l_name }},
+                    {{providerDetails?.providerInformation?.mainSpeciality | uppercase}}</h3>
+                  <span class="tags-blue"><i class="bi bi-star-fill mr-4" style="color:  #0086C9;"></i>Top Rated</span>
                 </div>
-                <span class=""><i class="bi bi-star"></i> Dermatologist</span>
-                <p class="mb-0"><i class="bi bi-geo-alt"></i> 604 Davis Cir SWHUNTSVILLE, AL 35801</p>
-                <span class="tags">Available</span>
+                <span class="text-capitalize "><i class="bi bi-star mr-8"></i>
+                  {{providerDetails?.providerInformation?.mainSpeciality}} -
+                  {{providerDetails?.providerInformation?.subSpeciality}}</span>
+                <p class=""><i class="bi bi-book mr-8"></i> {{providerDetails?.providerInformation?.mainSpeciality |
+                  uppercase}} ({{providerDetails?.providerInformation?.subSpeciality | titlecase}})
+                </p>
+                <span class="tags"
+                  [style.color]="getStatusColor(providerDetails?.providerInformation?.userId?.isActive)"
+                  [style.background-color]="getStatusBg(providerDetails?.providerInformation?.userId?.isActive)">
+                  {{ providerDetails?.providerInformation?.userId?.isActive === true ?
+                  'Available': 'Not Available' | titlecase }}
+                </span>
               </div>
             </div>
           </div>
-          <!-- <div class="">
-            <h4 class="mini_title">Sun, May 5</h4>
-            <div class="slots">
-              <ng-container *ngFor="let slot of slots; let i = index">
-                <a *ngIf="i < 5" href="#">{{ slot }}</a>
-              </ng-container>
-              <a class="more" href="#"> More </a>
-            </div>
-          </div> -->
+
         </div>
         <hr>
         <div class="mt-36 mb-20">
@@ -152,7 +156,7 @@
             </div>
             <div class="tab-pane fade" id="location" role="tabpanel" aria-labelledby="location-tab">
 
-              <div class="mt-32 w-100-p" >
+              <div class="mt-32 w-100-p">
                 <h2 class="tab-title">
 
                   Location
@@ -213,26 +217,28 @@
           <ul class="nav nav-tabs" id="myTab1" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="today-tab" data-bs-toggle="tab" data-bs-target="#today" type="button"
-                role="tab" aria-controls="today" aria-selected="true">TODAY</button>
+                role="tab" aria-controls="today" aria-selected="true" (click)="slotsDate('today')">TODAY</button>
             </li>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="tomorrow-tab" data-bs-toggle="tab" data-bs-target="#tomorrow" type="button"
-                role="tab" aria-controls="tomorrow" aria-selected="false">TOMORROW</button>
+                role="tab" aria-controls="tomorrow" aria-selected="false"
+                (click)="slotsDate('tomorrow')">TOMORROW</button>
             </li>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="select-date-tab" data-bs-toggle="tab" data-bs-target="#select-date"
-                type="button" role="tab" aria-controls="select-date" aria-selected="false">SELECT DATE</button>
+                type="button" role="tab" aria-controls="select-date" aria-selected="false"
+                (click)="slotsDate('selected')">SELECT DATE</button>
             </li>
 
           </ul>
           <div class="tab-content card-padding " id="myTabContent1">
             <div class="tab-pane fade show active" id="today" role="tabpanel" aria-labelledby="today-tab">
 
-              <div class="mt-32" style="width: 100%;">
+              <div class="mt-32 w-100-p">
                 <h4 class="tab-title">
-                  Today, July 27th
+                  Today, {{formattedDate}}
                 </h4>
-                <div class="mt-24">
+                <!-- <div class="mt-24">
                   <h5 class="tab-sub-title">
                     Morning </h5>
                   <div class="slots">
@@ -262,53 +268,257 @@
                     </ng-container>
                     <a class="more" href="#"> More </a>
                   </div>
+                </div> -->
+
+
+
+                <!-- <div class="mt-24">
+                  <ng-container *ngIf="morningSlots.length">
+                    <h5 class="tab-sub-title">Morning</h5>
+                    <div class="slots">
+                      <ng-container *ngFor="let slot of morningSlots; let i = index">
+                        <a *ngIf="i < morningLength">{{ slot.timeSlot }}</a>
+                      </ng-container>
+                      <a *ngIf="morningLength < morningSlots.length" class="more" (click)="showMore('morning')">More</a>
+                    </div>
+                  </ng-container>
                 </div>
+
+                <div class="mt-24">
+                  <ng-container *ngIf="afternoonSlots.length">
+
+                    <h5 class="tab-sub-title">Afternoon</h5>
+                    <div class="slots">
+                      <ng-container *ngFor="let slot of afternoonSlots; let i = index">
+                        <a *ngIf="i < afternoonLength">{{ slot.timeSlot }}</a>
+                      </ng-container>
+                      <a *ngIf="afternoonLength < afternoonSlots.length" class="more"
+                        (click)="showMore('afternoon')">More</a>
+                    </div>
+                  </ng-container>
+                </div>
+
+                <div class="mt-24">
+                  <ng-container *ngIf="eveningSlots.length">
+
+                    <h5 class="tab-sub-title">Evening and after-hours</h5>
+                    <div class="slots">
+                      <ng-container *ngFor="let slot of eveningSlots; let i = index">
+                        <a *ngIf="i < eveningLength">{{ slot.timeSlot }}</a>
+                      </ng-container>
+                      <a *ngIf="eveningLength < eveningSlots.length" class="more" (click)="showMore('evening')">More</a>
+                    </div>
+                  </ng-container>
+                </div> -->
+                <ng-container *ngIf="slotsData.length>0">
+
+                  <div class="mt-24">
+                    <ng-container *ngIf="morningSlots.length">
+                      <h5 class="tab-sub-title">Morning</h5>
+                      <div class="slots">
+                        <ng-container *ngFor="let slot of morningSlots; let i = index">
+                          <a [ngClass]="{'active': selectedSlot === slot}" *ngIf="i < morningLength"
+                            (click)="selectSlot(slot)">
+                            {{ slot.timeSlot }}
+                          </a>
+                        </ng-container>
+                        <a *ngIf="morningLength < morningSlots.length" class="more" (click)="showMore('morning')">
+                          More
+                        </a>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="mt-24">
+                    <ng-container *ngIf="afternoonSlots.length">
+                      <h5 class="tab-sub-title">Afternoon</h5>
+                      <div class="slots">
+                        <ng-container *ngFor="let slot of afternoonSlots; let i = index">
+                          <a [ngClass]="{'active': selectedSlot === slot}" *ngIf="i < afternoonLength"
+                            (click)="selectSlot(slot)">
+                            {{ slot.timeSlot }}
+                          </a>
+                        </ng-container>
+                        <a *ngIf="afternoonLength < afternoonSlots.length" class="more" (click)="showMore('afternoon')">
+                          More
+                        </a>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="mt-24">
+                    <ng-container *ngIf="eveningSlots.length">
+                      <h5 class="tab-sub-title">Evening and after-hours</h5>
+                      <div class="slots">
+                        <ng-container *ngFor="let slot of eveningSlots; let i = index">
+                          <a [ngClass]="{'active': selectedSlot === slot}" *ngIf="i < eveningLength"
+                            (click)="selectSlot(slot)">
+                            {{ slot.timeSlot }}
+                          </a>
+                        </ng-container>
+                        <a *ngIf="eveningLength < eveningSlots.length" class="more" (click)="showMore('evening')">
+                          More
+                        </a>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="slotsData.length === 0">
+
+                  <h4 class="tab-sub-title">
+                    No Slots Available</h4>
+
+                </ng-container>
+
+
               </div>
             </div>
             <div class="tab-pane fade" id="tomorrow" role="tabpanel" aria-labelledby="tomorrow-tab">
               <div class="mt-32" style="width: 100%;">
                 <h4 class="tab-title">
-                  Today, July 27th
+                  Tomorrow,{{tomorrowDate}}
                 </h4>
-                <div class="mt-24">
-                  <h5 class="tab-sub-title">
-                    Morning </h5>
-                  <div class="slots">
-                    <ng-container *ngFor="let slot of slots; let i = index">
-                      <a *ngIf="i < 5" href="#">{{ slot }}</a>
+                <ng-container *ngIf="slotsData.length>0">
+
+                  <div class="mt-24">
+                    <ng-container *ngIf="morningSlots.length">
+                      <h5 class="tab-sub-title">Morning</h5>
+                      <div class="slots">
+                        <ng-container *ngFor="let slot of morningSlots; let i = index">
+                          <a [ngClass]="{'active': selectedSlot === slot}" *ngIf="i < morningLength"
+                            (click)="selectSlot(slot)">
+                            {{ slot.timeSlot }}
+                          </a>
+                        </ng-container>
+                        <a *ngIf="morningLength < morningSlots.length" class="more" (click)="showMore('morning')">
+                          More
+                        </a>
+                      </div>
                     </ng-container>
-                    <a class="more" href="#"> More </a>
                   </div>
-                </div>
-                <div class="mt-24">
-                  <h5 class="tab-sub-title">
-                    Afternoon </h5>
-                  <div class="slots">
-                    <ng-container *ngFor="let slot of slots; let i = index">
-                      <a *ngIf="i < 5" href="#">{{ slot }}</a>
+
+                  <div class="mt-24">
+                    <ng-container *ngIf="afternoonSlots.length">
+                      <h5 class="tab-sub-title">Afternoon</h5>
+                      <div class="slots">
+                        <ng-container *ngFor="let slot of afternoonSlots; let i = index">
+                          <a [ngClass]="{'active': selectedSlot === slot}" *ngIf="i < afternoonLength"
+                            (click)="selectSlot(slot)">
+                            {{ slot.timeSlot }}
+                          </a>
+                        </ng-container>
+                        <a *ngIf="afternoonLength < afternoonSlots.length" class="more" (click)="showMore('afternoon')">
+                          More
+                        </a>
+                      </div>
                     </ng-container>
-                    <a class="more" href="#"> More </a>
                   </div>
-                </div>
-                <div class="mt-24">
-                  <h5 class="tab-sub-title">
-                    Evening and after-hours
-                  </h5>
-                  <div class="slots">
-                    <ng-container *ngFor="let slot of slots; let i = index">
-                      <a *ngIf="i < 5" href="#">{{ slot }}</a>
+
+                  <div class="mt-24">
+                    <ng-container *ngIf="eveningSlots.length">
+                      <h5 class="tab-sub-title">Evening and after-hours</h5>
+                      <div class="slots">
+                        <ng-container *ngFor="let slot of eveningSlots; let i = index">
+                          <a [ngClass]="{'active': selectedSlot === slot}" *ngIf="i < eveningLength"
+                            (click)="selectSlot(slot)">
+                            {{ slot.timeSlot }}
+                          </a>
+                        </ng-container>
+                        <a *ngIf="eveningLength < eveningSlots.length" class="more" (click)="showMore('evening')">
+                          More
+                        </a>
+                      </div>
                     </ng-container>
-                    <a class="more" href="#"> More </a>
                   </div>
-                </div>
+
+
+                </ng-container>
+                <ng-container *ngIf="slotsData.length === 0">
+
+                  <h4 class="tab-sub-title">
+                    No Slots Available</h4>
+
+                </ng-container>
               </div>
             </div>
+
+
             <div class="tab-pane fade" id="select-date" role="tabpanel" aria-labelledby="select-date-tab">
               <div class="mt-32" style="width: 100%;">
                 <h4 class="tab-title">
-                  Today, July 27th
+                  Selected Date {{ getFormattedDate() }}
+
                 </h4>
-                <div class="mt-24">
+
+
+                <div class="panel-body inline-flatpickr">
+                  <input type="hidden" class="form-control w-100-p" mwlFlatpickr [inline]="true"
+                    [(ngModel)]="inlineDatePicker" [disableMobile]="true" (ngModelChange)="onDateChange($event)"
+                    [options]="flatpickrOptions">
+                </div>
+
+                <ng-container *ngIf="slotsData.length> 0">
+
+                  <div class="mt-24">
+                    <ng-container *ngIf="morningSlots.length">
+                      <h5 class="tab-sub-title">Morning</h5>
+                      <div class="slots">
+                        <ng-container *ngFor="let slot of morningSlots; let i = index">
+                          <a [ngClass]="{'active': selectedSlot === slot}" *ngIf="i < morningLength"
+                            (click)="selectSlot(slot)">
+                            {{ slot.timeSlot }}
+                          </a>
+                        </ng-container>
+                        <a *ngIf="morningLength < morningSlots.length" class="more" (click)="showMore('morning')">
+                          More
+                        </a>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="mt-24">
+                    <ng-container *ngIf="afternoonSlots.length">
+                      <h5 class="tab-sub-title">Afternoon</h5>
+                      <div class="slots">
+                        <ng-container *ngFor="let slot of afternoonSlots; let i = index">
+                          <a [ngClass]="{'active': selectedSlot === slot}" *ngIf="i < afternoonLength"
+                            (click)="selectSlot(slot)">
+                            {{ slot.timeSlot }}
+                          </a>
+                        </ng-container>
+                        <a *ngIf="afternoonLength < afternoonSlots.length" class="more" (click)="showMore('afternoon')">
+                          More
+                        </a>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="mt-24">
+                    <ng-container *ngIf="eveningSlots.length">
+                      <h5 class="tab-sub-title">Evening and after-hours</h5>
+                      <div class="slots">
+                        <ng-container *ngFor="let slot of eveningSlots; let i = index">
+                          <a [ngClass]="{'active': selectedSlot === slot}" *ngIf="i < eveningLength"
+                            (click)="selectSlot(slot)">
+                            {{ slot.timeSlot }}
+                          </a>
+                        </ng-container>
+                        <a *ngIf="eveningLength < eveningSlots.length" class="more" (click)="showMore('evening')">
+                          More
+                        </a>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                </ng-container>
+
+                <ng-container *ngIf="slotsData.length === 0">
+
+                  <h4 class="tab-sub-title">
+                    No Slots Available</h4>
+
+                </ng-container>
+                <!-- <div class="mt-24">
                   <h5 class="tab-sub-title">
                     Morning </h5>
                   <div class="slots">
@@ -338,7 +548,7 @@
                     </ng-container>
                     <a class="more" href="#"> More </a>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
 
@@ -346,7 +556,8 @@
 
           <hr class="m-0 mt-24">
           <div class=" card-padding">
-            <button class="btn card-body-btn " routerLink="/service-booking-flow">
+            <button class="btn card-body-btn " routerLink="/service-booking-flow"
+              (click)="sendDataForPayment(selectedSlot,this.providerDetails)">
               Book Session
             </button>
           </div>

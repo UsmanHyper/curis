@@ -284,8 +284,8 @@ input.form-control {
   // padding: 12px;
   border-bottom: 1px solid #d0d5dd;
   // border-radius: 12px;
-  width: fit-content;
-  
+  // width: fit-content;
+
 }
 
 .more {
@@ -316,4 +316,63 @@ input.form-control {
   .card {
     padding: 20px;
   }
+}
+
+
+
+.tags-blue {
+  background-color: #E0F2FE;
+  color: #0086C9 !important;
+  padding: 5px 10px;
+  text-align: center;
+  border-radius: 4px;
+  width: 100%;
+  display: block;
+}
+
+
+// .active {
+//   background-color: #0BA5EC; /* Change to your preferred active color */
+//   font-weight: bold;
+// }
+
+
+a.active {
+  background: #0BA5EC !important;
+  font-weight: bold !important;
+  color: white !important;
+}
+
+
+.inline-flatpickr .form-control,
+.flatpickr-calendar.arrowTop:before,
+.flatpickr-calendar.arrowTop:after {
+  display: none;
+}
+
+
+.inline-flatpickr {
+  display: flex;
+  justify-content: center;
+  /* This centers the datepicker inside the div */
+}
+
+.flatpickr-calendar {
+  width: 100% !important;
+  /* Expands the calendar to full width */
+  max-width: 500px;
+  /* Adjust this value to your desired width */
+}
+
+
+.inline-flatpickr .flatpickr-calendar {
+  width: 100%; /* Adjust this to your desired width */
+}
+
+.inline-flatpickr .flatpickr-days {
+  min-width: 300px; /* Set a minimum width for the days grid */
+}
+
+.inline-flatpickr .flatpickr-months {
+  width: 100%; /* Expand the months section */
 }

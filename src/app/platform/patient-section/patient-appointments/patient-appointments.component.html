@@ -50,23 +50,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- <tr *ngFor="let appointments of appointmentList; let i = index"> -->
-                                                <tr>
-                                                    <td>{{'Steve Smith'}}</td>
-                                                    <td>{{'New York'}} </td>
-                                                    <td> {{'Dentist'}}</td>
-                                                    <td> {{'Dentist'}}</td>
-                                                    <td>{{ '27/07/2024 01:20 PM' }}</td>
+                                                <tr *ngFor="let appointments of appointmentList; let i = index">
+                                                    <!-- <tr> -->
+                                                    <td>{{appointments?.providerUserId?.f_name | titlecase}}
+                                                        {{appointments?.providerUserId?.f_name |titlecase }}</td>
+                                                    <td>{{appointments?.providerId?.city | titlecase}} </td>
+                                                    <td> {{appointments?.providerId?.mainSpeciality | titlecase}}</td>
+                                                    <td> {{appointments?.providerId?.subSpeciality | titlecase}}</td>
+
+                                                    <td>{{ appointments?.appointmentDate | date: 'dd/MM/yyyy hh:mm a' }}
+                                                    </td>
 
                                                     <td>
-                                                        <span class="tag" [style.color]="getStatusColor('New')"
-                                                            [style.background-color]="getStatusBg('New')">
-                                                            {{ 'New' | titlecase }}
+                                                        <span class="tag"
+                                                            [style.color]="getStatusColor(appointments?.status)"
+                                                            [style.background-color]="getStatusBg(appointments?.status)">
+                                                            {{ appointments?.status === true ? 'New':'Cancelled' |
+                                                            titlecase }}
                                                         </span>
                                                     </td>
                                                     <td>
                                                         <a class="tag_btn-reschdule"
-                                                            (click)="viewAppointment('abcd')">View</a>
+                                                            (click)="viewAppointment(appointments)">View</a>
                                                     </td>
                                                     <td>
                                                         <a class="tag_btn-reschdule"

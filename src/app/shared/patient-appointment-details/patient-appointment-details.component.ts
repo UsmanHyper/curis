@@ -9,6 +9,7 @@ import { MainHomeService } from 'src/app/services/main-home.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { providerService } from 'src/app/platform/provider-section/provider.service';
 import { authenticationService } from 'src/app/services/authentication.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-patient-appointment-details',
@@ -47,8 +48,10 @@ export class PatientAppointmentDetailsComponent implements OnInit {
       city: [''],
       startTime: [''],
       endTime: [''],
-
-
+      patientNotes: [''],
+      m_repots: [''],
+      investigation_ordered: [''],
+      prescription: [''],
     });
 
 
@@ -82,23 +85,23 @@ export class PatientAppointmentDetailsComponent implements OnInit {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
     let patientData = data?.patientId
-    this.appointmentForm.get('f_name')?.setValue(data[0].providerUserId?.f_name);
-    this.appointmentForm.get('l_name')?.setValue(data[0].providerUserId?.l_name);
-    this.appointmentForm.get('email')?.setValue(data[0].providerUserId?.email);
-    this.appointmentForm.get('gender')?.setValue(data[0].providerUserId?.gender);
+    this.appointmentForm.get('f_name')?.setValue(data?.patientId?.f_name);
+    this.appointmentForm.get('l_name')?.setValue(data?.patientId?.l_name);
+    this.appointmentForm.get('email')?.setValue(data?.patientId?.email);
+    this.appointmentForm.get('gender')?.setValue(data?.patientId?.gender);
 
-    this.appointmentForm.get('practiceName')?.setValue(data[0].providerId.practiceName);
-    this.appointmentForm.get('zipcode')?.setValue(data[0].providerId.zipcode);
-    this.appointmentForm.get('mainSpeciality')?.setValue(data[0].providerId.mainSpeciality);
-    this.appointmentForm.get('city')?.setValue(data[0].providerId.city);
+    this.appointmentForm.get('practiceName')?.setValue(data?.providerId.practiceName);
+    this.appointmentForm.get('zipcode')?.setValue(data?.providerId.zipcode);
+    this.appointmentForm.get('mainSpeciality')?.setValue(data?.providerId.mainSpeciality);
+    this.appointmentForm.get('city')?.setValue(data?.providerId.city);
 
-    this.appointmentForm.get('startTime')?.setValue(data[0].slothDetails?.startTime);
-    this.appointmentForm.get('startTime')?.setValue(data[0].slothDetails?.startTime);
+    this.appointmentForm.get('startTime')?.setValue(moment(data?.appointmentDate).format('dd/MM/yyyy hh:mm a'));
+    this.appointmentForm.get('endTime')?.setValue(moment(data?.appointmentDate).format('dd/MM/yyyy hh:mm a'));
 
-    this.appointmentForm.get('patientNotes')?.setValue(data[0].slothDetails?.patientNotes);
-    this.appointmentForm.get('m_repots')?.setValue(data[0].medicalNotes);
-    this.appointmentForm.get('investigation_ordered')?.setValue(data[0].investigationsOrdered);
-    this.appointmentForm.get('prescription')?.setValue(data[0].prescription);
+    this.appointmentForm.get('patientNotes')?.setValue(data?.slothDetails?.patientNotes || 'Nill');
+    this.appointmentForm.get('m_reports')?.setValue(data?.medicalNotes || 'Nill');
+    this.appointmentForm.get('investigation_ordered')?.setValue(data?.investigationsOrdered || 'Nill');
+    this.appointmentForm.get('prescription')?.setValue(data?.prescription || 'Nill');
   }
 
 

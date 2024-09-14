@@ -162,19 +162,95 @@
                                     </div>
                                 </div>
 
+                            </div>
+                            <div class="text-content mt-32">
+                                <h2 class="profile-header-text">Patient Interaction </h2>
+                                <hr>
+
+                            </div>
+                            <div class="form-wrapper">
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Patient Notes </label>
+
+                                        <textarea formControlName="patientNotes" placeholder="Write text here ..."
+                                            [readonly]="true" class="border  disable-field" autocomplete="off"
+                                            aria-autocomplete required name="new-notes" rows="4"></textarea>
 
 
-                                <div class="form-container  mt-12">
-                                    <div class=" d-flex g-16 mt-10">
-                                        <button class="form-submit-btn " (click)="bsModalRef.hide()">Close </button>
-                                        <!-- <button class="form-submit-btn"
-                                            [ngClass]="!appointmentForm.valid ? 'btn-disabled': '' "
-                                            [disabled]="!appointmentForm.valid" (click)="submitForm() ">
-                                            Save Interaction
-                                        </button> -->
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                    <div class="input-group">
+                                        <label for="fname"> Medical Report </label>
+                                        <textarea formControlName="m_reports" placeholder="Write text here ..."
+                                            [readonly]="true" class="border disable-field " autocomplete="off"
+                                            aria-autocomplete required name="new-notes" rows="4"></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                    <div class="input-group">
+                                        <label for="fname">Investigation Ordered </label>
+
+                                        <textarea formControlName="investigation_ordered"
+                                            placeholder="Write text here ..." [readonly]="true"
+                                            class="border  disable-field" autocomplete="off" aria-autocomplete required
+                                            name="new-notes" rows="4"></textarea>
+
+                                    </div>
+
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Prescription </label>
+
+
+                                        <textarea formControlName="prescription" placeholder="Write text here ..."
+                                            [readonly]="true" class="border disable-field" autocomplete="off"
+                                            aria-autocomplete required name="new-notes" rows="4"></textarea>
+
+
                                     </div>
                                 </div>
 
+
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Investigation Ordered </label>
+                                        <textarea formControlName="investigation_ordered"
+                                            placeholder="Write text here ..." class="border disable-field"
+                                            autocomplete="off" aria-autocomplete required name="new-notes"
+                                            rows="4"></textarea>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Prescription </label>
+                                        <textarea formControlName="prescription" placeholder="Write text here ..."
+                                            class="border disable-field" autocomplete="off" aria-autocomplete required
+                                            name="new-notes" rows="4"></textarea>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-container  mt-12">
+                                <div class=" d-flex g-16 mt-10">
+                                    <button class="form-submit-btn " (click)="bsModalRef.hide()">Close </button>
+                                    <!-- <button class="form-submit-btn"
+                                        [ngClass]="!appointmentForm.valid ? 'btn-disabled': '' "
+                                        [disabled]="!appointmentForm.valid" (click)="submitForm() ">
+                                        Save Interaction
+                                    </button> -->
+                                </div>
                             </div>
                         </form>
                     </div>

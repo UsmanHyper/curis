@@ -2,13 +2,13 @@
 <section class="booking_flow">
   <div class="container-fluid">
     <div class="booking_row">
-      <div class="col-1">
-        <h1 class="main_heading">Your Appointment with Dr. Shah</h1>
+      <!-- <div class="col-1">
+        <h1 class="main_heading">Your Appointment with Dr. {{data?.userId?.f_name}} {{data?.userId?.l_name}}</h1>
         <div class="d-flex g-16 py-20">
           <div class=""><i class="bi bi-calendar-week"></i></div>
           <div class="d-flex flex-column g-6">
             <h2 class="sub_title">Appointment Date & Time</h2>
-            <p>Jul 27, 9:30 AM - 10:00 AM</p>
+            <p>{{ moment(data?.dateOnly).format('MMM DD')}}, 9:30 AM - 10:00 AM</p>
           </div>
         </div>
         <div class="d-flex g-16 py-20">
@@ -35,7 +35,55 @@
             <span class="sub_title">$ 100</span>
           </div>
         </div>
+      </div> -->
+      <div class="col-1">
+        <h1 class="main_heading">
+          Your Appointment with Dr. {{ data?.userId?.f_name }} {{ data?.userId?.l_name }}
+        </h1>
+
+        <!-- Appointment Date & Time -->
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-calendar-week"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Appointment Date & Time</h2>
+            <p>
+              {{ formattedDate }},
+              {{formattedStartTime }} - {{ formattedEndTime }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-geo-alt"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Location</h2>
+            <p>Come say hello at our clinic.</p>
+            <span class="sub_title">{{ data?.addressLineOne }}</span>
+          </div>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-telephone"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Contact Number</h2>
+            <p>Mobile No.</p>
+            <span class="sub_title">{{ data?.userId?.contact_no }}</span>
+          </div>
+        </div>
+
+        <!-- Service Fee -->
+        <div class="d-flex g-16 py-20">
+          <div class=""><i class="bi bi-currency-dollar"></i></div>
+          <div class="d-flex flex-column g-6">
+            <h2 class="sub_title">Service Fee</h2>
+            <p>Self-pay</p>
+            <span class="sub_title">{{ data?.rates | currency:'USD ' }}</span>
+          </div>
+        </div>
       </div>
+
       <div class="col-2">
         <ng-container *ngIf="!loggedIn">
           <div class="stepper-card-container">
@@ -149,8 +197,8 @@
 
                         </div>
                         <div class="d-flex gap-4 group-wrapper mt-12">
-                          <button type="button" class="btn btn-submit btn-width"
-                            (click)="generateOtp()" [disabled]="userform.get('email')?.invalid">Continue</button>
+                          <button type="button" class="btn btn-submit btn-width" (click)="generateOtp()"
+                            [disabled]="userform.get('email')?.invalid">Continue</button>
                         </div>
 
 
@@ -229,8 +277,9 @@
                         <div class="d-flex gap-4 group-wrapper mt-12 ">
                           <div class="input-group">
                             <label for="fname">Phone Number</label>
-                            <input type="text" mask="(000) 000-0000" placeholder="(123)-456-7890" formControlName="contact_number" class="border"
-                              name="new-contact_number" autocomplete="off" aria-autocomplete required />
+                            <input type="text" mask="(000) 000-0000" placeholder="(123)-456-7890"
+                              formControlName="contact_number" class="border" name="new-contact_number"
+                              autocomplete="off" aria-autocomplete required />
 
                             <ng-container
                               *ngIf="userform.get('contact_number')?.invalid && (userform.get('contact_number')?.dirty || userform.get('contact_number')?.touched)">
@@ -256,7 +305,8 @@
 
                         </div>
                         <div class="d-flex gap-4 group-wrapper mt-12 ">
-                          <button type="button" class="btn btn-submit btn-width" (click)="confirmBooking()"  [disabled]="!userform.valid ">Continue</button>
+                          <button type="button" class="btn btn-submit btn-width" (click)="confirmBooking()"
+                            [disabled]="!userform.valid ">Continue</button>
                         </div>
                       </div>
                     </div>
@@ -265,7 +315,7 @@
 
                 </div>
               </ng-container>
-              <ng-container *ngIf="payFeeStepper">
+              <!-- <ng-container *ngIf="payFeeStepper">
                 <div class="mt-24 w-100-p">
                   <form [formGroup]="ccForm" autocomplete="disable" role="form" id="payment-form">
                     <div class="d-flex justify-content-center form-width flex-column">
@@ -397,7 +447,7 @@
                     </div>
                   </form>
                 </div>
-              </ng-container>
+              </ng-container> -->
 
 
               <ng-container *ngIf="successfulStepper">
@@ -441,7 +491,7 @@
 
               <!--Step Content -->
 
-              <ng-container *ngIf="isLoginPayFeeStepper">
+              <!-- <ng-container *ngIf="isLoginPayFeeStepper">
                 <div class="mt-24 w-100-p">
                   <form [formGroup]="ccForm" autocomplete="disable" role="form" id="payment-form">
                     <div class="d-flex justify-content-center form-width flex-column">
@@ -572,7 +622,7 @@
                     </div>
                   </form>
                 </div>
-              </ng-container>
+              </ng-container> -->
 
 
               <ng-container *ngIf="isLoginSuccessfulStepper">

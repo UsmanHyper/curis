@@ -276,3 +276,13 @@ input.date-input.form-control.border-0.flatpickr-input.ng-untouched.ng-pristine.
   background-color: #0086C9;
   border-color: #0086C9;
 }
+
+
+.scrollable {
+  max-height: 200px; /* Adjust height as needed */
+  overflow-y: auto;
+}
+
+.cur-point{
+cursor: pointer;
+}
