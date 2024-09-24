@@ -1,0 +1,32 @@
+// .main {
+//     padding: 16px;
+
+//     .nav-title {
+//       color: #293132;
+//       font-feature-settings: "clig" off, "liga" off;
+//       font-family: Poppins;
+//       font-size: 22.126px;
+//       font-style: normal;
+//       font-weight: 700;
+//       line-height: 48px;
+//     }
+//   }
+//   .no-graph {
+//     height: 280px !important;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     flex-direction: column;
+//     margin-bottom: 10px;
+//   }
+
+
+.card-title h2 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+    text-align: left;
+    margin: 0;
+    color: var(--Text-Title-Color, #1F2937);
+
+}

@@ -1,1 +1,36 @@
-<p>admin-dashboard works!</p>
+<app-header></app-header>
+<div class="container-fluid" style="max-width: 100%;">
+
+    <div class="vertical-tabs-card">
+        <div class="tabs-card px-4">
+            <div class="row g-0 ">
+                <div class="col-sm-1 col-md-4 col-lg-3  col-xl-2 tabs-container">
+                    <app-nav-bar></app-nav-bar>
+                </div>
+                <div class="col-sm-11 col-md-8 col-lg-9 col-xl-10">
+                    <div class=" content-card card-bg" style="padding-bottom: 6.7%;">
+                        <div class="tab-content" id="v-tabsContent">
+                            <div class="tab-pane show active" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
+                                <!--Dashboard--->
+                                <app-reporting-dashboard *ngIf="enableDashboard"></app-reporting-dashboard>
+                                <!--provider-Info--->
+                                <app-provider-information *ngIf="enableProviderInfo"></app-provider-information>
+                                <!--Patient-Info--->
+                                <app-patients-information *ngIf="enablePatientInfo"></app-patients-information>
+                                <!--LOV Management--->
+                                <app-lov-management *ngIf="enableLOV"></app-lov-management>
+                                <!--provider-location--->
+                                <app-appointments-information *ngIf="enableAppointment"></app-appointments-information>
+                                <!--change-password--->
+                                <app-change-password *ngIf="enableChangePasswordTab"></app-change-password>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

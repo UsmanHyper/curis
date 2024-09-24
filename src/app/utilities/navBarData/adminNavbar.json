@@ -1,6 +1,6 @@
 [
     {
-        "value":"Reporting Dashboard",
+        "value":"Dashboard",
         "url":""
     },
     {
@@ -8,7 +8,7 @@
         "url":""
     },
     {
-        "value":"Patients Information",
+        "value":"Patient Information",
         "url":""
     },
     {
@@ -20,7 +20,7 @@
         "url":""
     },
     {
-        "value":"Password Management",
+        "value": "Change Password",
         "url":""
     }
 ]

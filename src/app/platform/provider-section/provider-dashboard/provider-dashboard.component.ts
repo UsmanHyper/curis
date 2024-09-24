@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { providerService } from '../provider.service';
-import { HeaderComponent } from 'src/app/shared/header/header.component';
-import { FooterComponent } from 'src/app/shared/footer/footer.component';
+
 
 
 @Component({

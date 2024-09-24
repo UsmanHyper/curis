@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProviderDashboardComponent } from './platform/provider-section/provider-dashboard/provider-dashboard.component';
 import { DefaultScreenComponent } from './auth/default-screen/default-screen.component';
 import { PatientDashboardComponent } from './platform/patient-section/patient-dashboard/patient-dashboard.component';
+import { AdminDashboardComponent } from './platform/admin-section/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
@@ -42,6 +43,23 @@ const routes: Routes = [
         loadChildren: () =>
           import("./platform/patient-section/patient-module.module").then(
             (m) => m.PatientModuleModule
+          ),
+      },
+    ],
+  },
+  {
+    path: "AdminDashboard",
+    component: AdminDashboardComponent,
+    // canActivate: [adminAuthGuard],
+    data: {
+      title: "Admin Dashboard",
+    },
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("../app/platform/admin-section/admin-module.module").then(
+            (m) => m.AdminModuleModule
           ),
       },
     ],
@@ -146,23 +164,7 @@ const routes: Routes = [
   //     },
   //   ],
   // },
-  // {
-  //   path: "AdminDashboard",
-  //   component: AdminDashboardComponent,
-  //   canActivate: [adminAuthGuard],
-  //   data: {
-  //     title: "Admin Dashboard",
-  //   },
-  //   children: [
-  //     {
-  //       path: "",
-  //       loadChildren: () =>
-  //         import("./admin-module/admin-module.module").then(
-  //           (m) => m.AdminModuleModule
-  //         ),
-  //     },
-  //   ],
-  // },
+
 ];
 
 @NgModule({

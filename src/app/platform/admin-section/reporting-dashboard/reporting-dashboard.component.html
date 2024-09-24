@@ -1,0 +1,59 @@
+<section class="">
+    <div class="container-fluid">
+        <div class="stepper-card-container">
+            <div class="stepper-card">
+                <ng-container>
+                    <div class="w-100-p">
+                        <div class="d-flex justify-content-center form-width flex-column">
+                            <div class="text-content">
+                                <h1 class="title">Dashboard</h1>
+                                <p class="lead paragraph-desc">
+                                </p>
+                            </div>
+
+                            <div class="mt-20">
+                                <div class="row gx-4 gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+                                    <ng-container *ngFor="let item of cardInfo">
+                                        <div class="col-md-4">
+
+                                            <div class="card h-100-p  cust-pad p-24">
+                                                <div class="card-header">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="card-icon">
+                                                            <i class="{{item.icon}} icon-sty"></i>
+                                                        </span>
+                                                        <h5 class="card-title">{{item.title}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body d-flex flex-column justify-content-between">
+
+                                                    <div class="mt-4">
+                                                        <h2 class="total-value">{{item.total}}</h2>
+                                                        <p class="comparison mb-0">
+                                                            <span
+                                                                [ngClass]="{'text-success': item.ratio === 'high', 'text-danger': item.ratio === 'low'}">
+                                                                <i class="bi bi-arrow-up arrow-success"
+                                                                    *ngIf="item.ratio === 'high'"></i>
+                                                                <i class="bi bi-arrow-down arrow-danger"
+                                                                    *ngIf="item.ratio === 'low'"></i>
+                                                                {{item.value}}
+                                                            </span>
+                                                            <span class="text-muted">vs last month</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="mt-20">
+                                <app-line-chart></app-line-chart>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</section>
