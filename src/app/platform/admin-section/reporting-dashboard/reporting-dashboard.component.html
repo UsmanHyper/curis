@@ -5,12 +5,33 @@
                 <ng-container>
                     <div class="w-100-p">
                         <div class="d-flex justify-content-center form-width flex-column">
-                            <div class="text-content">
-                                <h1 class="title">Dashboard</h1>
-                                <p class="lead paragraph-desc">
-                                </p>
-                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
 
+                                <div class="text-content">
+                                    <h1 class="title">Dashboard</h1>
+                                    <p class="lead paragraph-desc">
+                                    </p>
+                                </div>
+                                <div class="button-grid ">
+                                    <div class="btn-group">
+                                        <button class="custom_dropdown_btn" type="button" id="dropdownMenuClickable"
+                                            data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                                            aria-expanded="false">
+                                            {{ selectedLabel || "Select Month" }}
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <div class="panel-body inline-flatpickr">
+
+                                                <li *ngFor="let item of months" class="dropdown-item"
+                                                    (click)="selectItem(item)">
+                                                    {{ item.value }}
+                                                </li>
+                                            </div>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mt-20">
                                 <div class="row gx-4 gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
                                     <ng-container *ngFor="let item of cardInfo">

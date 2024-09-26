@@ -34,18 +34,43 @@ function am4themes_myTheme(target: any) {
 })
 export class LineChartComponent implements OnInit {
   @Output() signal: EventEmitter<any>;
+  selectedLabel: any;
 
+  years = [
+    { value: 2024, data: 2024 },
+    { value: 2023, data: 2023 },
+    { value: 2022, data: 2022 },
+    { value: 2021, data: 2021 },
+    { value: 2020, data: 2020 },
+  ]
 
   constructor() {
     this.signal = new EventEmitter();
-
+    this.selectedLabel = 2024
   }
 
   ngOnInit(): void {
     this.createChart()
   }
 
+  selectItem(item: any) {
+    console.log(item);
+    this.selectedLabel = item.value;
+    this.closeDropdown()
 
+  }
+
+  closeDropdown() {
+    const navbarToggler = document.getElementById('navbarSupportedContent');
+    const navbarCollapse = document.getElementById('dropdownMenuClickable');
+
+    if (navbarToggler && navbarCollapse) {
+      const isNavbarOpen = navbarCollapse.classList.contains('show');
+      if (isNavbarOpen) {
+        (navbarToggler as HTMLElement).click();
+      }
+    }
+  }
   createChart() {
 
     // Create chart instance

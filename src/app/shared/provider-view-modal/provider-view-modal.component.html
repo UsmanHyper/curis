@@ -1,0 +1,250 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header justify-content-between">
+            <h1 class="modal-title">{{title}}</h1>
+            <i class="bi bi-x-lg close-icon" type="button" (click)="bsModalRef.hide()"></i>
+        </div>
+        <div class="modal-body contact_modal">
+            <div class="">
+                <div class="w-100-p">
+                    <div class="d-flex justify-content-center form-width flex-column">
+                        <form [formGroup]="appointmentForm" autocomplete="disable">
+                            <div class="text-content mt-32">
+                                <h2 class="profile-header-text">Personal Information
+                                </h2>
+                                <hr>
+
+                            </div>
+                            <div class="form-wrapper">
+                                <div class="d-flex gap-4 group-wrapper ">
+                                    <div class="input-group">
+                                        <label for="fname">First Name </label>
+
+                                        <input type="text" placeholder="First Name" class="border disable-field"
+                                            formControlName="f_name" autocomplete="off" aria-autocomplete required
+                                            [readonly]="true" name="new-f_name" />
+                                        <ng-container
+                                            *ngIf="appointmentForm.get('f_name')?.invalid && (appointmentForm.get('f_name')?.dirty || appointmentForm.get('f_name')?.touched)">
+                                            <ng-container *ngIf="appointmentForm.get('f_name')?.errors">
+                                                <span class="text-danger error-state">
+                                                    First Name is Required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">Last Name </label>
+
+                                        <input type="text" placeholder="Last Name" class="border disable-field"
+                                            formControlName="l_name" autocomplete="off" aria-autocomplete required
+                                            [readonly]="true" name="new-l_name" />
+                                        <ng-container
+                                            *ngIf="appointmentForm.get('l_name')?.invalid && (appointmentForm.get('l_name')?.dirty || appointmentForm.get('l_name')?.touched)">
+                                            <ng-container *ngIf="appointmentForm.get('l_name')?.errors">
+                                                <span class="text-danger error-state">
+                                                    Last Name is required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+
+
+                                    <div class="input-group">
+                                        <label for="fname">Gender</label>
+                                        <input type="text" placeholder="Gender" class="border disable-field"
+                                            [readonly]="true" formControlName="gender" autocomplete="off"
+                                            aria-autocomplete required name="new-gender" />
+
+                                        <ng-container
+                                            *ngIf="appointmentForm.get('gender')?.invalid && (appointmentForm.get('gender')?.dirty || appointmentForm.get('gender')?.touched)">
+                                            <ng-container *ngIf="appointmentForm.get('gender')?.errors">
+                                                <span class="text-danger error-state">Gender is
+                                                    required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="fname">Email</label>
+                                        <input type="text" placeholder="Enter Your Email" class="border disable-field"
+                                            [readonly]="true" formControlName="email" autocomplete="off"
+                                            aria-autocomplete required name="new-email" />
+
+                                        <ng-container
+                                            *ngIf="appointmentForm.get('email')?.invalid && (appointmentForm.get('email')?.dirty || appointmentForm.get('email')?.touched)">
+                                            <ng-container *ngIf="appointmentForm.get('email')?.errors">
+                                                <span class="text-danger error-state">
+                                                    Email is required</span>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">Contact Number</label>
+                                        <input type="text" placeholder="Enter Your Contact Number"
+                                            class="border disable-field" [readonly]="true" formControlName="contact_no"
+                                            autocomplete="off" aria-autocomplete required name="new-contact_no" />
+
+                                        <ng-container
+                                            *ngIf="appointmentForm.get('contact_no')?.invalid && (appointmentForm.get('contact_no')?.dirty || appointmentForm.get('contact_no')?.touched)">
+                                            <ng-container *ngIf="appointmentForm.get('contact_no')?.errors">
+                                                <span class="text-danger error-state">
+                                                    Contact Number is required</span>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="text-content mt-32">
+                                    <h2 class="profile-header-text">Practice Information
+                                    </h2>
+                                    <hr>
+
+                                </div>
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Practice Name </label>
+                                        <input type="text" placeholder="Enter Practice Name"
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="practiceName" autocomplete="off" aria-autocomplete required
+                                            name="new-practiceName" />
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">Practice or provider’s speciality </label>
+                                        <input type="text" placeholder="Enter Practice or provider’s speciality"
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="mainSpeciality" autocomplete="off" aria-autocomplete
+                                            required name="new-mainSpeciality" />
+                                    </div>
+
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                    <div class="input-group">
+                                        <label for="fname">Practice Size </label>
+                                        <input type="text" placeholder="Enter Practice Size"
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="practiceSize" autocomplete="off" aria-autocomplete required
+                                            name="new-practiceSize" />
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">Role At Practice </label>
+                                        <input type="text" placeholder="Enter Role At Practice"
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="roleAtPractice" autocomplete="off" aria-autocomplete
+                                            required name="new-roleAtPractice" />
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">Zip Code </label>
+                                        <input type="text" placeholder="Enter Zip Code"
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="zipcode" autocomplete="off" aria-autocomplete
+                                            required name="new-zipcode" />
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Billing Address line 1 </label>
+                                        <input type="text" placeholder="Enter Billing Address line 1"
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="addressLineOne" autocomplete="off" aria-autocomplete
+                                            required name="new-addressLineOne" />
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">Billing Address line 2 </label>
+                                        <input type="text" placeholder="Enter Billing Address line 2"
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="addressLineTwo" autocomplete="off" aria-autocomplete
+                                            required name="new-addressLineTwo" />
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">City </label>
+                                        <input type="text" placeholder="Enter City" class="border disable-field"
+                                            [readonly]="true" formControlName="city" autocomplete="off"
+                                            aria-autocomplete required name="new-city" />
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="text-content mt-32">
+                                <h2 class="profile-header-text">Qualification & Skills
+                                </h2>
+                                <hr>
+
+                            </div>
+                            <div class="form-wrapper">
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Qualification </label>
+                                        <input type="text" placeholder="Enter Qualification"
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="qualification" autocomplete="off" aria-autocomplete
+                                            required name="new-qualification" />
+
+
+                                    </div>
+
+
+                                    <div class="input-group">
+                                        <label for="fname">Main Speciality </label>
+                                        <input type="text" placeholder="Enter Main Speciality "
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="main_Speciality" autocomplete="off" aria-autocomplete
+                                            required name="new-main_Speciality" />
+                                    </div>
+
+
+                                    <div class="input-group">
+                                        <label for="fname">Sub Speciality </label>
+                                        <input type="text" placeholder="Enter Sub Speciality "
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="subSpeciality" autocomplete="off" aria-autocomplete
+                                            required name="new-subSpeciality" />
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                    <div class="input-group">
+                                        <label for="fname">Licensed State </label>
+                                        <input type="text" placeholder="Enter Licensed State"
+                                            class="border disable-field" [readonly]="true"
+                                            formControlName="liciencedState" autocomplete="off" aria-autocomplete
+                                            required name="new-liciencedState" />
+
+
+                                    </div>
+
+
+                                    <div class="input-group">
+                                        <label for="fname">NPI Number </label>
+                                        <input type="text" placeholder="Enter NPI Number" class="border disable-field"
+                                            [readonly]="true" formControlName="NPI_Number" autocomplete="off"
+                                            aria-autocomplete required name="new-NPI_Number" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-container  mt-12">
+                                <div class=" d-flex g-16 mt-10">
+                                    <button class="form-submit-btn " (click)="bsModalRef.hide()">Close </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

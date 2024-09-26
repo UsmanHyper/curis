@@ -26,12 +26,107 @@
 
 
                             </div>
+
                             <div class="card mt-20">
                                 <div class="card-title">
                                     <h2> Appointment Governance</h2>
                                 </div>
-                                <!-- <hr> -->
+                                <div class="card-content">
+                                    <div class="table-wrapper">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Patient Name</th>
+                                                    <th scope="col">Provider Name</th>
+                                                    <th scope="col">City</th>
+                                                    <th scope="col">Services</th>
+                                                    <th scope="col">Main Speciality</th>
+                                                    <th scope="col">Date & Time</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Details</th>
+                                                    <th scope="col">Cancel</th>
 
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- <tr *ngFor="let order of filteredData; let i = index"> -->
+                                                <tr>
+
+                                                    <td> Shahzaman</td>
+                                                    <td>Naufal</td>
+                                                    <td>New york</td>
+                                                    <td>Dermatologists</td>
+                                                    <td>Dermatologists</td>
+                                                    <td>27/07/2024 01:20</td>
+
+
+                                                    <td>
+                                                        <span class="tag" [style.color]="getStatusColor(true)"
+                                                            [style.background-color]="getStatusBg(true)">
+                                                            {{ true === true ? 'New': 'Inactive' |
+                                                            titlecase }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="tag" [style.color]="getStatusColor(true)"
+                                                            [style.background-color]="getStatusBg(true)">
+                                                            {{ true === true ? 'View Details': 'Inactive' |
+                                                            titlecase }}
+                                                        </span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="tag" [style.color]="getStatusColor(true)"
+                                                            [style.background-color]="getStatusBg(true)">
+                                                            {{ true === true ? 'Cancel': 'Inactive' |
+                                                            titlecase }}
+                                                        </span>
+                                                    </td>
+                                                    <!-- <td>{{order.serviceName}}</td>
+                                                    <td>{{order.locationName}}</td>
+
+
+                                                    <td>{{order.rate | currency:'USD '}}</td>
+                                                    <td>
+                                                        <span class="tag"
+                                                            [style.color]="getStatusColor(order.is_enable)"
+                                                            [style.background-color]="getStatusBg(order.is_enable)">
+                                                            {{ order.is_enable === true ? 'Active': 'Inactive' |
+                                                            titlecase }}
+                                                        </span>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="form-switch">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                (change)="onCheckboxChange($event,order)"
+                                                                id="flexSwitchCheckChecked" [checked]="order.is_enable">
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="d-flex justify-content-evenly align-items-center">
+                                                            <i class="bi bi-trash fs-20"
+                                                                (click)="deleteService(order)"></i>
+                                                            <i class="bi bi-pencil-square fs-20"
+                                                                (click)="openRatesModalToEdit(order) "></i>
+                                                        </div>
+                                                    </td> -->
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer-section ">
+                                    <h3 class="page-index">Page {{itemInView}} of {{totalView}} </h3>
+                                    <div class="">
+                                        <!-- <ng-container *ngIf="workingHours?.length"> -->
+                                        <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"
+                                            (pageChange)="onPageChange($event)"></app-pagination>
+                                        <!-- </ng-container> -->
+                                    </div>
+                                </div>
 
                             </div>
 

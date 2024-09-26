@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./reporting-dashboard.component.scss']
 })
 export class ReportingDashboardComponent implements OnInit {
-
+  selectedLabel: any;
   cardInfo = [
     { title: 'Total Patients', total: '2,420', icon: 'bi-person', value: '40%', ratio: 'high' },
     { title: 'Total Providers', total: ' 1,210', icon: 'bi-person-check', value: '10%', ratio: 'low' },
@@ -16,6 +16,21 @@ export class ReportingDashboardComponent implements OnInit {
     { title: 'Daily Visitors', total: '2,420', icon: 'bi-people-fill', value: '40%', ratio: 'high' },
   ]
 
+  months = [
+    { value: 'January', data: 'January' },
+    { value: "February", data: "February" },
+    { value: "March", data: "March" },
+    { value: "April", data: "April" },
+    { value: "May", data: "May" },
+    { value: "June", data: "June" },
+    { value: "July", data: "July" },
+    { value: "August", data: "August" },
+    { value: "September", data: "September" },
+    { value: "October", data: "October" },
+    { value: "November", data: "November" },
+    { value: "December", data: "December" },
+  ]
+
   constructor() {
 
 
@@ -23,5 +38,25 @@ export class ReportingDashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+
+  selectItem(item: any) {
+    console.log(item);
+    this.selectedLabel = item.value;
+    this.closeDropdown()
+
+  }
+
+  closeDropdown() {
+    const navbarToggler = document.getElementById('navbarSupportedContent');
+    const navbarCollapse = document.getElementById('dropdownMenuClickable');
+
+    if (navbarToggler && navbarCollapse) {
+      const isNavbarOpen = navbarCollapse.classList.contains('show');
+      if (isNavbarOpen) {
+        (navbarToggler as HTMLElement).click();
+      }
+    }
   }
 }

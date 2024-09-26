@@ -1,0 +1,96 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header justify-content-between">
+            <h1 class="modal-title">{{title}}</h1>
+            <i class="bi bi-x-lg close-icon" type="button" (click)="bsModalRef.hide()"></i>
+        </div>
+        <div class="modal-body contact_modal">
+            <div class="">
+                <div class="w-100-p">
+                    <div class="d-flex justify-content-center form-width flex-column">
+                        <form [formGroup]="appointmentForm" autocomplete="disable">
+                            <div class="text-content mt-32">
+                                <h2 class="profile-header-text">Personal Information
+                                </h2>
+                                <hr>
+
+                            </div>
+                            <div class="form-wrapper">
+                                <div class="d-flex gap-4 group-wrapper ">
+                                    <div class="input-group">
+                                        <label for="fname">First Name </label>
+
+                                        <input type="text" placeholder="First Name" class="border disable-field"
+                                            formControlName="f_name" autocomplete="off" aria-autocomplete required
+                                            [readonly]="true" name="new-f_name" />
+                                        
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">Last Name </label>
+
+                                        <input type="text" placeholder="Last Name" class="border disable-field"
+                                            formControlName="l_name" autocomplete="off" aria-autocomplete required
+                                            [readonly]="true" name="new-l_name" />
+                                       
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+
+
+                                    <div class="input-group">
+                                        <label for="fname">Gender</label>
+                                        <input type="text" placeholder="Gender" class="border disable-field"
+                                            [readonly]="true" formControlName="gender" autocomplete="off"
+                                            aria-autocomplete required name="new-gender" />
+
+                                        <ng-container
+                                            *ngIf="appointmentForm.get('gender')?.invalid && (appointmentForm.get('gender')?.dirty || appointmentForm.get('gender')?.touched)">
+                                            <ng-container *ngIf="appointmentForm.get('gender')?.errors">
+                                                <span class="text-danger error-state">Gender is
+                                                    required</span>
+                                            </ng-container>
+
+                                        </ng-container>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="fname">Email</label>
+                                        <input type="text" placeholder="Enter Your Email" class="border disable-field"
+                                            [readonly]="true" formControlName="email" autocomplete="off"
+                                            aria-autocomplete required name="new-email" />
+
+                                        <ng-container
+                                            *ngIf="appointmentForm.get('email')?.invalid && (appointmentForm.get('email')?.dirty || appointmentForm.get('email')?.touched)">
+                                            <ng-container *ngIf="appointmentForm.get('email')?.errors">
+                                                <span class="text-danger error-state">
+                                                    Email is required</span>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="fname">User Type</label>
+                                        <input type="text" placeholder="Enter Your User Type"
+                                            class="border disable-field" [readonly]="true" formControlName="user_Type"
+                                            autocomplete="off" aria-autocomplete required name="new-user_Type" />
+                                       
+                                    </div>
+                                </div>                              
+                            </div>
+
+                            <div class="form-container  mt-12">
+                                <div class=" d-flex g-16 mt-10">
+                                    <button class="form-submit-btn " (click)="bsModalRef.hide()">Close </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

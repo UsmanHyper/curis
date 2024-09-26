@@ -77,12 +77,57 @@ input[type="date"] {
 
 
 
+.card-title {
+    padding: 12px 24px;
+    border-bottom: 1px solid #EAECF0;
+    margin-bottom: 0px;
+
+    .h2 {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 28px;
+        text-align: left;
+        color: #101828;
+
+    }
+}
+
+
+.card-title h2 {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: left;
+    color: #101828;
+
+}
 
 
 
+.tag_btn-cancel {
+    background-color: #FEF3F2;
+    border-radius: 10px;
+    text-align: center;
+    color: #D92D20;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 15px 28px;
 
+}
 
-
+.tag_btn-detail {
+    background: #F0F9FF;
+    border-radius: 10px;
+    text-align: center;
+    color: #0086C9;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 15px 28px;
+}
 
 .custom_dropdown_btn {
     min-width: 346px;
@@ -131,4 +176,68 @@ input[type="date"] {
     right: 0 !important;
     left: auto !important;
     height: auto;
+}
+
+
+.table thead tr {
+    background-color: #F9FAFB;
+    border-bottom: 1px solid #EAECF0;
+}
+
+// .table thead th {
+//     background-color: #F9FAFB;
+// }
+
+.table tbody tr {
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.table> :not(caption)>*>* {
+    font-size: 15px;
+    background-color: transparent;
+    border: 0;
+    padding: 20px 20px 18px;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 40px;
+}
+
+.table tr td {
+    color: #333333;
+}
+
+.table th {
+    color: #667085;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: left;
+}
+
+
+.tag {
+    border-radius: 100px;
+    padding: 8px 36px;
+    text-align: center;
+    // display: block;
+    text-align: center;
+
+}
+
+
+.card-footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+
+}
+
+.page-index {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    color: #344054;
+
 }
