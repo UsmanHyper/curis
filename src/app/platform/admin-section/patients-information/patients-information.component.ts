@@ -7,7 +7,6 @@ import { adminService } from 'src/app/platform/admin-section/admin.service'
 import { first } from 'rxjs';
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
-import { ToastrService } from 'ngx-toastr';
 import { PatientViewModalComponent } from 'src/app/shared/patient-view-modal/patient-view-modal.component';
 
 

@@ -1,0 +1,93 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header justify-content-between">
+            <h1 class="modal-title">{{title}}</h1>
+            <i class="bi bi-x-lg close-icon" type="button" (click)="bsModalRef.hide()"></i>
+        </div>
+        <div class="modal-body contact_modal">
+            <div class="">
+                <div class="w-100-p">
+                    <div class="d-flex justify-content-center form-width flex-column">
+                        <div class="page-header-section mt-28">
+                            <div class="input-field">
+                                <input type="text" class=" placeholder-text " placeholder="Search for LOV">
+                                <img src="../../../../assets/images/provider/Icon.png" alt="Toggle Password Visibility"
+                                    style="cursor: pointer;" />
+                            </div>
+                            <div class="button-grid ">
+                                <div class="btn-group">
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="card mt-20">
+                            <div class="card-title">
+                                <h2> Option Mapping Management</h2>
+                            </div>
+                            <div class="card-content">
+                                <div class="table-wrapper">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th scope="col">Sr.No</th> -->
+                                                <th scope="col">LOV Name</th>
+                                                <th scope="col">LOV Status</th>
+                                                <th scope="col">Edit Lov Child</th>
+                                                <th scope="col">Delete Lov Child</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of lovValueList;let i = index">
+                                                <!-- <td>{{i+1}}</td> -->
+                                                <td>{{item.value}}</td>
+
+                                                <td>
+                                                    <div class="form-switch">
+
+                                                        <input class="form-check-input" type="checkbox"
+                                                            (change)="onCheckboxChange($event,item)"
+                                                            id="flexSwitchCheckChecked" [checked]="item.is_enable">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a class="tag_btn-detail" (click)="updateLovValue(item._id)">View
+                                                        Values</a>
+                                                </td>
+
+                                                <td>
+                                                    <a class="tag_btn-cancel"
+                                                        (click)="delLovValue( this.lovAlldata._id , item._id)">Delete</a>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer-section ">
+                                <h3 class="page-index">Page {{itemInView}} of {{totalView}} </h3>
+                                <div class="">
+                                    <!-- <ng-container *ngIf="workingHours?.length"> -->
+                                    <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"
+                                        (pageChange)="onPageChange($event)"></app-pagination>
+                                    <!-- </ng-container> -->
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-container  mt-12">
+                            <div class=" d-flex g-16 mt-10">
+                                <button class="form-submit-btn " (click)="bsModalRef.hide()">Close </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

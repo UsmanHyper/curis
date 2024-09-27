@@ -1,6 +1,12 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
+import { authenticationService } from 'src/app/services/authentication.service';
+import { adminService } from 'src/app/platform/admin-section/admin.service'
+import { first } from 'rxjs';
+import { MainHomeService } from 'src/app/services/main-home.service';
+import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-appointments-information',
@@ -15,11 +21,92 @@ export class AppointmentsInformationComponent implements OnInit {
   itemsPerPage: any = 10;
   currentPage: number = 1;
   totalItems: number = 0;
-  constructor(private dss: DataSharingService, private viewportScroller: ViewportScroller) { }
+
+
+  AppointmentList: any;
+  userToken: any;
+  dataToSend: any;
+  showList: boolean = true;
+  showDetail: boolean = false;
+
+
+  constructor(private dss: DataSharingService, private viewportScroller: ViewportScroller,
+    public adminService: adminService, public authenticationService: authenticationService, private spinner: NgxSpinnerService, private apiService: MainHomeService,
+  ) { }
 
   ngOnInit(): void {
+    this.userToken = this.authenticationService.getUserToken();
+    this.getAppointDetails();
+  }
+
+  getAppointDetails() {
+    this.spinner.show();
+    this.adminService.getAppointmentDetails(this.userToken)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.spinner.hide();
+          this.dataToSend = res
+          this.getProviderData(res)
+          this.AppointmentList = res
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      );
+  }
+
+
+
+  getProviderData(data: any) {
+    this.adminService.getProviderDetails(this.userToken, data.providerUserId).
+      pipe(first())
+      .subscribe(
+        (res: any) => {
+          let combinedArray: any[] = []
+          data.forEach((ele: any) => {
+            combinedArray.push(ele);
+            res.forEach((elem: any) => {
+
+              ele.providerItem = elem
+            })
+
+
+          });
+
+          combinedArray.forEach((ele: any) => {
+
+            ele.status = (ele.isCancelled === false && ele.isCompleted === false && ele.isPaid === true) ? true : false
+
+
+          });
+          this.AppointmentList = combinedArray;
+
+        })
+  }
+
+
+  showError(error: any) {
+    this.apiService.errorToster(error, 'Error!',);
+  }
+
+
+
+
+  deleteAppoint(id?: any) {
 
   }
+  
+  showAppointValues(data: any) {
+
+  }
+
+
+
+
+
+
   onPageChange(page: number): void {
     this.currentPage = page;
 

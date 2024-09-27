@@ -1,0 +1,54 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header justify-content-between">
+            <h1 class="modal-title">{{title}}</h1>
+            <i class="bi bi-x-lg close-icon" type="button" (click)="bsModalRef.hide()"></i>
+        </div>
+        <div class="modal-body contact_modal">
+            <div class="">
+                <div class="w-100-p">
+                    <div class="d-flex justify-content-center form-width flex-column">
+                        <form [formGroup]="childLOV" autocomplete="disable">
+
+                            <div class="form-wrapper">
+                                <div class="d-flex gap-4 group-wrapper ">
+                                    <div class="input-group">
+                                        <label for="fname">Value Name </label>
+
+                                        <input type="text" placeholder="Enter The Value Name" class="border "
+                                            formControlName="value" autocomplete="off" aria-autocomplete required
+                                            name="new-value" />
+
+                                        <ng-container
+                                            *ngIf="childLOV.get('value')?.invalid && (childLOV.get('value')?.dirty || childLOV.get('value')?.touched)">
+                                            <ng-container *ngIf="childLOV.get('value')?.errors">
+                                                <span class="text-danger error-state">Value Name</span>
+                                            </ng-container>
+
+                                        </ng-container>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-container  mt-12">
+                                <div class=" d-flex g-16 mt-10">
+                                    <button class="form-cancel-btn button " (click)="bsModalRef.hide()">Close </button>
+                                    <button class="form-submit-btn button" (click)="addLov()" [disabled]="!childLOV.valid">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
