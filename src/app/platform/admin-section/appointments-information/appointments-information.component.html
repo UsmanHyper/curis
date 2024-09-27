@@ -56,7 +56,7 @@
                                                     <td>{{data.providerId.city}}</td>
                                                     <td>{{data.providerId.practiceSpecialization}}</td>
                                                     <td>{{data.providerId.mainSpeciality}}</td>
-                                                    <td>{{data.slotDetails.startTime | date: 'dd/MM/yyyy hh:mm a'}}
+                                                    <td>{{data.slotDetails?.startTime | date: 'dd/MM/yyyy hh:mm a' || " 2-2-24"}}
                                                     </td>
 
 
@@ -87,10 +87,10 @@
                                 <div class="card-footer-section ">
                                     <h3 class="page-index">Page {{itemInView}} of {{totalView}} </h3>
                                     <div class="">
-                                        <!-- <ng-container *ngIf="workingHours?.length"> -->
-                                        <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"
-                                            (pageChange)="onPageChange($event)"></app-pagination>
-                                        <!-- </ng-container> -->
+                                        <ng-container *ngIf="AppointmentList?.length">
+                                            <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"
+                                                (pageChange)="onPageChange($event)"></app-pagination>
+                                        </ng-container>
                                     </div>
                                 </div>
 

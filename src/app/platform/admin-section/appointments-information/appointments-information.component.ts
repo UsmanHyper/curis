@@ -7,6 +7,7 @@ import { adminService } from 'src/app/platform/admin-section/admin.service'
 import { first } from 'rxjs';
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
+import { AppointmentViewModalComponent } from 'src/app/shared/appointment-view-modal/appointment-view-modal.component';
 
 @Component({
   selector: 'app-appointments-information',
@@ -28,9 +29,10 @@ export class AppointmentsInformationComponent implements OnInit {
   dataToSend: any;
   showList: boolean = true;
   showDetail: boolean = false;
+  modalRef!: BsModalRef;
 
 
-  constructor(private dss: DataSharingService, private viewportScroller: ViewportScroller,
+  constructor(private dss: DataSharingService, private viewportScroller: ViewportScroller, private modalService: BsModalService,
     public adminService: adminService, public authenticationService: authenticationService, private spinner: NgxSpinnerService, private apiService: MainHomeService,
   ) { }
 
@@ -82,7 +84,7 @@ export class AppointmentsInformationComponent implements OnInit {
 
           });
           this.AppointmentList = combinedArray;
-
+          console.log("--------------------", this.AppointmentList)
         })
   }
 
@@ -97,14 +99,38 @@ export class AppointmentsInformationComponent implements OnInit {
   deleteAppoint(id?: any) {
 
   }
-  
-  showAppointValues(data: any) {
 
+
+
+  showAppointValues(data: any) {
+    this.openModal(this.dataToSend, 'Appointment Information', data)
   }
 
 
 
+  openModal(payload?: any, title?: any, id?: any) {
+    console.log("openModal", payload, title);
 
+    let initialState: ModalOptions = {
+      initialState: {
+        title: title,
+        payload: payload,
+        id: id,
+
+      }
+    };
+    console.log("this this.initialState", initialState)
+    this.modalRef = this.modalService.show(AppointmentViewModalComponent, {
+      initialState,
+      class: 'modal-dialog-centered modal-xl',
+      // ignoreBackdropClick: true,
+      keyboard: false,
+      animated: true,
+      backdrop: true,
+      // backdrop: 'static',
+    });
+
+  }
 
 
   onPageChange(page: number): void {
