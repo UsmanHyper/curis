@@ -148,7 +148,7 @@ export class ServiceBookingFlowComponent implements OnInit {
   }
 
 
- 
+
 
   getCountryLov() {
     this.spinner.show();
@@ -365,10 +365,12 @@ export class ServiceBookingFlowComponent implements OnInit {
           localStorage.setItem("appointmentId", dt)
           this.PayNow()
           // this.gender = res[0].lovs;
-          localStorage.removeItem('appointmentId')
-          localStorage.removeItem('slotInfo')
-          localStorage.removeItem('user_response')
-          localStorage.removeItem('searchData')
+          setTimeout(() => {
+            localStorage.removeItem('appointmentId')
+            localStorage.removeItem('slotInfo')
+            localStorage.removeItem('user_response')
+            localStorage.removeItem('searchData')
+          }, 1000);
         },
         (err: any) => {
           // this.showError(err?.error?.message?.description);
