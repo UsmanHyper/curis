@@ -95,12 +95,14 @@ export class ServiceBookingFlowComponent implements OnInit {
           .subscribe(
             (res: any) => {
               let dt = res
+              const formattedDOB = dt.dob ? moment(dt.dob).format('YYYY-MM-DD') : null;
+
               this.userform.patchValue({
                 first_name: dt.f_name,
                 last_name: dt.l_name,
                 contact_number: dt.contact_no,
                 gender: dt.gender,
-                // dob: dt.dob || '',
+                dob: formattedDOB,
                 email: dt.email,
               })
               this.moveToCreateAccount()
@@ -115,9 +117,6 @@ export class ServiceBookingFlowComponent implements OnInit {
 
 
   ngOnInit() {
-    this.type$.subscribe((type: any) => {
-      console.log('Credit Card Type:', type);
-    })
 
     this.getCountryLov()
     this.getGenderLov()
@@ -184,9 +183,6 @@ export class ServiceBookingFlowComponent implements OnInit {
     this.step2 = false;
     this.step3 = false;
     this.step4 = false;
-
-
-
   }
 
 
@@ -369,6 +365,10 @@ export class ServiceBookingFlowComponent implements OnInit {
           localStorage.setItem("appointmentId", dt)
           this.PayNow()
           // this.gender = res[0].lovs;
+          localStorage.removeItem('appointmentId')
+          localStorage.removeItem('slotInfo')
+          localStorage.removeItem('user_response')
+          localStorage.removeItem('searchData')
         },
         (err: any) => {
           // this.showError(err?.error?.message?.description);
