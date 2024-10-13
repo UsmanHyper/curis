@@ -54,15 +54,8 @@ export class ServiceBookingFlowComponent implements OnInit {
   formattedStartTime: string = '';
   formattedEndTime: string = '';
 
-  public type$: Observable<string> | any;
-  // allGenders: any = [
-  //   { name: 'Male', value: "male" },
-  //   { name: 'Female', value: "female" },
-  //   { name: 'Other', value: "other" }
-  // ]
   userform: FormGroup;
 
-  // ccForm: FormGroup;
 
   token: any = null;
 
@@ -83,9 +76,7 @@ export class ServiceBookingFlowComponent implements OnInit {
 
 
     this.dss.onSignal().subscribe((value: any) => {
-
       if (value && value.type === "otpVerified") {
-
         this.token = value.data.token;
         let payload = {
           email: this.userform.controls['email'].value,
@@ -124,6 +115,7 @@ export class ServiceBookingFlowComponent implements OnInit {
 
     let slot: any = localStorage.getItem('slotInfo');
 
+    console.log("=============", slot)
     this.data = JSON.parse(slot);
 
     console.log("=============", this.data)
