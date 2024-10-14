@@ -76,10 +76,9 @@
                                                     <td>{{order.startTime}}</td>
                                                     <td>{{order.endTime}}</td>
                                                     <td>
-                                                        <span class="tag"
-                                                            [style.color]="getStatusColor(order.isAvalible)"
-                                                            [style.background-color]="getStatusBg(order.isAvalible)">
-                                                            {{ order.isAvalible === true ? 'Active': 'Inactive'
+                                                        <span class="tag" [style.color]="getStatusColor(order.isAvailable)"
+                                                            [style.background-color]="getStatusBg(order.isAvailable)">
+                                                            {{ order.isAvailable === true ? 'Active': 'Inactive'
                                                             | titlecase }}
                                                             <!-- {{ order?.order_status | titlecase }} -->
                                                         </span>
@@ -87,10 +86,11 @@
 
                                                     <td>
                                                         <div class="form-switch">
+
                                                             <input class="form-check-input" type="checkbox"
                                                                 id="flexSwitchCheckChecked"
                                                                 (change)="onCheckboxChange($event,order)"
-                                                                [checked]="order.isAvalible">
+                                                                [checked]="order.isAvailable">
                                                         </div>
                                                     </td>
 

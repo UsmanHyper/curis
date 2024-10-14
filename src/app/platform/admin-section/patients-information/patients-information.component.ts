@@ -189,7 +189,7 @@ export class PatientsInformationComponent implements OnInit {
         return '#B42318';
       // Add more cases as needed
       default:
-        return 'yellow'; // Default color
+        return '#00000091'; // Default color
     }
   }
   getStatusBg(status: any): string {
@@ -201,7 +201,7 @@ export class PatientsInformationComponent implements OnInit {
         return '#f4d3d3';
       // Add more cases as needed
       default:
-        return 'yellow'; // Default color
+        return '#ecec006b';// Default color
     }
   }
 }

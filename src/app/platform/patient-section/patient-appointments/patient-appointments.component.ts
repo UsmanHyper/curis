@@ -107,7 +107,7 @@ export class PatientAppointmentsComponent implements OnInit {
         return '#B42318';
       // Add more cases as needed
       default:
-        return '#f3f3f3'; // Default color
+        return '#00000091'; // Default color
     }
   }
   getStatusBg(status: any) {
@@ -120,7 +120,7 @@ export class PatientAppointmentsComponent implements OnInit {
         return '#c1414130';
       // Add more cases as needed
       default:
-        return '#f3f3f3'; // Default color
+        return '#ecec006b'; // Default color
     }
   }
 

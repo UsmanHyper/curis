@@ -42,6 +42,7 @@ export class ServiceBookingFlowComponent implements OnInit {
   step3: boolean = false;
   step4: boolean = false;
 
+  scheduledData: any
 
   payStep1: boolean = false;
   payStep2: boolean = false;
@@ -115,10 +116,10 @@ export class ServiceBookingFlowComponent implements OnInit {
 
     let slot: any = localStorage.getItem('slotInfo');
 
-    console.log("=============", slot)
+    console.log("============= slot", slot)
     this.data = JSON.parse(slot);
 
-    console.log("=============", this.data)
+    console.log("============= data", this.data)
 
     this.formattedDate = moment(this.data.dateOnly).format('MMM DD');
     this.formattedStartTime = moment(this.data.startTimeOnly, 'HH:mm:ss').format('h:mm A');
@@ -309,27 +310,8 @@ export class ServiceBookingFlowComponent implements OnInit {
   }
 
 
-
-
-
-  // timeSelect(item: any) {
-  //   this.selectedId = item._id;
-  //   this.scheduleAppointment.get('time_slot')?.setValue(this.selectTime)
-  //   this.submit();
-  // }
-
-
-  // submit() {
-  //   this.formView = true;
-  //   this.scheduleView = false;
-  //   this.booking = false;
-  // }
-
-  // modalClose() {
-  //   this.dialogRef.close();
-  // }
-
   setScheduleAppintmentPayload(item: any) {
+    console.log("====>", this.data)
     let payload = {
       "isAvailable": false,
       "providerId": this.data?.providerId,
@@ -353,16 +335,19 @@ export class ServiceBookingFlowComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log(res)
-          let dt = res.data._id
-          localStorage.setItem("appointmentId", dt)
+          let dt = res.data
+          this.scheduledData = res.data
+
+
+          // localStorage.setItem("appointmentId", dt)
           this.PayNow()
           // this.gender = res[0].lovs;
-          setTimeout(() => {
-            localStorage.removeItem('appointmentId')
-            localStorage.removeItem('slotInfo')
-            localStorage.removeItem('user_response')
-            localStorage.removeItem('searchData')
-          }, 1000);
+          // setTimeout(() => {
+          // localStorage.removeItem('appointmentId')
+          // localStorage.removeItem('slotInfo')
+          // localStorage.removeItem('user_response')
+          // localStorage.removeItem('searchData')
+          // }, 1000);
         },
         (err: any) => {
           // this.showError(err?.error?.message?.description);
@@ -412,15 +397,15 @@ export class ServiceBookingFlowComponent implements OnInit {
 
     let response = localStorage.getItem("user_response") || ""
     let res = JSON.parse(response)
-    let appointment_id = localStorage.getItem("appointmentId")
+    // let appointment_id = localStorage.getItem("appointmentId")
     let payload = {
       name: this.userform.controls['first_name'].value + this.userform.controls['last_name'].value,
       description: "Appointment for ",
       // description: "Appointment for " + this.dataSource.mainSpeciality,
-      amount: 500,
+      amount: this.data?.rates || 500,
       // amount: this.price,
       email: this.userform.controls['email'].value,
-      appointment_id: appointment_id,
+      appointment_id: this.scheduledData?._id,
       userId: res._id
 
     }

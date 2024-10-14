@@ -353,7 +353,7 @@ export class RatesComponent implements OnInit {
         return '#B42318';
       // Add more cases as needed
       default:
-        return 'yellow'; // Default color
+        return '#00000091'; // Default color
     }
   }
   getStatusBg(status: any): string {

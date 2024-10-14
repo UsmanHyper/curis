@@ -198,11 +198,13 @@ export class WorkingHoursComponent implements OnInit {
             }
 
             ele.status = ele.isAvalible ? "Active" : "Inactive"
+            ele.isActive = ele.isActive 
 
           });
 
 
-          console.log(working); // Check the result
+          console.log("---------------------=",dt); // Check the result
+          console.log("---------------------=",working); // Check the result
           this.workingHours = working
           this.filteredData = working
           this.totalView = this.filteredData.length;
@@ -316,6 +318,7 @@ export class WorkingHoursComponent implements OnInit {
       );
   }
 
+
   getStatusColor(status: any): string {
     switch (status) {
       case true:
@@ -326,7 +329,7 @@ export class WorkingHoursComponent implements OnInit {
         return '#B42318';
       // Add more cases as needed
       default:
-        return 'yellow'; // Default color
+        return '#00000091'; // Default color
     }
   }
   getStatusBg(status: any): string {
@@ -338,10 +341,9 @@ export class WorkingHoursComponent implements OnInit {
         return '#f4d3d3';
       // Add more cases as needed
       default:
-        return 'yellow'; // Default color
+        return '#ecec006b'; // Default color
     }
   }
-
 
   sortData(key: string): void {
     this.sortKey = key;

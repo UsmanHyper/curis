@@ -373,6 +373,7 @@ export class ServiceProvidersComponent implements OnInit {
     let mergedData = { ...slot, ...data?.providerInformation };
 
     console.log("send", mergedData);
+    mergedData._id = slot._id
 
     localStorage.setItem('slotInfo', JSON.stringify(mergedData));
   }
