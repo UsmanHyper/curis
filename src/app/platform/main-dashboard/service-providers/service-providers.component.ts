@@ -29,7 +29,7 @@ export class ServiceProvidersComponent implements OnInit {
   mapData: any = [];
 
   rating: number = 5;
-  selectedSpeciality: FormControl;
+  selectedSpecialty: FormControl;
   selectedService: FormControl;
   selectedLocation: FormControl;
   selectedDate: FormControl;
@@ -48,7 +48,7 @@ export class ServiceProvidersComponent implements OnInit {
   ];
 
   dateTitle: any;
-  checkSpeciality: boolean = false;
+  checkSpecialty: boolean = false;
   checkService: boolean = false;
   checkLocation: boolean = false;
   checkDate: boolean = false;
@@ -84,7 +84,7 @@ export class ServiceProvidersComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder, private apiService: MainHomeService, private spinner: NgxSpinnerService, private router: Router,
     private dss: DataSharingService) {
-    this.selectedSpeciality = new FormControl('Select Speciality');
+    this.selectedSpecialty = new FormControl('Select Specialty');
     this.selectedService = new FormControl('Select Service');
     this.selectedLocation = new FormControl('Select Location');
     this.selectedDate = new FormControl(null);
@@ -99,16 +99,16 @@ export class ServiceProvidersComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.getSpecialityLov()
+    this.getSpecialtyLov()
     this.getZipCodeLov()
 
 
-    this.selectedSpeciality.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
+    this.selectedSpecialty.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
       console.log("-----------", val)
       if (val === "Select Speciality") {
-        this.checkSpeciality = false
+        this.checkSpecialty = false
       } else {
-        this.checkSpeciality = true
+        this.checkSpecialty = true
       }
 
     })
@@ -166,8 +166,8 @@ export class ServiceProvidersComponent implements OnInit {
 
   patch(data: any) {
     console.log(":-------", data)
-    this.selectedSpeciality.patchValue(data.mainSpeciality);
-    this.getServicesForSpeciality();
+    this.selectedSpecialty.patchValue(data.mainSpeciality);
+    this.getServicesForSpecialty();
 
     this.selectedLocation.patchValue(data.zipCode)
     this.selectedDate.patchValue(data.date)
@@ -176,8 +176,8 @@ export class ServiceProvidersComponent implements OnInit {
 
     setTimeout(() => {
       let payload = {
-        mainSpeciality: this.selectedSpeciality.value,
-        service: this.selectedSpeciality.value,
+        mainSpeciality: this.selectedSpecialty.value,
+        service: this.selectedSpecialty.value,
         // service: this.selectedService.value,
         zipCode: this.selectedLocation.value,
         date: moment(this.selectedDate.value).format('YYYY-MM-DD')
@@ -216,7 +216,7 @@ export class ServiceProvidersComponent implements OnInit {
     }
   }
 
-  getSpecialityLov() {
+  getSpecialtyLov() {
     this.spinner.show();
     this.apiService.getLovs(4)
       .pipe(first())
@@ -234,11 +234,11 @@ export class ServiceProvidersComponent implements OnInit {
       );
   }
 
-  getServicesForSpeciality() {
+  getServicesForSpecialty() {
 
-    console.log("this.selectedSpeciality", this.selectedSpeciality.value)
+    console.log("this.selectedSpecialty", this.selectedSpecialty.value)
     this.spinner.show();
-    this.apiService.getLovByName(this.selectedSpeciality.value)
+    this.apiService.getLovByName(this.selectedSpecialty.value)
       .pipe(first())
       .subscribe(
         (res: any) => {
@@ -274,7 +274,7 @@ export class ServiceProvidersComponent implements OnInit {
 
 
   search() {
-    console.log('Speciality:', this.selectedSpeciality.value);
+    console.log('Specialty:', this.selectedSpecialty.value);
     console.log('Service:', this.selectedService.value);
     console.log('Location:', this.selectedLocation.value);
     console.log('Date:', this.selectedDate.value);
@@ -283,14 +283,14 @@ export class ServiceProvidersComponent implements OnInit {
 
     // this.router.navigateByUrl('service-providers')
 
-    if (!!this.selectedSpeciality.value && !!this.selectedService.value && !!this.selectedLocation.value && !this.selectedDate.value) {
-      // if (this.selectedSpeciality === null && this.selectedProvider === null && this.selectedLocation === null && !this.range.valid) {
+    if (!!this.selectedSpecialty.value && !!this.selectedService.value && !!this.selectedLocation.value && !this.selectedDate.value) {
+      // if (this.selectedSpecialty === null && this.selectedProvider === null && this.selectedLocation === null && !this.range.valid) {
       return
     } else {
 
       let payload = {
-        mainSpeciality: this.selectedSpeciality.value,
-        service: this.selectedSpeciality.value,
+        mainSpeciality: this.selectedSpecialty.value,
+        service: this.selectedSpecialty.value,
         // service: this.selectedService.value,
         zipCode: this.selectedLocation.value,
         date: moment(this.selectedDate.value).format('YYYY-MM-DD')

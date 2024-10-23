@@ -143,29 +143,28 @@
                                             </ng-container>
                                         </div>
                                         <div class="input-group">
-                                            <label for="speciality">Practice or provider’s speciality</label>
+                                            <label for="speciality">Practice or Provider's Specialty</label>
 
                                             <select class="form-select input-style" aria-label="Default select example"
                                                 formControlName="providersSpeciality">
-                                                <option disabled selected>Provider speciality</option>
-                                                <option *ngFor="let item of mainSpecialityLov" [value]="item.value">{{
+                                                <option disabled selected>Provider Specialty</option>
+                                                <option *ngFor="let item of mainSpecialtyLov" [value]="item.value">{{
                                                     item.value }}</option>
                                             </select>
                                             <ng-container
                                                 *ngIf="practiceInformationForm.get('providersSpeciality')?.invalid && (practiceInformationForm.get('providersSpeciality')?.dirty || practiceInformationForm.get('providersSpeciality')?.touched)">
                                                 <ng-container
                                                     *ngIf="practiceInformationForm.get('providersSpeciality')?.errors">
-                                                    <span class="text-danger error-state">Practice or provider’s
-                                                        speciality is required</span>
+                                                    <span class="text-danger error-state">Practice or Provider's Specialty is required</span>
                                                 </ng-container>
 
                                             </ng-container>
                                         </div>
                                         <div class="input-group">
-                                            <label for="fname">Practice Size</label>
+                                            <label for="fname">Practice Size (Number of Providers)</label>
                                             <select class="form-select input-style" aria-label="Default select example"
                                                 formControlName="practiceSize">
-                                                <option disabled selected>Practice Size</option>
+                                                <option disabled selected>Practice Size (Number of Providers)</option>
                                                 <option *ngFor="let item of practiceSize" [value]="item.value">{{
                                                     item.value }}</option>
                                             </select>
@@ -173,7 +172,7 @@
                                                 *ngIf="practiceInformationForm.get('practiceSize')?.invalid && (practiceInformationForm.get('practiceSize')?.dirty || practiceInformationForm.get('practiceSize')?.touched)">
                                                 <ng-container
                                                     *ngIf="practiceInformationForm.get('practiceSize')?.errors">
-                                                    <span class="text-danger error-state">Practice Size is
+                                                    <span class="text-danger error-state">Practice Size (Number of Providers) is
                                                         required</span>
                                                 </ng-container>
 
@@ -184,10 +183,10 @@
 
                                     <div class="d-flex gap-4 group-wrapper mt-12 ">
                                         <div class="input-group">
-                                            <label for="fname">Role At Practice</label>
+                                            <label for="fname">Role at Practice</label>
                                             <select class="form-select input-style" aria-label="Default select example"
                                                 formControlName="roleAtPractice">
-                                                <option disabled selected>Role At Practice</option>
+                                                <option disabled selected>Role at Practice</option>
                                                 <option *ngFor="let item of roleAtPractice" [value]="item.value">{{
                                                     item.value }}</option>
                                             </select>
@@ -196,7 +195,7 @@
                                                 *ngIf="practiceInformationForm.get('roleAtPractice')?.invalid && (practiceInformationForm.get('roleAtPractice')?.dirty || practiceInformationForm.get('roleAtPractice')?.touched)">
                                                 <ng-container
                                                     *ngIf="practiceInformationForm.get('roleAtPractice')?.errors">
-                                                    <span class="text-danger error-state">Role At Practice is
+                                                    <span class="text-danger error-state">Role at Practice is
                                                         required</span>
                                                 </ng-container>
 
@@ -315,7 +314,7 @@
                                             <select class="form-select input-style" aria-label="Default select example"
                                                 formControlName="mainSpecialization">
                                                 <option disabled selected>Main specialization</option>
-                                                <option *ngFor="let item of mainSpecialityLov" [value]="item.value">
+                                                <option *ngFor="let item of mainSpecialtyLov" [value]="item.value">
                                                     {{ item.value }}</option>
                                             </select>
                                             <ng-container
@@ -334,7 +333,7 @@
                                             <select class="form-select input-style" aria-label="Default select example"
                                                 formControlName="subSpecialization">
                                                 <option disabled selected>Sub specialization</option>
-                                                <option *ngFor="let item of subSpecialityLov" [value]="item.value">
+                                                <option *ngFor="let item of subSpecialtyLov" [value]="item.value">
                                                     {{ item.value }}</option>
                                             </select>
                                             <ng-container

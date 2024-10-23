@@ -62,14 +62,14 @@ export class RegisterProviderComponent implements OnInit {
   accountInformationForm: FormGroup;
 
   genderLov: any = [];
-  specialityLov: any = [];
+  specialtyLov: any = [];
   practiceSize: any = [];
   roleAtPractice: any = [];
   statesLov: any = [];
   qualificationLov: any = [];
   cityLov: any = [];
   zipCodesLov: any = [];
-  subSpecialityLov: any = [];
+  subSpecialtyLov: any = [];
 
   passwordVisibility: any = {
     currentPassword: false,
@@ -78,6 +78,9 @@ export class RegisterProviderComponent implements OnInit {
   };
 
   imgSrc: string = './assets/images/admin/eye.png'
+
+  successTitle: any
+  successResponse: any
 
 
   constructor(public formBuilder: FormBuilder, private apiService: MainHomeService, private spinner: NgxSpinnerService, private router: Router, private authenticationService: authenticationService) {
@@ -94,9 +97,9 @@ export class RegisterProviderComponent implements OnInit {
 
     this.practiceInformationForm = this.formBuilder.group({
       practiceName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
-      providersSpeciality: ["Provider speciality", Validators.required],
-      practiceSize: ["Practice Size", Validators.required],
-      roleAtPractice: ["Role At Practice", Validators.required],
+      providersSpeciality: ["Provider Specialty", Validators.required],
+      practiceSize: ["Practice Size (Number of Providers)", Validators.required],
+      roleAtPractice: ["Role at Practice", Validators.required],
       zipCode: ["ZIP Code", Validators.required],
       city: ["Practice City", Validators.required],
       addressLineOne: ["", Validators.required],
@@ -106,11 +109,11 @@ export class RegisterProviderComponent implements OnInit {
 
 
     this.qualificationAndSkillsForm = this.formBuilder.group({
-      qualification: ["Select qualification", Validators.required],
+      qualification: ["Select Qualification", Validators.required],
       overallExperience: ["", Validators.required],
-      npiNumber: ["NPI number", [Validators.required,]],
+      npiNumber: ["", [Validators.required, CustomValidators.isNumbers]],
       licienceState: ["Licensed State", Validators.required],
-      subSpeciality: ["Sub specialization", Validators.required],
+      subSpeciality: ["Sub Specialization", Validators.required],
       // specialization: ["", Validators.required],
     });
 
@@ -126,15 +129,15 @@ export class RegisterProviderComponent implements OnInit {
 
   ngOnInit() {
     this.getGenderLov()
-    this.getSpecialitiesLov()
-    this.getSubSpecialitiesLov()
-    this.getpracticeSizeLov()
+    this.getSpecialtiesLov()
+    this.getSubSpecialtiesLov()
+    this.getPracticeSizeLov()
     this.getCityLov();
-    this.getpracticeRolesLov();
+    this.getPracticeRolesLov();
     this.getStatesLov()
-    this.getzipCodeLov()
+    this.getZipCodeLov()
     this.providerQualification()
-    this.getSubSpecialityLov()
+    this.getSubSpecialtyLov()
   }
   // confirmationValidator = (control: FormControl): Promise<any> | Observable<any> => {
   //   return new Promise((resolve) => {
@@ -246,6 +249,7 @@ export class RegisterProviderComponent implements OnInit {
       "l_name": this.personalInformationForm.controls['lastName'].value,
       "email": this.personalInformationForm.controls['email'].value,
       "gender": this.personalInformationForm.controls['gender'].value,
+      // "gender": (this.personalInformationForm.controls['gender'].value).toLowerCase(),
       "user_Type": this.personalInformationForm.controls['userType'].value,
       "contact_no": this.personalInformationForm.controls['contactNumber'].value,
 
@@ -278,9 +282,12 @@ export class RegisterProviderComponent implements OnInit {
         (res: any) => {
           if (res.success == true) {
             this.authenticationService.setUserTokenData(res.token);
-            this.getUserDetailsBytokenRequest(res.token);
+            this.successTitle = "Go To Dashboard";
+            this.successResponse = res.token  
+
+            // this.getUserDetailsByTokenRequest(res.token);
             this.authenticationService.setIsAuthenticated(true);
-            localStorage.setItem("isLoggedIn", "true");
+            // localStorage.setItem("isLoggedIn", "true");
           }
         },
         (err: any) => {
@@ -390,7 +397,11 @@ export class RegisterProviderComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (res: any) => {
-          this.genderLov = res[0].lovs;
+          let dt = res[0].lovs;
+          // dt.forEach((elem: any) => {
+          //   elem.value = this.capitalizeFirstLetter(elem.value);
+          // });
+          this.genderLov = dt
           this.spinner.hide();
         },
         (err: any) => {
@@ -400,13 +411,21 @@ export class RegisterProviderComponent implements OnInit {
       );
   }
 
-  getSpecialitiesLov() {
+  capitalizeFirstLetter(str: string): string {
+    return str
+      .split(' ') // Split the string into an array of words
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+      .join(' '); // Join the words back into a single string
+
+  }
+
+  getSpecialtiesLov() {
     this.spinner.show();
     this.apiService.getLovs(4)
       .pipe(first())
       .subscribe(
         (res: any) => {
-          this.specialityLov = res[0].lovs;
+          this.specialtyLov = res[0].lovs;
           this.spinner.hide();
         },
         (err: any) => {
@@ -416,13 +435,13 @@ export class RegisterProviderComponent implements OnInit {
       );
   }
 
-  getSubSpecialitiesLov() {
+  getSubSpecialtiesLov() {
     this.spinner.show();
     this.apiService.getLovs(4)
       .pipe(first())
       .subscribe(
         (res: any) => {
-          this.specialityLov = res[0].lovs;
+          this.specialtyLov = res[0].lovs;
           this.spinner.hide();
         },
         (err: any) => {
@@ -432,7 +451,7 @@ export class RegisterProviderComponent implements OnInit {
       );
   }
 
-  getpracticeSizeLov() {
+  getPracticeSizeLov() {
     this.spinner.show();
     this.apiService.getLovs(12)
       .pipe(first())
@@ -463,7 +482,7 @@ export class RegisterProviderComponent implements OnInit {
         }
       );
   }
-  getpracticeRolesLov() {
+  getPracticeRolesLov() {
     this.spinner.show();
     this.apiService.getLovs(11)
       .pipe(first())
@@ -496,7 +515,7 @@ export class RegisterProviderComponent implements OnInit {
   }
 
 
-  getzipCodeLov() {
+  getZipCodeLov() {
     this.spinner.show();
     this.apiService.getLovs(19)
       .pipe(first())
@@ -527,13 +546,13 @@ export class RegisterProviderComponent implements OnInit {
       );
   }
 
-  getSubSpecialityLov() {
+  getSubSpecialtyLov() {
     this.spinner.show();
     this.apiService.getLovs(5)
       .pipe(first())
       .subscribe(
         (res: any) => {
-          this.subSpecialityLov = res[0].lovs;
+          this.subSpecialtyLov = res[0].lovs;
           this.spinner.hide();
         },
         (err: any) => {
@@ -543,27 +562,27 @@ export class RegisterProviderComponent implements OnInit {
       );
   }
 
-  getUserDetailsBytokenRequest(data: any) {
+  getUserDetailsByTokenRequest(data: any) {
     this.spinner.show();
     this.authenticationService.getDataByToken(data)
       .pipe(first())
       .subscribe(
         (res: any) => {
           if (res) {
-            this.authenticationService.setLoggedInUser(res);
-            if (res.user_Type == "Provider") {
-              this.getProviderDataById(res._id, data);
-              this.router.navigate(['/providerDashboard']);
-            }
-            else if (res.user_Type == "Patient") {
-              this.router.navigate(['/userDashboard']);
-            }
-            else if (res.user_Type == "Admin") {
-              this.router.navigate(['/AdminDashboard']);
-            }
-            else if (res.user_Type == "Lab") {
-              this.router.navigate(['/LabDashboard']);
-            }
+            // this.authenticationService.setLoggedInUser(res);
+            // if (res.user_Type == "Provider") {
+            //   this.getProviderDataById(res._id, data);
+            //   this.router.navigate(['/providerDashboard']);
+            // }
+            // else if (res.user_Type == "Patient") {
+            //   this.router.navigate(['/userDashboard']);
+            // }
+            // else if (res.user_Type == "Admin") {
+            //   this.router.navigate(['/AdminDashboard']);
+            // }
+            // else if (res.user_Type == "Lab") {
+            //   this.router.navigate(['/LabDashboard']);
+            // }
           }
         },
         (err: any) => {

@@ -22,8 +22,8 @@ export class ProviderProfileComponent implements OnInit {
   stateLov: any;
   cityLov: any;
   languageLov: any;
-  mainSpecialityLov: any;
-  subSpecialityLov: any;
+  mainSpecialtyLov: any;
+  subSpecialtyLov: any;
   practiceSize: any;
   roleAtPractice: any;
   genderLov: any;
@@ -53,9 +53,9 @@ export class ProviderProfileComponent implements OnInit {
 
     this.practiceInformationForm = this.formBuilder.group({
       practiceName: ["", [Validators.required,]],
-      providersSpeciality: ["Provider speciality", Validators.required],
-      practiceSize: ["Practice Size", Validators.required],
-      roleAtPractice: ["Role At Practice", Validators.required],
+      providersSpeciality: ["Provider Specialty", Validators.required],
+      practiceSize: ["Practice Size (Number of Providers)", Validators.required],
+      roleAtPractice: ["Role at Practice", Validators.required],
       billingAddress: ["", Validators.required],
       billingAddresstwo: ["", Validators.required],
       zipCode: ["ZIP Code", Validators.required],
@@ -86,14 +86,14 @@ export class ProviderProfileComponent implements OnInit {
       this.getCityLov(),
       this.getCountryLov(),
       this.getLanguageLov(),
-      this.getSubSpecialityLov(),
-      this.getpracticeRolesLov(),
-      this.getpracticeSizeLov(),
+      this.getSubSpecialtyLov(),
+      this.getPracticeRolesLov(),
+      this.getPracticeSizeLov(),
       this.getStateLov(),
       this.getTimezoneLov(),
-      this.getmainSpecialityLov(),
+      this.getMainSpecialtyLov(),
       this.getGenderLov(),
-      this.getzipCodeLov(),
+      this.getZipCodeLov(),
       this.providerQualification()
 
     ])
@@ -213,7 +213,7 @@ export class ProviderProfileComponent implements OnInit {
     });
   }
 
-  getzipCodeLov() {
+  getZipCodeLov() {
     this.spinner.show();
     this.apiService.getLovs(19)
       .pipe(first())
@@ -426,7 +426,7 @@ export class ProviderProfileComponent implements OnInit {
       );
   }
 
-  getpracticeSizeLov() {
+  getPracticeSizeLov() {
     this.spinner.show();
     this.providerService.getLovs(12)
       .pipe(first())
@@ -458,7 +458,7 @@ export class ProviderProfileComponent implements OnInit {
       );
   }
 
-  getpracticeRolesLov() {
+  getPracticeRolesLov() {
     this.spinner.show();
     this.providerService.getLovs(11)
       .pipe(first())
@@ -490,13 +490,13 @@ export class ProviderProfileComponent implements OnInit {
       );
   }
 
-  getmainSpecialityLov() {
+  getMainSpecialtyLov() {
     this.spinner.show();
     this.providerService.getLovs(4)
       .pipe(first())
       .subscribe(
         (res: any) => {
-          this.mainSpecialityLov = res[0].lovs;
+          this.mainSpecialtyLov = res[0].lovs;
           this.spinner.hide();
         },
         (err: any) => {
@@ -506,13 +506,13 @@ export class ProviderProfileComponent implements OnInit {
       );
   }
 
-  getSubSpecialityLov() {
+  getSubSpecialtyLov() {
     this.spinner.show();
     this.providerService.getLovs(5)
       .pipe(first())
       .subscribe(
         (res: any) => {
-          this.subSpecialityLov = res[0].lovs;
+          this.subSpecialtyLov = res[0].lovs;
           this.spinner.hide();
         },
         (err: any) => {

@@ -27,9 +27,9 @@
         <div class="form_fields">
           <div class="form_group">
 
-            <select class="form-select" aria-label="Default select example" (change)="getServicesForSpeciality()"
-              [formControl]="selectedSpeciality">
-              <option selected disabled>Select Speciality</option>
+            <select class="form-select" aria-label="Default select example" (change)="getServicesForSpecialty()"
+              [formControl]="selectedSpecialty">
+              <option selected disabled>Select Specialty</option>
               <option *ngFor="let item of specialtiesList" [value]="item.value">{{item.value}}</option>
 
             </select>
@@ -60,7 +60,7 @@
           </div>
           <div class="form_group">
             <button class="web_button btn" (click)="search()"
-              [disabled]="!checkSpeciality || !checkService || !checkLocation || !checkDate">Search</button>
+              [disabled]="!checkSpecialty || !checkService || !checkLocation || !checkDate">Search</button>
             <!-- <button class="web_button" routerLink="service-providers" (click)="search()">Search</button> -->
           </div>
 
