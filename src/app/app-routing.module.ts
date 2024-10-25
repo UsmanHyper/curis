@@ -146,7 +146,28 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./auth/auth.module').then(m => (m.AuthModule))
-  }
+  },
+  {
+    path: 'curis-detail-page',
+    loadComponent: () =>
+      import("./shared/curis-detail-page/curis-detail-page.component").then(
+        (mod) => mod.CurisDetailPageComponent
+      ),
+  },
+  {
+    path: 'provider-portal',
+    loadComponent: () =>
+      import("./shared/provider-portal/provider-portal.component").then(
+        (mod) => mod.ProviderPortalComponent
+      ),
+  },
+  {
+    path: 'provider-resource-center',
+    loadComponent: () =>
+      import("./shared/provider-resource-center/provider-resource-center.component").then(
+        (mod) => mod.ProviderResourceCenterComponent
+      ),
+  },
   // {
   //   path: "userDashboard",
   //   component: UserDashboardComponent,

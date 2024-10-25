@@ -46,7 +46,19 @@
                             For Providers <span></span>
                         </a>
 
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu " style="min-width: 264px !important;" aria-labelledby="navbarDropdown">
+                            <li class="d-flex align-items-center "><a class="dropdown-item" routerLink="/curis-detail-page"
+                                    (click)="closeDropdown()"><i class=" fontStyle bi bi-building mr-12"></i> Join
+                                    Curis</a>
+                            </li>
+                            <li class="d-flex align-items-center "><a class="dropdown-item" routerLink="/provider-portal"
+                                    (click)="closeDropdown()"><i class="fontStyle bi bi-cast mr-12 "></i> Provider
+                                    Portal</a>
+                            </li>
+                            <li class="d-flex align-items-center "><a class="dropdown-item" routerLink="/provider-resource-center"
+                                    (click)="closeDropdown()"><i class="fontStyle bi bi-play-circle mr-12"></i> Provider
+                                    Resource Center</a>
+                            </li>
                             <!-- <li><a class="dropdown-item" routerLink="/wedding-venues"
                                     [queryParams]="{ type: 'hall booking' }" (click)="closeDropdown()">Book Hall</a>
                             </li>

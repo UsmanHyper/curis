@@ -14,8 +14,7 @@
 
 .navbar {
     padding: 16px 12px;
-    border-bottom: 1px solid #D0D5DD
-    // box-shadow: 0 0 20px #00000020;
+    border-bottom: 1px solid #D0D5DD // box-shadow: 0 0 20px #00000020;
 }
 
 .navbar ul {
@@ -32,10 +31,10 @@
     border-radius: 8px;
     padding: 12px 30px;
     font-size: 16px;
-  }
+}
 
 .logo-title {
-    
+
     font-size: 16.6px !important;
     font-weight: 600;
     line-height: 16.6px;
@@ -153,5 +152,26 @@ header .logo {
 @media screen and (max-width: 480px) and (min-width: 200px) {
     header .logo {
         width: 100px;
+    }
+}
+
+
+.fontStyle {
+    color: #0086C9;
+    font-size: 20px;
+}
+
+// .fontStyle:hover,
+// .fontStyle:active {
+//     color: #fff;
+// }
+
+
+.dropdown-item:hover , .dropdown-item:active  {
+    color: #fff;
+    background-color: #2986c9;
+    
+    .fontStyle{
+        color: #fff;
     }
 }
