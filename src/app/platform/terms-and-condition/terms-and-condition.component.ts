@@ -6,12 +6,12 @@ import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { LinksComponent } from 'src/app/shared/contact-us/links/links.component';
 
 @Component({
-  selector: 'app-about-us',
+  selector: 'app-terms-and-condition',
   standalone: true,
   imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent,LinksComponent ],
-  templateUrl: './about-us.component.html',
-  styleUrls: ['./about-us.component.scss']
+  templateUrl: './terms-and-condition.component.html',
+  styleUrls: ['./terms-and-condition.component.scss']
 })
-export class AboutUsComponent {
+export class TermsAndConditionComponent {
 
 }

@@ -6,12 +6,12 @@ import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { LinksComponent } from 'src/app/shared/contact-us/links/links.component';
 
 @Component({
-  selector: 'app-about-us',
+  selector: 'app-notice-private-policy',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent,LinksComponent ],
-  templateUrl: './about-us.component.html',
-  styleUrls: ['./about-us.component.scss']
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, LinksComponent],
+  templateUrl: './notice-private-policy.component.html',
+  styleUrls: ['./notice-private-policy.component.scss']
 })
-export class AboutUsComponent {
+export class NoticePrivatePolicyComponent {
 
 }

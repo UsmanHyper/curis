@@ -125,8 +125,36 @@ const routes: Routes = [
   {
     path: "contact-us",
     loadComponent: () =>
-      import("./platform/contact-us/contact-us.component").then(
-        (mod) => mod.ContactUsComponent
+      import("./shared/contact-us/curis-contact-info/curis-contact-info.component").then(
+        (mod) => mod.CurisContactInfoComponent
+      ),
+  },
+  {
+    path: "terms-and-condition",
+    loadComponent: () =>
+      import("./platform/terms-and-condition/terms-and-condition.component").then(
+        (mod) => mod.TermsAndConditionComponent
+      ),
+  },
+  {
+    path: "privacy-policy",
+    loadComponent: () =>
+      import("./platform/privacy-policy/privacy-policy.component").then(
+        (mod) => mod.PrivacyPolicyComponent
+      ),
+  },
+  {
+    path: "patient-feedback-survey",
+    loadComponent: () =>
+      import("./platform/patient-feedback-survey/patient-feedback-survey.component").then(
+        (mod) => mod.PatientFeedbackSurveyComponent
+      ),
+  },
+  {
+    path: "notice-private-policy",
+    loadComponent: () =>
+      import("./platform/notice-private-policy/notice-private-policy.component").then(
+        (mod) => mod.NoticePrivatePolicyComponent
       ),
   },
   {
@@ -164,7 +192,7 @@ const routes: Routes = [
   {
     path: 'provider-resource-center',
     loadComponent: () =>
-      import("./shared/provider-resource-center/provider-resource-center.component").then(
+      import("./shared/provider-resource/provider-resource-center/provider-resource-center.component").then(
         (mod) => mod.ProviderResourceCenterComponent
       ),
   },

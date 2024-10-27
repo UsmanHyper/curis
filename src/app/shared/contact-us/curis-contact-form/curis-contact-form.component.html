@@ -1,0 +1,176 @@
+<section class="pb-64 pt-64">
+    <div class="container">
+        <ng-container *ngIf="showForm">
+
+
+            <div class="row justify-content-between">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="row align-items-center justify-content-between ">
+                        <div class="col-12 col-md-12 col-lg-6 col-xl-6">
+                            <figure class="photo">
+                                <div class="d-flex flex-column g-36 ">
+                                    <div class="d-flex gap-20 flex-column">
+                                        <h1 class="fs-36">Get in touch</h1>
+                                        <p class="para fs-20">Our friendly team would love to hear from you.</p>
+
+                                        <form [formGroup]="contactInformationForm" autocomplete="disable"
+                                            class="form-width">
+
+                                            <div class="form-wrapper">
+                                                <div class="d-flex gap-4 group-wrapper ">
+                                                    <div class="input-group">
+                                                        <label for="fname">First Name</label>
+                                                        <input type="text" placeholder="Enter First Name"
+                                                            formControlName="firstName" class="border"
+                                                            name="new-firstName" autocomplete="off" aria-autocomplete
+                                                            required />
+                                                        <ng-container
+                                                            *ngIf="contactInformationForm.get('firstName')?.invalid && (contactInformationForm.get('firstName')?.dirty || contactInformationForm.get('firstName')?.touched)">
+                                                            <ng-container
+                                                                *ngIf="contactInformationForm.get('firstName')?.errors">
+                                                                <span class="text-danger error-state">First Name is
+                                                                    required</span>
+                                                            </ng-container>
+
+                                                        </ng-container>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <label for="lname">Last Name</label>
+                                                        <input type="text" placeholder="Enter Last Name" class="border"
+                                                            formControlName="lastName" autocomplete="off"
+                                                            aria-autocomplete required name="new-lastName" />
+                                                        <ng-container
+                                                            *ngIf="contactInformationForm.get('lastName')?.invalid && (contactInformationForm.get('lastName')?.dirty || contactInformationForm.get('lastName')?.touched)">
+                                                            <ng-container
+                                                                *ngIf="contactInformationForm.get('lastName')?.errors">
+                                                                <span class="text-danger error-state">Last Name is
+                                                                    required</span>
+                                                            </ng-container>
+
+                                                        </ng-container>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+
+                                                    <div class="input-group">
+                                                        <label for="fname">Phone Number</label>
+
+                                                        <!-- <input type="text" mask="(000) 000-0000"
+                                                            placeholder="(123)-456-7890" formControlName="phone"
+                                                            class="border" name="new-phone" autocomplete="off"
+                                                            aria-autocomplete required /> -->
+                                                           
+                                                            <input class="border "
+                                                            type="tel" (keypress)="onInputKeyPress($event)" #telInput
+                                                            id="telInput" [attr.intl-tel-input]="true" mask="(000) 000-0000"
+                                                            formControlName="phone_number"  placeholder="(123)-456-7890" />
+
+                                                        <ng-container
+                                                            *ngIf="contactInformationForm.get('phone')?.invalid && (contactInformationForm.get('phone')?.dirty || contactInformationForm.get('phone')?.touched)">
+                                                            <ng-container
+                                                                *ngIf="contactInformationForm.get('phone')?.errors">
+                                                                <span class="text-danger error-state">Phone Number is
+                                                                    required</span>
+                                                            </ng-container>
+
+                                                        </ng-container>
+                                                    </div>
+
+
+
+
+                                                </div>
+                                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                                    <div class="input-group">
+                                                        <label for="fname">Email</label>
+                                                        <input type="email" placeholder="Enter Email"
+                                                            formControlName="email" [readOnly]="true" class="border"
+                                                            name="new-email" autocomplete="off" aria-autocomplete
+                                                            required />
+
+                                                        <ng-container
+                                                            *ngIf="contactInformationForm.get('email')?.invalid && (contactInformationForm.get('email')?.dirty || contactInformationForm.get('email')?.touched)">
+                                                            <ng-container
+                                                                *ngIf="contactInformationForm.get('email')?.errors">
+                                                                <span class="text-danger error-state">Email is
+                                                                    required</span>
+                                                            </ng-container>
+
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex gap-4 group-wrapper mt-12 ">
+                                                    <div class="input-group">
+                                                        <label for="fname">Message</label>
+                                                        <textarea formControlName="message" placeholder="Enter Message"
+                                                            class="border" autocomplete="off" aria-autocomplete required
+                                                            name="new-message" rows="4"></textarea>
+
+                                                        <ng-container
+                                                            *ngIf="contactInformationForm.get('message')?.invalid && (contactInformationForm.get('message')?.dirty || contactInformationForm.get('message')?.touched)">
+                                                            <ng-container
+                                                                *ngIf="contactInformationForm.get('message')?.errors">
+                                                                <span class="text-danger error-state">
+                                                                    Message is required</span>
+                                                                    <span></span>
+                                                            </ng-container>
+
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="d-flex gap-4 group-wrapper mt-12 justify-content-end">
+                                                <button type="button" class="btn btn-submit btn-width "
+                                                    (click)="saveImpression()">Send Message</button>
+                                            </div>
+                                            <!-- <div class="d-flex gap-4 group-wrapper mt-12 justify-content-end">
+                                                <button type="button" class="btn btn-submit btn-width "
+                                                    [disabled]="contactInformationForm.invalid"
+                                                    (click)="saveImpression()">Send Message</button>
+                                            </div> -->
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </figure>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6 col-xsl-6">
+                            <figure class="photo">
+                                <img src="../../../../assets/images/home/Image.svg" alt="Couple" loading="lazy"
+                                    width="100%" height="100%" />
+                            </figure>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <ng-container *ngIf="showSubmitMessage">
+        <div class="container">
+            <div class="row justify-content-start mb-64">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="ft_card d-flex flex-column g-12">
+                        <h1></h1>
+                        <h2 class="section-title">Contact us</h2>
+                        <h3 class="title">We’d love to hear from you</h3>
+                        <p class="para text-center">
+                            Our friendly team is always here to chat.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+
+
+
+</section>
