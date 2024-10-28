@@ -366,7 +366,8 @@
                           <ng-container
                             *ngIf="practiceInformationForm.get('practiceSize')?.invalid && (practiceInformationForm.get('practiceSize')?.dirty || practiceInformationForm.get('practiceSize')?.touched)">
                             <ng-container *ngIf="practiceInformationForm.get('practiceSize')?.errors">
-                              <span class="text-danger error-state">Practice Size (Number of Providers) is required</span>
+                              <span class="text-danger error-state">Practice Size (Number of Providers) is
+                                required</span>
                             </ng-container>
 
                           </ng-container>
@@ -383,6 +384,50 @@
                             *ngIf="practiceInformationForm.get('roleAtPractice')?.invalid && (practiceInformationForm.get('roleAtPractice')?.dirty || practiceInformationForm.get('roleAtPractice')?.touched)">
                             <ng-container *ngIf="practiceInformationForm.get('roleAtPractice')?.errors">
                               <span class="text-danger error-state">Role at Practice is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+                      </div>
+                      <div class="d-flex gap-4 group-wrapper mt-12 ">
+                        <div class="input-group">
+                          <label for="fname">Practice City</label>
+                   
+                          <input type="text" class="form-control" placeholder="Select City"
+                            (keyup)="onKeyUpCity($event)" formControlName="city" />
+
+                          <div class="autocomplete-items" *ngIf="filteredCity.length > 0">
+                            <div *ngFor="let item of filteredCity" (click)="selectCity(item.city) " class="fs-16">
+                              {{ item.city }}
+                            </div>
+                          </div>
+
+
+                          <ng-container
+                            *ngIf="practiceInformationForm.get('city')?.invalid && (practiceInformationForm.get('city')?.dirty || practiceInformationForm.get('city')?.touched)">
+                            <ng-container *ngIf="practiceInformationForm.get('city')?.errors">
+                              <span class="text-danger error-state">Practice City is required</span>
+                            </ng-container>
+
+                          </ng-container>
+                        </div>
+                        <div class="input-group">
+                          <label for="fname">ZIP Code</label>
+                   
+                          <input type="text" class="form-control" placeholder="Select Location"
+                            (keyup)="onKeyUp($event)" maxlength="5" minlength="5" formControlName="zipCode" />
+
+                          <div class="autocomplete-items" *ngIf="filteredLocations.length > 0">
+                            <div *ngFor="let item of filteredLocations" (click)="selectLocation(item.zipCode) "
+                              class="fs-16">
+                              {{ item.zipCode }}
+                            </div>
+                          </div>
+
+                          <ng-container
+                            *ngIf="practiceInformationForm.get('zipCode')?.invalid && (practiceInformationForm.get('zipCode')?.dirty || practiceInformationForm.get('zipCode')?.touched)">
+                            <ng-container *ngIf="practiceInformationForm.get('zipCode')?.errors">
+                              <span class="text-danger error-state">ZIP Code is required</span>
                             </ng-container>
 
                           </ng-container>
@@ -419,39 +464,7 @@
                         </div>
                       </div>
 
-                      <div class="d-flex gap-4 group-wrapper mt-12 ">
-                        <div class="input-group">
-                          <label for="fname">Practice City</label>
-                          <select class="form-select input-style" aria-label="Default select example"
-                            formControlName="city">
-                            <option disabled selected>Practice City</option>
-                            <option *ngFor="let item of cityLov" [value]="item.value">{{ item.value }}</option>
-                          </select>
-                          <ng-container
-                            *ngIf="practiceInformationForm.get('city')?.invalid && (practiceInformationForm.get('city')?.dirty || practiceInformationForm.get('city')?.touched)">
-                            <ng-container *ngIf="practiceInformationForm.get('city')?.errors">
-                              <span class="text-danger error-state">Practice City is required</span>
-                            </ng-container>
 
-                          </ng-container>
-                        </div>
-                        <div class="input-group">
-                          <label for="fname">ZIP Code</label>
-                          <select class="form-select input-style" aria-label="Default select example"
-                            formControlName="zipCode">
-                            <option disabled selected>ZIP Code</option>
-                            <option *ngFor="let item of zipCodesLov" [value]="item.value">{{ item.value }}</option>
-                          </select>
-
-                          <ng-container
-                            *ngIf="practiceInformationForm.get('zipCode')?.invalid && (practiceInformationForm.get('zipCode')?.dirty || practiceInformationForm.get('zipCode')?.touched)">
-                            <ng-container *ngIf="practiceInformationForm.get('zipCode')?.errors">
-                              <span class="text-danger error-state">ZIP Code is required</span>
-                            </ng-container>
-
-                          </ng-container>
-                        </div>
-                      </div>
 
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <button type="button" class="btn btn-submit btn-width"
@@ -534,8 +547,8 @@
                         <div class="input-group">
                           <label for="fname">NPI Number</label>
 
-                          <input type="text" placeholder="Enter NPI Number" formControlName="npiNumber" class="border" maxlength="10"
-                            name="new-overallExperience" autocomplete="off" aria-autocomplete required />
+                          <input type="text" placeholder="Enter NPI Number" formControlName="npiNumber" class="border"
+                            maxlength="10" name="new-overallExperience" autocomplete="off" aria-autocomplete required />
 
                           <ng-container
                             *ngIf="qualificationAndSkillsForm.get('npiNumber')?.invalid && (qualificationAndSkillsForm.get('npiNumber')?.dirty || qualificationAndSkillsForm.get('npiNumber')?.touched)">

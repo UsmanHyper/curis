@@ -241,3 +241,32 @@ input.date-input.form-control.border-0.flatpickr-input.ng-untouched.ng-pristine.
   background-color: #0086C9;
   border-color: #0086C9;
 }
+
+
+
+
+.form_group {
+  position: relative;
+}
+
+.autocomplete-items {
+  position: absolute;
+  top: 100%; /* Position right below the input */
+  left: 0;
+  right: 0;
+  max-height: 200px; /* Set a max-height and add scrolling */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  background-color: white;
+  z-index: 1000; /* Ensure it appears above other elements */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-items div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.autocomplete-items div:hover {
+  background-color: #f0f0f0;
+}

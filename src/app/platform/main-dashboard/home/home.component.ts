@@ -7,13 +7,14 @@ import { LinksComponent } from 'src/app/shared/links/links.component';
 import { TestimonialComponent } from 'src/app/platform/main-dashboard/testimonial/testimonial.component';
 import { WorkflowComponent } from '../workflow/workflow.component';
 import { KeyFeaturesComponent } from '../key-featuers/key-features.component';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import FormsModule
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'; // Import FormsModule
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { debounceTime, distinctUntilChanged, first } from 'rxjs';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import * as moment from 'moment'
+import { switchMap } from 'rxjs/operators';
 
 
 
@@ -47,6 +48,8 @@ export class HomeComponent implements OnInit {
   selectedProvider: any;
   selectedValue: any;
 
+  filteredLocations: any[] = [];
+
   showList = false;
   flatpickrOptions: any = {
     disable: [
@@ -76,7 +79,7 @@ export class HomeComponent implements OnInit {
 
     this.selectedSpecialty = new FormControl('Select Specialty');
     this.selectedService = new FormControl('Select Service');
-    this.selectedLocation = new FormControl('Select Location');
+    this.selectedLocation = new FormControl(null, (Validators.maxLength(5), Validators.minLength(5)));
     this.selectedDate = new FormControl(null);
 
     this.disableService = true
@@ -126,6 +129,27 @@ export class HomeComponent implements OnInit {
     })
 
 
+  }
+
+  onKeyUp(event: KeyboardEvent) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input.length >= 3) {
+      this.apiService.getLocations(input).subscribe((res: any) => {
+        this.filteredLocations = res.data;
+        console.log("---------------", res.data);
+      }, (err: any) => {
+        this.filteredLocations = [];
+        this.apiService.errorToster("Zip Code Not Found", "Error")
+      }
+      );
+    } else {
+      this.filteredLocations = [];
+    }
+  }
+
+  selectLocation(item: any) {
+    this.selectedLocation.setValue(item);
+    this.filteredLocations = [];
   }
 
   search() {

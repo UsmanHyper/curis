@@ -78,6 +78,8 @@ export class RegisterProviderComponent implements OnInit {
   };
 
   imgSrc: string = './assets/images/admin/eye.png'
+  filteredLocations: any[] = [];
+  filteredCity: any[] = [];
 
   successTitle: any
   successResponse: any
@@ -100,8 +102,8 @@ export class RegisterProviderComponent implements OnInit {
       providersSpeciality: ["Provider Specialty", Validators.required],
       practiceSize: ["Practice Size (Number of Providers)", Validators.required],
       roleAtPractice: ["Role at Practice", Validators.required],
-      zipCode: ["ZIP Code", Validators.required],
-      city: ["Practice City", Validators.required],
+      zipCode: [null, Validators.required, Validators.maxLength(5), Validators.minLength(5)],
+      city: [null, Validators.required],
       addressLineOne: ["", Validators.required],
       addressLineTwo: [""],
     });
@@ -153,6 +155,52 @@ export class RegisterProviderComponent implements OnInit {
   //     }
   //   });
   // };
+
+
+  onKeyUpCity(event: KeyboardEvent) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input.length >= 3) {
+      this.apiService.getCity(input).subscribe((res: any) => {
+        this.filteredCity = res.data;
+        console.log("---------------", res.data);
+      }, (err: any) => {
+        this.filteredCity = [];
+        this.apiService.errorToster("Zip Code Not Found", "Error")
+      }
+      );
+    } else {
+      this.filteredCity = [];
+    }
+  }
+
+  selectCity(item: any) {
+    this.filteredCity = [];
+    this.practiceInformationForm.get('city')?.setValue(item)
+  }
+
+
+
+
+  onKeyUp(event: KeyboardEvent) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input.length >= 3) {
+      this.apiService.getLocations(input).subscribe((res: any) => {
+        this.filteredLocations = res.data;
+        console.log("---------------", res.data);
+      }, (err: any) => {
+        this.filteredLocations = [];
+        this.apiService.errorToster("Zip Code Not Found", "Error")
+      }
+      );
+    } else {
+      this.filteredLocations = [];
+    }
+  }
+
+  selectLocation(item: any) {
+    this.filteredLocations = [];
+    this.practiceInformationForm.get('zipCode')?.setValue(item)
+  }
 
 
 
@@ -283,7 +331,7 @@ export class RegisterProviderComponent implements OnInit {
           if (res.success == true) {
             this.authenticationService.setUserTokenData(res.token);
             this.successTitle = "Go To Dashboard";
-            this.successResponse = res.token  
+            this.successResponse = res.token
 
             // this.getUserDetailsByTokenRequest(res.token);
             this.authenticationService.setIsAuthenticated(true);

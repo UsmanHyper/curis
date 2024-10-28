@@ -330,9 +330,9 @@ button.fc-listWeek-button.btn.btn-primary {
 @media screen and (max-width: 991px) and (min-width: 200px) {}
 
 @media screen and (max-width: 767px) and (min-width: 200px) {
-  .content{
-    padding: 8px!important;
-  } 
+  .content {
+    padding: 8px !important;
+  }
 }
 
 @media screen and (max-width: 575px) and (min-width: 200px) {
@@ -346,3 +346,40 @@ button.fc-listWeek-button.btn.btn-primary {
 @media screen and (max-width: 400px) and (min-width: 200px) {}
 
 @media screen and (max-width: 480px) and (min-width: 200px) {}
+
+
+
+
+
+/* Hide the default appearance */
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+/* Vertical scrollbar settings */
+::-webkit-scrollbar:vertical {
+  width: 8px;
+  border-radius: 15px;
+  margin-left: -10px;
+}
+
+/* Horizontal scrollbar settings */
+::-webkit-scrollbar:horizontal {
+  height: 4px;
+}
+
+/* Scrollbar thumb (draggable part) color */
+::-webkit-scrollbar-thumb {
+  border-radius: 15px;
+  background-color: #0086C9;
+  /* Set to desired color */
+  margin-left: -10px;
+}
+
+/* Scrollbar track (background) color */
+::-webkit-scrollbar-track {
+  background-color: rgba(220, 220, 220, 0.5);
+  /* Optional: customize if needed */
+  border-radius: 15px;
+  margin-left: -10px;
+}

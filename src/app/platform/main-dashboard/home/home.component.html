@@ -44,14 +44,25 @@
             </select>
           </div>
 
-          <div class="form_group">
+          <!-- <div class="form_group">
             <select class="form-select" aria-label="Default select example" [disabled]="disableLocation"
               aria-disabled="true" [formControl]="selectedLocation">
               <option selected>Select Location</option>
               <option *ngFor="let item of zipCodesLov" [value]="item.value">{{item.value}}</option>
 
             </select>
+          </div> -->
+          <div class="form_group">
+            <input type="text" class="form-control" placeholder="Select Location" (keyup)="onKeyUp($event)"
+              maxlength="5" minlength="5" [formControl]="selectedLocation" />
+
+            <div class="autocomplete-items" *ngIf="filteredLocations.length > 0">
+              <div *ngFor="let item of filteredLocations" (click)="selectLocation(item.zipCode) " class="fs-16">
+                {{ item.zipCode }}
+              </div>
+            </div>
           </div>
+
           <div class="form_group">
             <input class="date-input form-control border-0 flatpickr-input " type="text" mwlFlatpickr
               [formControl]="selectedDate" [options]="flatpickrOptions" [disableMobile]="true" placeholder="dd,mm,yyyy"

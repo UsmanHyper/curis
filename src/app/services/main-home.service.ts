@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 const lovsURL = new URL(`${environment.publicUrl}lov/`);
@@ -14,6 +14,7 @@ const checkEmail = new URL(`${environment.baseUrl}users/rest/v1/getUserStatusByE
 const patientByEmail = new URL(`${environment.baseUrl}patient/rest/v1/getPatientByEmail`)
 const searchProvidersByCriteria = new URL(`${environment.publicUrl}searchProvidersByCriteria`)
 const searchProvidersByCriteriaByProviderId = new URL(`${environment.publicUrl}rest/v1/searchSlotsByProviderAndDate`)
+const searchZip = new URL(`${environment.publicUrl}search/`)
 
 export interface ApiResponse {
   status: number;
@@ -98,7 +99,15 @@ export class MainHomeService {
     return this.http.get(lovsByNameURL + data);
   }
 
+  
+  getLocations(query: string): Observable<any[]> {
+    return this.http.get<any[]>(searchZip.href + `cityorzipcode?criteria=${query}&isZipcode=yes`);
+  }
+  getCity(query: string): Observable<any[]> {
+    return this.http.get<any[]>(searchZip.href + `cityorzipcode?criteria=${query}&isCity=yes`);
+  }
 
+  
   getOTP(postData: any) {
     return this.http.post<ApiResponse>(slugOTP.href, postData);
   }
