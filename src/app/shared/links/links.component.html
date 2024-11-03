@@ -43,7 +43,7 @@
                 <ul class="footer-links">
                     <span class="span-title">Legal</span>
                     <ng-container *ngFor="let item of legal">
-                        <li class="text-center"><a href="#">{{item}}</a></li>
+                        <li class="text-center"><a routerLink="{{item.link}}">{{item.name}}</a></li>
                     </ng-container>
                 </ul>
             </div>
@@ -54,7 +54,8 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="ft_card d-flex flex-column justify-content-center align-items-center">
                     <!-- <h3 class="title">Solutions for Healthcare Providers</h3> -->
-                    <p class="para text-center mw-80">If you need immediate assistance, please reach out to our support team
+                    <p class="para text-center mw-80">If you need immediate assistance, please reach out to our support
+                        team
                         at
                         <span class="link">[support@curis.com]</span> or call us at <span class="link"> [1-800-555-1234]
                         </span>.

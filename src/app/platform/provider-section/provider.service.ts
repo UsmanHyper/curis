@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 
-const lovsURL = environment.publicUrl + '/lov/';
+const lovsURL = environment.publicUrl + 'lov/';
 const lovsByNameURL = environment.publicUrl + 'lovByName/';
 //const getUserDataURL = environment.baseUrl+
 const getProviderDataUrl = environment.baseUrl + 'provider/profile/userId';
@@ -16,7 +16,7 @@ const ProviderWorkingHoursUrl = environment.baseUrl + 'provider/locationWorkingH
 const SlotURL = environment.baseUrl + 'provider/slot';
 const providerAppointmentsURL = environment.baseUrl + 'provider/appointments';
 const paymentUrl = environment.baseUrl + 'payment-gateway/process-payment'
-let cancelAppointment = new URL(`${environment.baseUrl}/patient/rest/v1/appointment/cancel`)
+let cancelAppointment = new URL(`${environment.baseUrl}patient/rest/v1/appointment/cancel`)
 
 @Injectable({
   providedIn: 'root'

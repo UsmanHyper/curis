@@ -513,7 +513,7 @@
 
                         <div class="input-group">
                           <label for="fname">Experience (In years)</label>
-                          <input type="text" placeholder="Enter Experience (In years)"
+                          <input type="text" placeholder="Enter Experience (In years)" maxlength="2"minlength="2"
                             formControlName="overallExperience" class="border" name="new-overallExperience"
                             autocomplete="off" aria-autocomplete required />
                           <ng-container
@@ -531,13 +531,13 @@
                         <div class="input-group">
                           <label for="fname">Licensed State</label>
                           <select class="form-select input-style" aria-label="Default select example"
-                            formControlName="licienceState">
+                            formControlName="practiceState">
                             <option disabled selected>Licensed State</option>
                             <option *ngFor="let item of statesLov" [value]="item.value">{{ item.value }}</option>
                           </select>
                           <ng-container
-                            *ngIf="qualificationAndSkillsForm.get('licienceState')?.invalid && (qualificationAndSkillsForm.get('licienceState')?.dirty || qualificationAndSkillsForm.get('licienceState')?.touched)">
-                            <ng-container *ngIf="qualificationAndSkillsForm.get('licienceState')?.errors">
+                            *ngIf="qualificationAndSkillsForm.get('practiceState')?.invalid && (qualificationAndSkillsForm.get('practiceState')?.dirty || qualificationAndSkillsForm.get('practiceState')?.touched)">
+                            <ng-container *ngIf="qualificationAndSkillsForm.get('practiceState')?.errors">
                               <span class="text-danger error-state">Licensed State is required</span>
                             </ng-container>
 

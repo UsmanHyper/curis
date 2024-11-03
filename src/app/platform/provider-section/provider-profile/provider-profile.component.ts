@@ -5,10 +5,12 @@ import { first } from 'rxjs/operators';
 import {
   FormBuilder,
   Validators,
-  FormGroup
+  FormGroup,
+  AbstractControl
 } from "@angular/forms";
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { authenticationService } from 'src/app/services/authentication.service';
+import { CustomValidators } from 'src/app/utilities/custom.validator';
 
 
 
@@ -33,6 +35,10 @@ export class ProviderProfileComponent implements OnInit {
   providerData: any;
   zipCodesLov: any;
   qualificationLov: any;
+  filteredLocations: any[] = [];
+  filteredCity: any[] = [];
+
+  showTextFelid: boolean = true
 
 
   personalInformationForm: FormGroup;
@@ -43,33 +49,33 @@ export class ProviderProfileComponent implements OnInit {
     private providerService: providerService, private authenticationService: authenticationService) {
 
     this.personalInformationForm = this.formBuilder.group({
-      firstName: ["", [Validators.required,]],
-      lastName: ["", [Validators.required,]],
+      firstName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
+      lastName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
       email: ["", [Validators.required,]],
       gender: ["Select your Gender", Validators.required],
-      contactNumber: ["", Validators.required],
+      contactNumber: ["", Validators.required,],
     });
 
 
     this.practiceInformationForm = this.formBuilder.group({
-      practiceName: ["", [Validators.required,]],
+      practiceName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
       providersSpeciality: ["Provider Specialty", Validators.required],
       practiceSize: ["Practice Size (Number of Providers)", Validators.required],
       roleAtPractice: ["Role at Practice", Validators.required],
       billingAddress: ["", Validators.required],
-      billingAddresstwo: ["", Validators.required],
-      zipCode: ["ZIP Code", Validators.required],
-      city: ["Practice City", Validators.required],
-      state: ["", Validators.required]
+      billingAddresstwo: ["",],
+      zipCode: [null, Validators.required,],
+      city: [null, Validators.required,],
+      // state: ["", Validators.required]
     });
 
     this.qualificationAndSkillsForm = this.formBuilder.group({
       qualification: ["Select qualification", Validators.required],
       mainSpecialization: ["Main specialization", Validators.required],
       subSpecialization: ["Sub specialization", Validators.required],
-      licienceState: ["Licensed State", Validators.required],
-      overallExperience: ["", Validators.required],
-      npiNumber: ["", [Validators.required,]]
+      practiceState: ["Licensed State", Validators.required],
+      overallExperience: ["", Validators.required,],
+      npiNumber: ["", [Validators.required,]],
     });
 
     this.fetchData()
@@ -94,10 +100,14 @@ export class ProviderProfileComponent implements OnInit {
       this.getMainSpecialtyLov(),
       this.getGenderLov(),
       this.getZipCodeLov(),
-      this.providerQualification()
+      // this.providerQualification()
 
     ])
   }
+
+
+
+
 
 
   async fetchData() {
@@ -127,9 +137,125 @@ export class ProviderProfileComponent implements OnInit {
       });
   }
 
+  // Custom validator to check if the city is in filteredCity
+  cityValidator(control: AbstractControl) {
+    if (!control.value) return null; // Allow empty value, if required validation will handle this
+    // const match = this.filteredCity.find(item => item.city === control.value);
+    // return match ? null : { invalidCity: true };
+
+
+    // Check if input length is at least 3 characters
+    if (control.value.length >= 3) {
+      const match = this.filteredCity.find(item => item.city === control.value); // Assuming item has a 'city' property
+      return match ? null : { invalidCity: true };
+    }
+
+    return null; // If input length is less than 3, do not mark as invalid
+  }
+
+
+  onKeyUpCity(event: KeyboardEvent) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input.length >= 3) {
+      this.apiService.getCity(input).subscribe((res: any) => {
+        this.filteredCity = res.data;
+      }, (err: any) => {
+        this.filteredCity = [];
+        this.apiService.errorToster("Zip Code Not Found", "Error");
+        this.practiceInformationForm.get('city')?.setErrors({ invalidCity: true });
+      });
+    } else {
+      this.filteredCity = [];
+      this.practiceInformationForm.get('city')?.setErrors({ invalidCity: true });
+    }
+  }
+
+  selectCity(item: any) {
+    this.filteredCity = [];
+    this.practiceInformationForm.get('city')?.setValue(item);
+    this.practiceInformationForm.get('city')?.updateValueAndValidity(); // Re-validate
+  }
+
+
+
+  // Custom validator to check if zipCode is in filteredLocations
+  locationValidator(control: AbstractControl) {
+    if (!control.value) return null; // Allow empty value; required validation will handle this
+
+    // Check if input length is at least 3 characters and if filteredLocations has items
+    if (control.value.length >= 3 && this.filteredLocations.length > 0) {
+      const match = this.filteredLocations.find(item => item.zipCode === control.value); // Adjust property name if needed
+      return match ? null : { invalidLocation: true };
+    }
+
+    return null; // If input length is less than 3 or no locations to match, do not mark as invalid
+  }
+
+  onKeyUp(event: KeyboardEvent) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input.length >= 3) {
+      this.apiService.getLocations(input).subscribe((res: any) => {
+        this.filteredLocations = res.data;
+        console.log("---------------", res.data);
+      }, (err: any) => {
+        this.filteredLocations = [];
+        this.apiService.errorToster("Zip Code Not Found", "Error")
+        this.practiceInformationForm.get('zipCode')?.setErrors({ invalid: true });
+      });
+    } else {
+      this.filteredLocations = [];
+      this.practiceInformationForm.get('zipCode')?.setErrors({ invalidCity: true });
+    }
+  }
+
+  selectLocation(item: any) {
+    this.filteredLocations = [];
+    this.practiceInformationForm.get('zipCode')?.setValue(item);
+    this.practiceInformationForm.get('zipCode')?.updateValueAndValidity(); // Re-validate
+
+  }
+  onSpecialitySelect(selectedValue: any) {
+    console.log("=============", selectedValue)
+    this.onSpecialtySelect(this.qualificationAndSkillsForm.controls['mainSpecialization'].value)
+  }
+
+
+  onSpecialtySelect(selectedValue: string) {
+    this.showTextFelid = false;
+    switch (selectedValue) {
+      case "Cardiologist":
+        this.providerQualification(21);
+        break;
+      case "Dermatologist":
+        this.providerQualification(22);
+        break;
+      case "Mental Health":
+        this.providerQualification(23);
+        break;
+      case "OB-GYN":
+        this.providerQualification(24);
+        break;
+      case "Optometrist":
+        this.providerQualification(25);
+        break;
+      case "Primary Care":
+        this.providerQualification(26);
+        break;
+      case "Diagnostic Lab":
+        this.providerQualification(27);
+        break;
+      case "Dentist":
+        this.providerQualification(27);
+        break;
+      default:
+        console.warn('Selected speciality does not have a mapped ID.');
+        break;
+    }
+  }
 
 
   createPersonalInformationForm() {
+    console.log("this.userData", this.userData)
     this.personalInformationForm.setValue({
       firstName: this.userData.f_name,
       lastName: this.userData.l_name,
@@ -140,6 +266,7 @@ export class ProviderProfileComponent implements OnInit {
   }
 
   createPracticeInformationForm() {
+    console.log("this.userData", this.providerData)
 
     if (this.providerData === null || this.providerData == undefined) {
       let data: any = localStorage?.getItem("providerData");
@@ -156,26 +283,40 @@ export class ProviderProfileComponent implements OnInit {
       billingAddresstwo: this.providerData.addressLineTwo ? this.providerData.addressLineTwo : null,
       zipCode: this.providerData.zipcode,
       city: this.providerData.city,
-      state: this.providerData.liciencedState
+      // state: this.providerData.liciencedState
     });
   }
 
   createQualificationAndSkillsForm() {
 
+    console.log("this.userData----", this.providerData)
 
     if (this.providerData === null || this.providerData == undefined) {
       let data: any = localStorage?.getItem("providerData");
       this.providerData = JSON.parse(data);
     }
 
+    if (this.providerData.qualification) {
+      this.showTextFelid = true
+    } else {
+      this.showTextFelid = false
+    }
+
     this.qualificationAndSkillsForm.setValue({
       qualification: this.providerData.qualification,
-      mainSpecialization: this.providerData.mainSpeciality || 'Main specialization',
-      subSpecialization: this.providerData.subSpeciality || "Sub specialization",
-      licienceState: this.providerData.liciencedState,
+      mainSpecialization: this.providerData.mainSpeciality,
+      subSpecialization: this.providerData.subSpeciality,
+      practiceState: this.providerData.practiceState || null,
       overallExperience: this.providerData.experience || null,
       npiNumber: this.providerData.NPI_Number
     });
+    console.log("this.userData----qualification", this.providerData.qualification)
+
+    // setTimeout(() => {
+
+    //   this.qualificationAndSkillsForm.get("qualification")?.setValue(this.providerData.qualification)
+    // }, 3000);
+
   }
 
   // Assuming this is inside a function that handles the API response
@@ -199,7 +340,7 @@ export class ProviderProfileComponent implements OnInit {
       billingAddresstwo: response.billingAddresstwo,
       zipCode: response.zipcode,
       city: response.city,
-      state: response.practiceState
+      // state: response.practiceState
     });
 
     // Set values for qualification and skills form
@@ -207,7 +348,7 @@ export class ProviderProfileComponent implements OnInit {
       qualification: response.qualification || 'Select qualification',
       mainSpecialization: response.mainSpeciality,
       subSpecialization: response.subSpeciality || "",
-      licienceState: response.practiceState,
+      practiceState: response.practiceState || '',
       overallExperience: response.experience || null,
       npiNumber: response.NPI_Number
     });
@@ -228,9 +369,10 @@ export class ProviderProfileComponent implements OnInit {
         }
       );
   }
-  providerQualification() {
+
+  providerQualification(id: number) {
     this.spinner.show();
-    this.apiService.getLovs(20)
+    this.apiService.getLovs(id)
       .pipe(first())
       .subscribe(
         (res: any) => {
@@ -243,6 +385,7 @@ export class ProviderProfileComponent implements OnInit {
         }
       );
   }
+
   submitProviderForm() {
     if (this.providerData) {
       let data = {
@@ -260,12 +403,12 @@ export class ProviderProfileComponent implements OnInit {
         "billingAddresstwo": this.practiceInformationForm.controls['billingAddresstwo'].value,
         "zipcode": this.practiceInformationForm.controls['zipCode'].value,
         "city": this.practiceInformationForm.controls['city'].value,
-        "practiceState": this.practiceInformationForm.controls['state'].value,
+        // "practiceState": this.practiceInformationForm.controls['state'].value,
 
         "qualification": this.qualificationAndSkillsForm.controls['qualification'].value,
         "mainSpeciality": this.qualificationAndSkillsForm.controls['mainSpecialization'].value,
         "subSpeciality": this.qualificationAndSkillsForm.controls['subSpecialization'].value || "",
-        "licienceState": this.qualificationAndSkillsForm.controls['licienceState'].value,
+        "practiceState": this.qualificationAndSkillsForm.controls['practiceState'].value,
         "experience": this.qualificationAndSkillsForm.controls['overallExperience'].value,
         "NPI_Number": this.qualificationAndSkillsForm.controls['npiNumber'].value,
       }

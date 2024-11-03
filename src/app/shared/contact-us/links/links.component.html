@@ -1,6 +1,6 @@
 <section class="">
     <div class="container mt-20">
-        
+
         <div class="row justify-content-center">
             <div class="col-12 col-md-12 text-center">
                 <!-- <label class="label-f-t">Also Check Out...</label> -->
@@ -33,11 +33,11 @@
                 <ul class="footer-links">
                     <span class="span-title">Legal</span>
                     <ng-container *ngFor="let item of legal">
-                        <li class="text-center"><a href="#">{{item}}</a></li>
+                        <li class="text-center"><a routerLink="{{item.link}}">{{item.name}}</a></li>
                     </ng-container>
                 </ul>
             </div>
         </div>
     </div>
-    
+
 </section>

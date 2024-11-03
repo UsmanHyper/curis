@@ -89,7 +89,7 @@ export class RegisterProviderComponent implements OnInit {
   constructor(public formBuilder: FormBuilder, private apiService: MainHomeService, private spinner: NgxSpinnerService, private router: Router, private authenticationService: authenticationService) {
 
     this.personalInformationForm = this.formBuilder.group({
-      firstName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
+      firstName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace ]],
       lastName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
       email: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/), CustomValidators.isEmail]],
       gender: ["Select your Gender", Validators.required],
@@ -113,11 +113,11 @@ export class RegisterProviderComponent implements OnInit {
 
     this.qualificationAndSkillsForm = this.formBuilder.group({
       qualification: ["Select Qualification", Validators.required],
-      overallExperience: ["", Validators.required],
-      npiNumber: ["", [Validators.required, CustomValidators.isNumbers]],
-      licienceState: ["Licensed State", Validators.required],
+      overallExperience: ["", Validators.required, Validators.maxLength(2), Validators.minLength(2) , CustomValidators.isNumbers],
+      npiNumber: ["", [Validators.required, CustomValidators.isNumbers, Validators.maxLength(10), Validators.minLength(10)]],
+      practiceState: ["Licensed State", Validators.required],
       subSpeciality: ["Sub Specialization", Validators.required],
-      // specialization: ["", Validators.required],
+      
     });
 
     this.accountInformationForm = this.formBuilder.group({
@@ -417,7 +417,7 @@ export class RegisterProviderComponent implements OnInit {
       "qualification": this.qualificationAndSkillsForm.controls['qualification'].value,
       "mainSpeciality": this.practiceInformationForm.controls['providersSpeciality'].value,
       "subSpeciality": this.qualificationAndSkillsForm.controls['subSpeciality'].value,
-      "liciencedState": this.qualificationAndSkillsForm.controls['licienceState'].value,
+      "practiceState": this.qualificationAndSkillsForm.controls['practiceState'].value,
       "experience": this.qualificationAndSkillsForm.controls['overallExperience'].value,
       "NPI_Number": this.qualificationAndSkillsForm.controls['npiNumber'].value,
       "password": this.accountInformationForm.controls['password'].value
