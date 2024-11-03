@@ -140,16 +140,20 @@ export class HomeComponent implements OnInit {
       }, (err: any) => {
         this.filteredLocations = [];
         this.apiService.errorToster("Zip Code Not Found", "Error")
+        this.selectedLocation?.setErrors({ invalid: true });
+
       }
       );
     } else {
       this.filteredLocations = [];
+      this.selectedLocation?.setErrors({ invalid: true });
     }
   }
 
   selectLocation(item: any) {
     this.selectedLocation.setValue(item);
     this.filteredLocations = [];
+    this.selectedLocation?.updateValueAndValidity();
   }
 
   search() {

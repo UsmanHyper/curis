@@ -340,7 +340,7 @@
                           <label for="speciality">Practice or Provider's Specialty</label>
 
                           <select class="form-select input-style" aria-label="Default select example"
-                            formControlName="providersSpeciality">
+                            formControlName="providersSpeciality" >
                             <option disabled selected>Provider Specialty</option>
                             <option *ngFor="let item of specialtyLov" [value]="item.value">{{ item.value }}</option>
                           </select>

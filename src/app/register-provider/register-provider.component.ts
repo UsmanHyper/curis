@@ -12,6 +12,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 import { NgxMaskModule } from 'ngx-mask';
 import { authenticationService } from '../services/authentication.service';
 import { RegistrationStatusComponent } from '../shared/registration-status/registration-status.component';
+import { invalid } from 'moment';
 
 
 @Component({
@@ -102,8 +103,8 @@ export class RegisterProviderComponent implements OnInit {
       providersSpeciality: ["Provider Specialty", Validators.required],
       practiceSize: ["Practice Size (Number of Providers)", Validators.required],
       roleAtPractice: ["Role at Practice", Validators.required],
-      zipCode: [null, Validators.required, Validators.maxLength(5), Validators.minLength(5)],
-      city: [null, Validators.required],
+      zipCode: [null, Validators.required, Validators.maxLength(5), Validators.minLength(5), this.locationValidator],
+      city: [null, Validators.required, this.cityValidator],
       addressLineOne: ["", Validators.required],
       addressLineTwo: [""],
     });
@@ -138,8 +139,14 @@ export class RegisterProviderComponent implements OnInit {
     this.getPracticeRolesLov();
     this.getStatesLov()
     this.getZipCodeLov()
-    this.providerQualification()
+    // this.providerQualification()
     this.getSubSpecialtyLov()
+
+    this.practiceInformationForm.get('providersSpeciality')?.valueChanges.subscribe(selectedValue => {
+      this.onSpecialtySelect(selectedValue);
+      this.qualificationAndSkillsForm.get('qualification')?.reset();
+      this.qualificationAndSkillsForm.get('qualification')?.setValue('Select Qualification')
+    });
   }
   // confirmationValidator = (control: FormControl): Promise<any> | Observable<any> => {
   //   return new Promise((resolve) => {
@@ -156,30 +163,59 @@ export class RegisterProviderComponent implements OnInit {
   //   });
   // };
 
+  // Custom validator to check if the city is in filteredCity
+  cityValidator(control: AbstractControl) {
+    if (!control.value) return null; // Allow empty value, if required validation will handle this
+    // const match = this.filteredCity.find(item => item.city === control.value);
+    // return match ? null : { invalidCity: true };
+
+
+    // Check if input length is at least 3 characters
+    if (control.value.length >= 3) {
+      const match = this.filteredCity.find(item => item.city === control.value); // Assuming item has a 'city' property
+      return match ? null : { invalidCity: true };
+    }
+
+    return null; // If input length is less than 3, do not mark as invalid
+  }
+
 
   onKeyUpCity(event: KeyboardEvent) {
     const input = (event.target as HTMLInputElement).value;
     if (input.length >= 3) {
       this.apiService.getCity(input).subscribe((res: any) => {
         this.filteredCity = res.data;
-        console.log("---------------", res.data);
       }, (err: any) => {
         this.filteredCity = [];
-        this.apiService.errorToster("Zip Code Not Found", "Error")
-      }
-      );
+        this.apiService.errorToster("Zip Code Not Found", "Error");
+        this.practiceInformationForm.get('city')?.setErrors({ invalidCity: true });
+      });
     } else {
       this.filteredCity = [];
+      this.practiceInformationForm.get('city')?.setErrors({ invalidCity: true });
     }
   }
 
   selectCity(item: any) {
     this.filteredCity = [];
-    this.practiceInformationForm.get('city')?.setValue(item)
+    this.practiceInformationForm.get('city')?.setValue(item);
+    this.practiceInformationForm.get('city')?.updateValueAndValidity(); // Re-validate
   }
 
 
 
+  // Custom validator to check if zipCode is in filteredLocations
+  locationValidator(control: AbstractControl) {
+    if (!control.value) return null; // Allow empty value; required validation will handle this
+
+    // Check if input length is at least 3 characters and if filteredLocations has items
+    if (control.value.length >= 3 && this.filteredLocations.length > 0) {
+      const match = this.filteredLocations.find(item => item.zipCode === control.value); // Adjust property name if needed
+      return match ? null : { invalidLocation: true };
+    }
+
+    return null; // If input length is less than 3 or no locations to match, do not mark as invalid
+  }
 
   onKeyUp(event: KeyboardEvent) {
     const input = (event.target as HTMLInputElement).value;
@@ -190,17 +226,85 @@ export class RegisterProviderComponent implements OnInit {
       }, (err: any) => {
         this.filteredLocations = [];
         this.apiService.errorToster("Zip Code Not Found", "Error")
-      }
-      );
+        this.practiceInformationForm.get('zipCode')?.setErrors({ invalid: true });
+      });
     } else {
       this.filteredLocations = [];
+      this.practiceInformationForm.get('zipCode')?.setErrors({ invalidCity: true });
     }
   }
 
   selectLocation(item: any) {
     this.filteredLocations = [];
-    this.practiceInformationForm.get('zipCode')?.setValue(item)
+    this.practiceInformationForm.get('zipCode')?.setValue(item);
+    this.practiceInformationForm.get('zipCode')?.updateValueAndValidity(); // Re-validate
+
   }
+
+
+
+  onSpecialtySelect(selectedValue: string) {
+    switch (selectedValue) {
+      case "Cardiologist":
+        this.providerQualification(21);
+        break;
+      case "Dermatologist":
+        this.providerQualification(22);
+        break;
+      case "Mental Health":
+        this.providerQualification(23);
+        break;
+      case "OB-GYN":
+        this.providerQualification(24);
+        break;
+      case "Optometrist":
+        this.providerQualification(25);
+        break;
+      case "Primary Care":
+        this.providerQualification(26);
+        break;
+      case "Diagnostic Lab":
+        this.providerQualification(27);
+        break;
+      case "Dentist":
+        this.providerQualification(27);
+        break;
+      default:
+        console.warn('Selected speciality does not have a mapped ID.');
+        break;
+    }
+  }
+
+  // Your existing function
+
+
+
+
+  // onKeyUpCity(event: KeyboardEvent) {
+  //   const input = (event.target as HTMLInputElement).value;
+  //   if (input.length >= 3) {
+  //     this.apiService.getCity(input).subscribe((res: any) => {
+  //       this.filteredCity = res.data;
+  //       console.log("---------------", res.data);
+  //     }, (err: any) => {
+  //       this.filteredCity = [];
+  //       this.apiService.errorToster("Zip Code Not Found", "Error")
+  //       this.practiceInformationForm.get('city')?.invalid
+  //     }
+  //     );
+  //   } else {
+  //     this.filteredCity = [];
+  //   }
+  // }
+
+  // selectCity(item: any) {
+  //   this.filteredCity = [];
+  //   this.practiceInformationForm.get('city')?.setValue(item)
+  // }
+
+
+
+
 
 
 
@@ -373,6 +477,16 @@ export class RegisterProviderComponent implements OnInit {
     this.step2 = false;
     this.step3 = false;
     this.step4 = false;
+
+
+    console.log("============", this.practiceInformationForm.value)
+    let dt = this.practiceInformationForm.value
+
+    this.practiceInformationForm.get("providersSpeciality")?.setValue(dt.providersSpeciality)
+    this.practiceInformationForm.get("practiceSize")?.setValue(dt.practiceSize)
+    this.practiceInformationForm.get("zipCode")?.setValue(dt.zipCode)
+    this.practiceInformationForm.get("addressLineOne")?.setValue(dt.addressLineOne)
+    this.practiceInformationForm.get("addressLineTwo")?.setValue(dt.addressLineTwo)
   }
 
 
@@ -428,6 +542,9 @@ export class RegisterProviderComponent implements OnInit {
     this.step2 = false;
     this.step3 = false;
     this.step4 = false;
+
+
+
   }
   nextToQualificationAndSkills() {
     this.personalInformationStepper = false;
@@ -578,9 +695,9 @@ export class RegisterProviderComponent implements OnInit {
         }
       );
   }
-  providerQualification() {
+  providerQualification(id: number) {
     this.spinner.show();
-    this.apiService.getLovs(20)
+    this.apiService.getLovs(id)
       .pipe(first())
       .subscribe(
         (res: any) => {
