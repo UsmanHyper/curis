@@ -3,7 +3,7 @@ import { providerService } from '../provider.service';
 import { authenticationService } from 'src/app/services/authentication.service';
 import { first } from 'rxjs';
 import * as moment from 'moment';
-import { DatePipe } from '@angular/common';
+import { DatePipe, ViewportScroller } from '@angular/common';
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { ProviderAppointmentDetailsComponent } from 'src/app/shared/provider-appointment-details/provider-appointment-details.component';
@@ -38,8 +38,11 @@ export class AppointmentsComponent implements OnInit {
   modalRef!: BsModalRef;
   totalPages: any = 10;
   currentPage: number = 1;
+  itemsPerPage: number = 10;
+  pagedItems: any[] = [];
 
-  constructor(private providerService: providerService, private authenticationService: authenticationService, private modalService: BsModalService, private dss: DataSharingService) {
+  constructor(private providerService: providerService, private authenticationService: authenticationService, 
+    private modalService: BsModalService, private dss: DataSharingService, private viewportScroller: ViewportScroller) {
 
   }
 
@@ -90,11 +93,7 @@ export class AppointmentsComponent implements OnInit {
 
   }
 
-  onPageChange(page: number): void {
-    this.currentPage = page;
 
-    // this.getHallData("", page)
-  }
 
 
   getStatusColor(status: string): string {
@@ -151,6 +150,11 @@ export class AppointmentsComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.appointmentList = res
+
+          setTimeout(() => {
+            this.calculatePages()
+            this.setPage(this.currentPage)
+          }, 2000);
         },
         (err: any) => {
           // this.spinner.hide();
@@ -160,5 +164,25 @@ export class AppointmentsComponent implements OnInit {
   }
 
 
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.setPage(page)
+    // this.getHallData("", page)
+  }
+  calculatePages(): void {
+    if (this.appointmentList?.length > 0) {
+      this.totalPages = Math.ceil(this.appointmentList.length / this.itemsPerPage);
+    }
+  }
 
+  setPage(page: number): void {
+    this.currentPage = page;
+    const startIndex = (page - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.appointmentList?.length);
+    this.pagedItems = this.appointmentList?.slice(startIndex, endIndex);
+    this.viewportScroller.scrollToPosition([0, 0]);
+    console.log("this", this.pagedItems)
+
+
+  }
 }

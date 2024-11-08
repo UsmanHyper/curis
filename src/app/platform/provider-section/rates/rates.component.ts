@@ -54,7 +54,7 @@ export class RatesComponent implements OnInit {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
     this.getProviderLocationAPI(this.providerData._id);
-    this.getServicesLov(this.providerData.mainSpeciality);
+    this.getServicesLov(this.providerData.mainSpecialty);
     this.getLocationLov();
 
     this.dss.onSignal().subscribe((value: any) => {
@@ -267,9 +267,9 @@ export class RatesComponent implements OnInit {
   }
 
 
-  getServicesLov(pSpecialityName: any) {
+  getServicesLov(SpecialtyName: any) {
     this.spinner.show();
-    this.providerService.getLovsByName(pSpecialityName)
+    this.providerService.getLovsByName(SpecialtyName)
       .pipe(first())
       .subscribe(
         (res: any) => {

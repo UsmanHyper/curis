@@ -1,18 +1,3 @@
-// import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-// import { NgxSpinnerService } from 'ngx-spinner';
-// import { first } from 'rxjs/operators';
-// // import { authenticationService } from '../../authentication.service';
-// import {
-//   FormBuilder,
-//   Validators,
-//   FormGroup
-// } from "@angular/forms";
-// // import { Global } from '../../Global';
-// import { providerService } from '../provider.service';
-// // import { MatDialog } from '@angular/material/dialog';
-// import { AddLocationComponent } from './add-location/add-location.component';
-// import { MainHomeService } from 'src/app/services/main-home.service';
-// // import { homeService } from 'src/app/app.service';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';

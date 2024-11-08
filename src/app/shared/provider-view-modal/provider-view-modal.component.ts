@@ -45,16 +45,16 @@ export class ProviderViewModalComponent implements OnInit {
       email: ['',],
       practiceName: ['',],
       contact_no: ['',],
-      mainSpeciality: ['',],
+      mainSpecialty: ['',],
       practiceSize: ['',],
       roleAtPractice: ['',],
       addressLineOne: ['',],
       addressLineTwo: ['',],
       city: ['',],
       qualification: ['',],
-      main_Speciality: ['',],
-      subSpeciality: ['',],
-      liciencedState: ['',],
+      main_Specialty: ['',],
+      subSpecialty: ['',],
+      licensedState: ['',],
       NPI_Number: ['',],
       zipcode: ['',],
     });
@@ -101,7 +101,7 @@ export class ProviderViewModalComponent implements OnInit {
           this.appointmentForm.get('contact_no')?.setValue(dt.userId.contact_no);
 
           this.appointmentForm.get('practiceName')?.setValue(dt.practiceName);
-          this.appointmentForm.get('mainSpeciality')?.setValue(dt.mainSpeciality);
+          this.appointmentForm.get('mainSpecialty')?.setValue(dt.mainSpecialty);
           this.appointmentForm.get('practiceSize')?.setValue(dt.practiceSize);
           this.appointmentForm.get('roleAtPractice')?.setValue(dt.roleAtPractice);
           this.appointmentForm.get('addressLineOne')?.setValue(dt.addressLineOne);
@@ -110,9 +110,9 @@ export class ProviderViewModalComponent implements OnInit {
           this.appointmentForm.get('zipcode')?.setValue(dt.zipcode);
 
           this.appointmentForm.get('qualification')?.setValue(dt.qualification);
-          this.appointmentForm.get('main_Speciality')?.setValue(dt.mainSpeciality);
-          this.appointmentForm.get('subSpeciality')?.setValue(dt.subSpeciality);
-          this.appointmentForm.get('liciencedState')?.setValue(dt.liciencedState);
+          this.appointmentForm.get('main_Specialty')?.setValue(dt.mainSpecialty);
+          this.appointmentForm.get('subSpecialty')?.setValue(dt.subSpecialty);
+          this.appointmentForm.get('licensedState')?.setValue(dt.licensedState);
           this.appointmentForm.get('NPI_Number')?.setValue(dt.NPI_Number);
 
 

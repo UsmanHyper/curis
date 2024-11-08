@@ -340,12 +340,43 @@ button.fc-listWeek-button.btn.btn-primary {
     font-size: 15px !important;
   }
 
+  .col-sm-2 {
+    flex: 0 0 auto;
+    width: 16.66666667%;
+  }
+
+  .col-sm-10 {
+    flex: 0 0 auto;
+    width: calc(100% - 16.66666667%);
+  }
 
 }
 
-@media screen and (max-width: 400px) and (min-width: 200px) {}
+@media screen and (max-width: 400px) and (min-width: 200px) {
+  .col-sm-2 {
+    flex: 0 0 auto;
+    width: 16.66666667%;
+  }
 
-@media screen and (max-width: 480px) and (min-width: 200px) {}
+  .col-sm-10 {
+    flex: 0 0 auto;
+    width: calc(100% - 16.66666667%);
+  }
+}
+
+@media screen and (max-width: 480px) and (min-width: 200px) {
+  .col-sm-2 {
+    flex: 0 0 auto;
+    width: 16.66666667%;
+  }
+
+  .col-sm-10 {
+    flex: 0 0 auto;
+    width: calc(100% - 16.66666667%);
+  }
+
+  
+}
 
 
 
@@ -383,3 +414,10 @@ button.fc-listWeek-button.btn.btn-primary {
   border-radius: 15px;
   margin-left: -10px;
 }
+
+
+.card-overflow {
+  overflow: auto;
+}
+
+@media (min-width: 576px) {}

@@ -22,7 +22,7 @@ export class ProviderProfileComponent implements OnInit {
 
   @ViewChild('binMap') binMap: GoogleMapsComponent | any;
 
-  selectedSpeciality: string = '';
+  selectedSpecialty: string = '';
   selectedService: string = '';
   selectedLocation: string = '';
   selectedDate: string = '';
@@ -83,8 +83,8 @@ export class ProviderProfileComponent implements OnInit {
     if (!!searchData) {
 
       let payload = {
-        mainSpeciality: searchData.selectedSpeciality,
-        service: searchData.selectedSpeciality,
+        mainSpecialty: searchData.selectedSpecialty,
+        service: searchData.selectedSpecialty,
         // service: searchData.selectedService,
         zipCode: searchData.selectedLocation,
         date: moment(searchData.selectedDate).format('YYYY-MM-DD')

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { first, Subscription, take, timer } from 'rxjs';
@@ -10,6 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { providerService } from 'src/app/platform/provider-section/provider.service';
 import * as moment from 'moment';
 import { authenticationService } from 'src/app/services/authentication.service';
+import { CustomValidators } from 'src/app/utilities/custom.validator';
 
 
 @Component({
@@ -33,7 +34,9 @@ export class ProviderLocationModalComponent implements OnInit {
   locationFormGroup: FormGroup;
   zipCodesLov: any;
   location: any;
-  checked: boolean = false
+  checked: boolean = false;
+  filteredLocations: any[] = [];
+  filteredCity: any[] = [];
 
 
   constructor(
@@ -49,8 +52,24 @@ export class ProviderLocationModalComponent implements OnInit {
       activeStatus: [false, Validators.required],
       locationAddressLineOne: ["", Validators.required],
       locationAddressLineTwo: [""],
-      city: ["Select your City", Validators.required],
-      zipCode: ["Select your Zip Code", Validators.required]
+      zipCode: [
+        "",
+        [
+          Validators.required,
+          Validators.maxLength(5),
+          Validators.minLength(5),
+
+          CustomValidators.noEmptyValue
+        ]
+      ],
+      city: [
+        "",
+        [
+          Validators.required,
+          this.cityValidator,
+          CustomValidators.noEmptyValue
+        ]
+      ],
 
     });
 
@@ -79,9 +98,89 @@ export class ProviderLocationModalComponent implements OnInit {
 
 
   }
+  cityValidator(control: AbstractControl) {
+    if (!control.value) return null; // Allow empty value, if required validation will handle this
+    // const match = this.filteredCity.find(item => item.city === control.value);
+    // return match ? null : { invalidCity: true };
 
 
+    // Check if input length is at least 3 characters
+    if (control.value.length >= 3) {
+      const match = this.filteredCity.find(item => item.city === control.value); // Assuming item has a 'city' property
+      return match ? null : { invalidCity: true };
+    }
 
+    return null; // If input length is less than 3, do not mark as invalid
+  }
+
+  onKeyUpCity(event: KeyboardEvent) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input.length >= 3) {
+      this.apiService.getCity(input).subscribe((res: any) => {
+        this.filteredCity = res.data;
+      }, (err: any) => {
+        this.filteredCity = [];
+        this.apiService.errorToster("Zip Code Not Found", "Error");
+        this.locationFormGroup.get('city')?.setErrors({ invalidCity: true });
+      });
+    } else {
+      this.filteredCity = [];
+      this.locationFormGroup.get('city')?.setErrors({ invalidCity: true });
+    }
+  }
+
+  selectCity(item: any) {
+    this.filteredCity = [];
+    this.locationFormGroup.get('city')?.setValue(item);
+    this.locationFormGroup.get('city')?.updateValueAndValidity(); // Re-validate
+  }
+
+
+  validateZipCode() {
+    const zipCodeControl = this.locationFormGroup.get('zipCode');
+
+    // Perform validation
+    if (zipCodeControl?.value && zipCodeControl.value.length >= 3) {
+      const match = this.filteredLocations.find(item => item.zipCode === zipCodeControl.value);
+      if (!match) {
+        // If no match, set the control to invalid with an error
+        zipCodeControl.setErrors({ invalidLocation: true });
+      } else {
+        // Clear any previous errors if match is found
+        zipCodeControl.setErrors(null);
+      }
+    } else {
+      // Clear any previous errors if the value is not long enough
+      zipCodeControl?.setErrors(null);
+    }
+  }
+
+
+  onKeyUp(event: KeyboardEvent) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input.length >= 3) {
+      this.apiService.getLocations(input).subscribe((res: any) => {
+        this.filteredLocations = res.data;
+        console.log("---------------", res.data);
+      }, (err: any) => {
+        this.filteredLocations = [];
+        this.apiService.errorToster("Zip Code Not Found", "Error")
+        this.locationFormGroup.get('zipCode')?.setErrors({ invalid: true });
+      });
+    } else {
+      // this.filteredLocations = [];
+      this.locationFormGroup.get('zipCode')?.setErrors({ invalid: true });
+    }
+  }
+
+  selectLocation(item: any) {
+
+    this.locationFormGroup.get('zipCode')?.setValue(item);
+    this.validateZipCode()
+    this.locationFormGroup.get('zipCode')?.updateValueAndValidity(); // Re-validate
+    this.filteredLocations = [];
+
+  }
 
   closeModal() {
     this.locationFormGroup.reset();

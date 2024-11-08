@@ -60,7 +60,7 @@ export class ProviderRatesModalComponent implements OnInit {
     this.userToken = this.authenticationService.getUserToken();
     this.getProviderLocationAPI(this.providerData._id);
     this.getLocationLov();
-    this.getServicesLov(this.providerData.mainSpeciality);
+    this.getServicesLov(this.providerData.mainSpecialty);
     this.getCityLov();
 
 

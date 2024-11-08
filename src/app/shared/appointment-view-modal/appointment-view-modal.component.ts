@@ -47,7 +47,7 @@ export class AppointmentViewModalComponent implements OnInit {
       gender: ["", Validators.required],
       practiceName: ['', Validators.required],
       zipcode: ['', Validators.required],
-      mainSpeciality: ['', Validators.required],
+      mainSpecialty: ['', Validators.required],
       city: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
@@ -110,7 +110,7 @@ export class AppointmentViewModalComponent implements OnInit {
 
           this.appointmentForm.get('practiceName')?.setValue(this.AppointmentData.providerId.practiceName);
           this.appointmentForm.get('zipcode')?.setValue(this.AppointmentData.providerId.zipcode);
-          this.appointmentForm.get('mainSpeciality')?.setValue(this.AppointmentData.providerId.mainSpeciality);
+          this.appointmentForm.get('mainSpecialty')?.setValue(this.AppointmentData.providerId.mainSpecialty);
           this.appointmentForm.get('city')?.setValue(this.AppointmentData.providerId.city);
 
 

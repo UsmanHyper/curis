@@ -155,7 +155,7 @@
                   </div>
                 </ng-container>
                 <span [ngClass]="{'activeText': successfulStepper, 'text-medium': !successfulStepper}"
-                  class="text-medium">Registration Completion</span>
+                  class="text-center">Registration Completion</span>
               </div>
             </div>
 
@@ -300,7 +300,7 @@
 
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <button type="button" class="btn btn-submit btn-width" (click)="moveToPracticeInfo()"
-                          [disabled]="personalInformationForm.invalid && this.personalInformationForm.controls['gender'].value ==='Select your Gender' ">Continue</button>
+                          [disabled]="this.personalInformationForm.invalid || this.personalInformationForm.controls['gender'].value ==='Select your Gender' ">Continue</button>
                       </div>
                     </div>
                   </div>
@@ -337,16 +337,16 @@
                           </ng-container>
                         </div>
                         <div class="input-group">
-                          <label for="speciality">Practice or Provider's Specialty</label>
+                          <label for="specialty">Practice or Provider's Specialty</label>
 
                           <select class="form-select input-style" aria-label="Default select example"
-                            formControlName="providersSpeciality" >
+                            formControlName="providersSpecialty">
                             <option disabled selected>Provider Specialty</option>
                             <option *ngFor="let item of specialtyLov" [value]="item.value">{{ item.value }}</option>
                           </select>
                           <ng-container
-                            *ngIf="practiceInformationForm.get('providersSpeciality')?.invalid && (practiceInformationForm.get('providersSpeciality')?.dirty || practiceInformationForm.get('providersSpeciality')?.touched)">
-                            <ng-container *ngIf="practiceInformationForm.get('providersSpeciality')?.errors">
+                            *ngIf="practiceInformationForm.get('providersSpecialty')?.invalid && (practiceInformationForm.get('providersSpecialty')?.dirty || practiceInformationForm.get('providersSpecialty')?.touched)">
+                            <ng-container *ngIf="practiceInformationForm.get('providersSpecialty')?.errors">
                               <span class="text-danger error-state">Practice or provider’s Specialty is required</span>
                             </ng-container>
 
@@ -392,7 +392,7 @@
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <div class="input-group">
                           <label for="fname">Practice City</label>
-                   
+
                           <input type="text" class="form-control" placeholder="Select City"
                             (keyup)="onKeyUpCity($event)" formControlName="city" />
 
@@ -413,7 +413,7 @@
                         </div>
                         <div class="input-group">
                           <label for="fname">ZIP Code</label>
-                   
+
                           <input type="text" class="form-control" placeholder="Select Location"
                             (keyup)="onKeyUp($event)" maxlength="5" minlength="5" formControlName="zipCode" />
 
@@ -463,14 +463,14 @@
                           </ng-container>
                         </div>
                       </div>
-
+                 
 
 
                       <div class="d-flex gap-4 group-wrapper mt-12 ">
                         <button type="button" class="btn btn-submit btn-width"
                           (click)="backToPersonalInfo()">Back</button>
                         <button type="button" class="btn btn-submit btn-width" (click)="nextToQualificationAndSkills()"
-                          [disabled]="practiceInformationForm.invalid">Next</button>
+                          [disabled]="isNextButtonDisabled()">Next</button>
                       </div>
                     </div>
                   </div>
@@ -495,7 +495,7 @@
                       <div class="d-flex gap-4 group-wrapper ">
 
                         <div class="input-group">
-                          <label for="speciality">Qualification</label>
+                          <label for="Specialty">Qualification</label>
 
                           <select class="form-select input-style" aria-label="Default select example"
                             formControlName="qualification">
@@ -513,9 +513,15 @@
 
                         <div class="input-group">
                           <label for="fname">Experience (In years)</label>
-                          <input type="text" placeholder="Enter Experience (In years)" maxlength="2"minlength="2"
+                          <!-- <input type="text" placeholder="Enter Experience (In years)" maxlength="2"minlength="2"
                             formControlName="overallExperience" class="border" name="new-overallExperience"
-                            autocomplete="off" aria-autocomplete required />
+                            autocomplete="off" aria-autocomplete required /> -->
+                          <select class="form-select input-style" aria-label="Default select example"
+                            formControlName="overallExperience">
+                            <option disabled selected>Select Experience (In years)</option>
+                            <option *ngFor="let item of overallExperienceLov" [value]="item.value">{{ item.name }}
+                            </option>
+                          </select>
                           <ng-container
                             *ngIf="qualificationAndSkillsForm.get('overallExperience')?.invalid && (qualificationAndSkillsForm.get('overallExperience')?.dirty || qualificationAndSkillsForm.get('overallExperience')?.touched)">
                             <ng-container *ngIf="qualificationAndSkillsForm.get('overallExperience')?.errors">
@@ -531,13 +537,13 @@
                         <div class="input-group">
                           <label for="fname">Licensed State</label>
                           <select class="form-select input-style" aria-label="Default select example"
-                            formControlName="practiceState">
+                            formControlName="licensedState">
                             <option disabled selected>Licensed State</option>
                             <option *ngFor="let item of statesLov" [value]="item.value">{{ item.value }}</option>
                           </select>
                           <ng-container
-                            *ngIf="qualificationAndSkillsForm.get('practiceState')?.invalid && (qualificationAndSkillsForm.get('practiceState')?.dirty || qualificationAndSkillsForm.get('practiceState')?.touched)">
-                            <ng-container *ngIf="qualificationAndSkillsForm.get('practiceState')?.errors">
+                            *ngIf="qualificationAndSkillsForm.get('licensedState')?.invalid && (qualificationAndSkillsForm.get('licensedState')?.dirty || qualificationAndSkillsForm.get('licensedState')?.touched)">
+                            <ng-container *ngIf="qualificationAndSkillsForm.get('licensedState')?.errors">
                               <span class="text-danger error-state">Licensed State is required</span>
                             </ng-container>
 
@@ -566,13 +572,13 @@
                         <div class="input-group">
                           <label for="fname">Sub specialization</label>
                           <select class="form-select input-style" aria-label="Default select example"
-                            formControlName="subSpeciality">
+                            formControlName="subSpecialty">
                             <option disabled selected>Sub Specialization</option>
                             <option *ngFor="let item of subSpecialtyLov" [value]="item.value">{{ item.value }}</option>
                           </select>
                           <ng-container
-                            *ngIf="qualificationAndSkillsForm.get('subSpeciality')?.invalid && (qualificationAndSkillsForm.get('subSpeciality')?.dirty || qualificationAndSkillsForm.get('subSpeciality')?.touched)">
-                            <ng-container *ngIf="qualificationAndSkillsForm.get('subSpeciality')?.errors">
+                            *ngIf="qualificationAndSkillsForm.get('subSpecialty')?.invalid && (qualificationAndSkillsForm.get('subSpecialty')?.dirty || qualificationAndSkillsForm.get('subSpecialty')?.touched)">
+                            <ng-container *ngIf="qualificationAndSkillsForm.get('subSpecialty')?.errors">
                               <span class="text-danger error-state">Sub specialization is required</span>
                             </ng-container>
 
@@ -585,7 +591,7 @@
                         <button type="button" class="btn btn-submit btn-width"
                           (click)="backToPracticeInfo()">Back</button>
                         <button type="button" class="btn btn-submit btn-width" (click)="moveToAccountInfo()"
-                          [disabled]="qualificationAndSkillsForm.invalid">Next</button>
+                        [disabled]="qualificationAndSkillButtonDisabled()">Next</button>
                       </div>
                     </div>
                   </div>

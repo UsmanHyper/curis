@@ -49,8 +49,8 @@
                                     <h2> Appointments</h2>
                                 </div>
                                 <!-- <hr> -->
-                                <div class="card-content">
-                                    <div class="table-wrapper">
+                                <div class="card-content overflow-hidden">
+                                    <div class="table-wrapper card-overflow">
                                         <table class="table">
                                             <thead>
                                                 <tr>
@@ -58,7 +58,7 @@
                                                     <th scope="col">Patient Name</th>
                                                     <th scope="col">Date & Time</th>
                                                     <th scope="col">Status</th>
-                                                    <th scope="col">Reschedule</th>
+                                                    <!-- <th scope="col">Reschedule</th> -->
                                                     <th scope="col">View</th>
                                                     <th scope="col">Action</th>
                                                 </tr>
@@ -81,7 +81,7 @@
                                                             <!-- {{ order?.order_status | titlecase }} -->
                                                         </span>
                                                     </td>
-                                                    <td><a class="tag_btn-reschdule">Reschedule</a></td>
+                                                    <!-- <td><a class="tag_btn-reschdule">Reschedule</a></td> -->
                                                     <td>
                                                         <a class="btn-business"
                                                             (click)="viewAppointment(appointments)">View Appointment</a>

@@ -57,7 +57,7 @@
                                         <label for="fname">Address Line 2</label>
                                         <input type="text" placeholder="Address Line 2" class="border"
                                             formControlName="locationAddressLineTwo" autocomplete="off"
-                                            aria-autocomplete required name="new-locationAddressLineTwo" />
+                                            aria-autocomplete name="new-locationAddressLineTwo" />
                                         <ng-container
                                             *ngIf="locationFormGroup.get('locationAddressLineTwo')?.invalid && (locationFormGroup.get('locationAddressLineTwo')?.dirty || locationFormGroup.get('locationAddressLineTwo')?.touched)">
                                             <ng-container
@@ -76,13 +76,22 @@
                                     <div class="input-group">
                                         <label for="fname">City</label>
 
-                                        <select class="form-select input-style" aria-label="Default select example"
+                                        <!-- <select class="form-select input-style" aria-label="Default select example"
                                             formControlName="city">
                                             <option disabled selected>Select your City</option>
                                             <option *ngFor="let item of cityLov" [value]="item.value">
                                                 {{ item.value }}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <input type="text" class="form-control" placeholder="Select City"
+                                            (keyup)="onKeyUpCity($event)" formControlName="city" />
+
+                                        <div class="autocomplete-items" *ngIf="filteredCity.length > 0">
+                                            <div *ngFor="let item of filteredCity" (click)="selectCity(item.city) "
+                                                class="fs-16">
+                                                {{ item.city }}
+                                            </div>
+                                        </div>
 
                                         <ng-container
                                             *ngIf="locationFormGroup.get('city')?.invalid && (locationFormGroup.get('city')?.dirty || locationFormGroup.get('city')?.touched)">
@@ -95,13 +104,23 @@
                                     <div class="input-group">
                                         <label for="fname">Zip Code</label>
 
-                                        <select class="form-select input-style" aria-label="Default select example"
+                                        <!-- <select class="form-select input-style" aria-label="Default select example"
                                             formControlName="zipCode">
                                             <option disabled selected>Select your Zip Code</option>
                                             <option *ngFor="let item of zipCodesLov" [value]="item.value">
                                                 {{ item.value }}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <input type="text" class="form-control" placeholder="Select Location"
+                                            (keyup)="onKeyUp($event)" maxlength="5" minlength="5"
+                                            formControlName="zipCode" />
+
+                                        <div class="autocomplete-items" *ngIf="filteredLocations.length > 0">
+                                            <div *ngFor="let item of filteredLocations"
+                                                (click)="selectLocation(item.zipCode) " class="fs-16">
+                                                {{ item.zipCode }}
+                                            </div>
+                                        </div>
 
                                         <ng-container
                                             *ngIf="locationFormGroup.get('zipCode')?.invalid && (locationFormGroup.get('zipCode')?.dirty || locationFormGroup.get('zipCode')?.touched)">
@@ -144,7 +163,8 @@
                                 </div>
                                 <div class="form-container  mt-12">
                                     <div class=" d-flex g-16 mt-10">
-                                        <button class="form-cancel-btn " (click)="bsModalRef.hide()">Cancel </button>
+                                        <button class="form-cancel-btn " (click)="bsModalRef.hide()">Cancel
+                                        </button>
                                         <button class="form-submit-btn"
                                             [ngClass]="(!locationFormGroup.valid || locationFormGroup.controls['city'].value =='Select your City'|| locationFormGroup.controls['zipCode'].value =='Select your Zip Code') ? 'btn-disabled': '' "
                                             [disabled]="!locationFormGroup.valid || locationFormGroup.controls['city'].value =='Select your City'|| locationFormGroup.controls['zipCode'].value =='Select your Zip Code'"

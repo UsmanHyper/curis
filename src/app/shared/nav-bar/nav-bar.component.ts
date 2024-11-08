@@ -27,10 +27,11 @@ export class NavBarComponent {
   ngOnInit() {
     this.userData = this.authenticationService.getLoggedInUser();
 
-    this.getNavigationsByUserType(this.userData.user_Type || 'Provider');
+    this.getNavigationByUserType(this.userData.user_Type || 'Provider');
+    this.updateExpansionState();
   }
 
-  getNavigationsByUserType(userType: String) {
+  getNavigationByUserType(userType: String) {
     if (userType == "Provider") {
       this.navBarItems = providerNavBar;
     }
@@ -134,9 +135,10 @@ export class NavBarComponent {
   private updateExpansionState(): void {
     // You can adjust the breakpoint as needed
     const isSmallScreen = window.innerWidth < 768 || window.innerWidth === 780; // Example breakpoint: 768 pixels
-
+    console.log("------------isSmallScreen", isSmallScreen)
     if (isSmallScreen) {
       this.isExpanded = false;
+
     } else {
 
       this.isExpanded = true;

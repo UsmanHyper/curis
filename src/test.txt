@@ -1,0 +1,130 @@
+{
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "users_Schema",
+        required: true,
+        index: true
+      },
+      DOB: {
+        type: String,
+      },
+      NPI_Number: {
+        type: String,
+     //   required: true,
+        index: true
+      },
+      contact_one: {
+        type: String,
+       // required: true,
+        index: true
+      },
+      contact_two: {
+        type: String
+      },
+      city: {
+        type: String,
+        //required: true
+      },
+      licensedState: {
+        type: String,
+       // required: true
+      },
+      country: { 
+        type: String,
+      //  required: true
+      },
+      zipcode: {
+        type: String,
+       // required: true,
+        index: true
+      },
+      address_res: {
+        type: String,
+      },
+      address_office: {
+        type: String,
+       // required: true
+      },
+      addressLineOne:{
+        type: String,
+      },
+      addressLineTwo:{
+        type: String,
+      },
+    billingAddress: {
+      type: String,
+     // required: true
+    },
+    billingAddresstwo: {
+      type: String,
+     // required: true
+    },
+      board_Certification: {
+        type: String,
+      
+      },
+      education: {
+        type: String,
+     
+      },
+      training: {
+        type: String,
+       
+      },
+      longitude: {
+        type: String,
+        index: true
+        
+      },
+      latitude: {
+        type: String,
+        index: true
+      },
+      mainSpeciality: {
+        type: String,
+      //  required: true,
+        index: true
+      },
+      subSpeciality: {
+        type: String,
+        index: true
+      },
+      timezone: {
+        type: String
+      },
+      gender:{
+        type: String
+      },
+      chicagoLandId:{
+        type: String
+      },
+      language:{
+        type: String
+      },
+      practiceName:{
+        type: String
+      },
+      practiceSize:{
+        type: String
+      },
+      roleAtPractice:{
+        type: String
+      },
+      qualification:{
+        type: String
+      },
+      practiceSpecialization:{
+        type: String,
+        index: true
+      },
+      experience:{
+        type: Number
+      },
+      practiceState:{
+        type: String
+      },
+      providerDescription:{
+        type: String
+      }
+    
+}

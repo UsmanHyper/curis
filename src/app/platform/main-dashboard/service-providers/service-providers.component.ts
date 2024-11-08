@@ -105,7 +105,7 @@ export class ServiceProvidersComponent implements OnInit {
 
     this.selectedSpecialty.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
       console.log("-----------", val)
-      if (val === "Select Speciality") {
+      if (val === "Select Specialty") {
         this.checkSpecialty = false
       } else {
         this.checkSpecialty = true
@@ -166,7 +166,7 @@ export class ServiceProvidersComponent implements OnInit {
 
   patch(data: any) {
     console.log(":-------", data)
-    this.selectedSpecialty.patchValue(data.mainSpeciality);
+    this.selectedSpecialty.patchValue(data.mainSpecialty);
     this.getServicesForSpecialty();
 
     this.selectedLocation.patchValue(data.zipCode)
@@ -176,7 +176,7 @@ export class ServiceProvidersComponent implements OnInit {
 
     setTimeout(() => {
       let payload = {
-        mainSpeciality: this.selectedSpecialty.value,
+        mainSpecialty: this.selectedSpecialty.value,
         service: this.selectedSpecialty.value,
         // service: this.selectedService.value,
         zipCode: this.selectedLocation.value,
@@ -289,7 +289,7 @@ export class ServiceProvidersComponent implements OnInit {
     } else {
 
       let payload = {
-        mainSpeciality: this.selectedSpecialty.value,
+        mainSpecialty: this.selectedSpecialty.value,
         service: this.selectedSpecialty.value,
         // service: this.selectedService.value,
         zipCode: this.selectedLocation.value,

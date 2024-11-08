@@ -44,7 +44,7 @@ export class PatientAppointmentDetailsComponent implements OnInit {
       email: [''],
       practiceName: [''],
       zipcode: [''],
-      mainSpeciality: [''],
+      mainSpecialty: [''],
       city: [''],
       startTime: [''],
       endTime: [''],
@@ -92,7 +92,7 @@ export class PatientAppointmentDetailsComponent implements OnInit {
 
     this.appointmentForm.get('practiceName')?.setValue(data?.providerId.practiceName);
     this.appointmentForm.get('zipcode')?.setValue(data?.providerId.zipcode);
-    this.appointmentForm.get('mainSpeciality')?.setValue(data?.providerId.mainSpeciality);
+    this.appointmentForm.get('mainSpecialty')?.setValue(data?.providerId.mainSpecialty);
     this.appointmentForm.get('city')?.setValue(data?.providerId.city);
 
     this.appointmentForm.get('startTime')?.setValue(moment(data?.appointmentDate).format('dd/MM/yyyy hh:mm a'));

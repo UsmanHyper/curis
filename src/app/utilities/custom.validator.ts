@@ -1,4 +1,4 @@
-import { AbstractControl, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class CustomValidators {
 
@@ -47,6 +47,16 @@ export class CustomValidators {
   static isEmptyValue(value: any) {
     return value === null || typeof value === 'string' && value.length === 0;
   }
+
+  
+    static noEmptyValue(control: AbstractControl): ValidationErrors | null {
+      const value = control.value;
+      if (value === null || value === undefined || value.trim() === '') {
+        return { noEmptyValue: true };
+      }
+      return null;
+    }
+  
 
   static isAlphabetsAndNumbers(control: AbstractControl) {
     if (CustomValidators.isEmptyValue(control.value)) {

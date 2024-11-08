@@ -6,13 +6,7 @@ import { PatientDashboardComponent } from './platform/patient-section/patient-da
 import { AdminDashboardComponent } from './platform/admin-section/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
-  // { path: '', component: HomeComponent },
-  // { path: 'signup', component: SignupComponent },
-  // { path: 'doctor-profile', component: DoctorProfileComponent },
-  // { path: 'schedule-appointment', component: ScheduleAppointmentComponent },
-  // { path: 'login', component: LoginComponent },
-  // { path: 'forgotPassword', component: ForgotPasswordComponent },
-  // { path: 'payment-status', component: PaymentStatusComponent },
+
   {
     path: "providerDashboard",
     component: ProviderDashboardComponent,

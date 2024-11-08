@@ -401,7 +401,7 @@ export class ServiceBookingFlowComponent implements OnInit {
     let payload = {
       name: this.userform.controls['first_name'].value + this.userform.controls['last_name'].value,
       description: "Appointment for ",
-      // description: "Appointment for " + this.dataSource.mainSpeciality,
+      // description: "Appointment for " + this.dataSource.mainSpecialty,
       amount: this.data?.rates || 500,
       // amount: this.price,
       email: this.userform.controls['email'].value,

@@ -172,7 +172,7 @@ export class HomeComponent implements OnInit {
     } else {
 
       let payload = {
-        mainSpeciality: this.selectedSpecialty.value,
+        mainSpecialty: this.selectedSpecialty.value,
         service: this.selectedSpecialty.value,
         // service: this.selectedService.value,
         zipCode: this.selectedLocation.value,
@@ -203,7 +203,7 @@ export class HomeComponent implements OnInit {
 
 
         this.router.navigate(["/service-providers"], {
-          queryParams: { specialty: `${payload.mainSpeciality}`, service: payload.service, zip: payload.zipCode, date: payload.date },
+          queryParams: { specialty: `${payload.mainSpecialty}`, service: payload.service, zip: payload.zipCode, date: payload.date },
         })
       },
         (err: any) => {

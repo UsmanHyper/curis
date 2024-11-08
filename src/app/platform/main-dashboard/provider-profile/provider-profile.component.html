@@ -13,14 +13,14 @@
                   <h3 class="sub_title m-0" routerLink="/provider-profile">
                     {{ providerDetails?.providerInformation?.userId?.f_name }}
                     {{ providerDetails?.providerInformation?.userId?.l_name }},
-                    {{providerDetails?.providerInformation?.mainSpeciality | uppercase}}</h3>
+                    {{providerDetails?.providerInformation?.mainSpecialty | uppercase}}</h3>
                   <span class="tags-blue"><i class="bi bi-star-fill mr-4" style="color:  #0086C9;"></i>Top Rated</span>
                 </div>
                 <span class="text-capitalize "><i class="bi bi-star mr-8"></i>
-                  {{providerDetails?.providerInformation?.mainSpeciality}} -
-                  {{providerDetails?.providerInformation?.subSpeciality}}</span>
-                <p class=""><i class="bi bi-book mr-8"></i> {{providerDetails?.providerInformation?.mainSpeciality |
-                  uppercase}} ({{providerDetails?.providerInformation?.subSpeciality | titlecase}})
+                  {{providerDetails?.providerInformation?.mainSpecialty}} -
+                  {{providerDetails?.providerInformation?.subSpecialty}}</span>
+                <p class=""><i class="bi bi-book mr-8"></i> {{providerDetails?.providerInformation?.mainSpecialty |
+                  uppercase}} ({{providerDetails?.providerInformation?.subSpecialty | titlecase}})
                 </p>
                 <span class="tags"
                   [style.color]="getStatusColor(providerDetails?.providerInformation?.userId?.isActive)"
