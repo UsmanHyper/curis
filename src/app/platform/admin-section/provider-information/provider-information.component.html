@@ -15,7 +15,7 @@
                             <div class="page-header-section mt-28">
                                 <div class="input-field">
                                     <input type="text" class=" placeholder-text "
-                                        placeholder="Search for Provider Information">
+                                        placeholder="Search for Provider Information"  [formControl]="searchedData">
                                     <img src="../../../../assets/images/provider/Icon.png"
                                         alt="Toggle Password Visibility" style="cursor: pointer;" />
                                 </div>
@@ -26,7 +26,7 @@
 
 
                             </div>
-                   
+
                             <div class="card mt-20">
                                 <div class="card-title">
                                     <h2> Provider Information</h2>
@@ -49,14 +49,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let data of providerList;let i = index">
+                                                <tr *ngFor="let data of pagedItems;let i = index">
                                                     <td> {{data.f_name}} {{data.l_name}}</td>
                                                     <td>{{data.email}}</td>
-                                                    <td>Yuri W. Novitsky</td>
-                                                    <td>New York</td>
-                                                    <td>New York</td>
+                                                    <td>{{data.addressLineOne ? data.addressLineOne :
+                                                        data.addressLineTwo || 'N/A'}}
+                                                    </td>
+                                                    <td>{{data.city || 'N/A'}}</td>
+                                                    <td>{{data.licensedState || 'N/A'}}</td>
                                                     <td>{{data.contact_no}}</td>
-                                                    <td>12345</td>
+                                                    <td>{{data.zipcode || 'N/A'}}</td>
                                                     <td>
                                                         <div class="form-switch">
 
@@ -71,7 +73,8 @@
                                                             (click)="viewDetails(data)">Details</a>
                                                     </td>
                                                     <td>
-                                                        <a class="tag_btn-cancel" (click)="cancel(data._id)">Cancel</a>
+                                                        <a class="tag_btn-detail"
+                                                            (click)="editViewDetails(data)">Edit</a>
                                                     </td>
 
 
@@ -81,9 +84,11 @@
                                     </div>
                                 </div>
                                 <div class="card-footer-section ">
-                                    <h3 class="page-index">Page {{itemInView}} of {{totalView}} </h3>
+                                    <h3 class="page-index">Items {{itemInView}} of {{totalView}} </h3>
+                                    <!-- <h3 class="page-index">Page {{pagedItems.length}} of {{providerList.length}} </h3> -->
+
                                     <div class="">
-                                        <ng-container *ngIf="providerList?.length">
+                                        <ng-container *ngIf="pagedItems?.length">
                                             <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"
                                                 (pageChange)="onPageChange($event)"></app-pagination>
                                         </ng-container>

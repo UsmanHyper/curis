@@ -17,7 +17,7 @@
                             </div>
                             <div class="page-header-section mt-28">
                                 <div class="input-field">
-                                    <input type="text" class=" placeholder-text " placeholder="Search for Appointments">
+                                    <input type="text" class=" placeholder-text " placeholder="Search for Appointments" [formControl]="searchedData">
                                     <!-- <i class="bi bi-search" style="cursor: pointer;"></i> -->
                                     <img src="../../../../assets/images/provider/Icon.png" alt="Toggle Password Visibility" style="cursor: pointer;" />
 
@@ -67,7 +67,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let order of filteredData; let i = index">
+                                                <tr *ngFor="let order of pagedItems; let i = index">
                                                     <!-- <tr> -->
                                                     <td>{{order.serviceName}}</td>
                                                     <td>{{order.locationName}}</td>
@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer-section ">
-                                    <h3 class="page-index">Page {{itemInView}} of {{totalView}} </h3>
+                                    <h3 class="page-index">Items {{itemInView}} of {{totalView}} </h3>
                                     <div class="">
                                         <ng-container *ngIf="workingHours?.length">
                                             <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"

@@ -1,11 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { providerService } from '../provider.service';
 import { authenticationService } from 'src/app/services/authentication.service';
-import { first } from 'rxjs';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs';
 
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 import { ProviderRatesModalComponent } from 'src/app/shared/provider-rates-modal/provider-rates-modal.component';
@@ -39,14 +39,18 @@ export class RatesComponent implements OnInit {
 
 
   filteredData: any
-  pagedItems: any
   locationLov: any
   selectedLabel: any = null
   searchText: string = '';
 
+  completelyList: any;
+  searchedData: FormControl;
+  pagedItems: any[] = [];
+
   constructor(private apiService: MainHomeService, public formBuilder: FormBuilder,
     private spinner: NgxSpinnerService, private providerService: providerService,
     private authenticationService: authenticationService, private modalService: BsModalService, private dss: DataSharingService, private viewportScroller: ViewportScroller) {
+    this.searchedData = new FormControl(null);
 
   }
 
@@ -63,8 +67,35 @@ export class RatesComponent implements OnInit {
         this.getProviderLocationAPI(this.providerData._id)
       }
     })
-
+    this.searchedData.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
+      console.log("-----------", val);
+      this.searchData(this.searchedData.value)
+    })
   }
+  searchData(searchText: any) {
+
+ 
+    console.log("Filtered Data:", this.completelyList);
+    const searchProperties = ['serviceName', 'locationName', 'rate'];
+    let searchData = this.completelyList.filter((item: any) =>
+      Object.keys(item).some(key =>
+        typeof item[key] === 'string' && item[key].toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+    // let searchData = this.completelyList.filter((item: any) =>
+    //   searchProperties.some((prop:any) =>
+    //     item[prop]?.toLowerCase().includes(searchText.toLowerCase())
+    //   )
+    // );
+    console.log("Filtered Data:", searchData);
+    this.filteredData = searchData
+    setTimeout(() => {
+      this.calculatePages();
+      this.setPage(this.currentPage);
+      this.totalView = this.filteredData?.length;
+    }, 2000);
+  }
+
 
   getLocationLov() {
     this.spinner.show();
@@ -73,6 +104,7 @@ export class RatesComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.locationLov = res;
+
           this.spinner.hide();
         },
         (err: any) => {
@@ -131,11 +163,7 @@ export class RatesComponent implements OnInit {
   // }
 
 
-  onPageChange(page: number): void {
-    this.currentPage = page;
 
-    // this.getHallData("", page)
-  }
 
   addNewLocation() {
     this.isEditMode = false;
@@ -226,8 +254,7 @@ export class RatesComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.providersLocation = res;
-          this.providersLocation.forEach(() => {
-          });
+        
           let working: any[] = []; // Initialize as an array
           let dt = this.providersLocation;
 
@@ -246,14 +273,14 @@ export class RatesComponent implements OnInit {
           console.log(this.providersLocation); // Check the result
           this.workingHours = working
           this.filteredData = working
+          this.completelyList = working
+          setTimeout(() => {
+            this.calculatePages();
+            this.setPage(this.currentPage);
+            this.totalView = this.filteredData?.length;
+          }, 2000);
+          
           this.spinner.hide();
-          this.totalItems = this.filteredData.length;
-          // this.itemInView = this.filteredData.length;
-
-
-            // this.calculatePages(this.totalItems);
-            // this.setPage(this.currentPage);
-     
         },
         (err: any) => {
           this.spinner.hide();
@@ -302,28 +329,28 @@ export class RatesComponent implements OnInit {
     this.updateNewRatesByLocation(ev.locationId, ev._id, data);
 
   }
-
-  calculatePages(item: number): void {
-    if (item > 0) {
-      this.totalPages = Math.ceil(item / this.itemsPerPage);
-    }
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.setPage(page)
+    // Update paged items or fetch new data based on the page
   }
 
+  calculatePages(): void {
+    if (this.filteredData?.length > 0) {
+      this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
+    }
+  }
 
   setPage(page: number): void {
     this.currentPage = page;
     const startIndex = (page - 1) * this.itemsPerPage;
-    const endIndex = Math.min(startIndex + this.itemsPerPage, this.totalItems);
-    this.pagedItems = this.filteredData;
-
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.filteredData?.length);
+    this.pagedItems = this.filteredData?.slice(startIndex, endIndex);
+    this.itemInView = this.pagedItems.length
     this.viewportScroller.scrollToPosition([0, 0]);
-    this.itemInView = this.totalItems
-    this.totalView = this.pagedItems
+    console.log("this", this.pagedItems)
 
-    // this.pageInfo = {
-    //   page_size: this.totalItems || 0,
-    //   on_display: this.pagedItems.length || 0,
-    // };
+
   }
 
 

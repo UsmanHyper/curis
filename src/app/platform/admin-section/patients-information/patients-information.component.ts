@@ -4,36 +4,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { authenticationService } from 'src/app/services/authentication.service';
 import { adminService } from 'src/app/platform/admin-section/admin.service'
-import { first } from 'rxjs';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs';
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 import { PatientViewModalComponent } from 'src/app/shared/patient-view-modal/patient-view-modal.component';
-
-
-
-
-
-@Pipe({
-  name: "phone"
-})
-export class PhonePipe implements PipeTransform {
-  transform(rawNum:string) {
-    rawNum = "+1"+ rawNum;
-
-    const countryCodeStr = rawNum.slice(0,2);
-    const areaCodeStr = rawNum.slice(2,5);
-    const midSectionStr = rawNum.slice(5,8);
-    const lastSectionStr = rawNum.slice(8);
-
-    return `${countryCodeStr} (${areaCodeStr})${midSectionStr}-${lastSectionStr}`;
-  }
-}
-
-
-
-
-
-
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -42,6 +17,7 @@ export class PhonePipe implements PipeTransform {
   styleUrls: ['./patients-information.component.scss']
 })
 export class PatientsInformationComponent implements OnInit {
+
   itemInView: number = 5;
   totalView: number = 10;
 
@@ -56,15 +32,46 @@ export class PatientsInformationComponent implements OnInit {
   patientListView: boolean = true;
   patientData: any
   modalRef!: BsModalRef;
-
+  pagedItems: any[] = [];
+  completelyList: any;
+  searchedData: FormControl
 
   constructor(private dss: DataSharingService, private viewportScroller: ViewportScroller, private modalService: BsModalService,
     public adminService: adminService, public authenticationService: authenticationService, private spinner: NgxSpinnerService, private apiService: MainHomeService,
-  ) { }
+  ) {
+    this.searchedData = new FormControl(null);
+
+  }
 
   ngOnInit(): void {
     this.userToken = this.authenticationService.getUserToken();
     this.getProviderDetails();
+
+    this.searchedData.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
+      console.log("-----------", val);
+      this.searchData(this.searchedData.value)
+    })
+  }
+
+
+  searchData(searchText: any) {
+
+    // let searchData = this.completelyList.filter((item: any) =>
+    //   item.name.toLowerCase().includes(searchText.toLowerCase())
+    // );
+    // console.log("Filtered Data:", searchData);
+    let searchData = this.completelyList.filter((item: any) =>
+      Object.keys(item).some(key =>
+        typeof item[key] === 'string' && item[key].toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+    console.log("Filtered Data:", searchData);
+    this.patientList = searchData
+    setTimeout(() => {
+      this.calculatePages();
+      this.setPage(this.currentPage);
+      this.totalView = this.patientList?.length;
+    }, 2000);
   }
 
   getProviderDetails() {
@@ -74,7 +81,17 @@ export class PatientsInformationComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.spinner.hide();
-          this.patientList = res
+          let dt: any = res;
+          dt.forEach((ele: any) => {
+            ele.contact_no = this.transform(ele.contact_no);
+          });
+          this.patientList = res;
+          this.completelyList = res;
+          setTimeout(() => {
+            this.calculatePages();
+            this.setPage(this.currentPage);
+            this.totalView = this.patientList?.length;
+          }, 2000);
         },
         (err: any) => {
           this.spinner.hide();
@@ -91,6 +108,16 @@ export class PatientsInformationComponent implements OnInit {
     this.openModal(item, 'Patient Information')
   }
 
+  transform(rawNum: string) {
+    rawNum = "+1" + rawNum;
+
+    const countryCodeStr = rawNum.slice(0, 2);
+    const areaCodeStr = rawNum.slice(2, 5);
+    const midSectionStr = rawNum.slice(5, 8);
+    const lastSectionStr = rawNum.slice(8);
+
+    return `${countryCodeStr} (${areaCodeStr})${midSectionStr}-${lastSectionStr}`;
+  }
 
   openModal(payload?: any, title?: any,) {
     console.log("openModal", payload, title);
@@ -150,32 +177,26 @@ export class PatientsInformationComponent implements OnInit {
 
   onPageChange(page: number): void {
     this.currentPage = page;
-
-    // this.getHallData("", page)
+    this.setPage(page)
+    // Update paged items or fetch new data based on the page
   }
 
-
-  calculatePages(item: number): void {
-    if (item > 0) {
-      this.totalPages = Math.ceil(item / this.itemsPerPage);
+  calculatePages(): void {
+    if (this.patientList?.length > 0) {
+      this.totalPages = Math.ceil(this.patientList.length / this.itemsPerPage);
     }
   }
-
 
   setPage(page: number): void {
     this.currentPage = page;
     const startIndex = (page - 1) * this.itemsPerPage;
-    const endIndex = Math.min(startIndex + this.itemsPerPage, this.totalItems);
-    // this.pagedItems = this.filteredData;
-
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.patientList?.length);
+    this.pagedItems = this.patientList?.slice(startIndex, endIndex);
+    this.itemInView = this.pagedItems.length
     this.viewportScroller.scrollToPosition([0, 0]);
-    // this.itemInView = this.totalItems
-    // this.totalView = this.pagedItems
+    console.log("this", this.pagedItems)
 
-    // this.pageInfo = {
-    //   page_size: this.totalItems || 0,
-    //   on_display: this.pagedItems.length || 0,
-    // };
+
   }
 
 

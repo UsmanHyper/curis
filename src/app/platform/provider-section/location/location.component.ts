@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { first } from 'rxjs';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs';
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { providerService } from '../provider.service';
 import { authenticationService } from 'src/app/services/authentication.service';
@@ -24,17 +24,21 @@ export class LocationComponent implements OnInit {
   cityLov: any;
   itemInView: number = 5;
   totalView: number = 10;
+  itemsPerPage: number = 10;
   modalRef!: BsModalRef;
 
   totalPages: any = 10;
   currentPage: number = 1;
 
-
+  completelyList: any;
+  searchedData: FormControl;
+  pagedItems: any[] = [];
 
   constructor(private apiService: MainHomeService, public formBuilder: FormBuilder,
     private spinner: NgxSpinnerService, private providerService: providerService,
     private authenticationService: authenticationService, private modalService: BsModalService, private dss: DataSharingService) {
 
+      this.searchedData = new FormControl(null);
 
   }
   ngOnInit() {
@@ -49,7 +53,36 @@ export class LocationComponent implements OnInit {
         this.getProviderLocationAPI(this.providerData._id)
       }
     })
+    this.searchedData.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
+      console.log("-----------", val);
+      this.searchData(this.searchedData.value)
+    })
+  }
 
+  searchData(searchText: any) {
+
+    // let searchData = this.completelyList.filter((item: any) =>
+    //   item.name.toLowerCase().includes(searchText.toLowerCase())
+    // );
+    // console.log("Filtered Data:", searchData);
+    const searchProperties = ['locationName', 'locationAddressLineOne', 'locationAddressLineTwo', 'city', 'zip'];
+    // let searchData = this.completelyList.filter((item: any) =>
+    //   Object.keys(item).some(key =>
+    //     typeof item[key] === 'string' && item[key].toLowerCase().includes(searchText.toLowerCase())
+    //   )
+    // );
+    let searchData = this.completelyList.filter((item: any) =>
+      searchProperties.some(prop =>
+        item[prop]?.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+    console.log("Filtered Data:", searchData);
+    this.providersLocation = searchData
+    setTimeout(() => {
+      this.calculatePages();
+      this.setPage(this.currentPage);
+      this.totalView = this.providersLocation?.length;
+    }, 2000);
   }
   addNewLocation() {
     this.isEditMode = false;
@@ -106,8 +139,12 @@ export class LocationComponent implements OnInit {
           })
           this.providersLocation = dt
           console.log("providersLocation", this.providersLocation)
-          this.itemInView = dt.length;
-          this.totalView = dt.length;
+          this.completelyList = dt
+          setTimeout(() => {
+            this.calculatePages();
+            this.setPage(this.currentPage);
+            this.totalView = this.providersLocation?.length;
+          }, 2000);
           this.spinner.hide();
         },
         (err: any) => {
@@ -208,11 +245,7 @@ export class LocationComponent implements OnInit {
   }
 
 
-  onPageChange(page: number): void {
-    this.currentPage = page;
-
-    // this.getHallData("", page)
-  }
+ 
 
   onCheckboxChange(event: Event, ev: any): void {
     const inputElement = event.target as HTMLInputElement;
@@ -255,6 +288,30 @@ export class LocationComponent implements OnInit {
           this.showError(err?.error?.message?.description);
         }
       );
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.setPage(page)
+    // Update paged items or fetch new data based on the page
+  }
+
+  calculatePages(): void {
+    if (this.providersLocation?.length > 0) {
+      this.totalPages = Math.ceil(this.providersLocation.length / this.itemsPerPage);
+    }
+  }
+
+  setPage(page: number): void {
+    this.currentPage = page;
+    const startIndex = (page - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.providersLocation?.length);
+    this.pagedItems = this.providersLocation?.slice(startIndex, endIndex);
+    this.itemInView = this.pagedItems.length
+    // this.viewportScroller.scrollToPosition([0, 0]);
+    console.log("this", this.pagedItems)
+
+
   }
 
 }

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { providerService } from '../provider.service';
 import { authenticationService } from 'src/app/services/authentication.service';
-import { first } from 'rxjs';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs';
 import * as moment from 'moment';
 import { DatePipe, ViewportScroller } from '@angular/common';
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { ProviderAppointmentDetailsComponent } from 'src/app/shared/provider-appointment-details/provider-appointment-details.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-appointments',
@@ -39,10 +40,13 @@ export class AppointmentsComponent implements OnInit {
   totalPages: any = 10;
   currentPage: number = 1;
   itemsPerPage: number = 10;
+  completelyList: any;
+  searchedData: FormControl;
   pagedItems: any[] = [];
 
   constructor(private providerService: providerService, private authenticationService: authenticationService, 
     private modalService: BsModalService, private dss: DataSharingService, private viewportScroller: ViewportScroller) {
+      this.searchedData = new FormControl(null);
 
   }
 
@@ -57,8 +61,36 @@ export class AppointmentsComponent implements OnInit {
         this.getProviderAppointments();
       }
     })
+    this.searchedData.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
+      console.log("-----------", val);
+      this.searchData(this.searchedData.value)
+    })
   }
+  searchData(searchText: any) {
 
+    // let searchData = this.completelyList.filter((item: any) =>
+    //   item.name.toLowerCase().includes(searchText.toLowerCase())
+    // );
+    // console.log("Filtered Data:", searchData);
+    const searchProperties = ['patientId.f_name', 'slothDetails?.startTime', 'patientId.l_name', ];
+    // let searchData = this.completelyList.filter((item: any) =>
+    //   Object.keys(item).some(key =>
+    //     typeof item[key] === 'string' && item[key].toLowerCase().includes(searchText.toLowerCase())
+    //   )
+    // );
+    let searchData = this.completelyList.filter((item: any) =>
+      searchProperties.some(prop =>
+        item[prop]?.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+    console.log("Filtered Data:", searchData);
+    this.appointmentList = searchData
+    setTimeout(() => {
+      this.calculatePages();
+      this.setPage(this.currentPage);
+      this.totalView = this.appointmentList?.length;
+    }, 2000);
+  }
 
   onDateChange(newDate: any) {
     this.dateTitle = moment(this.inlineDatePicker).format('DD/MM/YYYY')
@@ -151,9 +183,11 @@ export class AppointmentsComponent implements OnInit {
         (res: any) => {
           this.appointmentList = res
 
+          this.completelyList = res
           setTimeout(() => {
-            this.calculatePages()
-            this.setPage(this.currentPage)
+            this.calculatePages();
+            this.setPage(this.currentPage);
+            this.totalView = this.appointmentList?.length;
           }, 2000);
         },
         (err: any) => {
@@ -167,8 +201,9 @@ export class AppointmentsComponent implements OnInit {
   onPageChange(page: number): void {
     this.currentPage = page;
     this.setPage(page)
-    // this.getHallData("", page)
+    // Update paged items or fetch new data based on the page
   }
+
   calculatePages(): void {
     if (this.appointmentList?.length > 0) {
       this.totalPages = Math.ceil(this.appointmentList.length / this.itemsPerPage);
@@ -180,6 +215,7 @@ export class AppointmentsComponent implements OnInit {
     const startIndex = (page - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, this.appointmentList?.length);
     this.pagedItems = this.appointmentList?.slice(startIndex, endIndex);
+    this.itemInView = this.pagedItems.length
     this.viewportScroller.scrollToPosition([0, 0]);
     console.log("this", this.pagedItems)
 

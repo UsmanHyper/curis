@@ -4,10 +4,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { authenticationService } from 'src/app/services/authentication.service';
 import { adminService } from 'src/app/platform/admin-section/admin.service'
-import { first } from 'rxjs';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs';
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
 import { AppointmentViewModalComponent } from 'src/app/shared/appointment-view-modal/appointment-view-modal.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-appointments-information',
@@ -30,15 +31,52 @@ export class AppointmentsInformationComponent implements OnInit {
   showList: boolean = true;
   showDetail: boolean = false;
   modalRef!: BsModalRef;
+  completelyList: any;
+  searchedData: FormControl;
+  pagedItems: any[] = [];
 
 
   constructor(private dss: DataSharingService, private viewportScroller: ViewportScroller, private modalService: BsModalService,
     public adminService: adminService, public authenticationService: authenticationService, private spinner: NgxSpinnerService, private apiService: MainHomeService,
-  ) { }
+  ) {
+    this.searchedData = new FormControl(null);
+
+  }
 
   ngOnInit(): void {
     this.userToken = this.authenticationService.getUserToken();
     this.getAppointDetails();
+
+    this.searchedData.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
+      console.log("-----------", val)
+      this.searchData(this.searchedData.value)
+    })
+  }
+
+  searchData(searchText: any) {
+
+    // let searchData = this.completelyList.filter((item: any) =>
+    //   item.name.toLowerCase().includes(searchText.toLowerCase())
+    // );
+    // console.log("Filtered Data:", searchData);
+    const searchProperties = ['patientId.f_name', 'providerId.practiceName', 'providerId.practiceSpecialization', 'providerId.mainSpecialty', 'slotDetails.startTime'];
+    // let searchData = this.completelyList.filter((item: any) =>
+    //   Object.keys(item).some(key =>
+    //     typeof item[key] === 'string' && item[key].toLowerCase().includes(searchText.toLowerCase())
+    //   )
+    // );
+    let searchData = this.completelyList.filter((item: any) =>
+      searchProperties.some(prop =>
+        item[prop]?.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+    console.log("Filtered Data:", searchData);
+    this.AppointmentList = searchData
+    setTimeout(() => {
+      this.calculatePages();
+      this.setPage(this.currentPage);
+      this.totalView = this.AppointmentList?.length;
+    }, 2000);
   }
 
   getAppointDetails() {
@@ -51,6 +89,12 @@ export class AppointmentsInformationComponent implements OnInit {
           this.dataToSend = res
           this.getProviderData(res)
           this.AppointmentList = res
+          this.completelyList = res
+          setTimeout(() => {
+            this.calculatePages();
+            this.setPage(this.currentPage);
+            this.totalView = this.AppointmentList?.length;
+          }, 2000);
         },
         (err: any) => {
           this.spinner.hide();
@@ -135,32 +179,26 @@ export class AppointmentsInformationComponent implements OnInit {
 
   onPageChange(page: number): void {
     this.currentPage = page;
-
-    // this.getHallData("", page)
+    this.setPage(page)
+    // Update paged items or fetch new data based on the page
   }
 
-
-  calculatePages(item: number): void {
-    if (item > 0) {
-      this.totalPages = Math.ceil(item / this.itemsPerPage);
+  calculatePages(): void {
+    if (this.AppointmentList?.length > 0) {
+      this.totalPages = Math.ceil(this.AppointmentList.length / this.itemsPerPage);
     }
   }
-
 
   setPage(page: number): void {
     this.currentPage = page;
     const startIndex = (page - 1) * this.itemsPerPage;
-    const endIndex = Math.min(startIndex + this.itemsPerPage, this.totalItems);
-    // this.pagedItems = this.filteredData;
-
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.AppointmentList?.length);
+    this.pagedItems = this.AppointmentList?.slice(startIndex, endIndex);
+    this.itemInView = this.pagedItems.length
     this.viewportScroller.scrollToPosition([0, 0]);
-    // this.itemInView = this.totalItems
-    // this.totalView = this.pagedItems
+    console.log("this", this.pagedItems)
 
-    // this.pageInfo = {
-    //   page_size: this.totalItems || 0,
-    //   on_display: this.pagedItems.length || 0,
-    // };
+
   }
 
 

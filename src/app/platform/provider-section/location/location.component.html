@@ -18,7 +18,7 @@
 
                             <div class="page-header-section mt-28">
                                 <div class="input-field">
-                                    <input type="text" class=" placeholder-text " placeholder="Search for Appointments">
+                                    <input type="text" class=" placeholder-text " placeholder="Search for Appointments" [formControl]="searchedData">
                                     <img src="../../../../assets/images/provider/Icon.png" alt="Toggle Password Visibility" style="cursor: pointer;" />
 
 
@@ -53,7 +53,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let order of providersLocation; let i = index">
+                                                <tr *ngFor="let order of pagedItems; let i = index">
                                                     <td>{{order.locationName}}</td>
                                                     <td>{{order.locationAddressLineOne}}</td>
                                                     <td>{{order.locationAddressLineTwo}}</td>
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer-section ">
-                                    <h3 class="page-index">Page {{itemInView}} of {{totalView}} </h3>
+                                    <h3 class="page-index">Items {{itemInView}} of {{totalView}} </h3>
                                     <div class="">
                                         <ng-container *ngIf="providersLocation?.length">
                                             <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"

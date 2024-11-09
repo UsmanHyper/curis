@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { authenticationService } from 'src/app/services/authentication.service';
-import { first } from 'rxjs';
+import { debounceTime, distinctUntilChanged, first } from 'rxjs';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-bootstrap/modal';
@@ -11,6 +11,7 @@ import { userService } from 'src/app/services/user.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { adminService } from 'src/app/services/admin.service';
 import { MainHomeService } from 'src/app/services/main-home.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-patient-appointments',
@@ -30,16 +31,22 @@ export class PatientAppointmentsComponent implements OnInit {
   modalRef!: BsModalRef;
   totalPages: any = 10;
   currentPage: number = 1;
-
+  itemsPerPage: any = 10;
 
   // AppointmentList: any;
   dataToSend: any;
   showList: boolean = true;
   showDetail: boolean = false;
 
+  completelyList: any;
+  searchedData: FormControl;
+  pagedItems: any[] = [];
+
+
   constructor(private providerService: providerService, private authenticationService: authenticationService, private modalService: BsModalService,
     private dss: DataSharingService, private userService: userService, private spinner: NgxSpinnerService,
     public adminService: adminService, private apiService: MainHomeService) {
+    this.searchedData = new FormControl(null);
 
   }
 
@@ -54,9 +61,37 @@ export class PatientAppointmentsComponent implements OnInit {
     //     this.getProviderAppointments();
     //   }
     // })
+    this.searchedData.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
+      console.log("-----------", val);
+      this.searchData(this.searchedData.value)
+    })
   }
 
+  searchData(searchText: any) {
 
+    // let searchData = this.completelyList.filter((item: any) =>
+    //   item.name.toLowerCase().includes(searchText.toLowerCase())
+    // );
+    // console.log("Filtered Data:", searchData);
+    const searchProperties = ['providerUserId?.f_name', 'providerUserId?.f_name', 'providerId?.city', 'providerId?.mainSpecialty', 'providerId?.subSpecialty'];
+    // let searchData = this.completelyList.filter((item: any) =>
+    //   Object.keys(item).some(key =>
+    //     typeof item[key] === 'string' && item[key].toLowerCase().includes(searchText.toLowerCase())
+    //   )
+    // );
+    let searchData = this.completelyList.filter((item: any) =>
+      searchProperties.some(prop =>
+        item[prop]?.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+    console.log("Filtered Data:", searchData);
+    this.dataToSend = searchData
+    setTimeout(() => {
+      this.calculatePages();
+      this.setPage(this.currentPage);
+      this.totalView = this.dataToSend?.length;
+    }, 2000);
+  }
   // onDateChange(newDate: any) {
   //   this.dateTitle = moment(this.inlineDatePicker).format('DD/MM/YYYY')
   // }
@@ -90,11 +125,7 @@ export class PatientAppointmentsComponent implements OnInit {
 
   }
 
-  onPageChange(page: number): void {
-    this.currentPage = page;
 
-    // this.getHallData("", page)
-  }
 
 
   getStatusColor(status: any) {
@@ -144,6 +175,12 @@ export class PatientAppointmentsComponent implements OnInit {
           });
 
           this.dataToSend = res
+          this.completelyList = res
+          setTimeout(() => {
+            this.calculatePages();
+            this.setPage(this.currentPage);
+            this.totalView = this.dataToSend?.length;
+          }, 2000);
           // this.getProviderData(res)
         },
         (err: any) => {
@@ -157,5 +194,26 @@ export class PatientAppointmentsComponent implements OnInit {
     this.apiService.errorToster(error, 'Error!',);
   }
 
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.setPage(page)
+    // Update paged items or fetch new data based on the page
+  }
 
+  calculatePages(): void {
+    if (this.dataToSend?.length > 0) {
+      this.totalPages = Math.ceil(this.dataToSend.length / this.itemsPerPage);
+    }
+  }
+
+  setPage(page: number): void {
+    this.currentPage = page;
+    const startIndex = (page - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.dataToSend?.length);
+    this.pagedItems = this.dataToSend?.slice(startIndex, endIndex);
+    this.itemInView = this.pagedItems.length
+    console.log("this", this.pagedItems)
+
+
+  }
 }

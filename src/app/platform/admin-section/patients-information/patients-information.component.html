@@ -15,7 +15,7 @@
                             <div class="page-header-section mt-28">
                                 <div class="input-field">
                                     <input type="text" class=" placeholder-text "
-                                        placeholder="Search for Patient Information">
+                                        placeholder="Search for Patient Information"  [formControl]="searchedData">
                                     <img src="../../../../assets/images/provider/Icon.png"
                                         alt="Toggle Password Visibility" style="cursor: pointer;" />
                                 </div>
@@ -48,7 +48,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let data of patientList; let i = index">
+                                                <tr *ngFor="let data of pagedItems; let i = index">
                                                     
 
                                                     <td> {{data.f_name}} {{data.l_name}}</td>
@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer-section ">
-                                    <h3 class="page-index">Page {{itemInView}} of {{totalView}} </h3>
+                                    <h3 class="page-index">Items {{itemInView}} of {{totalView}} </h3>
                                     <div class="">
                                         <ng-container *ngIf="patientList?.length">
                                             <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"

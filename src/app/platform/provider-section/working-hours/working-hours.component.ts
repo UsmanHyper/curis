@@ -24,6 +24,7 @@ export class WorkingHoursComponent implements OnInit {
   cityLov: any;
   itemInView: number = 5;
   totalView: number = 10;
+  itemsPerPage: number = 10;
   workingHours: any;
   locationLov: any;
   locationNumber: any;
@@ -43,13 +44,17 @@ export class WorkingHoursComponent implements OnInit {
   currentPage: number = 1;
 
 
-  
+  completelyList: any;
+  searchedData: FormControl;
+  pagedItems: any[] = [];
 
-  
+
 
   constructor(private apiService: MainHomeService, public formBuilder: FormBuilder,
     private spinner: NgxSpinnerService, private providerService: providerService,
     private authenticationService: authenticationService, private modalService: BsModalService, private dss: DataSharingService) {
+    this.searchedData = new FormControl(null);
+
   }
   ngOnInit() {
     this.providerData = this.providerService.getProviderData()
@@ -66,14 +71,32 @@ export class WorkingHoursComponent implements OnInit {
 
       }
     })
+    this.searchedData.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
+      console.log("-----------", val);
+      this.searchData(this.searchedData.value)
+    })
 
   }
 
-  onPageChange(page: number): void {
-    this.currentPage = page;
+  searchData(searchText: any) {
 
-    // this.getHallData("", page)
+    console.log("this.completelyList",this.completelyList)
+    const searchProperties = ['dayName', 'locationName', 'startTime', 'endTime'];
+
+    let searchData = this.completelyList.filter((item: any) =>
+      searchProperties.some(prop =>
+        item[prop]?.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+    console.log("Filtered Data:", searchData);
+    this.filteredData = searchData
+    setTimeout(() => {
+      this.calculatePages();
+      this.setPage(this.currentPage);
+      this.totalView = this.filteredData?.length;
+    }, 2000);
   }
+
 
 
   filteredItems() {
@@ -198,17 +221,21 @@ export class WorkingHoursComponent implements OnInit {
             }
 
             ele.status = ele.isAvalible ? "Active" : "Inactive"
-            ele.isActive = ele.isActive 
+            ele.isActive = ele.isActive
 
           });
 
 
-          console.log("---------------------=",dt); // Check the result
-          console.log("---------------------=",working); // Check the result
+          console.log("---------------------=", dt); // Check the result
+          console.log("---------------------=", working); // Check the result
           this.workingHours = working
           this.filteredData = working
-          this.totalView = this.filteredData.length;
-          this.itemInView = this.filteredData.length;
+          this.completelyList = working
+          setTimeout(() => {
+            this.calculatePages();
+            this.setPage(this.currentPage);
+            this.totalView = this.filteredData?.length;
+          }, 2000);
 
 
           this.spinner.hide();
@@ -389,4 +416,27 @@ export class WorkingHoursComponent implements OnInit {
   //     }
   //   }
   // }
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.setPage(page)
+    // Update paged items or fetch new data based on the page
+  }
+
+  calculatePages(): void {
+    if (this.filteredData?.length > 0) {
+      this.totalPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
+    }
+  }
+
+  setPage(page: number): void {
+    this.currentPage = page;
+    const startIndex = (page - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.filteredData?.length);
+    this.pagedItems = this.filteredData?.slice(startIndex, endIndex);
+    this.itemInView = this.pagedItems.length
+    // this.viewportScroller.scrollToPosition([0, 0]);
+    console.log("this", this.pagedItems)
+
+
+  }
 }

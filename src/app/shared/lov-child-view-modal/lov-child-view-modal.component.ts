@@ -3,7 +3,7 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { first, Subscription, take, timer } from 'rxjs';
+import { debounceTime, distinctUntilChanged, first, Subscription, take, timer } from 'rxjs';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -36,15 +36,19 @@ export class LovChildViewModalComponent implements OnInit {
   userToken: any;
   lovValueList: any;
   lovAlldata: any;
+  pagedItems: any[] = [];
+
+  completelyList: any;
+  searchedData: FormControl
 
   constructor(
     private fb: FormBuilder, private router: Router, public bsModalRef: BsModalRef,
-    private modalService: BsModalService, private dss: DataSharingService,private viewportScroller: ViewportScroller,
+    private modalService: BsModalService, private dss: DataSharingService, private viewportScroller: ViewportScroller,
     private apiService: MainHomeService, private spinner: NgxSpinnerService,
     private providerService: providerService, private authenticationService: authenticationService, private adminService: adminService) {
 
 
-
+    this.searchedData = new FormControl(null);
 
 
   }
@@ -53,7 +57,34 @@ export class LovChildViewModalComponent implements OnInit {
     this.userToken = this.authenticationService.getUserToken();
     this.getData(this.initialState.payload)
 
-   this.title =  this.initialState.title
+    this.title = this.initialState.title
+
+
+    this.searchedData.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
+      console.log("-----------", val)
+
+      // this.getLovDetails();
+      this.searchData(this.searchedData.value)
+
+
+
+
+    })
+  }
+
+  searchData(searchText: any) {
+    console.log("searchText", searchText)
+    console.log("searchText", this.lovValueList)
+    let searchData = this.completelyList.filter((item: any) =>
+      item.value.toLowerCase().includes(searchText.toLowerCase())
+    );
+    console.log("Filtered Data:", searchData);
+    this.lovValueList = searchData
+    setTimeout(() => {
+      this.calculatePages();
+      this.setPage(this.currentPage);
+      this.totalView = this.lovValueList?.length;
+    }, 2000);
   }
 
   getData(id?: any) {
@@ -63,7 +94,13 @@ export class LovChildViewModalComponent implements OnInit {
         (res: any) => {
           // this.spinner.hide();
           this.lovValueList = res[0].lovs
+          this.completelyList = res[0].lovs
           this.lovAlldata = res[0]
+          setTimeout(() => {
+            this.calculatePages();
+            this.setPage(this.currentPage);
+            this.totalView = this.lovValueList?.length;
+          }, 2000);
         },
         (err: any) => {
           this.spinner.hide();
@@ -142,32 +179,26 @@ export class LovChildViewModalComponent implements OnInit {
 
   onPageChange(page: number): void {
     this.currentPage = page;
-
-    // this.getHallData("", page)
+    this.setPage(page)
+    // Update paged items or fetch new data based on the page
   }
 
-
-  calculatePages(item: number): void {
-    if (item > 0) {
-      this.totalPages = Math.ceil(item / this.itemsPerPage);
+  calculatePages(): void {
+    if (this.lovValueList?.length > 0) {
+      this.totalPages = Math.ceil(this.lovValueList.length / this.itemsPerPage);
     }
   }
-
 
   setPage(page: number): void {
     this.currentPage = page;
     const startIndex = (page - 1) * this.itemsPerPage;
-    const endIndex = Math.min(startIndex + this.itemsPerPage, this.totalItems);
-    // this.pagedItems = this.filteredData;
-
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.lovValueList?.length);
+    this.pagedItems = this.lovValueList?.slice(startIndex, endIndex);
+    this.itemInView = this.pagedItems.length
     this.viewportScroller.scrollToPosition([0, 0]);
-    // this.itemInView = this.totalItems
-    // this.totalView = this.pagedItems
+    console.log("this", this.pagedItems)
 
-    // this.pageInfo = {
-    //   page_size: this.totalItems || 0,
-    //   on_display: this.pagedItems.length || 0,
-    // };
+
   }
 
 
