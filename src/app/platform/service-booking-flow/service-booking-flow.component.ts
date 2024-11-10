@@ -65,8 +65,8 @@ export class ServiceBookingFlowComponent implements OnInit {
 
 
     this.userform = this.formBuilder.group({
-      first_name: [null, [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
-      last_name: [null, [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace]],
+      first_name: [null, [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace, CustomValidators.isAlphabetsAndSpace]],
+      last_name: [null, [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace, CustomValidators.isAlphabetsAndSpace]],
       contact_number: [null, [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), Validators.minLength(8), this.noWhitespaceValidator]],
       gender: ["Select your gender", [Validators.required]],
       dob: [null, [Validators.required]],
@@ -188,6 +188,8 @@ export class ServiceBookingFlowComponent implements OnInit {
       email: this.userform.controls['email'].value,
       dob: this.userform.controls['dob'].value,
       contact_no: this.userform.controls['contact_number'].value,
+      m_reports: this.userform.controls['notes'].value,
+
       password: "test12345",
     }
     console.log("=================", payload)

@@ -21,7 +21,6 @@ export class PaymentStatusComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute,) { }
 
 
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['successStatus']) {
       this.successStatus = changes['successStatus'].currentValue;

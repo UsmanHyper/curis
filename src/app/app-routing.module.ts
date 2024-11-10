@@ -87,6 +87,7 @@ const routes: Routes = [
         (mod) => mod.HomeComponent
       ),
   },
+
   {
     path: "service-providers",
     loadComponent: () =>
@@ -190,23 +191,15 @@ const routes: Routes = [
         (mod) => mod.ProviderResourceCenterComponent
       ),
   },
-  // {
-  //   path: "userDashboard",
-  //   component: UserDashboardComponent,
-  //   canActivate: [],
-  //   data: {
-  //     title: "user Dashboard",
-  //   },
-  //   children: [
-  //     {
-  //       path: "",
-  //       loadChildren: () =>
-  //         import("./user-module/user-module.module").then(
-  //           (m) => m.UserModuleModule
-  //         ),
-  //     },
-  //   ],
-  // },
+  {
+    path: 'payment-status',
+    loadComponent: () =>
+      import("./shared/payment-status/payment-status.component").then(
+        (mod) => mod.PaymentStatusComponent
+      ),
+  },
+  { path: '**', redirectTo: '' }
+
 
 ];
 

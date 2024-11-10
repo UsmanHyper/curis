@@ -5,10 +5,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
-// import { AppointmentSchedularModalComponent } from '../appointment-schedular-modal/appointment-schedular-modal.component';
-// import { MatDialog } from '@angular/material/dialog';
-// import { AppointmentModalComponent } from './appointment-modal/appointment-modal.component';
-// import { authenticationService } from 'src/app/authentication.service';
+
 import { providerService } from '../provider.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { first } from 'rxjs';
@@ -21,7 +18,6 @@ import { CalenderAppointmentModalComponent } from 'src/app/shared/calender-appoi
 import { authenticationService } from 'src/app/services/authentication.service';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 
-// import { homeService } from 'src/app/app.service';
 
 
 
@@ -41,7 +37,7 @@ export class CalenderComponent implements OnInit {
   modalRef!: BsModalRef;
 
   eventsPromise: Promise<EventInput[]> | any;
-
+  isModalOpen = false;
 
 
   calendarOptions: CalendarOptions = {
@@ -243,6 +239,13 @@ export class CalenderComponent implements OnInit {
   openModal(payload?: any, type?: any) {
     console.log("openModal", payload, type);
     if (!!payload) {
+      if (this.isModalOpen) {
+        return; // Prevent opening multiple modals
+      }
+
+      // Set the flag to true as the modal is now opening
+      this.isModalOpen = true;
+
       let initialState: ModalOptions = {
         initialState: {
           title: type === 'eventDataUpdate' ? 'Update Appointment Slot' : ' Add New Slot',
@@ -254,11 +257,19 @@ export class CalenderComponent implements OnInit {
       this.modalRef = this.modalService.show(CalenderAppointmentModalComponent, {
         initialState,
         class: 'modal-dialog-centered modal-lg',
-        // ignoreBackdropClick: true,
+        ignoreBackdropClick: true,
         keyboard: false,
         animated: true,
-        backdrop: true,
-        // backdrop: 'static',
+        // backdrop: true,
+        backdrop: 'static',
+      });
+
+      setTimeout(() => {
+        if (this.modalRef && this.modalRef.onHide) {
+          this.modalRef.onHide.subscribe(() => {
+            this.isModalOpen = false;
+          });
+        }
       });
     }
 

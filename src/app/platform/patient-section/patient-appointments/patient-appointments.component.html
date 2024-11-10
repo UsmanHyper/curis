@@ -29,7 +29,6 @@
                                 <div class="card-title">
                                     <h2> Appointments</h2>
                                 </div>
-                                <!-- <hr> -->
                                 <div class="card-content overflow-hidden">
                                     <div class="table-wrapper card-overflow">
                                         <table class="table">
@@ -42,7 +41,7 @@
                                                     <th scope="col">Appointment Date</th>
                                                     <th scope="col">Status</th>
                                                     <th scope="col">View</th>
-                                                    <th scope="col">Download Invoice</th>
+                                                    <!-- <th scope="col">Download Invoice</th> -->
                                                     <th scope="col">Cancel</th>
                                                 </tr>
                                             </thead>
@@ -67,16 +66,55 @@
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <a class="tag_btn-reschdule"
-                                                            (click)="viewAppointment(appointments)">View</a>
+                                                        <!-- <a class="tag_btn-reschdule"
+                                                            (click)="viewAppointment(appointments)">View</a> -->
+                                                            <ng-container *ngIf="!appointments?.status">
+                                                                <a class="tag_btn-reschdule disable-btn">View
+                                                                    Appointment</a>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="appointments?.status">
+                                                                <a class="tag_btn-reschdule"
+                                                                    (click)="viewAppointment(appointments)">View
+                                                                    Appointment</a>
+                                                            </ng-container>
                                                     </td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <a class="tag_btn-reschdule"
                                                             (click)="viewAppointment('abcd')">Download Invoice</a>
+                                                    </td> -->
+                                                    <td>
+                                                        <ng-container *ngIf="!appointments?.status">
+                                                            <a class="tag_btn-cancel">
+                                                                Appointment Cancelled</a>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="appointments?.status">
+                                                            <a class="tag_btn-cancel"
+                                                                (click)="cancelAppointment(appointments._id)">Cancel
+                                                                Appointment</a>
+                                                        </ng-container>
+                                                    </td>
+                                                    <!-- <td>
+                                                        <ng-container *ngIf="!appointments?.status">
+                                                            <a class="btn-business disable-btn">View
+                                                                Appointment</a>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="appointments?.status">
+                                                            <a class="btn-business"
+                                                                (click)="viewAppointment(appointments)">View
+                                                                Appointment</a>
+                                                        </ng-container>
                                                     </td>
                                                     <td>
-                                                        <a class="tag_btn-cancel">Cancel</a>
-                                                    </td>
+                                                        <ng-container *ngIf="!appointments?.status">
+                                                            <a class="tag_btn-cancel">
+                                                                Appointment Cancelled</a>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="appointments?.status">
+                                                            <a class="tag_btn-cancel"
+                                                                (click)="cancelAppointment(appointments._id)">Cancel
+                                                                Appointment</a>
+                                                        </ng-container>
+                                                    </td> -->
 
                                                 </tr>
                                             </tbody>

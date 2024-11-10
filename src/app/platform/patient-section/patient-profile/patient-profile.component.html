@@ -40,7 +40,7 @@
                                             <label for="lname">Middle Initial</label>
                                             <input type="text" placeholder="Enter Middle Initial Name" class="border"
                                                 formControlName="middleName" autocomplete="off" aria-autocomplete
-                                                required name="new-middleName" />
+                                                name="new-middleName" />
                                             <ng-container
                                                 *ngIf="personalInformationForm.get('middleName')?.invalid && (personalInformationForm.get('middleName')?.dirty || personalInformationForm.get('middleName')?.touched)">
                                                 <ng-container *ngIf="personalInformationForm.get('middleName')?.errors">
@@ -128,7 +128,17 @@
 
                                 </div>
 
-                                <!-- <---------------------------------Emergency Contact---------------------------->
+
+                                <!-- </form> -->
+                            </form>
+                            <div class="d-flex gap-4 group-wrapper mt-12 justify-content-end">
+                                <button type="button" class="btn btn-submit btn-width w-30-p"
+                                    (click)="submitPatientForm()" [disabled]="!checkPatientFields()">Save Personal
+                                    Information</button>
+                            </div>
+
+                            <!-- <---------------------------------Emergency Contact---------------------------->
+                            <form [formGroup]="patientDemographics" autocomplete="disable">
 
 
                                 <div class="text-content mt-32">
@@ -148,9 +158,9 @@
                                                 name="new-emergency_firstName" autocomplete="off" aria-autocomplete
                                                 required />
                                             <ng-container
-                                                *ngIf="personalInformationForm.get('emergency_firstName')?.invalid && (personalInformationForm.get('emergency_firstName')?.dirty || personalInformationForm.get('emergency_firstName')?.touched)">
+                                                *ngIf="patientDemographics.get('emergency_firstName')?.invalid && (patientDemographics.get('emergency_firstName')?.dirty || patientDemographics.get('emergency_firstName')?.touched)">
                                                 <ng-container
-                                                    *ngIf="personalInformationForm.get('emergency_firstName')?.errors">
+                                                    *ngIf="patientDemographics.get('emergency_firstName')?.errors">
                                                     <span class="text-danger error-state">First name is
                                                         required</span>
                                                 </ng-container>
@@ -164,9 +174,9 @@
                                                 name="new-emergency_lastName" autocomplete="off" aria-autocomplete
                                                 required />
                                             <ng-container
-                                                *ngIf="personalInformationForm.get('emergency_lastName')?.invalid && (personalInformationForm.get('emergency_lastName')?.dirty || personalInformationForm.get('emergency_lastName')?.touched)">
+                                                *ngIf="patientDemographics.get('emergency_lastName')?.invalid && (patientDemographics.get('emergency_lastName')?.dirty || patientDemographics.get('emergency_lastName')?.touched)">
                                                 <ng-container
-                                                    *ngIf="personalInformationForm.get('emergency_lastName')?.errors">
+                                                    *ngIf="patientDemographics.get('emergency_lastName')?.errors">
                                                     <span class="text-danger error-state">Last name is
                                                         required</span>
                                                 </ng-container>
@@ -176,13 +186,15 @@
 
                                         <div class="input-group">
                                             <label for="fname">Contact Number </label>
-                                            <input type="text" placeholder="Enter Contact Number "
+
+                                            <input type="text" mask="(000) 000-0000" placeholder="(123)-456-7890"
                                                 formControlName="emergency_contact_no" class="border"
-                                                name="new-contact_no" autocomplete="off" aria-autocomplete required />
+                                                name="new-emergency_contact_no" autocomplete="off" aria-autocomplete
+                                                required />
                                             <ng-container
-                                                *ngIf="personalInformationForm.get('emergency_contact_no')?.invalid && (personalInformationForm.get('emergency_contact_no')?.dirty || personalInformationForm.get('emergency_contact_no')?.touched)">
+                                                *ngIf="patientDemographics.get('emergency_contact_no')?.invalid && (patientDemographics.get('emergency_contact_no')?.dirty || patientDemographics.get('emergency_contact_no')?.touched)">
                                                 <ng-container
-                                                    *ngIf="personalInformationForm.get('emergency_contact_no')?.errors">
+                                                    *ngIf="patientDemographics.get('emergency_contact_no')?.errors">
                                                     <span class="text-danger error-state">Contact Number is
                                                         required</span>
                                                 </ng-container>
@@ -195,18 +207,15 @@
 
 
                                 </div>
-                                <!-- </form> -->
-                            </form>
 
-                            <!-- <---------------------------------Patient Demographics---------------------------->
+                                <!-- <---------------------------------Patient Demographics---------------------------->
 
-                            <div class="text-content mt-32">
-                                <h2 class="profile-header-text">Patient Demographics</h2>
+                                <div class="text-content mt-32">
+                                    <h2 class="profile-header-text">Patient Demographics</h2>
 
-                            </div>
-                            <hr>
+                                </div>
+                                <hr>
 
-                            <form [formGroup]="patientDemographics" autocomplete="disable">
 
                                 <div class="form-wrapper">
                                     <div class="d-flex gap-4 group-wrapper ">
@@ -227,7 +236,7 @@
 
                                         <div class="input-group">
                                             <label for="fname">Contact One</label>
-                                            <input type="text" placeholder="Enter Contact One"
+                                            <input type="text" mask="(000) 000-0000" placeholder="(123)-456-7890"
                                                 formControlName="contact_one" class="border" name="new-contact_one"
                                                 autocomplete="off" aria-autocomplete required />
                                             <ng-container
@@ -240,7 +249,7 @@
                                         </div>
                                         <div class="input-group">
                                             <label for="fname">Contact Two </label>
-                                            <input type="text" placeholder="Enter Contact Two"
+                                            <input type="text" mask="(000) 000-0000" placeholder="(123)-456-7890"
                                                 formControlName="contact_two" class="border" name="new-contact_two"
                                                 autocomplete="off" aria-autocomplete required />
                                             <ng-container
@@ -256,12 +265,21 @@
                                     <div class="d-flex gap-4 group-wrapper mt-12 ">
                                         <div class="input-group">
                                             <label for="fname"> City</label>
-                                            <select class="form-select input-style" aria-label="Default select example"
+                                            <!-- <select class="form-select input-style" aria-label="Default select example"
                                                 formControlName="city">
                                                 <option disabled selected> Select City</option>
                                                 <option *ngFor="let item of cityLov" [value]="item.value">{{ item.value
                                                     }}</option>
-                                            </select>
+                                            </select> -->
+                                            <input type="text" class="form-control" placeholder="Select City"
+                                                (keyup)="onKeyUpCity($event)" formControlName="city" />
+
+                                            <div class="autocomplete-items" *ngIf="filteredCity.length > 0">
+                                                <div *ngFor="let item of filteredCity" (click)="selectCity(item.city) "
+                                                    class="fs-16">
+                                                    {{ item.city }}
+                                                </div>
+                                            </div>
                                             <ng-container
                                                 *ngIf="patientDemographics.get('city')?.invalid && (patientDemographics.get('city')?.dirty || patientDemographics.get('city')?.touched)">
                                                 <ng-container *ngIf="patientDemographics.get('city')?.errors">
@@ -289,7 +307,7 @@
                                         </div>
 
                                         <div class="input-group">
-                                            <label for="fname">Country</label>
+                                            <label for="fname">County</label>
                                             <select class="form-select input-style" aria-label="Default select example"
                                                 formControlName="country">
                                                 <option disabled selected> Select Country</option>
@@ -306,12 +324,17 @@
                                         </div>
                                         <div class="input-group">
                                             <label for="fname">Zip Code</label>
-                                            <select class="form-select input-style" aria-label="Default select example"
-                                                formControlName="zipcode">
-                                                <option disabled selected> Select Zip Code</option>
-                                                <option *ngFor="let item of zipcodeLov" [value]="item.value">{{
-                                                    item.value }}</option>
-                                            </select>
+                                         
+                                            <input type="text" class="form-control" placeholder="Select Location"
+                                                (keyup)="onKeyUp($event)" maxlength="5" minlength="5"
+                                                formControlName="zipCode" />
+
+                                            <div class="autocomplete-items" *ngIf="filteredLocations.length > 0">
+                                                <div *ngFor="let item of filteredLocations"
+                                                    (click)="selectLocation(item.zipCode) " class="fs-16">
+                                                    {{ item.zipCode }}
+                                                </div>
+                                            </div>
                                             <ng-container
                                                 *ngIf="patientDemographics.get('zipcode')?.invalid && (patientDemographics.get('zipcode')?.dirty || patientDemographics.get('zipcode')?.touched)">
                                                 <ng-container *ngIf="patientDemographics.get('zipcode')?.errors">
@@ -340,7 +363,7 @@
                                             <label for="fname">Address Two </label>
                                             <input type="text" placeholder="Enter Address Line 2"
                                                 formControlName="address_two" class="border" name="new-address_two"
-                                                autocomplete="off" aria-autocomplete required />
+                                                autocomplete="off" aria-autocomplete />
                                             <ng-container
                                                 *ngIf="patientDemographics.get('address_two')?.invalid && (patientDemographics.get('address_two')?.dirty || patientDemographics.get('address_two')?.touched)">
                                                 <ng-container *ngIf="patientDemographics.get('address_two')?.errors">
@@ -357,7 +380,8 @@
 
                         </div>
                         <div class="d-flex gap-4 group-wrapper mt-12 justify-content-end">
-                            <button type="button" class="btn btn-submit btn-width w-30-p">Save Profile
+                            <button type="button" class="btn btn-submit btn-width w-30-p" (click)="submitForm()"
+                                [disabled]="!checkAllFields()">Save Profile
                                 Information</button>
                         </div>
                     </div>

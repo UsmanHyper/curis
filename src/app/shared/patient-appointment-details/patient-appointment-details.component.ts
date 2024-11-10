@@ -49,7 +49,7 @@ export class PatientAppointmentDetailsComponent implements OnInit {
       startTime: [''],
       endTime: [''],
       patientNotes: [''],
-      m_repots: [''],
+      m_reports: [''],
       investigation_ordered: [''],
       prescription: [''],
     });
@@ -85,6 +85,7 @@ export class PatientAppointmentDetailsComponent implements OnInit {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
     let patientData = data?.patientId
+    console.log("========", data);
     this.appointmentForm.get('f_name')?.setValue(data?.patientId?.f_name);
     this.appointmentForm.get('l_name')?.setValue(data?.patientId?.l_name);
     this.appointmentForm.get('email')?.setValue(data?.patientId?.email);
@@ -98,36 +99,11 @@ export class PatientAppointmentDetailsComponent implements OnInit {
     this.appointmentForm.get('startTime')?.setValue(moment(data?.appointmentDate).format('dd/MM/yyyy hh:mm a'));
     this.appointmentForm.get('endTime')?.setValue(moment(data?.appointmentDate).format('dd/MM/yyyy hh:mm a'));
 
-    this.appointmentForm.get('patientNotes')?.setValue(data?.slothDetails?.patientNotes || 'Nill');
+    this.appointmentForm.get('patientNotes')?.setValue(data?.patientId?.notes || 'Nill');
     this.appointmentForm.get('m_reports')?.setValue(data?.medicalNotes || 'Nill');
     this.appointmentForm.get('investigation_ordered')?.setValue(data?.investigationsOrdered || 'Nill');
     this.appointmentForm.get('prescription')?.setValue(data?.prescription || 'Nill');
   }
 
-
-
-
-
-
-  submitForm() {
-    let payload = {
-      medicalNotes: this.appointmentForm.controls['m_reports'].value,
-      investigationsOrdered: this.appointmentForm.controls['investigation_ordered'].value,
-      prescription: this.appointmentForm.controls['prescription'].value
-    }
-
-    let id = this.initialState.payload._id;
-    this.providerService.putScheduledAppointments(this.userToken, id, payload)
-      .pipe(first())
-      .subscribe(
-        (res: any) => {
-          this.dss.sendSignal({ type: 'patientInteraction-saved', data: "success" })
-        },
-        (err: any) => {
-
-          this.showError(err?.error?.message?.description);
-        }
-      );
-  }
 
 }

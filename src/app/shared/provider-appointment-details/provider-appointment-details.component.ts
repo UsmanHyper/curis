@@ -78,6 +78,7 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
     let patientData = data?.patientId
+    console.log("data----------1", data)
     this.appointmentForm.get('f_name')?.setValue(patientData.f_name)
     this.appointmentForm.get('l_name')?.setValue(patientData.l_name)
     this.appointmentForm.get('email')?.setValue(patientData.email)
@@ -89,13 +90,7 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
   }
 
 
-  patientReport() {
 
-  }
-
-  updatePatientReport() {
-
-  }
 
   submitForm() {
     let payload = {
@@ -109,7 +104,10 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (res: any) => {
-          this.dss.sendSignal({ type: 'patientInteraction-saved', data: "success" })
+          this.apiService.successToster("Patient Demographics Updated Successfully", "Success");
+
+          // this.dss.sendSignal({ type: 'patientInteraction-saved', data: "success" })
+          this.closeModal()
         },
         (err: any) => {
 

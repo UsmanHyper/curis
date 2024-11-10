@@ -313,7 +313,7 @@ validateZipCode() {
         this.providerQualification(27);
         break;
       case "Dentist":
-        this.providerQualification(27);
+        this.providerQualification(28);
         break;
       default:
         console.warn('Selected specialty does not have a mapped ID.');
@@ -549,6 +549,7 @@ validateZipCode() {
         (res: any) => {
           this.providerService.setProviderData(res);
           this.getProviderData();
+          this.apiService.successToster("Provider Basic Information Updated Successfully", "Success");
           this.spinner.hide();
         },
         (err: any) => {
@@ -567,6 +568,8 @@ validateZipCode() {
         (res: any) => {
           this.providerService.setProviderData(res);
           this.getProviderData();
+          this.apiService.successToster("Provider Personal Information Updated Successfully", "Success");
+
           this.spinner.hide();
         },
         (err: any) => {

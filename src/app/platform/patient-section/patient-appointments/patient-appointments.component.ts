@@ -154,7 +154,27 @@ export class PatientAppointmentsComponent implements OnInit {
         return '#ecec006b'; // Default color
     }
   }
+  cancelAppointment(item: any) {
+    let payload = {
+      appointmentId: item
+    }
 
+
+    this.providerService.cancelAppointment(payload).pipe(first())
+      .subscribe(
+        (res: any) => {
+          console.log("---------------", res);
+          this.getAppointDetails();
+
+        },
+        (err: any) => {
+          // this.spinner.hide();
+          // this.showError(err?.error?.message?.description);
+        }
+      );
+
+
+  }
 
   getAppointDetails() {
     this.spinner.show();

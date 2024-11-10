@@ -365,7 +365,7 @@ validateZipCode() {
         this.providerQualification(27);
         break;
       case "Dentist":
-        this.providerQualification(27);
+        this.providerQualification(28);
         break;
       default:
         console.warn('Selected specialty does not have a mapped ID.');

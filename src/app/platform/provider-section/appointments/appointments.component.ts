@@ -44,9 +44,9 @@ export class AppointmentsComponent implements OnInit {
   searchedData: FormControl;
   pagedItems: any[] = [];
 
-  constructor(private providerService: providerService, private authenticationService: authenticationService, 
+  constructor(private providerService: providerService, private authenticationService: authenticationService,
     private modalService: BsModalService, private dss: DataSharingService, private viewportScroller: ViewportScroller) {
-      this.searchedData = new FormControl(null);
+    this.searchedData = new FormControl(null);
 
   }
 
@@ -72,7 +72,7 @@ export class AppointmentsComponent implements OnInit {
     //   item.name.toLowerCase().includes(searchText.toLowerCase())
     // );
     // console.log("Filtered Data:", searchData);
-    const searchProperties = ['patientId.f_name', 'slothDetails?.startTime', 'patientId.l_name', ];
+    const searchProperties = ['patientId.f_name', 'slothDetails?.startTime', 'patientId.l_name',];
     // let searchData = this.completelyList.filter((item: any) =>
     //   Object.keys(item).some(key =>
     //     typeof item[key] === 'string' && item[key].toLowerCase().includes(searchText.toLowerCase())
@@ -128,33 +128,58 @@ export class AppointmentsComponent implements OnInit {
 
 
 
-  getStatusColor(status: string): string {
+  // getStatusColor(status: string): string {
+  //   switch (status) {
+  //     case 'New':
+  //       return '#027A48'; // Example color for booked status
+  //     case 'Completed':
+  //       return '#026AA2'; // Example color for reserved status
+  //     case 'cancelled':
+  //       return '#B42318';
+  //     // Add more cases as needed
+  //     default:
+  //       return '#00000091'; // Default color
+  //   }
+  // }
+  // getStatusBg(status: string): string {
+  //   switch (status) {
+  //     case 'New':
+  //       return '#ECFDF3'; // Example color for booked status
+  //     case 'Completed':
+  //       return '#F0F9FF'; // Example color for reserved status
+  //     case 'cancelled':
+  //       return '#d50000';
+  //     // Add more cases as needed
+  //     default:
+  //       return '#ecec006b'; // Default color
+  //   }
+  // }
+  getStatusColor(status: any) {
     switch (status) {
-      case 'New':
+      case true:
         return '#027A48'; // Example color for booked status
       case 'Completed':
         return '#026AA2'; // Example color for reserved status
-      case 'cancelled':
+      case false:
         return '#B42318';
       // Add more cases as needed
       default:
         return '#00000091'; // Default color
     }
   }
-  getStatusBg(status: string): string {
+  getStatusBg(status: any) {
     switch (status) {
-      case 'New':
+      case true:
         return '#ECFDF3'; // Example color for booked status
       case 'Completed':
         return '#F0F9FF'; // Example color for reserved status
-      case 'cancelled':
-        return '#d50000';
+      case false:
+        return '#c1414130';
       // Add more cases as needed
       default:
         return '#ecec006b'; // Default color
     }
   }
-
 
   cancelAppointment(item: any) {
     let payload = {
@@ -166,6 +191,8 @@ export class AppointmentsComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("---------------", res)
+          this.getProviderAppointments();
+
         },
         (err: any) => {
           // this.spinner.hide();
@@ -181,9 +208,18 @@ export class AppointmentsComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (res: any) => {
-          this.appointmentList = res
 
-          this.completelyList = res
+          let dt = res;
+
+          dt.forEach((ele: any) => {
+
+            ele.status = (ele.isCancelled === false && ele.isCompleted === false && ele.isPaid === true) ? true : false
+
+
+          });
+          this.appointmentList = dt
+
+          this.completelyList = dt
           setTimeout(() => {
             this.calculatePages();
             this.setPage(this.currentPage);

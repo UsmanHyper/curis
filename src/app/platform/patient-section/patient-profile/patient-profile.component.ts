@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { first } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment'
@@ -8,6 +8,7 @@ import { userService } from 'src/app/services/user.service';
 import { providerService } from '../../provider-section/provider.service';
 import { authenticationService } from 'src/app/services/authentication.service';
 import { MainHomeService } from 'src/app/services/main-home.service';
+import { CustomValidators } from 'src/app/utilities/custom.validator';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class PatientProfileComponent implements OnInit {
   isEditPersonalInformation: boolean | any = false;
   userId: any;
   patientId: any;
-
+  filteredLocations: any[] = [];
+  filteredCity: any[] = [];
 
   constructor(private userService: userService, private formBuilder: FormBuilder, private providerService: providerService, private authenticationService: authenticationService, private spinner: NgxSpinnerService, private apiService: MainHomeService,) {
 
@@ -38,23 +40,39 @@ export class PatientProfileComponent implements OnInit {
       lastName: ["", [Validators.required,]],
       middleName: ["", []],
       email: ["", [Validators.required,]],
-      gender: ["", Validators.required],
-      emergency_firstName: ["", [Validators.required,]],
-      emergency_lastName: ["", [Validators.required,]],
-      emergency_contact_no: ["", [Validators.required,]],
+      gender: ["", Validators.required,],
+
 
     });
 
     this.patientDemographics = this.formBuilder.group({
-      DOB: ["", Validators.required],
-      contact_one: ["", Validators.required],
-      contact_two: ["", Validators.required],
-      city: ["Select City", Validators.required],
-      state: ["Select State", Validators.required],
-      country: ["Select Country", Validators.required],
-      zipcode: ["Select Zip Code", Validators.required],
+      DOB: ["", Validators.required,],
+      contact_one: ["", Validators.required,],
+      contact_two: ["", Validators.required,],
+      state: ["Select State", Validators.required,],
+      country: ["Select Country", Validators.required,],
+      zipCode: [
+        "",
+        [
+          Validators.required,
+          Validators.maxLength(5),
+          Validators.minLength(5),
+
+          CustomValidators.noEmptyValue
+        ]
+      ],
+      city: [
+        "",
+        [
+          Validators.required,
+          CustomValidators.noEmptyValue
+        ]
+      ],
       address_one: ['', Validators.required],
-      address_two: ['', Validators.required],
+      address_two: ['',],
+      emergency_firstName: ["", [Validators.required,]],
+      emergency_lastName: ["", [Validators.required,]],
+      emergency_contact_no: ["", [Validators.required,]],
       // socialSecurityNumber: ['', Validators.required],
 
 
@@ -85,12 +103,104 @@ export class PatientProfileComponent implements OnInit {
   }
 
 
-  setUserFormValue(data: any) {
+  onKeyUpCity(event: KeyboardEvent) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input.length >= 3) {
+      this.apiService.getCity(input).subscribe((res: any) => {
+        this.filteredCity = res.data;
+      }, (err: any) => {
+        this.filteredCity = [];
+        this.apiService.errorToster("Zip Code Not Found", "Error");
+        this.patientDemographics.get('city')?.setErrors({ invalidCity: true });
+      });
+    } else {
+      this.filteredCity = [];
+      this.patientDemographics.get('city')?.setErrors({ invalidCity: true });
+    }
+  }
 
+  selectCity(item: any) {
+    this.validateCity();
+    this.patientDemographics.get('city')?.setValue(item);
+    this.patientDemographics.get('city')?.updateValueAndValidity(); // Re-validate
+    this.filteredCity = [];
+  }
+
+
+  validateCity() {
+    const cityControl = this.patientDemographics.get('city');
+
+    // Perform validation
+    if (cityControl?.value && cityControl.value.length >= 3) {
+      const match = this.filteredLocations.find(item => item.city === cityControl.value);
+      if (!match) {
+        // If no match, set the control to invalid with an error
+        cityControl.setErrors({ invalid: true });
+      } else {
+        // Clear any previous errors if match is found
+        cityControl.setErrors(null);
+      }
+    } else {
+      // Clear any previous errors if the value is not long enough
+      cityControl?.setErrors(null);
+    }
+  }
+
+
+  // Call this function manually when you want to check and set the error status
+  validateZipCode() {
+    const zipCodeControl = this.patientDemographics.get('zipCode');
+
+    // Perform validation
+    if (zipCodeControl?.value && zipCodeControl.value.length >= 3) {
+      const match = this.filteredLocations.find(item => item.zipCode === zipCodeControl.value);
+      if (!match) {
+        // If no match, set the control to invalid with an error
+        zipCodeControl.setErrors({ invalidLocation: true });
+      } else {
+        // Clear any previous errors if match is found
+        zipCodeControl.setErrors(null);
+      }
+    } else {
+      // Clear any previous errors if the value is not long enough
+      zipCodeControl?.setErrors(null);
+    }
+  }
+
+
+  onKeyUp(event: KeyboardEvent) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input.length >= 3) {
+      this.apiService.getLocations(input).subscribe((res: any) => {
+        this.filteredLocations = res.data;
+        console.log("---------------", res.data);
+      }, (err: any) => {
+        this.filteredLocations = [];
+        this.apiService.errorToster("Zip Code Not Found", "Error")
+        this.patientDemographics.get('zipCode')?.setErrors({ invalid: true });
+      });
+    } else {
+      // this.filteredLocations = [];
+      this.patientDemographics.get('zipCode')?.setErrors({ invalid: true });
+    }
+  }
+
+  selectLocation(item: any) {
+
+    this.patientDemographics.get('zipCode')?.setValue(item);
+    this.validateZipCode()
+    this.patientDemographics.get('zipCode')?.updateValueAndValidity(); // Re-validate
+    this.filteredLocations = [];
+
+  }
+
+
+  setUserFormValue(data: any) {
     this.personalInformationForm.get('firstName')?.setValue(this.patientData.f_name)
     this.personalInformationForm.get('lastName')?.setValue(this.patientData.l_name)
     this.personalInformationForm.get('email')?.setValue(this.patientData.email)
     this.personalInformationForm.get('gender')?.setValue(this.patientData.gender)
+    this.personalInformationForm.get('middleName')?.setValue(this.patientData.mid_name || '')
   }
 
   getGenderLov() {
@@ -181,7 +291,7 @@ export class PatientProfileComponent implements OnInit {
 
           } else {
             this.isEdit = true;
-            this.setPatientDemograpicValue(dt)
+            this.setPatientDemographicValue(dt)
             this.patientId = dt._id;
           }
         },
@@ -194,7 +304,8 @@ export class PatientProfileComponent implements OnInit {
 
 
 
-  setPatientDemograpicValue(data: any) {
+  setPatientDemographicValue(data: any) {
+    console.log("data", data)
     let dateObj = moment(data['DOB'], "MM/DD/YYYY ");
     let convertedDate = dateObj.format("YYYY-MM-DD");
     this.patientDemographics.get('DOB')?.setValue(convertedDate);
@@ -203,20 +314,14 @@ export class PatientProfileComponent implements OnInit {
     this.patientDemographics.get('city')?.setValue(data.city);
     this.patientDemographics.get('state')?.setValue(data.state);
     this.patientDemographics.get('country')?.setValue(data.country);
-    this.patientDemographics.get('zipcode')?.setValue(data.zipcode);
+    this.patientDemographics.get('zipCode')?.setValue(data.zipcode);
     this.patientDemographics.get('address_one')?.setValue(data.address_one);
     this.patientDemographics.get('address_two')?.setValue(data.address_two);
+    this.patientDemographics.get('emergency_firstName')?.setValue(data.emergency_firstName || '')
+    this.patientDemographics.get('emergency_lastName')?.setValue(data.emergency_lastName || '')
+    this.patientDemographics.get('emergency_contact_no')?.setValue(data.emergency_contact_no || '')
     // this.patientDemographics.get('socialSecurityNumber')?.setValue(data.socialSecurityNumber);
   }
-
-  patientReport() {
-
-  }
-
-  updatepatientReport() {
-
-  }
-
 
 
   submitForm() {
@@ -230,57 +335,58 @@ export class PatientProfileComponent implements OnInit {
       city: this.patientDemographics.controls['city'].value,
       state: this.patientDemographics.controls['state'].value,
       country: this.patientDemographics.controls['country'].value,
-      zipcode: this.patientDemographics.controls['zipcode'].value,
+      zipcode: this.patientDemographics.controls['zipCode'].value,
       address_one: this.patientDemographics.controls['address_one'].value,
       address_two: this.patientDemographics.controls['address_two'].value,
-      socialSecurityNumber: this.patientDemographics.controls['socialSecurityNumber'].value,
+      emergency_firstName: this.patientDemographics.controls['emergency_firstName']?.value,
+      emergency_lastName: this.patientDemographics.controls['emergency_lastName']?.value,
+      emergency_contact_no: this.patientDemographics.controls['emergency_contact_no']?.value,
+      // socialSecurityNumber: this.patientDemographics.controls['socialSecurityNumber'].value,
 
     }
 
-    if (this.isEdit === true) {
-      this.userService.putPatientInformation(this.userToken, this.patientId, payload)
-        .pipe(first())
-        .subscribe(
-          (res: any) => {
-          },
-          (err: any) => {
-            // this.spinner.hide();
-            this.showError(err?.error?.message?.description);
-          }
-        )
 
-    } else {
+    this.userService.postPatientInformation(this.userToken, this.patientId, payload)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.patientId = res._id;
+          // this.isEdit = true;
+          this.apiService.successToster("Patient Personal Information Updated Successfully", "Success");
+        },
+        (err: any) => {
+          // this.spinner.hide();
+          this.showError(err?.error?.message?.description);
+        }
+      )
+    
 
-      this.userService.postPatientInformation(this.userToken, payload)
-        .pipe(first())
-        .subscribe(
-          (res: any) => {
-            this.patientId = res._id;
-            this.isEdit = true;
-          },
-          (err: any) => {
-            // this.spinner.hide();
-            this.showError(err?.error?.message?.description);
-          }
-        )
-    }
   }
+
+
+
   showError(error: any) {
     this.apiService.errorToster(error, 'Error!',);
   }
 
 
   submitPatientForm() {
+
     let payload = {
       f_name: this.personalInformationForm.controls['firstName']?.value,
       l_name: this.personalInformationForm.controls['lastName']?.value,
       gender: this.personalInformationForm.controls['gender']?.value,
+      email: this.personalInformationForm.controls['email']?.value,
+      mid_name: this.personalInformationForm.controls['middleName']?.value,
+
     }
 
     this.userService.putPatientData(this.userToken, this.patientData._id, payload)
       .pipe(first())
       .subscribe(
         (res: any) => {
+          this.apiService.successToster("Patient Basic Information Updated Successfully", "Success");
+
         },
         (err: any) => {
           // this.spinner.hide();
@@ -288,6 +394,21 @@ export class PatientProfileComponent implements OnInit {
         }
       )
 
+  }
+
+  checkPatientFields(): boolean {
+    return (
+      this.personalInformationForm.valid
+
+    );
+  }
+
+  checkAllFields(): boolean {
+    return (
+      this.patientDemographics.valid
+
+
+    );
   }
 
 }

@@ -11,6 +11,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ChangePasswordComponent } from 'src/app/shared/change-password/change-password.component';
 import { PaginationComponent } from 'src/app/shared/pagination/pagination.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 
@@ -31,6 +32,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     HeaderComponent,
     FooterComponent,
     SharedModule,
+    NgxMaskModule,
     ChangePasswordComponent, PaginationComponent, ModalModule.forRoot()
 
 

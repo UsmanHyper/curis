@@ -14,7 +14,8 @@
 
                             <div class="page-header-section mt-28">
                                 <div class="input-field">
-                                    <input type="text" class=" placeholder-text " placeholder="Search for Appointments" [formControl]="searchedData">
+                                    <input type="text" class=" placeholder-text " placeholder="Search for Appointments"
+                                        [formControl]="searchedData">
                                     <img src="../../../../assets/images/provider/Icon.png"
                                         alt="Toggle Password Visibility" style="cursor: pointer;" />
                                 </div>
@@ -71,21 +72,42 @@
                                                     <!-- <td>{{ '27/07/2024 01:20 PM' | date: 'dd MMM yyyy'
                                                         }}</td> -->
 
-                                                    <td>
+                                                    <!-- <td>
                                                         <span class="tag" [style.color]="getStatusColor('New')"
                                                             [style.background-color]="getStatusBg('New')">
                                                             {{ 'New' | titlecase }}
-                                                            <!-- {{ order?.order_status | titlecase }} -->
+                                                        </span>
+                                                    </td> -->
+                                                    <td>
+                                                        <span class="tag"
+                                                            [style.color]="getStatusColor(appointments?.status)"
+                                                            [style.background-color]="getStatusBg(appointments?.status)">
+                                                            {{ appointments?.status === true ? 'New':'Cancelled' |
+                                                            titlecase }}
                                                         </span>
                                                     </td>
                                                     <!-- <td><a class="tag_btn-reschdule">Reschedule</a></td> -->
                                                     <td>
-                                                        <a class="btn-business"
-                                                            (click)="viewAppointment(appointments)">View Appointment</a>
+                                                        <ng-container *ngIf="!appointments?.status">
+                                                            <a class="btn-business disable-btn">View
+                                                                Appointment</a>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="appointments?.status">
+                                                            <a class="btn-business"
+                                                                (click)="viewAppointment(appointments)">View
+                                                                Appointment</a>
+                                                        </ng-container>
                                                     </td>
                                                     <td>
-                                                        <a class="tag_btn-cancel"
-                                                            (click)="cancelAppointment(appointments._id)">Cancel Appointment</a>
+                                                        <ng-container *ngIf="!appointments?.status">
+                                                            <a class="tag_btn-cancel">
+                                                                Appointment Cancelled</a>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="appointments?.status">
+                                                            <a class="tag_btn-cancel"
+                                                                (click)="cancelAppointment(appointments._id)">Cancel
+                                                                Appointment</a>
+                                                        </ng-container>
                                                     </td>
 
                                                 </tr>

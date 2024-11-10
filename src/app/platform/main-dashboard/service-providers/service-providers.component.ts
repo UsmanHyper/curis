@@ -79,6 +79,7 @@ export class ServiceProvidersComponent implements OnInit {
   disableLocation: boolean = false;
   dateSelected: any
 
+  filteredLocations: any[] = [];
 
   providerDetails: any[] = []
 
@@ -378,4 +379,31 @@ export class ServiceProvidersComponent implements OnInit {
     localStorage.setItem('slotInfo', JSON.stringify(mergedData));
   }
 
+
+
+
+  onKeyUp(event: KeyboardEvent) {
+    const input = (event.target as HTMLInputElement).value;
+    if (input.length >= 3) {
+      this.apiService.getLocations(input).subscribe((res: any) => {
+        this.filteredLocations = res.data;
+        console.log("---------------", res.data);
+      }, (err: any) => {
+        this.filteredLocations = [];
+        this.apiService.errorToster("Zip Code Not Found", "Error")
+        this.selectedLocation?.setErrors({ invalid: true });
+
+      }
+      );
+    } else {
+      this.filteredLocations = [];
+      this.selectedLocation?.setErrors({ invalid: true });
+    }
+  }
+
+  selectLocation(item: any) {
+    this.selectedLocation.setValue(item);
+    this.filteredLocations = [];
+    this.selectedLocation?.updateValueAndValidity();
+  }
 }
