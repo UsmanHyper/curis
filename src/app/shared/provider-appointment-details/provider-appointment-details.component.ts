@@ -81,15 +81,14 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
     let patientData = data?.patientId
-    console.log("data----------1", data)
     this.appointmentForm.get('f_name')?.setValue(patientData.f_name)
     this.appointmentForm.get('l_name')?.setValue(patientData.l_name)
     this.appointmentForm.get('email')?.setValue(patientData.email)
     this.appointmentForm.get('gender')?.setValue(patientData.gender)
     this.appointmentForm.get('patientNotes')?.setValue(data.medicalNotes)
-    this.appointmentForm.get('investigation_ordered')?.setValue(patientData.investigationsOrdered)
+    this.appointmentForm.get('investigation_ordered')?.setValue(data.investigationsOrdered)
     this.appointmentForm.get('m_reports')?.setValue(data.medicalNotes)
-    this.appointmentForm.get('prescription')?.setValue(patientData.prescription)
+    this.appointmentForm.get('prescription')?.setValue(data.prescription)
   }
 
 

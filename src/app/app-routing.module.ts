@@ -81,6 +81,11 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
+    path: 'login', redirectTo: 'auth'
+  },
+
+
+  {
     path: "",
     loadComponent: () =>
       import("./platform/main-dashboard/home/home.component").then(

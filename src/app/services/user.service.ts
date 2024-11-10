@@ -65,8 +65,7 @@ export class userService {
             })
         };
 
-        return this.http.put(userUrl + "/" + providerId, payload, header);
-        // return this.http.put(patientUrl + "/" + providerId, payload, header);
+        return this.http.put(patientUrl + "/" + providerId, payload, header);
     }
 
 
@@ -80,14 +79,14 @@ export class userService {
         return this.http.put(userUrl + "/" + providerId, payload, header);
     }
 
-    postPatientInformation(accessToken: any, providerId: any, payload: any) {
+    postPatientInformation(accessToken: any,  payload: any) {
         const header = {
             headers: new HttpHeaders({
                 Authorization: accessToken
             })
         };
 
-        return this.http.put(patientUrl + "/user/" + providerId, payload, header);
+        return this.http.put(patientUrl , payload, header);
     }
 
 

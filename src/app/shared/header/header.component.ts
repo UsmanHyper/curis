@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs';
 import { authenticationService } from 'src/app/services/authentication.service';
+import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { MainHomeService } from 'src/app/services/main-home.service';
 
 @Component({
@@ -17,11 +18,18 @@ export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
 
 
-  constructor(private router: Router, private route: ActivatedRoute, private authenticationService: authenticationService, private apiService: MainHomeService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private authenticationService: authenticationService, private apiService: MainHomeService, private dss: DataSharingService) { }
   ngOnInit(): void {
 
 
     this.loggedIn = localStorage.getItem('isLoggedIn') === 'true' ? true : false
+
+    this.dss.onSignal().subscribe((value: any) => {
+
+      if (value && value.type === "logOut") {
+        this.loggedIn = localStorage.getItem('isLoggedIn') === 'true' ? true : false
+      }
+    })
 
   }
 
@@ -36,9 +44,9 @@ export class HeaderComponent implements OnInit {
           this.authenticationService.removeLoggedInUser();
           this.authenticationService.removeTokenData();
           this.authenticationService.removeProviderData();
-          localStorage.setItem('isLoggedIn','false')
-          this.router.navigate(['/login']);
-
+          localStorage.setItem('isLoggedIn', 'false')
+          this.loggedIn = false;
+          this.dss.sendSignal({ type: 'logOut', item: "signOut" });
           // this.spinner.hide();
         },
         (err: any) => {

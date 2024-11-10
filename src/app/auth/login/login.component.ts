@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { first } from 'rxjs';
 import { authenticationService } from 'src/app/services/authentication.service';
+import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { MainHomeService } from 'src/app/services/main-home.service';
 import { userService } from 'src/app/services/user.service';
 import { CustomValidators } from 'src/app/utilities/custom.validator';
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
   // changePasswordView: boolean = false
 
   constructor(public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private userService: userService,
-    private router: Router, private authenticationService: authenticationService, private apiService: MainHomeService) {
+    private router: Router, private authenticationService: authenticationService, private apiService: MainHomeService , private dss: DataSharingService) {
     this.loginFormGroup = this.formBuilder.group({
       email: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/), CustomValidators.isEmail]],
       password: ["", [Validators.required]],
@@ -47,6 +48,7 @@ export class LoginComponent implements OnInit {
       });
     }
     this.loginFormGroup.get('remember')?.setValue(true)
+    this.dss.sendSignal({ type: 'logOut', item: "signOut" });
 
   }
 

@@ -286,7 +286,6 @@ export class PatientProfileComponent implements OnInit {
 
 
   getUserDemographic(id: any): any {
-    console.log("idd=====", id)
     this.userService.getPatientInformation(this.userToken, id)
       .pipe(first())
       .subscribe(
@@ -330,6 +329,7 @@ export class PatientProfileComponent implements OnInit {
 
     let payload = {
       userId: this.patientData._id,
+      userIdDup: this.patientData._id,
       contact_one: this.patientDemographics.controls['contact_one'].value,
       contact_two: this.patientDemographics.controls['contact_two'].value,
       city: this.patientDemographics.controls['city'].value,
@@ -341,27 +341,53 @@ export class PatientProfileComponent implements OnInit {
       emergency_firstName: this.patientDemographics.controls['emergency_firstName']?.value,
       emergency_lastName: this.patientDemographics.controls['emergency_lastName']?.value,
       emergency_contact_no: this.patientDemographics.controls['emergency_contact_no']?.value,
-      // socialSecurityNumber: this.patientDemographics.controls['socialSecurityNumber'].value,
 
     }
+    if (this.isEdit === true) {
+      this.userService.putPatientInformation(this.userToken, this.patientId, payload)
+        .pipe(first())
+        .subscribe(
+          (res: any) => {
+            this.apiService.successToster("Patient Demographic Updated", "Success")
+
+          },
+          (err: any) => {
+            // this.spinner.hide();
+            // this.showError(err?.error?.message?.description);
+          }
+        )
+
+    } else {
+      this.userService.postPatientInformation(this.userToken, payload)
+        .pipe(first())
+        .subscribe(
+          (res: any) => {
+            this.apiService.successToster("Patient Demographic Saved", "Success")
+            this.patientId = res._id;
+            this.isEdit = true;
+          },
+          (err: any) => {
+
+          }
+        )
 
 
-    this.userService.postPatientInformation(this.userToken, this.patientId, payload)
-      .pipe(first())
-      .subscribe(
-        (res: any) => {
-          this.patientId = res._id;
-          // this.isEdit = true;
-          this.apiService.successToster("Patient Personal Information Updated Successfully", "Success");
-          this.getUserDemographic(this.patientData._id)
+      // this.userService.putPatientData(this.userToken, this.patientId, payload)
+      //   .pipe(first())
+      //   .subscribe(
+      //     (res: any) => {
+      //       this.patientId = res._id;
+      //       // this.isEdit = true;
+      //       this.apiService.successToster("Patient Personal Information Updated Successfully", "Success");
+      //       this.getUserDemographic(this.patientData._id)
 
-        },
-        (err: any) => {
-          // this.spinner.hide();
-          this.showError(err?.error?.message?.description);
-        }
-      )
-
+      //     },
+      //     (err: any) => {
+      //       // this.spinner.hide();
+      //       this.showError(err?.error?.message?.description);
+      //     }
+      //   )
+    }
 
   }
 

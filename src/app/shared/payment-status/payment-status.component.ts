@@ -18,7 +18,7 @@ export class PaymentStatusComponent implements OnInit {
   @Input() successStatus: any;
 
 
-  constructor(private router: Router, private route: ActivatedRoute,) { }
+  constructor(private router: Router, private route: ActivatedRoute, private authenticationService: authenticationService) { }
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -49,12 +49,29 @@ export class PaymentStatusComponent implements OnInit {
 
 
   gotoDashboard() {
-    let response = localStorage.getItem("user_response") || ""
+    let response :any = localStorage.getItem("loggedInUser") || null
     let res = JSON.parse(response)
-    // this.authenticationservice.setLoggedInUser(res);
-    if (res.user_Type == "Patient") {
-      this.router.navigate(['/userDashboard']);
+    
+    if(!!res){
+      this.authenticationService.setLoggedInUser(res);
+      if (res.user_Type == "Provider") {
+        // this.getProviderDataById(res._id)
+        this.router.navigate(['/providerDashboard']);
+      }
+      else if (res.user_Type == "Patient") {
+        this.router.navigate(['/patientDashboard']);
+      }
+      else if (res.user_Type == "Admin") {
+        this.router.navigate(['/AdminDashboard']);
+      }
+      else if (res.user_Type == "Lab") {
+        this.router.navigate(['/LabDashboard']);
+      }
+    }else{
+      this.router.navigate(['/auth']);
     }
+    
+
   }
 
 
