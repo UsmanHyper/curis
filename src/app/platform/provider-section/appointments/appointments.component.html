@@ -79,31 +79,43 @@
                                                         </span>
                                                     </td> -->
                                                     <td>
-                                                        <span class="tag"
-                                                            [style.color]="getStatusColor(appointments?.status)"
-                                                            [style.background-color]="getStatusBg(appointments?.status)">
-                                                            {{ appointments?.status === true ? 'New':'Cancelled' |
+                                                        <span class="tag" [style.color]="getStatusColor(checkStatusColor(appointments?.isCancelled ,
+                                                            appointments?.isCompleted, appointments?.isPaid))"
+                                                            [style.background-color]="getStatusBg(checkStatusColor(appointments?.isCancelled ,
+                                                            appointments?.isCompleted, appointments?.isPaid))">
+                                                            {{checkStatus(appointments?.isCancelled ,
+                                                            appointments?.isCompleted, appointments?.isPaid) |
                                                             titlecase }}
                                                         </span>
                                                     </td>
                                                     <!-- <td><a class="tag_btn-reschdule">Reschedule</a></td> -->
                                                     <td>
-                                                        <ng-container *ngIf="!appointments?.status">
-                                                            <a class="btn-business disable-btn">View
+                                                        <ng-container
+                                                            *ngIf="checkStatusColor(appointments?.isCancelled ,   appointments?.isCompleted, appointments?.isPaid) ==='Cancelled' || 'Completed'">
+                                                            <a class="btn-business "
+                                                                (click)="viewAppointment(appointments, 'disabled')">View
                                                                 Appointment</a>
                                                         </ng-container>
-                                                        <ng-container *ngIf="appointments?.status">
+                                                        <ng-container *ngIf="checkStatusColor(appointments?.isCancelled ,
+                                                            appointments?.isCompleted, appointments?.isPaid) === 'New'">
                                                             <a class="btn-business"
                                                                 (click)="viewAppointment(appointments)">View
                                                                 Appointment</a>
                                                         </ng-container>
                                                     </td>
                                                     <td>
-                                                        <ng-container *ngIf="!appointments?.status">
+                                                        <ng-container *ngIf="checkStatus(appointments?.isCancelled ,
+                                                            appointments?.isCompleted, appointments?.isPaid) ==='Cancelled'">
                                                             <a class="tag_btn-cancel">
                                                                 Appointment Cancelled</a>
                                                         </ng-container>
-                                                        <ng-container *ngIf="appointments?.status">
+                                                        <ng-container *ngIf="checkStatus(appointments?.isCancelled ,
+                                                            appointments?.isCompleted, appointments?.isPaid) ==='Completed'">
+                                                            <a class="tag_btn-cancel">
+                                                                Appointment Completed</a>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="checkStatus(appointments?.isCancelled ,
+                                                            appointments?.isCompleted, appointments?.isPaid) === 'New'">
                                                             <a class="tag_btn-cancel"
                                                                 (click)="cancelAppointment(appointments._id)">Cancel
                                                                 Appointment</a>

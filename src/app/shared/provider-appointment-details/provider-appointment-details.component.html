@@ -88,7 +88,7 @@
                                     <div class="input-group">
                                         <label for="fname">Patient notes </label>
                                         <textarea formControlName="patientNotes" placeholder="Write text here ..."
-                                            class="border disable-field" autocomplete="off" aria-autocomplete 
+                                            class="border disable-field" autocomplete="off" aria-autocomplete
                                             [readonly]="true" name="new-notes" rows="4"></textarea>
                                         <ng-container
                                             *ngIf="appointmentForm.get('patientNotes')?.invalid && (appointmentForm.get('patientNotes')?.dirty || appointmentForm.get('patientNotes')?.touched)">
@@ -116,6 +116,7 @@
                                         <label for="fname">Medical Report </label>
                                         <textarea formControlName="m_reports" placeholder="Write text here ..."
                                             class="border " autocomplete="off" aria-autocomplete required
+                                            [readOnly]="isDisable" [ngClass]="isDisable ? 'disable-field ': '' "
                                             name="new-notes" rows="4"></textarea>
                                         <ng-container
                                             *ngIf="appointmentForm.get('m_reports')?.invalid && (appointmentForm.get('m_reports')?.dirty || appointmentForm.get('m_reports')?.touched)">
@@ -134,6 +135,7 @@
                                         <label for="fname">Investigation Ordered </label>
                                         <textarea formControlName="investigation_ordered"
                                             placeholder="Write text here ..." class="border " autocomplete="off"
+                                            [readOnly]="isDisable" [ngClass]="isDisable ? 'disable-field ': '' "
                                             aria-autocomplete required name="new-notes" rows="4"></textarea>
                                         <ng-container
                                             *ngIf="appointmentForm.get('investigation_ordered')?.invalid && (appointmentForm.get('investigation_ordered')?.dirty || appointmentForm.get('investigation_ordered')?.touched)">
@@ -152,6 +154,7 @@
                                         <label for="fname">Prescription </label>
                                         <textarea formControlName="prescription" placeholder="Write text here ..."
                                             class="border " autocomplete="off" aria-autocomplete required
+                                            [readOnly]="isDisable" [ngClass]="isDisable ? 'disable-field ': '' "
                                             name="new-notes" rows="4"></textarea>
                                         <ng-container
                                             *ngIf="appointmentForm.get('prescription')?.invalid && (appointmentForm.get('prescription')?.dirty || appointmentForm.get('prescription')?.touched)">
@@ -166,14 +169,25 @@
                                 </div>
 
                                 <div class="form-container  mt-12">
-                                    <div class=" d-flex g-16 mt-10">
-                                        <button class="form-cancel-btn " (click)="bsModalRef.hide()">Cancel </button>
-                                        <button class="form-submit-btn"
-                                            [ngClass]="!appointmentForm.valid ? 'btn-disabled': '' "
-                                            [disabled]="!appointmentForm.valid" (click)="submitForm() ">
-                                            Save Interaction
-                                        </button>
-                                    </div>
+                                    <ng-container *ngIf="!isDisable">
+
+                                        <div class=" d-flex g-16 mt-10">
+                                            <button class="form-cancel-btn " (click)="bsModalRef.hide()">Cancel
+                                            </button>
+                                            <button class="form-submit-btn"
+                                                [ngClass]="!appointmentForm.valid ? 'btn-disabled': '' "
+                                                [disabled]="!appointmentForm.valid" (click)="submitForm() ">
+                                                Save Interaction
+                                            </button>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="isDisable">
+                                        <div class=" d-flex g-16 mt-10">
+                                            <button class="form-cancel-btn " (click)="bsModalRef.hide()">Close
+                                            </button>
+
+                                        </div>
+                                    </ng-container>
                                 </div>
 
                             </div>

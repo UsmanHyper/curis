@@ -8,6 +8,7 @@ import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-boots
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { ProviderAppointmentDetailsComponent } from 'src/app/shared/provider-appointment-details/provider-appointment-details.component';
 import { FormControl } from '@angular/forms';
+import { MainHomeService } from 'src/app/services/main-home.service';
 
 @Component({
   selector: 'app-appointments',
@@ -44,7 +45,7 @@ export class AppointmentsComponent implements OnInit {
   searchedData: FormControl;
   pagedItems: any[] = [];
 
-  constructor(private providerService: providerService, private authenticationService: authenticationService,
+  constructor(private providerService: providerService, private authenticationService: authenticationService, private apiService:MainHomeService,
     private modalService: BsModalService, private dss: DataSharingService, private viewportScroller: ViewportScroller) {
     this.searchedData = new FormControl(null);
 
@@ -96,19 +97,20 @@ export class AppointmentsComponent implements OnInit {
     this.dateTitle = moment(this.inlineDatePicker).format('DD/MM/YYYY')
   }
 
-  viewAppointment(ev?: any) {
+  viewAppointment(ev?: any, type?: any) {
     console.log("viewAppointment", ev);
-    this.openModal(ev, 'Appointment Details');
+    this.openModal(ev, 'Appointment Details', (type === 'disabled' ? true : false));
 
   }
 
-  openModal(payload?: any, title?: any,) {
+  openModal(payload?: any, title?: any, type?: any) {
     console.log("openModal", payload, title);
 
     let initialState: ModalOptions = {
       initialState: {
         title: title,
         payload: payload,
+        type: type
 
       }
     };
@@ -191,6 +193,7 @@ export class AppointmentsComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("---------------", res)
+          this.apiService.successToster("Appointment has been Cancelled", "Success")
           this.getProviderAppointments();
 
         },
@@ -233,6 +236,28 @@ export class AppointmentsComponent implements OnInit {
       );
   }
 
+  checkStatus(isCancelled: any, isCompleted: any, isPaid: any): any {
+
+    if (isCancelled === false && isCompleted === false && isPaid === true) {
+      return 'New';
+    } else if (isCancelled === true && isCompleted === false && isPaid === true) {
+      return 'Cancelled';
+    } else if (isCancelled === false && isCompleted === true && isPaid === true) {
+      return 'Completed';
+    }
+
+  }
+  checkStatusColor(isCancelled: any, isCompleted: any, isPaid: any): any {
+
+    if (isCancelled === false && isCompleted === false && isPaid === true) {
+      return true;
+    } else if (isCancelled === true && isCompleted === false && isPaid === true) {
+      return false;
+    } else if (isCancelled === false && isCompleted === true && isPaid === true) {
+      return true;
+    }
+
+  }
 
   onPageChange(page: number): void {
     this.currentPage = page;

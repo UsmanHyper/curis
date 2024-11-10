@@ -26,7 +26,7 @@ export class PatientAppointmentDetailsComponent implements OnInit {
   userToken: any;
   appointmentForm: FormGroup;
   isEdit: boolean | any;
-
+  isDisable: boolean = false
 
 
 
@@ -60,7 +60,7 @@ export class PatientAppointmentDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
-
+    this.isDisable = this.initialState.type || false
     this.title = this.initialState.title
     this.patchData(this.initialState.payload)
   }

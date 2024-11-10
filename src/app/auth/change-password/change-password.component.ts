@@ -26,11 +26,13 @@ export class ChangePasswordComponent implements OnInit {
   constructor(public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private userService: userService,
     private router: Router, private authenticationService: authenticationService, private apiService: MainHomeService) {
     this.passwordFormGroup = this.formBuilder.group({
-      password: [null, [Validators.required]],
-      confirm_password: [null, Validators.required, this.confirmationValidator],
+     
+      password: [null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,25}$'), CustomValidators.passwordStrength]],
+      confirm_password: [null, [Validators.required, this.confirmationValidator, CustomValidators.passwordMatcher]]
     });
 
   }
+  
 
   ngOnInit() {
 

@@ -25,6 +25,7 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
   userToken: any;
   appointmentForm: FormGroup;
   isEdit: boolean | any;
+  isDisable: boolean = false
 
 
 
@@ -55,6 +56,8 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
     this.title = this.initialState.title
+    console.log("this.initialState.type",this.initialState.type)
+    this.isDisable = this.initialState.type || false
     this.patchData(this.initialState.payload)
   }
 
@@ -83,9 +86,9 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
     this.appointmentForm.get('l_name')?.setValue(patientData.l_name)
     this.appointmentForm.get('email')?.setValue(patientData.email)
     this.appointmentForm.get('gender')?.setValue(patientData.gender)
-    this.appointmentForm.get('patientNotes')?.setValue(patientData.patientNotes)
+    this.appointmentForm.get('patientNotes')?.setValue(data.medicalNotes)
     this.appointmentForm.get('investigation_ordered')?.setValue(patientData.investigationsOrdered)
-    this.appointmentForm.get('m_reports')?.setValue(patientData.medicalNotes)
+    this.appointmentForm.get('m_reports')?.setValue(data.medicalNotes)
     this.appointmentForm.get('prescription')?.setValue(patientData.prescription)
   }
 
@@ -96,7 +99,8 @@ export class ProviderAppointmentDetailsComponent implements OnInit {
     let payload = {
       medicalNotes: this.appointmentForm.controls['m_reports'].value,
       investigationsOrdered: this.appointmentForm.controls['investigation_ordered'].value,
-      prescription: this.appointmentForm.controls['prescription'].value
+      prescription: this.appointmentForm.controls['prescription'].value,
+      isCompleted: true
     }
 
     let id = this.initialState.payload._id;

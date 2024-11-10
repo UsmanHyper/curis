@@ -41,12 +41,12 @@ export class PatientProfileComponent implements OnInit {
       middleName: ["", []],
       email: ["", [Validators.required,]],
       gender: ["", Validators.required,],
+      dob: ["", Validators.required,],
 
 
     });
 
     this.patientDemographics = this.formBuilder.group({
-      DOB: ["", Validators.required,],
       contact_one: ["", Validators.required,],
       contact_two: ["", Validators.required,],
       state: ["Select State", Validators.required,],
@@ -85,7 +85,7 @@ export class PatientProfileComponent implements OnInit {
 
     this.patientData = this.userService.getLoggedInUser()
     this.userToken = this.authenticationService.getUserToken();
-
+    console.log(" this.patientData", this.patientData)
     this.getGenderLov()
     this.getCityLov()
     this.getZipCodeLov()
@@ -101,6 +101,7 @@ export class PatientProfileComponent implements OnInit {
     });
 
   }
+
 
 
   onKeyUpCity(event: KeyboardEvent) {
@@ -201,6 +202,10 @@ export class PatientProfileComponent implements OnInit {
     this.personalInformationForm.get('email')?.setValue(this.patientData.email)
     this.personalInformationForm.get('gender')?.setValue(this.patientData.gender)
     this.personalInformationForm.get('middleName')?.setValue(this.patientData.mid_name || '')
+    const formattedDOB = this.patientData.dob ? moment(this.patientData.dob).format('YYYY-MM-DD') : null;
+    this.personalInformationForm.get('dob')?.setValue(formattedDOB);
+
+
   }
 
   getGenderLov() {
@@ -281,7 +286,7 @@ export class PatientProfileComponent implements OnInit {
 
 
   getUserDemographic(id: any): any {
-
+    console.log("idd=====", id)
     this.userService.getPatientInformation(this.userToken, id)
       .pipe(first())
       .subscribe(
@@ -291,8 +296,8 @@ export class PatientProfileComponent implements OnInit {
 
           } else {
             this.isEdit = true;
-            this.setPatientDemographicValue(dt)
             this.patientId = dt._id;
+            this.setPatientDemographicValue(dt)
           }
         },
         (err: any) => {
@@ -306,9 +311,6 @@ export class PatientProfileComponent implements OnInit {
 
   setPatientDemographicValue(data: any) {
     console.log("data", data)
-    let dateObj = moment(data['DOB'], "MM/DD/YYYY ");
-    let convertedDate = dateObj.format("YYYY-MM-DD");
-    this.patientDemographics.get('DOB')?.setValue(convertedDate);
     this.patientDemographics.get('contact_one')?.setValue(data.contact_one);
     this.patientDemographics.get('contact_two')?.setValue(data.contact_two);
     this.patientDemographics.get('city')?.setValue(data.city);
@@ -325,11 +327,9 @@ export class PatientProfileComponent implements OnInit {
 
 
   submitForm() {
-    let dateObj = moment(this.patientDemographics.controls['DOB'].value, "YYYY-MM-DD");
-    let convertedDate = dateObj.format("MM/DD/YYYY");
+
     let payload = {
       userId: this.patientData._id,
-      DOB: convertedDate,
       contact_one: this.patientDemographics.controls['contact_one'].value,
       contact_two: this.patientDemographics.controls['contact_two'].value,
       city: this.patientDemographics.controls['city'].value,
@@ -353,13 +353,15 @@ export class PatientProfileComponent implements OnInit {
           this.patientId = res._id;
           // this.isEdit = true;
           this.apiService.successToster("Patient Personal Information Updated Successfully", "Success");
+          this.getUserDemographic(this.patientData._id)
+
         },
         (err: any) => {
           // this.spinner.hide();
           this.showError(err?.error?.message?.description);
         }
       )
-    
+
 
   }
 
@@ -371,13 +373,15 @@ export class PatientProfileComponent implements OnInit {
 
 
   submitPatientForm() {
-
+    let dateObj = moment(this.personalInformationForm.controls['dob'].value, "YYYY-MM-DD");
+    let convertedDate = dateObj.format("MM/DD/YYYY");
     let payload = {
       f_name: this.personalInformationForm.controls['firstName']?.value,
       l_name: this.personalInformationForm.controls['lastName']?.value,
       gender: this.personalInformationForm.controls['gender']?.value,
       email: this.personalInformationForm.controls['email']?.value,
       mid_name: this.personalInformationForm.controls['middleName']?.value,
+      dob: convertedDate,
 
     }
 
@@ -386,7 +390,8 @@ export class PatientProfileComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.apiService.successToster("Patient Basic Information Updated Successfully", "Success");
-
+          this.authenticationService.setLoggedInUser(res);
+          this.patientData = this.userService.getLoggedInUser()
         },
         (err: any) => {
           // this.spinner.hide();

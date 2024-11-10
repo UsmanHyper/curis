@@ -96,19 +96,20 @@ export class PatientAppointmentsComponent implements OnInit {
   //   this.dateTitle = moment(this.inlineDatePicker).format('DD/MM/YYYY')
   // }
 
-  viewAppointment(ev?: any) {
+  viewAppointment(ev?: any, type?: any) {
     console.log("viewAppointment", ev);
-    this.openModal(ev, 'Appointment Details');
+    this.openModal(ev, 'Appointment Details', (type === 'disabled' ? true : false));
 
   }
 
-  openModal(payload?: any, title?: any,) {
+  openModal(payload?: any, title?: any,type?: any) {
     console.log("openModal", payload, title);
 
     let initialState: ModalOptions = {
       initialState: {
         title: title,
         payload: payload,
+        type: type
 
       }
     };
@@ -124,7 +125,28 @@ export class PatientAppointmentsComponent implements OnInit {
     });
 
   }
+  checkStatus(isCancelled: any, isCompleted: any, isPaid: any): any {
 
+    if (isCancelled === false && isCompleted === false && isPaid === true) {
+      return 'New';
+    } else if (isCancelled === true && isCompleted === false && isPaid === true) {
+      return 'Cancelled';
+    } else if (isCancelled === false && isCompleted === true && isPaid === true) {
+      return 'Completed';
+    }
+
+  }
+  checkStatusColor(isCancelled: any, isCompleted: any, isPaid: any): any {
+
+    if (isCancelled === false && isCompleted === false && isPaid === true) {
+      return true;
+    } else if (isCancelled === true && isCompleted === false && isPaid === true) {
+      return false;
+    } else if (isCancelled === false && isCompleted === true && isPaid === true) {
+      return true;
+    }
+
+  }
 
 
 
@@ -164,6 +186,8 @@ export class PatientAppointmentsComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log("---------------", res);
+          this.apiService.successToster("Appointment has been Cancelled", "Success")
+
           this.getAppointDetails();
 
         },

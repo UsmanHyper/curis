@@ -322,7 +322,7 @@ export class ServiceBookingFlowComponent implements OnInit {
       "slotDetails": this.data?._id,
       "email": this.userform.controls['email'].value,
       "appointmentTitle": this.userform.controls['first_name'].value + ` ` + this.userform.controls['last_name'].value,
-      "patientNotes": this.userform.controls['notes'].value
+      "medicalNotes": this.userform.controls['notes'].value
 
     }
     console.log("=============", payload)

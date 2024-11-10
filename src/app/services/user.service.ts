@@ -87,7 +87,7 @@ export class userService {
             })
         };
 
-        return this.http.put(patientUrl + "/" + providerId, payload, header);
+        return this.http.put(patientUrl + "/user/" + providerId, payload, header);
     }
 
 

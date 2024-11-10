@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { providerService } from 'src/app/platform/provider-section/provider.service';
 import { MainHomeService } from 'src/app/services/main-home.service';
+import { CustomValidators } from 'src/app/utilities/custom.validator';
 
 @Component({
   selector: 'app-change-password',
@@ -26,9 +27,12 @@ export class ChangePasswordComponent implements OnInit {
     // constructor(private providerservice: providerService, private spinner: NgxSpinnerService, private apiService: MainHomeService, private authenticationservice: authenticationService, private formBuilder: FormBuilder, private global: Global, private homeService: homeService) {
 
     this.changePassForm = this.formBuilder.group({
-      current_password: ["", [Validators.required,]],
-      new_password: ["", [Validators.required,]],
-      confirm_password: ["", [Validators.required,]],
+      // current_password: ["", [Validators.required,]],
+      // new_password: ["", [Validators.required,]],
+      // confirm_password: ["", [Validators.required,]],
+      current_password: [null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,25}$'), CustomValidators.passwordStrength]],
+      confirm_password: [null, [Validators.required,  CustomValidators.passwordMatcher]],
+      new_password: [null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,25}$'), CustomValidators.passwordStrength]],
     });
   }
 

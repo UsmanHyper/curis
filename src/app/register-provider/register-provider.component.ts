@@ -78,10 +78,9 @@ export class RegisterProviderComponent implements OnInit {
     confirmPassword: false
   };
 
-  imgSrc: string = './assets/images/admin/eye.png'
   filteredLocations: any[] = [];
   filteredCity: any[] = [];
-
+  notMatch: boolean = false;
   successTitle: any
   successResponse: any
   overallExperienceLov: any = [
@@ -99,11 +98,28 @@ export class RegisterProviderComponent implements OnInit {
     { name: "More then 10 Year", value: "10+" }
   ];
 
+  isShowPassword = false;
+  isShowConfirmPassword = false;
+  imgSrc: string = './assets/images/admin/eye.png';
+  imgSrc1: string = './assets/images/admin/eye.png';
+
+
+
+  public confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
+    if (!control.value) {
+      return { error: true, required: true };
+    } else if (control.value !== this.accountInformationForm.controls['password'].value) {
+      this.notMatch = true;
+      return { confirm: true, error: true };
+
+    }
+    return {};
+  };
 
   constructor(public formBuilder: FormBuilder, private apiService: MainHomeService, private spinner: NgxSpinnerService, private router: Router, private authenticationService: authenticationService) {
 
     this.personalInformationForm = this.formBuilder.group({
-      firstName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace,CustomValidators.isAlphabetsAndSpace]],
+      firstName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace, CustomValidators.isAlphabetsAndSpace]],
       lastName: ["", [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/), CustomValidators.noWhiteSpace, CustomValidators.isAlphabetsAndSpace]],
       email: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/), CustomValidators.isEmail]],
       gender: ["Select your Gender", Validators.required],
@@ -142,7 +158,7 @@ export class RegisterProviderComponent implements OnInit {
           Validators.required,
           Validators.maxLength(5),
           Validators.minLength(5),
-          
+
           CustomValidators.noEmptyValue
         ]
       ],
@@ -170,8 +186,8 @@ export class RegisterProviderComponent implements OnInit {
     });
 
     this.accountInformationForm = this.formBuilder.group({
-      password: [null, [Validators.required,]],
-      confirmPassword: [null, [Validators.required,]]
+      password: [null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,25}$'), CustomValidators.passwordStrength]],
+      confirmPassword: [null, [Validators.required, this.confirmationValidator, CustomValidators.passwordMatcher]]
     })
 
 
@@ -211,6 +227,21 @@ export class RegisterProviderComponent implements OnInit {
   //     }
   //   });
   // };
+
+
+
+
+  showPasswordFelid() {
+    this.isShowPassword = !this.isShowPassword;
+    this.imgSrc = this.isShowPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
+  }
+  showConfirmPassword() {
+    this.isShowConfirmPassword = !this.isShowConfirmPassword;
+    this.imgSrc1 = this.isShowConfirmPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
+  }
+
+
+
 
   // Custom validator to check if the city is in filteredCity
   cityValidator(control: AbstractControl) {
@@ -293,24 +324,24 @@ export class RegisterProviderComponent implements OnInit {
   // }
 
   // Call this function manually when you want to check and set the error status
-validateZipCode() {
-  const zipCodeControl = this.practiceInformationForm.get('zipCode');
+  validateZipCode() {
+    const zipCodeControl = this.practiceInformationForm.get('zipCode');
 
-  // Perform validation
-  if (zipCodeControl?.value && zipCodeControl.value.length >= 3) {
-    const match = this.filteredLocations.find(item => item.zipCode === zipCodeControl.value);
-    if (!match) {
-      // If no match, set the control to invalid with an error
-      zipCodeControl.setErrors({ invalidLocation: true });
+    // Perform validation
+    if (zipCodeControl?.value && zipCodeControl.value.length >= 3) {
+      const match = this.filteredLocations.find(item => item.zipCode === zipCodeControl.value);
+      if (!match) {
+        // If no match, set the control to invalid with an error
+        zipCodeControl.setErrors({ invalidLocation: true });
+      } else {
+        // Clear any previous errors if match is found
+        zipCodeControl.setErrors(null);
+      }
     } else {
-      // Clear any previous errors if match is found
-      zipCodeControl.setErrors(null);
+      // Clear any previous errors if the value is not long enough
+      zipCodeControl?.setErrors(null);
     }
-  } else {
-    // Clear any previous errors if the value is not long enough
-    zipCodeControl?.setErrors(null);
   }
-}
 
 
   onKeyUp(event: KeyboardEvent) {
@@ -439,19 +470,19 @@ validateZipCode() {
   }
 
 
-  confirmationValidator = (control: FormControl): Promise<any> | Observable<any> => {
-    return new Promise((resolve) => {
-      const password = this.accountInformationForm?.get('password')?.value;
-      const confirmPassword = control.value;
-      if (!confirmPassword) {
-        resolve({ required: true });
-      } else if (confirmPassword !== password) {
-        resolve({ confirm: true });
-      } else {
-        resolve(null);       // Validation passed
-      }
-    });
-  };
+  // confirmationValidator = (control: FormControl): Promise<any> | Observable<any> => {
+  //   return new Promise((resolve) => {
+  //     const password = this.accountInformationForm?.get('password')?.value;
+  //     const confirmPassword = control.value;
+  //     if (!confirmPassword) {
+  //       resolve({ required: true });
+  //     } else if (confirmPassword !== password) {
+  //       resolve({ confirm: true });
+  //     } else {
+  //       resolve(null);       // Validation passed
+  //     }
+  //   });
+  // };
 
 
 
@@ -470,26 +501,26 @@ validateZipCode() {
 
   // showPassword() {
   //   this.imgSrc = this.passwordVisibility.currentPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
+  // // }
+  // toggleVisibility(field: string): void {
+  //   this.passwordVisibility[field] = !this.passwordVisibility[field];
+  //   if (field === "newPassword") {
+  //     this.showNewPasswordConfirm()
+  //   } else if (field === "confirmPassword") {
+  //     this.showPasswordConfirm()
+  //   } else if (field === "currentPassword") {
+  //     // this.showPassword()
+  //   }
   // }
-  toggleVisibility(field: string): void {
-    this.passwordVisibility[field] = !this.passwordVisibility[field];
-    if (field === "newPassword") {
-      this.showNewPasswordConfirm()
-    } else if (field === "confirmPassword") {
-      this.showPasswordConfirm()
-    } else if (field === "currentPassword") {
-      // this.showPassword()
-    }
-  }
+
+  // showNewPasswordConfirm() {
+  //   this.imgSrc = this.passwordVisibility.newPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
+  // }
+  // showPasswordConfirm() {
+  //   this.imgSrc = this.passwordVisibility.confirmPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
+  // }
 
 
-
-  showNewPasswordConfirm() {
-    this.imgSrc = this.passwordVisibility.newPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
-  }
-  showPasswordConfirm() {
-    this.imgSrc = this.passwordVisibility.confirmPassword ? './assets/images/admin/hidden_eye.png' : './assets/images/admin/eye.png';
-  }
 
 
 
