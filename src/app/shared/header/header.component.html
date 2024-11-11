@@ -24,7 +24,7 @@
                                 </li> -->
                         </ng-container>
                         <ng-container *ngIf="loggedIn">
-                            <li><a class="dropdown-item" routerLink="/providerDashboard">User Profile</a></li>
+                            <li><a class="dropdown-item" routerLink="/providerDashboard" (click)="openDashboard()" >User Profile</a></li>
                             <li><a class="dropdown-item" routerLink="/auth" (click)="logout()">Log Out</a></li>
                         </ng-container>
 

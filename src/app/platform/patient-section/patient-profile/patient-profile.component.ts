@@ -343,6 +343,7 @@ export class PatientProfileComponent implements OnInit {
       emergency_contact_no: this.patientDemographics.controls['emergency_contact_no']?.value,
 
     }
+    debugger
     if (this.isEdit === true) {
       this.userService.putPatientInformation(this.userToken, this.patientId, payload)
         .pipe(first())

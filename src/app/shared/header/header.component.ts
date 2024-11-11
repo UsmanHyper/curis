@@ -6,6 +6,7 @@ import { first } from 'rxjs';
 import { authenticationService } from 'src/app/services/authentication.service';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { MainHomeService } from 'src/app/services/main-home.service';
+import { userService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
 
 
-  constructor(private router: Router, private route: ActivatedRoute, private authenticationService: authenticationService, private apiService: MainHomeService, private dss: DataSharingService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private authenticationService: authenticationService, private apiService: MainHomeService, private dss: DataSharingService, private userService: userService) { }
   ngOnInit(): void {
 
 
@@ -57,6 +58,45 @@ export class HeaderComponent implements OnInit {
 
   }
 
+
+  openDashboard() {
+
+    let userToken = localStorage.getItem('token') || null
+    if (!!userToken) {
+
+      this.getUSerDetailsBytokenRequest(userToken);
+    } else {
+      return
+    }
+  }
+
+
+  getUSerDetailsBytokenRequest(data: any) {
+    this.userService.getUserDataByToken(data)
+      .pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.authenticationService.setLoggedInUser(res);
+          if (res.user_Type == "Provider") {
+            // this.getProviderDataById(res._id)
+            this.router.navigate(['/providerDashboard']);
+          }
+          else if (res.user_Type == "Patient") {
+            this.router.navigate(['/patientDashboard']);
+          }
+          else if (res.user_Type == "Admin") {
+            this.router.navigate(['/AdminDashboard']);
+          }
+          else if (res.user_Type == "Lab") {
+            this.router.navigate(['/LabDashboard']);
+          }
+
+        },
+        (err: any) => {
+          this.showError(err?.error?.message);
+        }
+      );
+  }
 
   closeDropdown() {
     const navbarToggler = document.getElementById('navbar-toggler-icon');
