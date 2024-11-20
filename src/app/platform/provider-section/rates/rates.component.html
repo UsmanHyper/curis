@@ -17,7 +17,7 @@
                             </div>
                             <div class="page-header-section mt-28">
                                 <div class="input-field">
-                                    <input type="text" class=" placeholder-text " placeholder="Search for Appointments" [formControl]="searchedData">
+                                    <input type="text" class=" placeholder-text " placeholder="Search for Rates" [formControl]="searchedData">
                                     <!-- <i class="bi bi-search" style="cursor: pointer;"></i> -->
                                     <img src="../../../../assets/images/provider/Icon.png" alt="Toggle Password Visibility" style="cursor: pointer;" />
 
@@ -37,6 +37,10 @@
                                                 <input type="text" class="form-control" placeholder="Search..."
                                                     [(ngModel)]="searchText" />
 
+                                                <li  class="dropdown-item"
+                                                    (click)="selectItem('all')">
+                                                    {{ 'All' }}
+                                                </li>
                                                 <li *ngFor="let item of filteredItems()" class="dropdown-item"
                                                     (click)="selectItem(item)">
                                                     {{ item.locationName }}

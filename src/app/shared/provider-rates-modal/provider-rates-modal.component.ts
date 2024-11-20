@@ -32,6 +32,7 @@ export class ProviderRatesModalComponent implements OnInit {
   ratesFormGroup: FormGroup;
   serviceLov: any;
   locationNumber: any;
+  selectedLocation: any;
 
 
   constructor(
@@ -58,13 +59,15 @@ export class ProviderRatesModalComponent implements OnInit {
   ngOnInit(): void {
     this.providerData = this.providerService.getProviderData()
     this.userToken = this.authenticationService.getUserToken();
-    this.getProviderLocationAPI(this.providerData._id);
+    // this.getProviderLocationAPI(this.providerData._id);
     this.getLocationLov();
     this.getServicesLov(this.providerData.mainSpecialty);
     this.getCityLov();
 
 
     console.log("---------", this.initialState)
+    this.selectedLocation = this.initialState.selectedLocation;
+
 
     if (!!this.initialState.payload) {
       this.patchData(this.initialState.payload)
@@ -142,6 +145,9 @@ export class ProviderRatesModalComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.locationLov = res;
+          if (!!this.selectedLocation) {
+            this.setLocationIdBySelectedLocation()
+          }
           this.spinner.hide();
         },
         (err: any) => {
@@ -149,6 +155,19 @@ export class ProviderRatesModalComponent implements OnInit {
           this.showError(err?.error?.message?.description);
         }
       );
+  }
+
+  setLocationIdBySelectedLocation() {
+    if (this.selectedLocation) {
+      const selectedItem = this.locationLov.find(
+        (item: any) => item.locationName === this.selectedLocation
+      );
+
+      if (selectedItem) {
+        this.ratesFormGroup.get('locationId')?.setValue(selectedItem._id);
+        this.ratesFormGroup.get('locationId')?.disable();
+      }
+    }
   }
 
   handleSwitchToggle(e: any) {

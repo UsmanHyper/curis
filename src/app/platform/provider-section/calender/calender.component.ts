@@ -17,6 +17,8 @@ import { BsModalService, BsModalRef, ModalOptions, ModalModule } from 'ngx-boots
 import { CalenderAppointmentModalComponent } from 'src/app/shared/calender-appointment-modal/calender-appointment-modal.component';
 import { authenticationService } from 'src/app/services/authentication.service';
 import { DataSharingService } from 'src/app/services/data-sharing-servcie';
+import Swal from 'sweetalert2';
+
 
 
 
@@ -141,8 +143,13 @@ export class CalenderComponent implements OnInit {
             // const parsedDate = moment(ele.startTime, 'DD/MM/YYYY : hh:mm:ss A');
             // const parsedDateEnd = moment(ele.endTime, 'DD/MM/YYYY : hh:mm:ss A');
             ele.title = ele?.appointmentTitle || " Empty Appointment Slot";
-            ele.start = ele.startTime;
-            ele.end = ele.endTime;
+            ele.start = `${ele.dateOnly}T${ele.startTimeOnly}`
+            // ele.start = ele.startTime;
+            // ele.end = ele.endTime;
+            ele.end = `${ele.dateOnly}T${ele.endTimeOnly}`;
+            ele.appointmentId = ele._id
+            //           start: new Date(event.startTime).toISOString(), // Converts UTC to local ISO format
+            // end: new Date(event.endTime).toISOString(),
             // ele.start = parsedDate.format('YYYY-MM-DDTHH:mm:ss');
             // ele.end = parsedDateEnd.format('YYYY-MM-DDTHH:mm:ss');
           });
@@ -206,7 +213,7 @@ export class CalenderComponent implements OnInit {
 
 
   checkEventOverlap(stillEvent: any, movingEvent: any): boolean {
-    // console.log("stillEvent", stillEvent);
+    console.log("stillEvent", stillEvent);
     // console.log("stillEvent", movingEvent);
     return stillEvent.allDay && movingEvent.allDay;
   }
@@ -221,18 +228,75 @@ export class CalenderComponent implements OnInit {
     // arg.event will contain the clicked event data
     const eventData = arg.event;
 
-    // console.log('Clicked Event:', eventData['_def'].title);
-    // console.log('Clicked Event:', eventData);
-    // console.log('Clicked Event:', eventData._instance.range.end);
-    // console.log('Clicked Event:', eventData["_instance"].range.start);
+    console.log('Clicked Event:', eventData);
+    console.log('Clicked Event:', eventData['_def'].title);
+    console.log('Clicked Event:', eventData['_def'].extendedProps);
+    console.log('Clicked Event:', eventData._instance.range.end);
+    console.log('Clicked Event:', eventData["_instance"].range.start);
 
-    let payload = {
-      title: eventData['_def'].title,
-      start: eventData._instance.range.start,
-      end: eventData._instance.range.end,
-    }
+    let slotData = eventData['_def'].extendedProps
+    // let payload = {
+    //   title: eventData['_def'].title,
+    //   start: eventData._instance.range.start,
+    //   end: eventData._instance.range.end,
+    // }
 
     // this.openModal(payload, "eventDataUpdate");
+    const popover = document.querySelector('.fc-more-popover');
+    if (popover) {
+      popover.remove();
+    }
+    if (slotData.isAvailable === true) {
+      this.deleteLocationInformation(slotData.providerId, slotData._id)
+    } else {
+      this.unableToDeleteLocationInformation();
+    }
+
+  }
+  unableToDeleteLocationInformation() {
+    Swal.fire({
+      icon: "error",
+      title: "Sorry ",
+      text: "You cannot delete a slot with a booked appointment ",
+    });
+  }
+  deleteLocationInformation(providerId: any, slotId: any) {
+
+    Swal.fire({
+      title: 'Are you sure you want to delete it?',
+
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: 'grey',
+      confirmButtonText: 'Yes',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.providerService.deleteProviderAppointmentSlot(this.userToken, providerId, slotId)
+          .pipe(first())
+          .subscribe(
+            (res: any) => {
+              this.spinner.hide();
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'Appointment Slot has been Deleted.',
+                icon: 'success',
+              });
+              this.getProviderAppointment(this.providerData._id)
+            },
+            (err: any) => {
+              this.spinner.hide();
+              Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred while deleting the Location.',
+                icon: 'error',
+              });
+              // this.showError(err?.error?.message?.description);
+            }
+          );
+
+      }
+    });
   }
 
 

@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   // changePasswordView: boolean = false
 
   constructor(public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private userService: userService,
-    private router: Router, private authenticationService: authenticationService, private apiService: MainHomeService , private dss: DataSharingService) {
+    private router: Router, private authenticationService: authenticationService, private apiService: MainHomeService, private dss: DataSharingService) {
     this.loginFormGroup = this.formBuilder.group({
       email: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/), CustomValidators.isEmail]],
       password: ["", [Validators.required]],
@@ -82,6 +82,9 @@ export class LoginComponent implements OnInit {
             if (this.loginFormGroup.controls['remember'].value === true) {
               localStorage.setItem("userEmail", this.loginFormGroup.controls['email'].value);
               localStorage.setItem("userPassword", this.loginFormGroup.controls['password'].value);
+            } else {
+              localStorage.removeItem("userEmail");
+              localStorage.removeItem("userPassword");
             }
             this.authenticationService.setUserTokenData(res.token);
             this.userToken = res.token;

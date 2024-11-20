@@ -85,17 +85,17 @@ export class RegisterProviderComponent implements OnInit {
   successResponse: any
   overallExperienceLov: any = [
     { name: "Less than 1 year", value: "Less than 1 year" },
-    { name: "One", value: "1" },
-    { name: "Two", value: "1" },
-    { name: "Three", value: "1" },
-    { name: "Four", value: "1" },
-    { name: "Five", value: "1" },
-    { name: "Six", value: "1" },
-    { name: "Seven", value: "1" },
-    { name: "Eight", value: "1" },
-    { name: "Nine", value: "1" },
-    { name: "Ten", value: "1" },
-    { name: "More then 10 Year", value: "10+" }
+    { name: "01", value: "1" },
+    { name: "02", value: "1" },
+    { name: "03", value: "1" },
+    { name: "04", value: "1" },
+    { name: "05", value: "1" },
+    { name: "06", value: "1" },
+    { name: "07", value: "1" },
+    { name: "08", value: "1" },
+    { name: "09", value: "1" },
+    { name: "10", value: "1" },
+    { name: "10+", value: "10+" }
   ];
 
   isShowPassword = false;

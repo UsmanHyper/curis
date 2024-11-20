@@ -53,6 +53,7 @@
                                         <label for="fname">Location</label>
 
                                         <select class="form-select input-style" aria-label="Default select example"
+                                            [ngClass]="{'disable-field': selectedLocation ? true : false}"
                                             formControlName="locationId">
                                             <option disabled selected>Select your Location</option>
                                             <option *ngFor="let item of locationLov" [value]="item._id">

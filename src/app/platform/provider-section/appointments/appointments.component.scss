@@ -310,3 +310,33 @@ input[type="date"] {
         cursor: not-allowed !important;
     
   }
+
+
+  .responsive-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  
+  .btn-businesss {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    text-align: center;
+    background-color: #007bff; /* Blue color */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    white-space: nowrap; /* Prevents the text from wrapping */
+  }
+  
+  @media screen and (max-width: 768px) {
+    .btn-businesss {
+      font-size: 0.85rem;
+      padding: 0.4rem 0.8rem;
+    }
+  }
+  

@@ -74,9 +74,9 @@ export class RatesComponent implements OnInit {
   }
   searchData(searchText: any) {
 
- 
+
     console.log("Filtered Data:", this.completelyList);
-    const searchProperties = ['serviceName', 'locationName', 'rate'];
+    const searchProperties = ['serviceName', 'locationName'];
     let searchData = this.completelyList.filter((item: any) =>
       Object.keys(item).some(key =>
         typeof item[key] === 'string' && item[key].toLowerCase().includes(searchText.toLowerCase())
@@ -122,15 +122,29 @@ export class RatesComponent implements OnInit {
 
   // Handle item selection
   selectItem(item: any) {
-    this.selectedLabel = item.locationName;
-    this.searchText = '';  // Reset search text
-    this.closeDropdown()
-    let data = this.workingHours?.filter((item: any) =>
-      item?.locationName?.toLowerCase().includes(this.selectedLabel?.toLowerCase())
-    );
+    if (item === 'all') {
+      this.selectedLabel = '';
+      this.searchedData.setValue("");  // Reset search text
+      this.closeDropdown()
+    } else {
 
-    console.log(data);
-    this.filteredData = data
+      this.selectedLabel = item.locationName;
+      this.searchedData.reset();  // Reset search text
+      this.closeDropdown()
+      let data = this.completelyList?.filter((item: any) =>
+        item?.locationName?.toLowerCase().includes(this.selectedLabel?.toLowerCase())
+      );
+
+      // console.log(data);
+      // this.filteredData = data
+      console.log("Filtered Data:", data);
+      this.filteredData = data
+      setTimeout(() => {
+        this.calculatePages();
+        this.setPage(this.currentPage);
+        this.totalView = this.filteredData?.length;
+      }, 2000);
+    }
   }
 
 
@@ -178,7 +192,8 @@ export class RatesComponent implements OnInit {
       initialState: {
         title: title,
         payload: payload,
-        type: type
+        type: type,
+        selectedLocation: this.selectedLabel
       }
     };
     console.log("this this.initialState", initialState)
@@ -254,7 +269,7 @@ export class RatesComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.providersLocation = res;
-        
+
           let working: any[] = []; // Initialize as an array
           let dt = this.providersLocation;
 
@@ -279,7 +294,7 @@ export class RatesComponent implements OnInit {
             this.setPage(this.currentPage);
             this.totalView = this.filteredData?.length;
           }, 2000);
-          
+
           this.spinner.hide();
         },
         (err: any) => {

@@ -45,17 +45,17 @@ export class ProviderEditModalComponent implements OnInit {
 
   overallExperienceLov: any = [
     { name: "Less than 1 year", value: "Less than 1 year" },
-    { name: "One", value: "01" },
-    { name: "Two", value: "02" },
-    { name: "Three", value: "03" },
-    { name: "Four", value: "04" },
-    { name: "Five", value: "05" },
-    { name: "Six", value: "06" },
-    { name: "Seven", value: "07" },
-    { name: "Eight", value: "08" },
-    { name: "Nine", value: "09" },
-    { name: "Ten", value: "10" },
-    { name: "More then 10 Year", value: "10+" }
+    { name: "01", value: "1" },
+    { name: "02", value: "1" },
+    { name: "03", value: "1" },
+    { name: "04", value: "1" },
+    { name: "05", value: "1" },
+    { name: "06", value: "1" },
+    { name: "07", value: "1" },
+    { name: "08", value: "1" },
+    { name: "09", value: "1" },
+    { name: "10", value: "1" },
+    { name: "10+", value: "10+" }
   ];
 
   personalInformationForm: FormGroup;

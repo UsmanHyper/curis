@@ -5,7 +5,8 @@ import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
 
 const lovsURL = environment.publicUrl + '/lov/';
-const authenticationUrl = environment.baseUrl + 'authenticate/';
+const authenticationUrl = new URL(`${environment.baseUrl}authenticate/`);
+new URL(`${environment.baseUrl}patient/rest/v1/appointment/cancel`)
 const patientUrl = environment.baseUrl + 'patient/profile';
 const userUrl = environment.baseUrl + 'users/profile';
 const logoutUrl = environment.baseUrl + 'authenticate/logout';
@@ -34,6 +35,11 @@ export class authenticationService {
 
   setLoggedInUser(data: any) {
     localStorage.setItem('loggedInUser', JSON.stringify(data));
+  }
+
+  changeLoggedInUserPassword(payload: any) {
+    return this.http.post(authenticationUrl.href + 'changePassword', payload)
+    // return this.http.post(logoutUrl, payload, header);
   }
 
   removeLoggedInUser() {

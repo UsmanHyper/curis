@@ -14,6 +14,7 @@ const ProviderServicesByLocation = environment.baseUrl + 'provider/serviceLocati
 const getProviderByLocationUrl = environment.baseUrl + 'provider/providerLocation';
 const ProviderWorkingHoursUrl = environment.baseUrl + 'provider/locationWorkingHours';
 const SlotURL = environment.baseUrl + 'provider/slot';
+const DeleteSlot = new URL(`${SlotURL}`)
 const providerAppointmentsURL = environment.baseUrl + 'provider/appointments';
 const paymentUrl = environment.baseUrl + 'payment-gateway/process-payment'
 let cancelAppointment = new URL(`${environment.baseUrl}patient/rest/v1/appointment/cancel`)
@@ -127,6 +128,15 @@ export class providerService {
     };
 
     return this.http.get(SlotURL + "/" + providerId, header);
+  }
+  deleteProviderAppointmentSlot(accessToken: any, providerId: any, slotId: any) {
+    const header = {
+      headers: new HttpHeaders({
+        Authorization: accessToken
+      })
+    };
+
+    return this.http.delete(DeleteSlot.href + "/" + providerId + '/' + slotId, header);
   }
 
   PostProviderAppointmentInformation(accessToken: any, providerId: any, dataToSet: any) {
