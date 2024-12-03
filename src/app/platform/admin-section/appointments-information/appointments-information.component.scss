@@ -248,3 +248,28 @@ input[type="date"] {
     line-height: 20px;
     padding: 15px 28px;
 }
+
+
+
+.tag_btn-success {
+    background-color: #F0F9FF;
+    border-radius: 10px;
+    text-align: center;
+    color: #0086C9;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 12px 20px;
+
+}
+
+
+.responsive-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 0.5rem;
+    text-align: center;
+}

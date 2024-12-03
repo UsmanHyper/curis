@@ -35,8 +35,10 @@
             </select>
           </div>
           <div class="form_group">
-            <select class="form-select" aria-label="Default select example" [disabled]="disableService"
+            <select class="form-select" aria-label="Default select example"
               [formControl]="selectedService">
+            <!-- <select class="form-select" aria-label="Default select example" [disabled]="disableService"
+              [formControl]="selectedService"> -->
               <option selected disabled>Select Service</option>
               <option *ngFor="let item of servicesList" [value]="item.value" class="text-capitalize">{{item.value}}
               </option>

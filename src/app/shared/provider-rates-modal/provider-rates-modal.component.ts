@@ -9,6 +9,7 @@ import { MainHomeService } from 'src/app/services/main-home.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { providerService } from 'src/app/platform/provider-section/provider.service';
 import { authenticationService } from 'src/app/services/authentication.service';
+import { CustomValidators } from 'src/app/utilities/custom.validator';
 
 @Component({
   selector: 'app-provider-rates-modal',
@@ -47,7 +48,7 @@ export class ProviderRatesModalComponent implements OnInit {
       locationId: ["Select your Location", Validators.required],
       serviceId: [],
       serviceName: ["Select Service", Validators.required],
-      amount: ["", Validators.required],
+      amount: ["", Validators.required, Validators.minLength(3), Validators.maxLength(3), CustomValidators.isNumbers],
       status: ["", Validators.required]
 
     });

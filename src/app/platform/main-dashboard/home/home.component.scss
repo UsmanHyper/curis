@@ -270,3 +270,9 @@ input.date-input.form-control.border-0.flatpickr-input.ng-untouched.ng-pristine.
 .autocomplete-items div:hover {
   background-color: #f0f0f0;
 }
+
+
+.form-select:disabled {
+  background-color:transparent !important;
+  cursor: not-allowed;
+}

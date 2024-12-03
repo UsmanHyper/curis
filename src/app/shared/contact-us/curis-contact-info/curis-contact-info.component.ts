@@ -19,8 +19,8 @@ export class CurisContactInfoComponent {
 
 
   cardInfo = [
-    { title: 'Email', description: 'Our friendly team is here to help.', link: "info@curis.com", icon: 'bi bi-envelope' },
-    { title: 'Office', description: 'Come say hello at our office HQ.', link: "100 Smith Street Collingwood VIC 3066 AU", icon: 'bi bi-geo-alt' },
+    { title: 'Email', description: 'Our friendly team is here to help.', link: "info@curisnow.com", icon: 'bi bi-envelope' },
+    { title: 'Office', description: 'We are complete virtual', link: "", icon: 'bi bi-geo-alt' },
     { title: 'Phone', description: 'Mon-Fri from 8am to 5pm.', link: "+1 (555) 000-0000", icon: 'bi bi-telephone' },
 
   ]

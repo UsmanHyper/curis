@@ -58,15 +58,15 @@
                                                     <div class="input-group">
                                                         <label for="fname">Phone Number</label>
 
-                                                        <!-- <input type="text" mask="(000) 000-0000"
+                                                        <input type="text" mask="(000) 000-0000"
                                                             placeholder="(123)-456-7890" formControlName="phone"
                                                             class="border" name="new-phone" autocomplete="off"
-                                                            aria-autocomplete required /> -->
-                                                           
-                                                            <input class="border "
+                                                            aria-autocomplete required />
+
+                                                        <!-- <input class="border "
                                                             type="tel" (keypress)="onInputKeyPress($event)" #telInput
                                                             id="telInput" [attr.intl-tel-input]="true" mask="(000) 000-0000"
-                                                            formControlName="phone_number"  placeholder="(123)-456-7890" />
+                                                            formControlName="phone_number"  placeholder="(123)-456-7890" /> -->
 
                                                         <ng-container
                                                             *ngIf="contactInformationForm.get('phone')?.invalid && (contactInformationForm.get('phone')?.dirty || contactInformationForm.get('phone')?.touched)">
@@ -115,7 +115,7 @@
                                                                 *ngIf="contactInformationForm.get('message')?.errors">
                                                                 <span class="text-danger error-state">
                                                                     Message is required</span>
-                                                                    <span></span>
+                                                                <span></span>
                                                             </ng-container>
 
                                                         </ng-container>

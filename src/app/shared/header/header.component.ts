@@ -66,6 +66,7 @@ export class HeaderComponent implements OnInit {
 
       this.getUSerDetailsBytokenRequest(userToken);
     } else {
+      this.loggedIn = false;
       return
     }
   }

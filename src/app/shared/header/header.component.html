@@ -24,7 +24,7 @@
                                 </li> -->
                         </ng-container>
                         <ng-container *ngIf="loggedIn">
-                            <li><a class="dropdown-item" routerLink="/providerDashboard" (click)="openDashboard()" >User Profile</a></li>
+                            <li><a class="dropdown-item" (click)="openDashboard()">User Profile</a></li>
                             <li><a class="dropdown-item" routerLink="/auth" (click)="logout()">Log Out</a></li>
                         </ng-container>
 
@@ -46,17 +46,20 @@
                             For Providers <span></span>
                         </a>
 
-                        <ul class="dropdown-menu " style="min-width: 264px !important;" aria-labelledby="navbarDropdown">
-                            <li class="d-flex align-items-center "><a class="dropdown-item" routerLink="/register-as-a-provider"
-                                    (click)="closeDropdown()"><i class=" fontStyle bi bi-building mr-12"></i> Join
+                        <ul class="dropdown-menu " style="min-width: 264px !important;"
+                            aria-labelledby="navbarDropdown">
+                            <li class="d-flex align-items-center "><a class="dropdown-item"
+                                    routerLink="/register-as-a-provider" (click)="closeDropdown()"><i
+                                        class=" fontStyle bi bi-building mr-12"></i> Join
                                     Curis</a>
                             </li>
                             <li class="d-flex align-items-center "><a class="dropdown-item" routerLink="/login"
                                     (click)="closeDropdown()"><i class="fontStyle bi bi-cast mr-12 "></i> Provider
                                     Portal</a>
                             </li>
-                            <li class="d-flex align-items-center "><a class="dropdown-item" routerLink="/provider-resource-center"
-                                    (click)="closeDropdown()"><i class="fontStyle bi bi-play-circle mr-12"></i> Provider
+                            <li class="d-flex align-items-center "><a class="dropdown-item"
+                                    routerLink="/provider-resource-center" (click)="closeDropdown()"><i
+                                        class="fontStyle bi bi-play-circle mr-12"></i> Provider
                                     Resource Center</a>
                             </li>
                             <!-- <li><a class="dropdown-item" routerLink="/wedding-venues"
@@ -138,7 +141,7 @@
                                     </li>
                             </ng-container> -->
                                 <ng-container *ngIf="loggedIn">
-                                    <li><a class="dropdown-item" routerLink="/providerDashboard">User Profile</a></li>
+                                    <li><a class="dropdown-item" (click)="openDashboard()">User Profile</a></li>
                                     <li><a class="dropdown-item" routerLink="/auth" (click)="logout()">Log Out</a>
                                     </li>
                                 </ng-container>

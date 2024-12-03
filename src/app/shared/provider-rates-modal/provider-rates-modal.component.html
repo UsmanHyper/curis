@@ -33,14 +33,15 @@
                                     <div class="input-group">
                                         <label for="fname">Amount</label>
 
-                                        <input type="text" placeholder="Enter Amount" class="border"
-                                            formControlName="amount" autocomplete="off" aria-autocomplete required
-                                            name="new-amount" />
+                                        <input type="text" placeholder="Enter Amount" class="border" minlength="3"
+                                            maxlength="3" formControlName="amount" autocomplete="off" aria-autocomplete
+                                            required name="new-amount" />
 
                                         <ng-container
                                             *ngIf="ratesFormGroup.get('amount')?.invalid && (ratesFormGroup.get('amount')?.dirty || ratesFormGroup.get('amount')?.touched)">
                                             <ng-container *ngIf="ratesFormGroup.get('amount')?.errors">
-                                                <span class="text-danger error-state">Amount is required.</span>
+                                                <span class="text-danger error-state">Amount is required (Only Numeric
+                                                    Value).</span>
                                             </ng-container>
 
                                         </ng-container>

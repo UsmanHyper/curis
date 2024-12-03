@@ -12,27 +12,27 @@ import { RouterModule } from '@angular/router';
 export class LinksComponent {
 
   specialists: any = [
-    "Dermatologists in New York",
-    "Dermatologists in New York",
-    "Dermatologists in New York",
-    "Dermatologists in New York",
-    "Dermatologists in New York",
-    "Dermatologists in New York",
+    "Dermatologists in Chicago",
+    "Dermatologists in Chicago",
+    "Dermatologists in Chicago",
+    "Dermatologists in Chicago",
+    "Dermatologists in Chicago",
+    "Dermatologists in Chicago",
   ];
   doctors: any = [
-    "Doctors in Dallas",
-    "Doctors in Dallas",
-    "Doctors in Dallas",
-    "Doctors in Dallas",
-    "Doctors in Dallas",
-    "Doctors in Dallas",
+    "Doctors in Chicago",
+    "Doctors in Chicago",
+    "Doctors in Chicago",
+    "Doctors in Chicago",
+    "Doctors in Chicago",
+    "Doctors in Chicago",
   ];
   social: any = [
     "Twitter",
     "LinkedIn",
     "Facebook",
     "GitHub",
-    "AngelList",
+    "Tiktok",
     "Dribbble",
   ];
   legal : any =[

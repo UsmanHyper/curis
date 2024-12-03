@@ -4,24 +4,25 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { RouterModule } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MainHomeService } from 'src/app/services/main-home.service';
+import { NgxMaskModule } from 'ngx-mask';
 
 
-import intlTelInput, { Iti } from 'intl-tel-input';
-import utils from "intl-tel-input"
+// import intlTelInput, { Iti } from 'intl-tel-input';
+// import utils from "intl-tel-input"
 
 
-interface CustomIti extends Iti {
-  errorMsg: string;
-}
+// interface CustomIti extends Iti {
+//   errorMsg: string;
+// }
 
 @Component({
   selector: 'app-curis-contact-form',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule,],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, NgxMaskModule],
   templateUrl: './curis-contact-form.component.html',
   styleUrls: ['./curis-contact-form.component.scss']
 })
-export class CurisContactFormComponent implements OnInit , AfterViewInit {
+export class CurisContactFormComponent implements OnInit {
 
   contactInformationForm: FormGroup;
   showForm: boolean = true;
@@ -88,69 +89,69 @@ export class CurisContactFormComponent implements OnInit , AfterViewInit {
     this.showForm = false;
     this.showSubmitMessage = true;
   }
-  ngAfterViewInit() {
-    this.initializeItil()
+  // ngAfterViewInit() {
+  //   this.initializeItil()
 
-  }
+  // }
 
 
-  initializeItil() {
-    this.iti = intlTelInput(this.telInput.nativeElement, {
-      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.9/build/js/utils.js",
-      // utilsScript: "assets/scripts/utils.js",
-      initialCountry: this.contactInformationForm.value.iso_code ? this.contactInformationForm.value.iso_code : "us",
-      separateDialCode: true,
-      nationalMode: false,
-      formatOnDisplay: true
-    });
+  // initializeItil() {
+  //   this.iti = intlTelInput(this.telInput.nativeElement, {
+  //     utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.9/build/js/utils.js",
+  //     // utilsScript: "assets/scripts/utils.js",
+  //     initialCountry: this.contactInformationForm.value.iso_code ? this.contactInformationForm.value.iso_code : "us",
+  //     separateDialCode: true,
+  //     nationalMode: false,
+  //     formatOnDisplay: true
+  //   });
 
-    this.updateFormValues();
+  //   this.updateFormValues();
 
-    this.telInput.nativeElement.addEventListener('countrychange', () => {
-      this.updateFormValues();
-      this.updatePlaceholder();
-      this.validatePhoneNumber();
-    });
+  //   this.telInput.nativeElement.addEventListener('countrychange', () => {
+  //     this.updateFormValues();
+  //     this.updatePlaceholder();
+  //     this.validatePhoneNumber();
+  //   });
 
-    this.telInput.nativeElement.addEventListener('input', () => {
-      this.validatePhoneNumber();
-    });
+  //   this.telInput.nativeElement.addEventListener('input', () => {
+  //     this.validatePhoneNumber();
+  //   });
 
-    this.updatePlaceholder();
-  }
+  //   this.updatePlaceholder();
+  // }
 
-  updateFormValues() {
-    const selectedCountryData = this.iti.getSelectedCountryData();
-    this.contactInformationForm.get('iso_code')?.setValue(selectedCountryData.iso2);
-    this.contactInformationForm.get('country_code')?.setValue(selectedCountryData.dialCode);
-  }
+  // updateFormValues() {
+  //   const selectedCountryData = this.iti.getSelectedCountryData();
+  //   this.contactInformationForm.get('iso_code')?.setValue(selectedCountryData.iso2);
+  //   this.contactInformationForm.get('country_code')?.setValue(selectedCountryData.dialCode);
+  // }
 
-  updatePlaceholder() {
-    const placeholder = this.iti.getPlaceholderNumber();
-    this.telInput.nativeElement.placeholder = placeholder;
-  }
+  // updatePlaceholder() {
+  //   const placeholder = this.iti.getPlaceholderNumber();
+  //   this.telInput.nativeElement.placeholder = placeholder;
+  // }
 
-  validatePhoneNumber() {
-    const isValid = this.iti.isValidNumber();
-    if (isValid) {
-      this.contactInformationForm.get('phone')?.setErrors(null);
-    } else {
-      this.contactInformationForm.get('phone')?.setErrors({ invalid: true });
-    }
-  }
+  // validatePhoneNumber() {
+  //   const isValid = this.iti.isValidNumber();
+  //   if (isValid) {
+  //     this.contactInformationForm.get('phone')?.setErrors(null);
+  //   } else {
+  //     this.contactInformationForm.get('phone')?.setErrors({ invalid: true });
+  //   }
+  // }
 
-  onInputKeyPress(event: KeyboardEvent) {
-    const allowedChars = /[0-9\+\-\ ]/;
-    const allowedCtrlChars = /[axcv]/;
-    const allowedOtherKeys = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Home', 'End', 'Insert', 'Delete', 'Backspace'];
+  // onInputKeyPress(event: KeyboardEvent) {
+  //   const allowedChars = /[0-9\+\-\ ]/;
+  //   const allowedCtrlChars = /[axcv]/;
+  //   const allowedOtherKeys = ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Home', 'End', 'Insert', 'Delete', 'Backspace'];
 
-    if (!allowedChars.test(event.key) && !(event.ctrlKey && allowedCtrlChars.test(event.key)) && !allowedOtherKeys.includes(event.key)) {
-      event.preventDefault();
-    }
-  }
+  //   if (!allowedChars.test(event.key) && !(event.ctrlKey && allowedCtrlChars.test(event.key)) && !allowedOtherKeys.includes(event.key)) {
+  //     event.preventDefault();
+  //   }
+  // }
 
-  ngOnDestroy() {
-    this.iti.destroy();
-  }
+  // ngOnDestroy() {
+  //   this.iti.destroy();
+  // }
 
 }

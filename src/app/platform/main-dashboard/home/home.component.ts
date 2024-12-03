@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem("appointments");
 
     this.selectedSpecialty = new FormControl('Select Specialty');
-    this.selectedService = new FormControl('Select Service');
+    this.selectedService = new FormControl({ value: 'Select Service', disabled: true });
     this.selectedLocation = new FormControl(null, (Validators.maxLength(5), Validators.minLength(5)));
     this.selectedDate = new FormControl(null);
 
@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
 
 
     this.getSpecialtyLov()
-    this.getZipCodeLov()
+    // this.getZipCodeLov()
 
 
     this.selectedSpecialty.valueChanges.pipe(debounceTime(400), distinctUntilChanged()).subscribe((val: any) => {
@@ -256,13 +256,21 @@ export class HomeComponent implements OnInit {
 
   getServicesForSpecialty() {
 
-    console.log("this.selectedSpecialty", this.selectedSpecialty.value)
+    console.log("this.selectedSpecialty", this.selectedSpecialty.value);
+    this.servicesList = [];
     this.spinner.show();
     this.apiService.getLovByName(this.selectedSpecialty.value)
       .pipe(first())
       .subscribe(
         (res: any) => {
-          this.servicesList = res[0].lovs;
+          console.log("this.selectedSpecialty", res)
+          this.servicesList = res[0]?.lovs;
+          console.log("this.selectedSpecialty", res, this.servicesList)
+          if (!!this.servicesList) {
+            this.selectedService.enable()
+          } else {
+            this.selectedService.disable()
+          }
           this.spinner.hide();
         },
         (err: any) => {

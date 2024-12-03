@@ -12,7 +12,7 @@
                                 </p>
                             </div>
 
-                            <div class="page-header-section mt-28">
+                            <div class="page-header-section mt-28  ">
                                 <div class="input-field">
                                     <input type="text" class=" placeholder-text " placeholder="Search for Appointments"
                                         [formControl]="searchedData">
@@ -92,14 +92,14 @@
                                                     <td class="responsive-container">
                                                         <ng-container
                                                             *ngIf="checkStatusColor(appointments?.isCancelled ,   appointments?.isCompleted, appointments?.isPaid) ==='Cancelled' || 'Completed'">
-                                                            <a class="btn-business "
+                                                            <a class="tag_btn-success"
                                                                 (click)="viewAppointment(appointments, 'disabled')">View
                                                                 Appointment</a>
                                                         </ng-container>
                                                         <ng-container
                                                             *ngIf="checkStatusColor(appointments?.isCancelled ,
                                                             appointments?.isCompleted, appointments?.isPaid) === 'New'">
-                                                            <a class="btn-businesss"
+                                                            <a class="tag_btn-success"
                                                                 (click)="viewAppointment(appointments)">View
                                                                 Appointment</a>
                                                         </ng-container>
@@ -135,7 +135,7 @@
                                 <div class="card-footer-section ">
                                     <h3 class="page-index">Items {{itemInView}} of {{totalView}} </h3>
                                     <div class="">
-                                        <ng-container *ngIf="appointmentList?.length">
+                                        <ng-container *ngIf="appointmentList?.length>0">
                                             <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"
                                                 (pageChange)="onPageChange($event)"></app-pagination>
                                         </ng-container>

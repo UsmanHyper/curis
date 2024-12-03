@@ -49,7 +49,78 @@
 
         }
     }
+
 }
+
+// .card {
+//     border: 1px solid #eaecf0;
+//     border-radius: 8px;
+//     box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1);
+
+//     .card-header {
+//         padding: 0;
+//         background-color: transparent;
+//         border-bottom: none;
+
+//         .card-icon {
+//             background: #e0f2fe;
+//             padding: 10px 16px;
+//             border-radius: 50%;
+//             border: 12px solid #f0f9ff;
+
+//             .icon-sty {
+//                 font-size: 24px;
+//                 color: #0086c9;
+//             }
+//         }
+//     }
+
+//     .card-title {
+//         font-size: 20px;
+//         font-weight: 500;
+//         color: #101828;
+//         margin-left: 20px;
+//     }
+
+//     .total-value {
+//         font-size: 36px;
+//         font-weight: 600;
+//         color: #101828;
+//     }
+
+//     .comparison {
+//         font-size: 16px;
+
+//         .text-success {
+//             color: #027a48;
+//         }
+
+//         .text-danger {
+//             color: #b42318;
+//         }
+
+//         .text-muted {
+//             color: #667085;
+//         }
+//     }
+// }
+
+// /* Responsive Adjustments */
+// @media (max-width: 768px) {
+//     .card {
+//         .card-title {
+//             font-size: 16px;
+//         }
+
+//         .total-value {
+//             font-size: 28px;
+//         }
+
+//         .comparison {
+//             font-size: 14px;
+//         }
+//     }
+// }
 
 
 // .statistics-section {
@@ -83,12 +154,14 @@
 //             .bi {
 //                 font-size: 16px;
 //             }
-            .arrow-success {
-                color: #28a745;
-            }
-            .arrow-danger {
-                color: #dc3545;
-            }
+.arrow-success {
+    color: #28a745;
+}
+
+.arrow-danger {
+    color: #dc3545;
+}
+
 //             .text-muted {
 //                 font-size: 14px;
 //             }
