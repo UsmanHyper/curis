@@ -8,8 +8,6 @@ import { MainHomeService } from 'src/app/services/main-home.service';
 import { userService } from 'src/app/services/user.service';
 import { CustomValidators } from 'src/app/utilities/custom.validator';
 
-// Custom confirmation validator as a factory function
-
 
 @Component({
   selector: 'app-change-password',
@@ -111,10 +109,10 @@ export class ChangePasswordComponent implements OnInit {
           },
           (err: any) => {
             this.spinner.hide();
-            if (err.success === false) {
-              localStorage.removeItem('otp')
-              this.router.navigateByUrl('auth/forgot-password');
-            }
+            // if (err.success === false) {
+            localStorage.removeItem('otp')
+            this.router.navigateByUrl('auth/forgot-password');
+            // }
             // this.showError(err?.error?.message);
           }
         );

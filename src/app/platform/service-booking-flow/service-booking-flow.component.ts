@@ -17,13 +17,16 @@ import { DataSharingService } from 'src/app/services/data-sharing-servcie';
 import { NgxMaskModule } from 'ngx-mask';
 import { providerService } from '../provider-section/provider.service';
 import * as moment from 'moment'
+import { CurrencySymbolPipe } from 'src/app/pipes/currency-symbol.pipe';
+import { ProviderModuleModule } from '../provider-section/provider-module.module';
+import { StandaloneCurrencySymbolPipe } from 'src/app/pipes/standalone-currency-symbol.pipe';
 
 @Component({
   selector: 'app-service-booking-flow',
   templateUrl: './service-booking-flow.component.html',
   styleUrls: ['./service-booking-flow.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, PaymentStatusComponent, NgxMaskModule],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, PaymentStatusComponent, NgxMaskModule,StandaloneCurrencySymbolPipe],
 })
 export class ServiceBookingFlowComponent implements OnInit {
 

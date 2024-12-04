@@ -26,6 +26,7 @@ import { ProviderLocationModalComponent } from 'src/app/shared/provider-location
 import { ProviderRatesModalComponent } from 'src/app/shared/provider-rates-modal/provider-rates-modal.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CurrencySymbolPipe } from 'src/app/pipes/currency-symbol.pipe';
 
 
 
@@ -40,7 +41,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     
     AppointmentsComponent,
     ScheduleTimeComponent,
-    ProviderAccountComponent
+    ProviderAccountComponent,
+    CurrencySymbolPipe
   ],
   providers: [],
   // providers: [providerService, BsModalService],
