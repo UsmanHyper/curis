@@ -5,7 +5,7 @@
         <p class="mb-32 description">Please check your email to get your OTP code </p>
         <form [formGroup]="otpForm" autocomplete="off">
             <div class="mb-20">
-                <div class="form-group w-100-p align-items-center">
+                <div class="form-group w-100-p align-items-center d-flex justify-content-center mb-12">
                     <ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
                 </div>
                 <label class="otp-counter sub-title_description mt-8 mr-4">Send Code again
@@ -13,10 +13,10 @@
                 <div class="mt-3 w-100-p mt-10">
                     <p class="otp-request text-center  d-flex">
                         <label class="code_label sub-title_description">
-                            Did ‘t receive the code?
+                            Did ‘t receive the code? 
                         </label>
-                        <a class="sub-bold-title" [ngClass]="sendOtpAgian ? 'otp_link ': 'disabled' "
-                            (click)="resendOTP()">Re-send
+                        <a class="sub-bold-title ml-8" [ngClass]="sendOtpAgain ? 'otp_link ': 'disabled' "
+                            (click)="resendOTP()">  Re-send
                             code</a>
                     </p>
                 </div>

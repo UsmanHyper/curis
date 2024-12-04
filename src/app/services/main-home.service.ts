@@ -10,6 +10,7 @@ const lovsByNameURL = environment.publicUrl + 'lovByName/';
 const scheduleAppointmentURL = environment.publicUrl + 'scheduleAppointment/';
 const slugOTP = new URL(`${environment.baseUrl}rest/v1/registration/generate-otp`)
 const slugVerifyOTP = new URL(`${environment.baseUrl}rest/v1/registration/verify-otp`)
+const slugForgetPassword = new URL(`${environment.baseUrl}authenticate/forgetPassword`)
 const checkEmail = new URL(`${environment.baseUrl}users/rest/v1/getUserStatusByEmail`)
 const patientByEmail = new URL(`${environment.baseUrl}patient/rest/v1/getPatientByEmail`)
 const searchProvidersByCriteria = new URL(`${environment.publicUrl}searchProvidersByCriteria`)
@@ -99,7 +100,7 @@ export class MainHomeService {
     return this.http.get(lovsByNameURL + data);
   }
 
-  
+
   getLocations(query: string): Observable<any[]> {
     return this.http.get<any[]>(searchZip.href + `cityorzipcode?criteria=${query}&isZipcode=yes`);
   }
@@ -107,12 +108,15 @@ export class MainHomeService {
     return this.http.get<any[]>(searchZip.href + `cityorzipcode?criteria=${query}&isCity=yes`);
   }
 
-  
+
   getOTP(postData: any) {
     return this.http.post<ApiResponse>(slugOTP.href, postData);
   }
   verifyOTP(postData: any) {
     return this.http.post<ApiResponse>(slugVerifyOTP.href, postData);
+  }
+  resetPassword(postData: any) {
+    return this.http.post<ApiResponse>(slugForgetPassword.href, postData);
   }
   checkEmail(postData: any) {
     return this.http.post<ApiResponse>(checkEmail.href, postData);

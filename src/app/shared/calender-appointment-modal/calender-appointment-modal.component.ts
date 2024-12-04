@@ -279,7 +279,7 @@ export class CalenderAppointmentModalComponent implements OnInit {
         },
         (err: any) => {
           this.spinner.hide();
-          this.showError(err?.error?.message?.description);
+          this.showError(err?.error?.message);
         }
       );
   }

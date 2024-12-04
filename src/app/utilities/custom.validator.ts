@@ -20,11 +20,11 @@ export class CustomValidators {
 
   static phoneOnly(control: AbstractControl) {
     if (!!control.value) {
-        return control.value.match(/^[0-9+]+$/) ? null : { 'phoneonly': true };
+      return control.value.match(/^[0-9+]+$/) ? null : { 'phoneonly': true };
     } else {
-        return null;
+      return null;
     }
-}
+  }
 
   static passwordMatcher(control: AbstractControl) {
     const password = control.get('password')?.value;
@@ -48,15 +48,15 @@ export class CustomValidators {
     return value === null || typeof value === 'string' && value.length === 0;
   }
 
-  
-    static noEmptyValue(control: AbstractControl): ValidationErrors | null {
-      const value = control.value;
-      if (value === null || value === undefined || value.trim() === '') {
-        return { noEmptyValue: true };
-      }
-      return null;
+
+  static noEmptyValue(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (value === null || value === undefined || value.trim() === '') {
+      return { noEmptyValue: true };
     }
-  
+    return null;
+  }
+
 
   static isAlphabetsAndNumbers(control: AbstractControl) {
     if (CustomValidators.isEmptyValue(control.value)) {
@@ -139,7 +139,7 @@ export class CustomValidators {
     const val = control.value;
     let isValid = true;
     if (!!val && (val[0] === ' ' || val[val.length - 1] === ' ')) {
-        isValid = false;
+      isValid = false;
     }
     return isValid ? null : { 'whitespace': true };
   }

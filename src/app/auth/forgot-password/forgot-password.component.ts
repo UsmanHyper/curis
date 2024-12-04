@@ -16,14 +16,14 @@ import { CustomValidators } from 'src/app/utilities/custom.validator';
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotFormGroup: FormGroup;
-  
 
 
- 
+
+
 
   constructor(public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private userService: userService,
     private router: Router, private authenticationService: authenticationService, private apiService: MainHomeService) {
-   
+
     this.forgotFormGroup = this.formBuilder.group({
       email: ["", [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/), CustomValidators.isEmail]],
 
@@ -41,40 +41,66 @@ export class ForgotPasswordComponent implements OnInit {
     let data = {
       "email": this.forgotFormGroup.controls['email'].value,
     }
-    this.SubmitRequest(data);
-  }
-
-
-  SubmitRequest(data: any) {
-    this.spinner.show();
-    // this.apiService.loginUser(data)
-    //   .pipe(first())
-    //   .subscribe(
-    //     (res: any) => {
-    //       if (res.status == 201) {
-    //         if (this.loginFormGroup.controls['remember'].value === true) {
-    //           localStorage.setItem("userEmail", this.loginFormGroup.controls['email'].value);
-    //           localStorage.setItem("userPassword", this.loginFormGroup.controls['password'].value);
-    //         }
-    //         this.authenticationService.setUserTokenData(res.token);
-    //         this.userToken = res.token;
-    //         localStorage.setItem('isLoggedIn', "true");
-    //         this.getUSerDetailsBytokenRequest(this.userToken);
-    //         this.authenticationService.setIsAuthenticated(true);
-    //         this.spinner.hide();
-    //       }
-    //     },
-    //     (err: any) => {
-    //       this.spinner.hide();
-    //       this.showError(err?.error?.message);
-    //     }
-    //   );
-
-
-    this.router.navigateByUrl('/verify-otp')
+    if (this.forgotFormGroup.valid) {
+      this.checkEmail();
+    } else {
+      return
+    }
   }
 
 
 
+
+  checkEmail() {
+    let payload = {
+      email: this.forgotFormGroup.controls['email'].value
+    }
+    this.apiService.checkEmail(payload).pipe(first())
+      .subscribe(
+        (res: any) => {
+          if (!!res) {
+            if (res.isPatient === true) {
+              let payload = {
+                email: this.forgotFormGroup.controls['email'].value,
+                otpType: 'Patient'
+              }
+              this.sendOTP(payload)
+            } else if (res.isProvider === true) {
+
+              let payload = {
+                email: this.forgotFormGroup.controls['email'].value,
+                otpType: 'Provider'
+              }
+
+              this.sendOTP(payload)
+            }
+          }
+
+        },
+        (err: any) => {
+          this.spinner.hide();
+          this.apiService.successToster(err?.error?.message, 'Success');
+        }
+      );
+  }
+
+  sendOTP(value: any) {
+    localStorage.setItem('otp', JSON.stringify(value));
+    this.apiService.getOTP(value).pipe(first())
+      .subscribe(
+        (res: any) => {
+          this.apiService.successToster("Check Your Email", 'OTP Sent',)
+          // this.router.navigateByUrl('verify-otp')
+          this.router.navigate(['auth/verify-otp'])
+          // this.router.navigate(['verify-otp', JSON.stringify(value)])
+        },
+        (err: any) => {
+        }
+      );
+  }
 }
+
+
+
+
 

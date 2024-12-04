@@ -13,7 +13,7 @@ const routes: Routes = [
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'reset-password', component: ChangePasswordComponent , pathMatch: 'full'},
-      { path: 'verify-otp', component: VerifyOtpComponent , pathMatch: 'full'},
+      { path: 'verify-otp', component: VerifyOtpComponent , },
       { path: 'forgot-password', component: ForgotPasswordComponent , pathMatch: 'full'},
     ]
   },

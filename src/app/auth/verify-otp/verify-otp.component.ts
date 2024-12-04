@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { first, Subscription, take, timer } from 'rxjs';
 import { authenticationService } from 'src/app/services/authentication.service';
@@ -18,9 +18,9 @@ export class VerifyOtpComponent implements OnInit {
   initialState: any;
   payload: any;
   otp: any;
-  sendOtpAgian: boolean = false
+  sendOtpAgain: boolean = false
   countDown: Subscription = new Subscription;
-  counter = 60;
+  counter = 10;
   tick = 1000;
   @ViewChild('ngOtpInput', { static: false }) ngOtpInput: any;
   @ViewChild('ngOtpInput') ngOtpInputRef: any;
@@ -42,9 +42,10 @@ export class VerifyOtpComponent implements OnInit {
 
   }
 
+  otpPayload: any
 
 
-  constructor(public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private userService: userService,
+  constructor(public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private userService: userService, private route: ActivatedRoute,
     private router: Router, private authenticationService: authenticationService, private apiService: MainHomeService) {
 
     this.otpForm = this.formBuilder.group({
@@ -54,47 +55,59 @@ export class VerifyOtpComponent implements OnInit {
 
   ngOnInit() {
     this.otpCounter()
+    let dt: any = localStorage.getItem("otp");
+    if (!!dt) {
 
-    this.payload = this.initialState.payload
+      console.log("otpPayload", dt)
+      this.otpPayload = JSON.parse(dt)
+    } else {
+
+      this.router.navigate(['auth/forgot-password'])
+    }
+
   }
 
 
 
-  
+
   otpCounter() {
     this.countDown = timer(0, this.tick)
       .pipe(take(this.counter))
       .subscribe(() => {
         --this.counter;
         if (this.counter == 0) {
-          this.sendOtpAgian = true;
+          this.sendOtpAgain = true;
           this.countDown.unsubscribe();
         }
       });
   }
 
   verifyOtp() {
-    let payload = {
-      // email: this.payload.email,
-      // otpType: this.payload.otpType,
-      // otp: this.otpForm.controls['otp'].value
+    if (this.otpForm.valid) {
+      let payload = {
+        email: this.otpPayload.email,
+        otpType: this.otpPayload.otpType,
+        otp: this.otpForm.controls['otp'].value
+      }
+
+      localStorage.setItem('otp', JSON.stringify(payload));
+      // this.apiService.verifyOTP(payload).pipe(first())
+      //   .subscribe(
+      //     (res: any) => {
+      this.router.navigateByUrl('auth/reset-password')
+      //     },
+      //     (err: any) => {
+      //       // this.spinner.hide();
+      //       // this.showError(err?.error?.message?.description);
+      //     }
+      //   );
+
+
+
     }
-
-    // this.onSuccess.emit("otpVerified")
-
-    // this.apiService.verifyOTP(payload).pipe(first())
-    //   .subscribe(
-    //     (res: any) => {
-    //       // this.bsModalRef.hide()
-    //       // this.dss.sendSignal({ type: "otpVerified", data: res, })
-    //     },
-    //     (err: any) => {
-    //       // this.spinner.hide();
-    //       // this.showError(err?.error?.message?.description);
-    //     }
-    //   );
-
-      this.router.navigateByUrl('/reset-password')
+    else {
+      return
+    }
   }
 
   onOtpChange(otp: any) {
@@ -116,25 +129,25 @@ export class VerifyOtpComponent implements OnInit {
     );
   }
   resendOTP() {
-    if (this.sendOtpAgian === true) {
+    if (this.sendOtpAgain === true) {
       this.counter = 60;
-      this.sendOtpAgian = false;
+      this.sendOtpAgain = false;
       this.otpCounter()
       this.ngOtpInputRef.setValue(null);
-      this.generateOtp();
-      // const slug =new URL(`${environment.baseUrl}/users/authentication/forgot`);
-      // const payload = { email: this.email };
-      // this.apiService.post(slug.href, payload).subscribe((resp: any) => {
-      // }, (err: any) => {
-      // });
+      // this.generateOtp();
+      this.sendOTP(this.otpPayload)
     } else {
       return
     }
 
   }
 
-  generateOtp() {
-    this.apiService.getOTP(this.payload).pipe(first())
+  sendOTP(value: any) {
+    let payload = {
+      email: value.email,
+      otpType: value.otpType
+    }
+    this.apiService.getOTP(payload).pipe(first())
       .subscribe(
         (res: any) => {
           this.apiService.successToster("Check Your Email", 'OTP Re-Sent',)
@@ -143,6 +156,8 @@ export class VerifyOtpComponent implements OnInit {
         }
       );
   }
+
+
 
 
 }
