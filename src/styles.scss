@@ -315,23 +315,55 @@ button.fc-listWeek-button.btn.btn-primary {
 
 
 
-@media screen and (max-width: 2400px) and (min-width: 2135px) {}
+@media screen and (max-width: 2400px) and (min-width: 2135px) {
+  .input-field {
+    width: 36% !important
+  }
+}
 
-@media screen and (max-width: 2134px) and (min-width: 1921px) {}
+@media screen and (max-width: 2134px) and (min-width: 1921px) {
+  .input-field {
+    width: 36% !important
+  }
+}
 
-@media screen and (max-width: 1920px) and (min-width: 1600px) {}
+@media screen and (max-width: 1920px) and (min-width: 1600px) {
+  .input-field {
+    width: 36% !important
+  }
+}
 
-@media screen and (max-width: 1599px) and (min-width: 1400px) {}
+@media screen and (max-width: 1599px) and (min-width: 1400px) {
+  .input-field {
+    width: 36% !important
+  }
+}
 
-@media screen and (max-width: 1399px) and (min-width: 1200px) {}
+@media screen and (max-width: 1399px) and (min-width: 1200px) {
+  .input-field {
+    width: 36% !important
+  }
+}
 
-@media screen and (max-width: 1199px) and (min-width: 200px) {}
+@media screen and (max-width: 1199px) and (min-width: 200px) {
+  .input-field {
+    width: 64% !important
+  }
+}
 
-@media screen and (max-width: 991px) and (min-width: 200px) {}
+@media screen and (max-width: 991px) and (min-width: 200px) {
+  .input-field {
+    width: 100% !important
+  }
+}
 
 @media screen and (max-width: 767px) and (min-width: 200px) {
   .content {
     padding: 8px !important;
+  }
+
+  .input-field {
+    width: 36% !important
   }
 }
 
@@ -350,6 +382,10 @@ button.fc-listWeek-button.btn.btn-primary {
     width: calc(100% - 16.66666667%);
   }
 
+  .input-field {
+    width: 100% !important;
+  }
+
 }
 
 @media screen and (max-width: 400px) and (min-width: 200px) {
@@ -361,6 +397,10 @@ button.fc-listWeek-button.btn.btn-primary {
   .col-sm-10 {
     flex: 0 0 auto;
     width: calc(100% - 16.66666667%);
+  }
+
+  .input-field {
+    width: 100% !important;
   }
 }
 
@@ -375,10 +415,12 @@ button.fc-listWeek-button.btn.btn-primary {
     width: calc(100% - 16.66666667%);
   }
 
-  
+  .input-field {
+    width: 100% !important;
+  }
 }
 
-.page-index{
+.page-index {
   margin-bottom: 0px;
 }
 
