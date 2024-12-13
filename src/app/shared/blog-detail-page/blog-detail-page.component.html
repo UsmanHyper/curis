@@ -1,0 +1,71 @@
+<app-header></app-header>
+<section class="pb-20 mt-64">
+    <div class="container">
+        <div class="container d-flex flex-column">
+            <h1 class="section-title">Last Updated: {{dataSource.blog_date}}</h1>
+
+            <h2 class="h2-f-t text-capitalize"> {{dataSource.blog_title}} </h2>
+            <div class="text-center paragraph">
+                <img [src]="dataSource.image" class="card-img-top" alt="Accessible Healthcare">
+                <p>
+
+                </p>
+            </div>
+
+        </div>
+        <ng-container *ngIf="dataSource.sections.length>0">
+            <div class="mt-100  mb-56">
+                <div class="photos-grid w-100-p">
+                    <div class="card     content-area border-0">
+                        <ng-container *ngFor="let item of dataSource.sections;let i = index">
+
+                            <h3 class="h2-f-t-2 mt-40"> {{item.title}}</h3>
+
+                            <p class="paragraph-2">{{item.description}}
+
+                                <ng-container *ngIf="item.subsections">
+
+                                    <ng-container *ngFor="let sub of item.subsections;let j =index">
+
+                                        <ul>
+                                            <li class="mt-8">
+                                                <h4 class="h4-f-t-2 mt-10">
+                                                    <strong>{{sub.subtitle}}</strong>
+                                                </h4>
+                                                <p class="paragraph-3">{{sub.content}}
+                                            </li>
+
+                                        </ul>
+
+                                    </ng-container>
+
+                                </ng-container>
+
+                        </ng-container>
+                        <ng-container *ngIf="dataSource.referenceLink.length > 0">
+
+                            <h3 class="h2-f-t-2 mt-40">References</h3>
+                            <ng-container *ngFor="let links of dataSource.referenceLink">
+
+                                <ul>
+                                    <li class="">
+                                        <a class="section-title text-underline" [href]="links.link">
+                                            <strong>{{links.name}}</strong>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+
+                </div>
+            </div>
+        </ng-container>
+        <hr>
+    </div>
+</section>
+
+<app-links></app-links>
+
+<app-footer></app-footer>

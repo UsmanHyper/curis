@@ -203,6 +203,13 @@ const routes: Routes = [
         (mod) => mod.PaymentStatusComponent
       ),
   },
+  {
+    path: "blogs/:slug",
+    loadComponent: () =>
+      import("./shared/blog-detail-page/blog-detail-page.component").then(
+        (mod) => mod.BlogDetailPageComponent
+      ),
+  },
   { path: '**', redirectTo: '' }
 
 
