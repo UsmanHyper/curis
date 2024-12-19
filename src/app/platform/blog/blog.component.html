@@ -2,8 +2,8 @@
 <section>
   <div class="container">
     <!-- Recent Blog Posts -->
-    <!-- <h1 class="main_heading my-30">Recent blog posts</h1> -->
-    <!-- <div class="row recent-blog-posts">
+    <!-- <h1 class="main_heading my-30">Recent blog posts</h1> 
+    <div class="row recent-blog-posts">
       <div class="col-12 col-md-12 col-lg-12 col-xl-6">
         <div class="card">
           <img src="../../../assets/images/blog/blog1.png" class="card-img-top" alt="Accessible Healthcare">
@@ -54,7 +54,8 @@
       <ng-container *ngFor="let item of pagedItems ;let i = index">
         <div class="col-md-4">
           <div class="card">
-            <img [src]="item.image" class="card-img-top" alt="Accessible Healthcare" style="max-height: 236px;">
+            <img [src]="item.image" class="card-img-top" alt="Accessible Healthcare">
+            <!-- <img [src]="item.image" class="card-img-top" alt="Accessible Healthcare" style="max-height: 236px;"> -->
             <div class="card-body">
               <p class="indicate">{{item.author_name}} • {{item.blog_date}}</p>
               <a class="sub_title" [routerLink]="['/blogs', item.slug]"> {{item.blog_title}}</a>

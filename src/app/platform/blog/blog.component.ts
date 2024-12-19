@@ -21,9 +21,10 @@ export class BlogComponent implements OnInit {
   blogInfo: any;
   pagedItems: any;
   totalPages: any = 10;
-  itemsPerPage: any = 10;
+  itemsPerPage: any = 6;
   currentPage: number = 1;
   totalItems: number = 0;
+  recentData: any;
   constructor(private router: Router, private BlogDataService: BlogDataService, private viewportScroller: ViewportScroller,) {
 
 
@@ -32,6 +33,7 @@ export class BlogComponent implements OnInit {
   ngOnInit(): void {
 
     this.blogInfo = this.BlogDataService.getBlogs();
+    
     setTimeout(() => {
       this.calculatePages();
       this.setPage(this.currentPage);

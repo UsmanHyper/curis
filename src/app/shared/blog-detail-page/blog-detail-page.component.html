@@ -33,6 +33,22 @@
                                                     <strong>{{sub.subtitle}}</strong>
                                                 </h4>
                                                 <p class="paragraph-3">{{sub.content}}
+                                                    <ng-container *ngIf="sub.innerSubsection">
+                                                        <ng-container
+                                                            *ngFor="let innerSub of sub.innerSubsection;let k =index">
+
+                                                            <ul>
+                                                                <li class="mt-8">
+                                                                    <h4 class="h4-f-t-2 mt-10">
+                                                                        <strong>{{innerSub.innerSubtitle}}</strong>
+                                                                    </h4>
+                                                                    <p class="paragraph-3">{{innerSub.innerSubContent}}
+                                                                    </p>
+                                                                </li>
+                                                            </ul>
+
+                                                        </ng-container>
+                                                    </ng-container>
                                             </li>
 
                                         </ul>
